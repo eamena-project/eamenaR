@@ -8,20 +8,33 @@
 #' If 'geojson', will read the GeoJSON file path
 #' recorded in the parameter 'geojson.path'
 #' @param d a hash() object (a Python-like dictionary)
-#' @param field the field name that will be created in the a hash() object
 #' @param uuid the UUID of the HP, only useful if db = 'eamena'
 #' @param geojson.path the path of the GeoJSON file
+#' @param eamena.ref.repo the root of the EAMENA GitHub repository of reference
+#' where the reference datasets are stored
 #'
-#' @return A hash() with listed cultural periods names
+#' @return A hash() with listed cultural periods names in the field 'periods'
+#' and listed cultural sub-periods names in the field 'subperiods'
 #'
 #' @examples
 #'
+#' # looking into the EAMENA DB
 #' d_sql <- hash::hash()
 #' d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
 #' d_sql <- list_culturalper("eamena", d_sql, "culturalper", d_sql$uuid)
 #'
+#'
+#' # looking into a GeoJSON file
+#' geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
+#' d_sql <- list_culturalper(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+#' plot_cultural_periods(d = d_sql, field = "period", export.plot = T )
+#'
 #' @export
-list_culturalper <- function(db = 'eamena', d, field, uuid = NA, geojson.path = NA, raw.GH = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"){
+list_culturalper <- function(db = 'eamena',
+                             d = NA,
+                             uuid = NA,
+                             geojson.path = NA,
+                             eamena.ref.repo = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"){
   # TODO: field is useful?
   # d <- d_sql ; uuid <- '12053a2b-9127-47a4-990f-7f5279cd89da'; field <- "culturalper"
   # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper"
@@ -88,7 +101,7 @@ list_culturalper <- function(db = 'eamena', d, field, uuid = NA, geojson.path = 
                              periods = periods$periods,
                              periods.certain = periods$periods_certain
     )
-    cultural_periods <- read.table(paste0(raw.GH, "data/time/results/cultural_periods.tsv"),
+    cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
                                    sep = "\t", header = T)
     df.periods.template <- merge(df.periods, cultural_periods, by.x = "periods", by.y = "ea.name", all.x = TRUE)
     # df.periods <- name_from_uuid(db = db, df = df.periods,
@@ -114,7 +127,7 @@ list_culturalper <- function(db = 'eamena', d, field, uuid = NA, geojson.path = 
     # df.subperiods <- name_from_uuid(db = db, df = df.subperiods,
     #                                 uuid.in = "subperiods.certain", field.out = "name.subperiods.certain")
     # df.subperiods.template <- rbind(df.subperiods.template, df.subperiods)
-    cultural_periods <- read.table(paste0(raw.GH, "data/time/results/cultural_periods.tsv"),
+    cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
                                    sep = "\t", header = T)
     df.subperiods.template <- merge(df.subperiods, cultural_periods, by.x = "subperiods", by.y = "ea.name", all.x = TRUE)
   }

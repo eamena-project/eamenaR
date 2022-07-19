@@ -20,7 +20,7 @@
 #' plot_cultural_periods(d = d_sql, field = "culturalper", export.plot = TRUE)
 #'
 #' @export
-plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50, export.plot = F, dataDir = paste0(getwd(), "results/")){
+plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50, export.plot = F, dataDir = paste0(getwd(), "/results/")){
   # field = "period" ; d <- d_sql ; export.plot = F ; type.plot = "static" ;  bin.width = 50
   df.all <- d[[field]]
   df <- df.all$period
