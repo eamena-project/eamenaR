@@ -9,7 +9,8 @@
 #' @param type.plot if "static" create a PNG, if "dynamic" create a HTML widget
 #' @param bin.width size of the bins, by default, 50 years
 #' @param export.plot if True, export the plot
-#' @param dataDir the folder where the outputs will be saved
+#' @param dataDir the folder where the outputs will be saved. If it don't exist,
+#' it will be created
 #'
 #' @return A plotly chart to display or save
 #'
@@ -31,6 +32,8 @@ plot_cultural_periods <- function(d, field, type.plot = "static",
   df$ea.duration.taq <- as.numeric(df$ea.duration.taq)
   df$ea.duration.tpq <- as.numeric(df$ea.duration.tpq)
   df <- df[!is.na(df$ea.duration.taq) & !is.na(df$ea.duration.tpq), ]
+  # folder
+  dir.create(dataDir, showWarnings = FALSE)
   # nb of HP
   hps <- unique(d[[field]]$period$eamenaid)
   nb.hps <- length(hps)
@@ -54,7 +57,7 @@ plot_cultural_periods <- function(d, field, type.plot = "static",
                       height = 8)
       print(paste(gout, "is exported"))
     } else {
-      cultper.byeamenaid
+      ggplot2::print(cultper.byeamenaid)
     }
 
     # histogram
@@ -77,7 +80,7 @@ plot_cultural_periods <- function(d, field, type.plot = "static",
                       height = 8)
       print(paste(gout, "is exported"))
     } else {
-      cultper.histog
+      ggplot2::print(cultper.histog)
     }
   }
   # Plotly
