@@ -1,6 +1,6 @@
-Package: eamena-r
+Package: eamenaR
 Type: Package
-Title: eamena-r
+Title: eamenaR
 Description: R package for front-end statistical analysis of the EAMENA database.
 Version: 0.1.0
 Author: Thomas Huet <thomas.huet@arch.ox.ac.uk>
