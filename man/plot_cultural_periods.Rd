@@ -11,19 +11,22 @@ plot_cultural_periods(
   type.plot = "static",
   bin.width = 50,
   export.plot = F,
-  time.results = paste0(getwd(), "/data/time/results/")
+  dataDir = paste0(getwd(), "/results/")
 )
 }
 \arguments{
 \item{d}{a hash() object (a Python-like dictionary)}
 
-\item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object}
+\item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object
+to plot it}
 
 \item{type.plot}{if "static" create a PNG, if "dynamic" create a HTML widget}
 
 \item{bin.width}{size of the bins, by default, 50 years}
 
 \item{export.plot}{if True, export the plot}
+
+\item{dataDir}{the folder where the outputs will be saved}
 }
 \value{
 A plotly chart to display or save

@@ -6,11 +6,11 @@
 \usage{
 list_culturalper(
   db = "eamena",
-  d,
-  field,
+  d = NA,
   uuid = NA,
   geojson.path = NA,
-  raw.GH = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"
+ 
+    eamena.ref.repo = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"
 )
 }
 \arguments{
@@ -21,14 +21,16 @@ recorded in the parameter 'geojson.path'}
 
 \item{d}{a hash() object (a Python-like dictionary)}
 
-\item{field}{the field name that will be created in the a hash() object}
-
 \item{uuid}{the UUID of the HP, only useful if db = 'eamena'}
 
 \item{geojson.path}{the path of the GeoJSON file}
+
+\item{eamena.ref.repo}{the root of the EAMENA GitHub repository of reference
+where the reference datasets are stored}
 }
 \value{
-A hash() with listed cultural periods names
+A hash() with listed cultural periods names in the field 'periods'
+and listed cultural sub-periods names in the field 'subperiods'
 }
 \description{
 With a given concept UUID (v. Reference Data Manager), find all
@@ -36,8 +38,15 @@ the cultural periods, subperiods, etc., of a given HP
 }
 \examples{
 
+# looking into the EAMENA DB
 d_sql <- hash::hash()
 d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
 d_sql <- list_culturalper("eamena", d_sql, "culturalper", d_sql$uuid)
+
+
+# looking into a GeoJSON file
+geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
+d_sql <- list_culturalper(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+plot_cultural_periods(d = d_sql, field = "period", export.plot = T )
 
 }

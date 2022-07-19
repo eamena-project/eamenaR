@@ -5,6 +5,7 @@
 #'
 #' @param d a hash() object (a Python-like dictionary)
 #' @param field the field name where the periods, subperiods, etc. will be read in the a hash() object
+#' to plot it
 #' @param type.plot if "static" create a PNG, if "dynamic" create a HTML widget
 #' @param bin.width size of the bins, by default, 50 years
 #' @param export.plot if True, export the plot
