@@ -86,17 +86,8 @@ list_culturalper <- function(db = 'eamena',
                           subperiods = subperiods,
                           subperiods_certain = subperiods_certain)
   }
-  # con <- my_con(db) # load the Pg connection
-  # df <- dbGetQuery(con, sqll)
-  # dbDisconnect(con)
   periods <- df.part[!(is.na(df.part$periods) | df.part$periods == ""), ]
   if(nrow(periods) > 0){
-    # df.periods <- data.frame(eamenaid = periods$eamenaid,
-    #                          periods = periods$periods,
-    #                          periods.certain = periods$periods_certain,
-    #                          name.periods = rep(NA, nrow(periods)),
-    #                          name.periods.certain = rep(NA, nrow(periods))
-    # )
     df.periods <- data.frame(eamenaid = periods$eamenaid,
                              periods = periods$periods,
                              periods.certain = periods$periods_certain
@@ -104,11 +95,6 @@ list_culturalper <- function(db = 'eamena',
     cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
                                    sep = "\t", header = T)
     df.periods.template <- merge(df.periods, cultural_periods, by.x = "periods", by.y = "ea.name", all.x = TRUE)
-    # df.periods <- name_from_uuid(db = db, df = df.periods,
-    #                              uuid.in = "periods", field.out = "name.periods")
-    # df.periods <- name_from_uuid(db = db, df = df.periods,
-    #                              uuid.in = "periods.certain", field.out = "name.periods.certain")
-    # df.periods.template <- rbind(df.periods.template, df.periods)
   }
   subperiods <- df.part[!(is.na(df.part$subperiods) | df.part$subperiods == ""), ]
   if(nrow(subperiods) > 0){
@@ -116,17 +102,6 @@ list_culturalper <- function(db = 'eamena',
                                 subperiods = subperiods$subperiods,
                                 subperiods.certain = subperiods$subperiods_certain
     )
-    # df.subperiods <- data.frame(eamenaid = subperiods$eamenaid,
-    #                             subperiods = subperiods$subperiods,
-    #                             subperiods.certain = subperiods$subperiods_certain,
-    #                             name.subperiods = rep(NA, nrow(subperiods)),
-    #                             name.subperiods.certain = rep(NA, nrow(subperiods))
-    # )
-    # df.subperiods <- name_from_uuid(db = db, df = df.subperiods,
-    #                                 uuid.in = "subperiods", field.out = "name.subperiods")
-    # df.subperiods <- name_from_uuid(db = db, df = df.subperiods,
-    #                                 uuid.in = "subperiods.certain", field.out = "name.subperiods.certain")
-    # df.subperiods.template <- rbind(df.subperiods.template, df.subperiods)
     cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
                                    sep = "\t", header = T)
     df.subperiods.template <- merge(df.subperiods, cultural_periods, by.x = "subperiods", by.y = "ea.name", all.x = TRUE)
@@ -144,7 +119,6 @@ list_culturalper <- function(db = 'eamena',
 
   df.tibble <- tidyr::tibble(
     period = periods.out,
-    # subperiods = subperiods.out
   )
   d[["period"]] <- tidyr::tibble(period = periods.out)# subperiods = subperiods.out
   d[["subperiod"]] <- tidyr::tibble(subperiod = subperiods.out)# subperiods = subperiods.out

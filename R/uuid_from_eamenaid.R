@@ -1,14 +1,14 @@
-#' Return the UUID of a HP from EAMENA id
+#' Return the UUID of a HP from EAMENA ID
 #' @name uuid_from_eamenaid
-#' @description Return the UUID of a HP from EAMENA id and store it into a 
-#' hash() object #' alongside the EAMENA id
+#' @description Return the UUID of a HP from EAMENA id and store it into a
+#' hash() object alongside the EAMENA id. A connection with the database is needed
 #'
 #' @param db the name of the database, by default 'eamena'
 #' @param d a hash() object (a Python-like dictionary)
 #' @param eamenaid a EAMENA ID (eg. "EAMENA-0187363")
-#' @param field.uuid the name of the field that will be created in the a 
+#' @param field.uuid the name of the field that will be created in the a
 #' hash() object #' for the UUID
-#' @param field.eamenaid the name of the field that will be created in the a 
+#' @param field.eamenaid the name of the field that will be created in the a
 #' hash() object #' for the EAMENA ID
 #' @return a hash() object (a Python-like dictionary) with EAMENA ID and UUID
 #'
@@ -26,11 +26,6 @@ uuid_from_eamenaid <- function(db, d, eamenaid, field.uuid = "uuid", field.eamen
     FROM tiles
     WHERE tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text LIKE '%${eamenaid}%'
                        ")
-    # sqll <- str_interp("
-    # SELECT t.tileid, t.resourceinstanceid, t.tiledata, n.nodeid
-    # FROM tiles t LEFT JOIN nodes n ON t.nodegroupid = n.nodegroupid
-    # WHERE (t.tiledata::json -> n.nodeid::text)::text LIKE '%${eamenaid}%'
-    #                    ")
   }
   if (length(eamenaid) > 1) {
     # TODO: does it work for only 1 UUID?
@@ -41,13 +36,6 @@ uuid_from_eamenaid <- function(db, d, eamenaid, field.uuid = "uuid", field.eamen
     FROM tiles
     WHERE tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text SIMILAR to '%(${eamenaids})%'
                        ")
-    # sqll <- str_interp("
-    # SELECT
-    # t.tileid, t.resourceinstanceid, t.tiledata, n.nodeid
-    # FROM tiles t LEFT JOIN nodes n ON t.nodegroupid = n.nodegroupid
-    # WHERE (t.tiledata::json -> n.nodeid::text)::text SIMILAR to '%(${eamenaids})%'
-    # ")
-    # print(sqll)
   }
   con <- my_con(db) # load the Pg connection
   df <- DBI::dbGetQuery(con, sqll)

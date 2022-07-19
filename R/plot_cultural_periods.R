@@ -33,17 +33,7 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
   hps <- unique(d[[field]]$period$eamenaid)
   nb.hps <- length(hps)
   # # read the tpq/taq
-  # cultural_periods <- read.table(paste0(raw.GH, "data/time/results/cultural_periods.tsv"),
-  #                                sep = "\t", header = T)
   if (type.plot == "static") {
-    # time.table <- merge(df.all$period, cultural_periods, by.x = "periods", by.y = "ea.name", all.x = TRUE)
-    # # get unique cultural periods
-    # time.table <- time.table[!duplicated(time.table), ]
-    # time.table$ea.duration.taq <- as.numeric(as.character(time.table$ea.duration.taq))
-    # time.table$ea.duration.tpq <- as.numeric(as.character(time.table$ea.duration.tpq))
-    # time.table$no <- seq(1, nrow(time.table))
-    # clean
-    # time.table <- time.table[!is.na(time.table$ea.duration.taq) & !is.na(time.table$ea.duration.tpq), ]
     cultper.byeamenaid <- ggplot2::ggplot(df) +
       ggplot2::geom_segment(ggplot2::aes(x = ea.duration.taq, xend = ea.duration.tpq,
                                          y = eamenaid , yend = eamenaid,
@@ -96,7 +86,6 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
       # hp <- 1
       a.hp <- hps[hp] # get a EAMENA id
       df <- df.all$period[df.all$period$eamenaid == a.hp, ]
-      # df.periods <- df$period
       # only useful columns
       df.periods <- df[, c("name.periods", "name.periods.certain")]
       time.table <- merge(df.periods, cultural_periods, by.x = "name.periods", by.y = "ea.name", all.x = TRUE)
@@ -104,7 +93,6 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
       time.table <- time.table[!duplicated(time.table), ]
       time.table$ea.duration.taq <- as.numeric(as.character(time.table$ea.duration.taq))
       time.table$ea.duration.tpq <- as.numeric(as.character(time.table$ea.duration.tpq))
-      # time.table <- sapply(time.table[, c("ea.duration.taq", "ea.duration.tpq")], as.numeric)
       # plot
       for(i in seq(1, nrow(time.table))){
         # thedifferent boxes
