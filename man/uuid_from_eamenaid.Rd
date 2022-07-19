@@ -2,7 +2,7 @@
 % Please edit documentation in R/uuid_from_eamenaid.R
 \name{uuid_from_eamenaid}
 \alias{uuid_from_eamenaid}
-\title{Return the UUID of a HP from EAMENA id}
+\title{Return the UUID of a HP from EAMENA ID}
 \usage{
 uuid_from_eamenaid(
   db,
@@ -19,18 +19,18 @@ uuid_from_eamenaid(
 
 \item{eamenaid}{a EAMENA ID (eg. "EAMENA-0187363")}
 
-\item{field.uuid}{the name of the field that will be created in the a 
+\item{field.uuid}{the name of the field that will be created in the a
 hash() object #' for the UUID}
 
-\item{field.eamenaid}{the name of the field that will be created in the a 
+\item{field.eamenaid}{the name of the field that will be created in the a
 hash() object #' for the EAMENA ID}
 }
 \value{
 a hash() object (a Python-like dictionary) with EAMENA ID and UUID
 }
 \description{
-Return the UUID of a HP from EAMENA id and store it into a 
-hash() object #' alongside the EAMENA id
+Return the UUID of a HP from EAMENA id and store it into a
+hash() object alongside the EAMENA id. A connection with the database is needed
 }
 \examples{
 d_sql <- hash::hash() # hash instance to store the results

@@ -1,5 +1,4 @@
-# eamenaR
-> R package for front-end statistical analysis of the EAMENA database
+# ***eamenaR*** R package <br> for front-end statistical analysis of the EAMENA database <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 
 Install the R package
 
