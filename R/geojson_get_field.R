@@ -14,7 +14,7 @@
 geojson_get_field <- function(geojson.path, field = "EAMENA.ID"){
   # geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
   # field = "Cultural.Sub.period.Type"
-  r <- geojson_read(geojson.path)
+  r <- geojsonio::geojson_read(geojson.path)
   all.val <- c()
   for(i in seq(1, length(r[[2]]))){
     # print(i)
