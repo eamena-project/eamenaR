@@ -34,12 +34,10 @@ plot_cultural_periods(d = d_sql, field = "period", export.plot = T)
 The `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme) file
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_byeamenaid.png" width="400">
-</p>
-
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_byeamenaid.png" width="500">
+<br>
 and 
-
-<p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_histog.png" width="400">
+<br>
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_histog.png" width="500">
 </p>
 
