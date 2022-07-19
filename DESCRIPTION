@@ -1,0 +1,28 @@
+Package: eamena-r
+Type: Package
+Title: eamena-r (https://github.com/eamena-oxford/eamena-r)
+Description: R package for front-end statistical analysis of the EAMENA database.
+Version: 0.1.0
+Author: Thomas Huet <thomas.huet@arch.ox.ac.uk>
+Maintainer: Thomas Huet <thomas.huet@arch.ox.ac.uk>
+Authors@R: c(person("Thomas", "Huet",
+    email = "thomas.huet@arch.ox.ac.uk", role = c("aut", "cre")))
+Depends:
+    R (>= 3.0.1)
+License: MIT
+LazyData: true
+Imports:
+    geojsonio,
+    DBI,
+    stringr,
+    tidyr,
+    dplyr,
+    ggplot2,
+    plotly,
+    RColorBrewer,
+    htmlwidgets
+Suggests:
+    knitr,
+    microbenchmark,
+    testthat
+RoxygenNote: 7.1.2

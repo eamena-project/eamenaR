@@ -1,2 +1,8 @@
 # eamena-r
-R package for front-end statistical analysis of the EAMENA database
+> R package for front-end statistical analysis of the EAMENA database
+
+Install the R package
+
+```
+devtools::install_github("eamena-oxford/eamena-r")
+```
