@@ -6,3 +6,11 @@ Install the R package
 ```
 devtools::install_github("eamena-oxford/eamenaR")
 ```
+
+# Functions
+
+Plot cultural period of a GeoJSON file
+
+```
+
+```

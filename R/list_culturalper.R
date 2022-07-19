@@ -58,6 +58,7 @@ list_culturalper <- function(db = 'eamena', d, field, uuid = NA, geojson.path = 
                      ")
       con <- my_con(db) # load the Pg connection
       df.part <- DBI::dbGetQuery(con, sqll)
+      DBI::dbDisconnect(con)
     }
   }
   if(db == "geojson"){
@@ -128,7 +129,6 @@ list_culturalper <- function(db = 'eamena', d, field, uuid = NA, geojson.path = 
   ifelse(nrow(df.periods.template) > 0, periods.out <- df.periods.template, periods.out <- NA)
   ifelse(nrow(df.subperiods.template) > 0, subperiods.out <- df.subperiods.template, subperiods.out <- NA)
 
-  DBI::dbDisconnect(con)
   df.tibble <- tidyr::tibble(
     period = periods.out,
     # subperiods = subperiods.out

@@ -8,6 +8,7 @@
 #' @param type.plot if "static" create a PNG, if "dynamic" create a HTML widget
 #' @param bin.width size of the bins, by default, 50 years
 #' @param export.plot if True, export the plot
+#' @param dataDir the folder where the outputs will be saved
 #'
 #' @return A plotly chart to display or save
 #'
@@ -19,7 +20,7 @@
 #' plot_cultural_periods(d = d_sql, field = "culturalper", export.plot = TRUE)
 #'
 #' @export
-plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50, export.plot = F, time.results = paste0(getwd(), "/data/time/results/")){
+plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50, export.plot = F, dataDir = paste0(getwd(), "results/")){
   # field = "period" ; d <- d_sql ; export.plot = F ; type.plot = "static" ;  bin.width = 50
   df.all <- d[[field]]
   df <- df.all$period
@@ -43,21 +44,21 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
     # clean
     # time.table <- time.table[!is.na(time.table$ea.duration.taq) & !is.na(time.table$ea.duration.tpq), ]
     cultper.byeamenaid <- ggplot2::ggplot(df) +
-       ggplot2::geom_segment(aes(x = ea.duration.taq, xend = ea.duration.tpq,
-                       y = eamenaid , yend = eamenaid,
-                       size = 1,
-                       alpha = .1)) +
-       ggplot2::xlab("ANE") +
-       ggplot2::theme_bw() +
-       ggplot2::theme(legend.position="none",
-            axis.text.y=element_text(size=6))
+      ggplot2::geom_segment(ggplot2::aes(x = ea.duration.taq, xend = ea.duration.tpq,
+                                         y = eamenaid , yend = eamenaid,
+                                         size = 1,
+                                         alpha = .1)) +
+      ggplot2::xlab("ANE") +
+      ggplot2::theme_bw() +
+      ggplot2::theme(legend.position = "none",
+                     axis.text.y = ggplot2::element_text(size=6))
 
     if (export.plot) {
-      gout <- paste0(time.results, "cultural_period_byeamenaid.png")
+      gout <- paste0(dataDir, "cultural_period_byeamenaid.png")
       ggplot2::ggsave(gout,
-             cultper.byeamenaid,
-             width = 8,
-             height = 8)
+                      cultper.byeamenaid,
+                      width = 8,
+                      height = 8)
       print(paste(gout, "is exported"))
     } else {
       cultper.byeamenaid
@@ -76,11 +77,11 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
       ggplot2::xlab("ANE") +
       ggplot2::theme_bw()
     if(export.plot){
-      gout <- paste0(time.results, "cultural_period_histog.png")
+      gout <- paste0(dataDir, "cultural_period_histog.png")
       ggplot2::ggsave(gout,
-             cultper.histog,
-             width = 8,
-             height = 8)
+                      cultper.histog,
+                      width = 8,
+                      height = 8)
       print(paste(gout, "is exported"))
     } else {
       cultper.histog
@@ -115,42 +116,43 @@ plot_cultural_periods <- function(d, field, type.plot = "static", bin.width = 50
                       time.table[i, "ea.duration.taq"], " to ", time.table[i, "ea.duration.tpq"], " ANE")
         gplotly <- plotly::gplotly %>%
           plotly::add_polygons(x = per,
-                       # x=c(per1,per2,per3,per4),
-                       # x=c(periodes.df$tpq, periodes.df$tpq, periodes.df$taq, periodes.df$taq),
-                       y = c(hp-1, hp, hp, hp-1),
-                       color = colors[hp],
-                       line = list(width=1)
+                               # x=c(per1,per2,per3,per4),
+                               # x=c(periodes.df$tpq, periodes.df$tpq, periodes.df$taq, periodes.df$taq),
+                               y = c(hp-1, hp, hp, hp-1),
+                               color = colors[hp],
+                               line = list(width=1)
           ) %>%
           # the name in the rectangle centre
           plotly::add_annotations(x = mean(per),
-                          y = hp - .25,
-                          text = lbl,
-                          font = list(size = 12),
-                          showarrow = FALSE,
-                          inherit = T)
+                                  y = hp - .25,
+                                  text = lbl,
+                                  font = list(size = 12),
+                                  showarrow = FALSE,
+                                  inherit = T)
       }
       # the name of the EAMENA HP
       centre.eamena.id <- mean(c(time.table$ea.duration.taq, time.table$ea.duration.tpq))
       gplotly <- plotly::gplotly %>%
         plotly::add_annotations(x = centre.eamena.id,
-                        y = hp-.5,
-                        text = a.hp,
-                        font = list(size = 16),
-                        showarrow = FALSE,
-                        inherit = T)
+                                y = hp-.5,
+                                text = a.hp,
+                                font = list(size = 16),
+                                showarrow = FALSE,
+                                inherit = T)
     }
     gplotly <- plotly::gplotly %>%
       plotly::layout(yaxis = list(title = "Cultural periods",
-                          showlegend = F,
-                          legend = list(orientation = "h"),
-                          showgrid = FALSE,
-                          showticklabels = FALSE,
-                          zeroline = FALSE))
+                                  showlegend = F,
+                                  legend = list(orientation = "h"),
+                                  showgrid = FALSE,
+                                  showticklabels = FALSE,
+                                  zeroline = FALSE))
     if(export.plot){
-      htmlwidgets::saveWidget(htmlwidgets::as_widget(gplotly), 
-      paste0(getwd(), "/data/time/results/cultural_period.html"))
+      htmlwidgets::saveWidget(htmlwidgets::as_widget(gplotly),
+                              paste0(getwd(), "/data/time/results/cultural_period.html"))
     } else {
       gplotly
     }
   }
 }
+
