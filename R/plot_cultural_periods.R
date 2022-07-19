@@ -34,6 +34,7 @@ plot_cultural_periods <- function(d, field, type.plot = "static",
   df <- df[!is.na(df$ea.duration.taq) & !is.na(df$ea.duration.tpq), ]
   # folder
   dir.create(dataDir, showWarnings = FALSE)
+
   # nb of HP
   hps <- unique(d[[field]]$period$eamenaid)
   nb.hps <- length(hps)
