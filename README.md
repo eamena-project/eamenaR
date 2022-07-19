@@ -29,7 +29,7 @@ Store all periods represented in the GeoJSON to the `d` dictonnary, and plot the
 ```
 d <- list_culturalper(db = "geojson", 
                       d = d, 
-                      field = "culturalper", 
+                      field = "period", 
                       geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
 plot_cultural_periods(d = d, field = "period", export.plot = T)
 ```

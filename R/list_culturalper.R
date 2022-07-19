@@ -69,6 +69,7 @@ list_culturalper <- function(db = 'eamena',
       FROM tiles
       WHERE resourceinstanceid = '${a_uuid}'
                      ")
+      print("DB")
       con <- my_con(db) # load the Pg connection
       df.part <- DBI::dbGetQuery(con, sqll)
       DBI::dbDisconnect(con)
