@@ -35,9 +35,9 @@ The `plot_cultural_periods()` function will export two PNG diagrams for the [car
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_byeamenaid.png" width="500">
-<br>
+<br><br>
 and 
-<br>
+<br><br>
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/time/results/cultural_period_histog.png" width="500">
 </p>
 
