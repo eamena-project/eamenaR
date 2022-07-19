@@ -1,5 +1,9 @@
 # ***eamenaR*** a R package for front-end statistical analysis <br> of the EAMENA database <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 
+The ***eamenaR*** allows to analyse GeoJSON files exported from [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme) (front-end), or connect Postgres DB of EAMENA (back-end)
+
+# Install and load package
+
 Install the R package
 
 ```
@@ -29,7 +33,6 @@ Store all periods represented in the GeoJSON to the `d` dictonnary, and plot the
 ```
 d <- list_culturalper(db = "geojson", 
                       d = d, 
-                      field = "period", 
                       geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
 plot_cultural_periods(d = d, field = "period", export.plot = T)
 ```
