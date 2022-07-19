@@ -11,6 +11,8 @@ devtools::install_github("eamena-oxford/eamenaR")
 Plot cultural period of a GeoJSON file
 
 ```
+library(eamenaR)
+d_sql <- hash()
 geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
 d_sql <- list_culturalper(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
 plot_cultural_periods(d = d_sql, field = "period", export.plot = T)
