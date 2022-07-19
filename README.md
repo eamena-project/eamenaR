@@ -16,20 +16,20 @@ library(eamenaR)
 
 ## Plot cultural period from a GeoJSON file
 
-Create a hash dictonnary to store all data
+Create a hash dictonnary named `d` to store all data
 
 ```
-d_sql <- hash()
+d <- hash()
 ```
 
-List all periods represented in a GeoJSON and plot them
+Store all periods represented in the GeoJSON to the `d` dictonnary, and plot the periods
 
 ```
-d_sql <- list_culturalper(db = "geojson", 
-                          d = d_sql, 
-                          field = "culturalper", 
-                          geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
-plot_cultural_periods(d = d_sql, field = "period", export.plot = T)
+d <- list_culturalper(db = "geojson", 
+                      d = d, 
+                      field = "culturalper", 
+                      geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
+plot_cultural_periods(d = d, field = "period", export.plot = T)
 ```
 The `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme) file
 
