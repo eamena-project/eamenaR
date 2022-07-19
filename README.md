@@ -19,6 +19,8 @@ library(eamenaR)
 Create a hash dictonnary named `d` to store all data
 
 ```
+library(hash)
+
 d <- hash()
 ```
 
