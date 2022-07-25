@@ -23,6 +23,8 @@ library(eamenaR)
 Return the Grid ID of an Heritage Place by comparing their geometry
 
 ```
+library(dplyr)
+
 grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 grid.id
 ```
