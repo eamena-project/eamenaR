@@ -18,6 +18,7 @@ Imports:
     stringr,
     tidyr,
     dplyr,
+    DescTools,
     sf,
     ggplot2,
     plotly,

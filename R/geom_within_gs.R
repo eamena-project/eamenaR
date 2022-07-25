@@ -5,17 +5,18 @@
 #'
 #' @param resource.wkt the WKT geometry of a resource, as a character format. This
 #' WKT geometry can comes from a BU sheet (ex: POINT(0.916350216921341 35.9625191284127))
-#' @param grid_squares a path to a GeoJSON file. This GeoJSON is the
-#' EAMENA output of the GeoJSON URL. The GeoJSON is read and comvert to a sf object
+#' @param grid.squares.path a path to a GeoJSON file. This GeoJSON is an
+#' EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and comvert to a sf object
 #'
 #' @return the ID of the Grid Square
 #'
 #' @examples
 #'
 #' @export
-geom_within_gs <- function(resource.wkt = NA, grid.squares.sf = NA){
+geom_within_gs <- function(resource.wkt = NA,
+                           grid.squares.path = paste0(system.file(package = "zoowork"), "/extdata/grid_squares.geojson")){
   # grid_squares <- geojson_read(geojson.path)
-  grid.squares.sf <- sf::st_read(geojson.path)
+  grid.squares.sf <- sf::st_read(grid.squares.path)
   resource.geom <- data.frame(wkt = resource.wkt)
   # resource.geom <- data.frame(wkt = 'POINT(10 10)')
   resource.sf <- sf::st_as_sf(resource.geom, wkt = "wkt")
@@ -27,8 +28,10 @@ geom_within_gs <- function(resource.wkt = NA, grid.squares.sf = NA){
     is.within <- sf::st_within(resource.sf, grid.square.wkt) %>% lengths > 0
     if(is.within){
       return(grid.squares.sf$Grid.ID[[gs]])
+    } else {
+      missed <- paste0("this geometry is not in",
+                       DescTools::SplitPath(grid.squares.path)$fullfilename)
+      return(missed)
     }
-    # grid.square.geom <- data.frame(wkt = grid.square.wkt)
-    # grid.square.sf <- st_as_sf(grid.square.geom, wkt = "wkt")
   }
 }

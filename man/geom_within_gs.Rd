@@ -4,14 +4,18 @@
 \alias{geom_within_gs}
 \title{Test if a resource (HP) geometry is within a Grid Square.}
 \usage{
-geom_within_gs(resource.wkt = NA, grid.squares.sf = NA)
+geom_within_gs(
+  resource.wkt = NA,
+  grid.squares.path = paste0(system.file(package = "zoowork"),
+    "/extdata/grid_squares.geojson")
+)
 }
 \arguments{
 \item{resource.wkt}{the WKT geometry of a resource, as a character format. This
 WKT geometry can comes from a BU sheet (ex: POINT(0.916350216921341 35.9625191284127))}
 
-\item{grid_squares}{a path to a GeoJSON file. This GeoJSON is the
-EAMENA output of the GeoJSON URL. The GeoJSON is read and comvert to a sf object}
+\item{grid.squares.path}{a path to a GeoJSON file. This GeoJSON is an
+EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and comvert to a sf object}
 }
 \value{
 the ID of the Grid Square
