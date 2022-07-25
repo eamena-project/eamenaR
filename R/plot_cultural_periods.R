@@ -28,9 +28,10 @@ plot_cultural_periods <- function(d = NA,
                                   bin.width = 50,
                                   export.plot = F,
                                   dataDir = paste0(getwd(), "/results/")){
-  # field = "period" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50
+  # field = "period" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
+  # field = "subperiod" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
   df.all <- d[[field]]
-  df <- df.all$period
+  df <- df.all[[field]]
   df["ea.duration.tpq"][df["ea.duration.tpq"] == "Present"] <- format(Sys.Date(), "%Y")
   df$ea.duration.taq <- as.numeric(df$ea.duration.taq)
   df$ea.duration.tpq <- as.numeric(df$ea.duration.tpq)
@@ -45,13 +46,12 @@ plot_cultural_periods <- function(d = NA,
   if (type.plot == "static") {
     cultper.byeamenaid <- ggplot2::ggplot(df) +
       ggplot2::geom_segment(ggplot2::aes(x = ea.duration.taq, xend = ea.duration.tpq,
-                                         y = eamenaid , yend = eamenaid,
-                                         size = 1,
-                                         alpha = .1)) +
+                                         y = eamenaid , yend = eamenaid),
+                            size = 1, alpha = .1) +
       ggplot2::xlab("ANE") +
       ggplot2::theme_bw() +
       ggplot2::theme(legend.position = "none",
-                     axis.text.y = ggplot2::element_text(size=6))
+                     axis.text.y = ggplot2::element_text(size = 6))
 
     if (export.plot) {
       gout <- paste0(dataDir, "cultural_period_byeamenaid.png")
@@ -72,7 +72,7 @@ plot_cultural_periods <- function(d = NA,
       x <- as.numeric(c(x, a.duration))
     }
     cultper.histog <- ggplot2::ggplot() +
-      ggplot2::aes(x)+
+      ggplot2::aes(x) +
       ggplot2::geom_histogram(binwidth = bin.width, colour = "black", fill = "white") +
       ggplot2::xlab("ANE") +
       ggplot2::theme_bw()
@@ -84,7 +84,7 @@ plot_cultural_periods <- function(d = NA,
                       height = 8)
       print(paste(gout, "is exported"))
     } else {
-      ggplot2::print(cultper.histog)
+      print(cultper.histog)
     }
   }
   # Plotly
