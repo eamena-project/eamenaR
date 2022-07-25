@@ -5,12 +5,18 @@
 #'
 #' @param resource.wkt the WKT geometry of a resource, as a character format. This
 #' WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)")
-#' @param grid.squares.path a path to a GeoJSON file. This GeoJSON is an
-#' EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and comvert to a sf object
+#' @param grid.squares.path a path to a GeoJSON file,
+#'  by default to the example 'grid_squares.geojson' This GeoJSON is an
+#' EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and convert to a sf object
 #'
 #' @return the ID of the Grid Square
 #'
 #' @examples
+#'
+#' library(dplyr)
+#'
+#' geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+#'
 #'
 #' @export
 geom_within_gs <- function(resource.wkt = NA,
