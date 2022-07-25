@@ -26,7 +26,8 @@ to plot it}
 
 \item{export.plot}{if True, export the plot}
 
-\item{dataDir}{the folder where the outputs will be saved}
+\item{dataDir}{the folder where the outputs will be saved. If it don't exist,
+it will be created}
 }
 \value{
 A plotly chart to display or save
