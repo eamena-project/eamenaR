@@ -1,5 +1,5 @@
 #' List the name of all the cultural period of a given HP
-#' @name list_culturalper
+#' @name list_cultural_periods
 #' @description With a given concept UUID (v. Reference Data Manager), find all
 #' the cultural periods, subperiods, etc., of a given HP
 #'
@@ -21,20 +21,20 @@
 #' # looking into the EAMENA DB
 #' d_sql <- hash::hash()
 #' d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-#' d_sql <- list_culturalper("eamena", d_sql, "culturalper", d_sql$uuid)
+#' d_sql <- list_cultural_periods("eamena", d_sql, "culturalper", d_sql$uuid)
 #'
 #'
 #' # looking into a GeoJSON file
 #' geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
-#' d_sql <- list_culturalper(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+#' d_sql <- list_cultural_periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
 #' plot_cultural_periods(d = d_sql, field = "period", export.plot = T )
 #'
 #' @export
-list_culturalper <- function(db = 'eamena',
-                             d = NA,
-                             uuid = NA,
-                             geojson.path = NA,
-                             eamena.ref.repo = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"){
+list_cultural_periods <- function(db = 'eamena',
+                                  d = NA,
+                                  uuid = NA,
+                                  geojson.path = NA,
+                                  eamena.ref.repo = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"){
   # TODO: field is useful?
   # d <- d_sql ; uuid <- '12053a2b-9127-47a4-990f-7f5279cd89da'; field <- "culturalper"
   # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper"

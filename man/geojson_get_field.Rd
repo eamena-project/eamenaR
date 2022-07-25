@@ -2,7 +2,7 @@
 % Please edit documentation in R/geojson_get_field.R
 \name{geojson_get_field}
 \alias{geojson_get_field}
-\title{Get a list of parameters from a GeoJSON file.}
+\title{Get values of a given field in a GeoJSON file.}
 \usage{
 geojson_get_field(geojson.path, field = "EAMENA.ID")
 }
@@ -19,5 +19,7 @@ A vector with all values
 Get values of a given field
 }
 \examples{
+
+geojson_get_field(geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
 
 }

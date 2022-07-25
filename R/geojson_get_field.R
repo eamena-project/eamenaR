@@ -1,4 +1,4 @@
-#' Get a list of parameters from a GeoJSON file.
+#' Get values of a given field in a GeoJSON file.
 #' @name geojson_get_field
 #' @description Get values of a given field
 #'
@@ -9,6 +9,8 @@
 #' @return A vector with all values
 #'
 #' @examples
+#'
+#' geojson_get_field(geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
 #'
 #' @export
 geojson_get_field <- function(geojson.path, field = "EAMENA.ID"){

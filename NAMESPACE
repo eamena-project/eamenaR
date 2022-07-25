@@ -2,6 +2,6 @@
 
 export(geojson_get_field)
 export(geom_within_gs)
-export(list_culturalper)
+export(list_cultural_periods)
 export(plot_cultural_periods)
 export(uuid_from_eamenaid)
