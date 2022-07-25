@@ -28,8 +28,8 @@ plot_cultural_periods <- function(d = NA,
                                   bin.width = 50,
                                   export.plot = F,
                                   dataDir = paste0(getwd(), "/results/")){
-  # field = "period" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
-  # field = "subperiod" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
+  # field = "periods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
+  # field = "subperiods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
   df.all <- d[[field]]
   df <- df.all[[field]]
   df["ea.duration.tpq"][df["ea.duration.tpq"] == "Present"] <- format(Sys.Date(), "%Y")
