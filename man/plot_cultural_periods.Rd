@@ -6,8 +6,8 @@
 are recorded by years}
 \usage{
 plot_cultural_periods(
-  d,
-  field,
+  d = NA,
+  field = NA,
   type.plot = "static",
   bin.width = 50,
   export.plot = F,
@@ -37,9 +37,9 @@ Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates
 }
 \examples{
 
-d_sql <- hash::hash() # hash instance to store the results
+d_sql <- hash::hash()
 d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-d_sql <- list_culturalper(db = "eamena", d = d_sql, field = "culturalper", uuid = d_sql[["uuid"]])
+d_sql <- list_cultural_periods(db = "eamena", d = d_sql, field = "culturalper", uuid = d_sql[["uuid"]])
 plot_cultural_periods(d = d_sql, field = "culturalper", export.plot = TRUE)
 
 }

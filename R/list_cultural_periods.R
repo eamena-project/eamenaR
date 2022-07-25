@@ -121,7 +121,7 @@ list_cultural_periods <- function(db = 'eamena',
   df.tibble <- tidyr::tibble(
     period = periods.out,
   )
-  d[["period"]] <- tidyr::tibble(period = periods.out)# subperiods = subperiods.out
-  d[["subperiod"]] <- tidyr::tibble(subperiod = subperiods.out)# subperiods = subperiods.out
+  d[["periods"]] <- tidyr::tibble(period = periods.out)# subperiods = subperiods.out
+  d[["subperiods"]] <- tidyr::tibble(subperiod = subperiods.out)# subperiods = subperiods.out
   return(d)
 }
