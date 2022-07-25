@@ -14,7 +14,7 @@
 #'
 #' @export
 geom_within_gs <- function(resource.wkt = NA,
-                           grid.squares.path = paste0(system.file(package = "eamena"), "/extdata/grid_squares.geojson")){
+                           grid.squares.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson")){
   # grid_squares <- geojson_read(geojson.path)
   grid.squares.sf <- sf::st_read(grid.squares.path)
   resource.geom <- data.frame(wkt = resource.wkt)
