@@ -18,7 +18,16 @@ library(eamenaR)
 
 # Functions
 
-## Plot cultural period from a GeoJSON file
+## Geometries
+
+Return the Grid ID of an Heritage Place by comparing their geometry
+
+```
+geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+```
+
+## Cultural Periods
+### Plot cultural period from a GeoJSON file
 
 Create a hash dictonnary named `d` to store all data
 
