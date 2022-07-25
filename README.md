@@ -23,9 +23,10 @@ library(eamenaR)
 Return the Grid ID of an Heritage Place by comparing their geometry
 
 ```
-geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+grid.id
 ```
-
+Will return `"E00N35-44"`
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
 
