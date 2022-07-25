@@ -40,13 +40,14 @@ library(hash)
 d <- hash()
 ```
 
-Store all periods represented in the GeoJSON to the `d` dictonnary, and plot the periods
+Store all periods and subperiods represented in the GeoJSON to the `d` dictonnary, and plot them
 
 ```
-d <- list_culturalper(db = "geojson", 
+d <- list_cultural_periods(db = "geojson", 
                       d = d, 
                       geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
 plot_cultural_periods(d = d, field = "periods", export.plot = T)
+plot_cultural_periods(d = d, field = "subperiods", export.plot = T)
 ```
 Here, the `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file. These files are created by default in the `results/` folder.
 
