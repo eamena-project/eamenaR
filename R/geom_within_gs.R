@@ -22,7 +22,7 @@
 geom_within_gs <- function(resource.wkt = NA,
                            grid.squares.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson")){
   flag <- 0
-  grid.squares.sf <- sf::st_read(grid.squares.path)
+  grid.squares.sf <- sf::st_read(grid.squares.path, quiet = T)
   resource.geom <- data.frame(wkt = resource.wkt)
   resource.sf <- sf::st_as_sf(resource.geom, wkt = "wkt")
   for(gs in seq(1, nrow(grid.squares.sf))){

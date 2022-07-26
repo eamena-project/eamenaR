@@ -37,16 +37,12 @@ geom_bbox <- function(dataDir = NA,
       xcoord <- c(xcoord, df[ , x_column])
       ycoord <- c(ycoord, df[ , y_column])
     }
-    # max(xcoord, na.rm = T)
-    # max(ycoord, na.rm = T)
-    # min(xcoord, na.rm = T)
-    # min(ycoord, na.rm = T)
   }
   pt1 <- sf::st_point(c(min(xcoord, na.rm = T), min(ycoord, na.rm = T)))
   pt2 <- sf::st_point(c(max(xcoord, na.rm = T), min(ycoord, na.rm = T)))
   pt3 <- sf::st_point(c(max(xcoord, na.rm = T), max(ycoord, na.rm = T)))
   pt4 <- sf::st_point(c(min(xcoord, na.rm = T), max(ycoord, na.rm = T)))
-  bbox.sfc <- sf::st_as_sfc(sf::st_bbox(pt1, pt2, pt3, pt4, pt5))
+  bbox.sfc <- sf::st_as_sfc(sf::st_bbox(pt1, pt2, pt3, pt4))
   bbox.sf <- sf::st_as_sf(bbox.sfc)
   sf::st_write(bbox.sf, dsn = paste0(dataOut, geojson.name))
   print(paste0("the GeoJSON file '", geojson.name,"' as been created in '", DescTools::SplitPath(bu.name)$dirname,"'"))
