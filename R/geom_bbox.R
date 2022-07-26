@@ -1,4 +1,4 @@
-#' Show the bounding box of the geometries within a BU sheet or from various BU sheets
+#' Create the bounding box of BUs' geometries and save it as a GeoJSON file
 #' @name geom_bbox
 #' @description Read one or various XLSX worksheets within a folder.
 #' Collect the xmin, xmax, ymin, xmax and creates the bounding box,
@@ -15,7 +15,7 @@
 #'
 #' @examples
 #'
-#'geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/")
+#' geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/")
 #'
 #' @export
 geom_bbox <- function(dataDir = NA,
