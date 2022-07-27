@@ -21,7 +21,7 @@
 #'
 #' d_sql <- hash::hash()
 #' d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-#' d_sql <- list_cultural_periods(db = "eamena", d = d_sql, field = "culturalper", uuid = d_sql[["uuid"]])
+#' d_sql <- list_cultural_periods(db = "geojson", d = d_sql, uuid = d_sql[["uuid"]])
 #' plot_cultural_periods(d = d_sql, field = "culturalper", export.plot = TRUE)
 #'
 #' @export
@@ -37,7 +37,7 @@ plot_cultural_periods <- function(d = NA,
                                   fig.width = 8,
                                   fig.height = 8){
   # field = "periods" ; d <- d ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
-  # field = "subperiods" ; d <- d ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
+  # field = "subperiods" ; d <- d_sql ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
   df.all <- d[[field]]
   df <- df.all[[field]]
   df["ea.duration.tpq"][df["ea.duration.tpq"] == "Present"] <- format(Sys.Date(), "%Y")
@@ -45,7 +45,7 @@ plot_cultural_periods <- function(d = NA,
   df$ea.duration.tpq <- as.numeric(df$ea.duration.tpq)
   df <- df[!is.na(df$ea.duration.taq) & !is.na(df$ea.duration.tpq), ]
   # nb of HP
-  hps <- unique(d[[field]]$period$eamenaid)
+  hps <- unique(d[[field]][[field]][["eamenaid"]])
   nb.hps <- length(hps)
   # # read the tpq/taq
   if("by.eamenaid" %in% plot.type){
@@ -53,7 +53,7 @@ plot_cultural_periods <- function(d = NA,
       cultper.byeamenaid <- ggplot2::ggplot(df) +
         ggplot2::geom_segment(ggplot2::aes(x = ea.duration.taq, xend = ea.duration.tpq,
                                            y = eamenaid , yend = eamenaid,
-                                           colour = subperiods),
+                                           colour = .data[[field]]),
                               size = seg.size) +
         ggplot2::xlab("ANE") +
         ggplot2::theme_bw() +
