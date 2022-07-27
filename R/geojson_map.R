@@ -1,8 +1,6 @@
 #' Create a map, whether static or interactive leaflet, from a GeoJSON file
 #' @name geojson_map
-#' @description Create two maps to be imported into a reveal.js showcase:
-#' 1. a general map displaying all the HPs resulting from a EAMENA search ('geojson url' format)
-#' 2. a highlight map on one particular HP linked to a 3D model, photograph, etc.
+#' @description Create a distribution map
 #'
 #' @param map.name the name of the output map. By default "map".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
@@ -76,6 +74,7 @@ geojson_map <- function(map.name = "map",
       ggplot2::ggsave(gout, gmap,
                       width = fig.width,
                       height = fig.height)
+      print(paste(gout, "is exported"))
     } else {
       print(gmap)
     }
@@ -177,6 +176,7 @@ geojson_map <- function(map.name = "map",
       dir.create(dataOut, showWarnings = FALSE)
       gout <- paste0(dataOut, map.name, ".html")
       saveWidget(ea.map, gout)
+      print(paste(gout, "is exported"))
     } else {
       print(ea.map)
     }
