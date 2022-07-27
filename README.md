@@ -16,11 +16,13 @@ And load the package
 library(eamenaR)
 ```
 
-# Functions
+# Main functions
 
-## Geometries
+## Prepare your data
 
-Return the Grid ID of an Heritage Place by comparing their geometry
+### Geometries
+
+Return the Grid ID of an Heritage Place by comparing their geometry to a GeoJSON of Grid Squares (gs)
 
 ```
 library(dplyr)
@@ -29,6 +31,19 @@ grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 grid.id
 ```
 Will return `"E00N35-44"`
+
+## Spatial
+
+Distribution map of the default GeoJSON file
+
+```
+geojson_map(map.name = "caravanserail", export.plot = T)
+```
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail.png" width="500">
+</p>
+
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
 
@@ -66,3 +81,4 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_histog.png" width="500">
 </p>
+
