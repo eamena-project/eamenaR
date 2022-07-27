@@ -58,7 +58,7 @@ plot_cultural_periods <- function(d = NA,
         ggplot2::xlab("ANE") +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.y = ggplot2::element_text(size = y.label.size),
-                       legend.text = element_text(size = y.label.size + 1))
+                       legend.text = ggplot2::element_text(size = y.label.size + 1))
 
       if (export.plot) {
         dir.create(dataDir, showWarnings = FALSE)
