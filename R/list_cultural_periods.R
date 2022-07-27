@@ -1,5 +1,5 @@
 #' List the name of all the cultural period of a given HP
-#' @name list_cultural.periods
+#' @name list_cultural_periods
 #' @description With a given concept UUID (v. Reference Data Manager), find all
 #' the cultural periods, subperiods, etc., of a given HP
 #'
@@ -32,7 +32,7 @@
 #' plot_cultural.periods(d = d_sql, field = "period", export.plot = T )
 #'
 #' @export
-list_cultural.periods <- function(db = 'eamena',
+list_cultural_periods <- function(db = 'eamena',
                                   d = NA,
                                   uuid = NA,
                                   geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
