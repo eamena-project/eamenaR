@@ -1,5 +1,5 @@
 #' List the name of all the cultural period of a given HP
-#' @name list_cultural_periods
+#' @name list_cultural.periods
 #' @description With a given concept UUID (v. Reference Data Manager), find all
 #' the cultural periods, subperiods, etc., of a given HP
 #'
@@ -8,9 +8,11 @@
 #' If 'geojson', will read the GeoJSON file path
 #' recorded in the parameter 'geojson.path'
 #' @param d a hash() object (a Python-like dictionary)
-#' @param uuid the UUID of the HP, only useful if db = 'eamena'
-#' @param geojson.path the path of the GeoJSON file
-#' @param eamena.ref.repo the root of the EAMENA GitHub repository of reference
+#' @param uuid the UUIDs of one or several HP, only useful if db = 'eamena'. These
+#' UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
+#' a single UUID (eg., '12053a2b-9127-47a4-990f-7f5279cd89da')
+#' @param geojson.path the path of the GeoJSON file. By default caravanserail.geojson
+#' @param cultural.periods the root of the EAMENA GitHub repository of reference
 #' where the reference datasets are stored
 #'
 #' @return A hash() with listed cultural periods names in the field 'periods'
@@ -21,20 +23,23 @@
 #' # looking into the EAMENA DB
 #' d_sql <- hash::hash()
 #' d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-#' d_sql <- list_cultural_periods("eamena", d_sql, "culturalper", d_sql$uuid)
+#' d_sql <- list_cultural.periods("eamena", d_sql, "culturalper", d_sql$uuid)
 #'
 #'
 #' # looking into a GeoJSON file
 #' geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
-#' d_sql <- list_cultural_periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
-#' plot_cultural_periods(d = d_sql, field = "period", export.plot = T )
+#' d_sql <- list_cultural.periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+#' plot_cultural.periods(d = d_sql, field = "period", export.plot = T )
 #'
 #' @export
-list_cultural_periods <- function(db = 'eamena',
+list_cultural.periods <- function(db = 'eamena',
                                   d = NA,
                                   uuid = NA,
-                                  geojson.path = NA,
-                                  eamena.ref.repo = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/"){
+                                  geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                                  cultural_periods = paste0(system.file(package = "eamenaR"), "/extdata/cultural_periods.tsv")){
+
+
+
   # TODO: field is useful?
   # d <- d_sql ; uuid <- '12053a2b-9127-47a4-990f-7f5279cd89da'; field <- "culturalper"
   # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper"
@@ -93,9 +98,9 @@ list_cultural_periods <- function(db = 'eamena',
                              periods = periods$periods,
                              periods.certain = periods$periods_certain
     )
-    cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
+    cultural.periods <- read.table(cultural_periods,
                                    sep = "\t", header = T)
-    df.periods.template <- merge(df.periods, cultural_periods, by.x = "periods", by.y = "ea.name", all.x = TRUE)
+    df.periods.template <- merge(df.periods, cultural.periods, by.x = "periods", by.y = "ea.name", all.x = TRUE)
   }
   subperiods <- df.part[!(is.na(df.part$subperiods) | df.part$subperiods == ""), ]
   if(nrow(subperiods) > 0){
@@ -103,9 +108,9 @@ list_cultural_periods <- function(db = 'eamena',
                                 subperiods = subperiods$subperiods,
                                 subperiods.certain = subperiods$subperiods_certain
     )
-    cultural_periods <- read.table(paste0(eamena.ref.repo, "data/time/results/cultural_periods.tsv"),
+    cultural.periods <- read.table(cultural_periods,
                                    sep = "\t", header = T)
-    df.subperiods.template <- merge(df.subperiods, cultural_periods, by.x = "subperiods", by.y = "ea.name", all.x = TRUE)
+    df.subperiods.template <- merge(df.subperiods, cultural.periods, by.x = "subperiods", by.y = "ea.name", all.x = TRUE)
   }
   # clean
   df.periods.template <- df.periods.template[df.periods.template$eamenaid != "NA", ]
@@ -121,7 +126,7 @@ list_cultural_periods <- function(db = 'eamena',
   df.tibble <- tidyr::tibble(
     period = periods.out,
   )
-  d[["periods"]] <- tidyr::tibble(periods = periods.out)# subperiods = subperiods.out
-  d[["subperiods"]] <- tidyr::tibble(subperiods = subperiods.out)# subperiods = subperiods.out
+  d[["periods"]] <- tidyr::tibble(periods = periods.out)
+  d[["subperiods"]] <- tidyr::tibble(subperiods = subperiods.out)
   return(d)
 }
