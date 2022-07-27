@@ -11,26 +11,32 @@ plot_cultural_periods(
   type.plot = "static",
   bin.width = 50,
   export.plot = F,
-  dataDir = paste0(getwd(), "/results/")
+  dataDir = paste0(system.file(package = "eamenaR"), "/results/"),
+  seg.size = 1,
+  seg.alpha = 0.5,
+  fig.width = 8,
+  fig.height = 8
 )
 }
 \arguments{
 \item{d}{a hash() object (a Python-like dictionary)}
 
 \item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object
-to plot it}
+to plot it. It should be 'periods' or 'subperiods'}
 
 \item{type.plot}{if "static" create a PNG, if "dynamic" create a HTML widget}
 
 \item{bin.width}{size of the bins, by default, 50 years}
 
-\item{export.plot}{if True, export the plot}
+\item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
-\item{dataDir}{the folder where the outputs will be saved. If it don't exist,
-it will be created}
+\item{dataDir}{the folder where the outputs will be saved. By default: '/results'.
+If it doesn't exist, it will be created.}
+
+\item{seg.size, seg.alpha, fig.width, fig.height}{parameters for the gglpot output}
 }
 \value{
-A plotly chart to display or save
+A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
 }
 \description{
 Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates

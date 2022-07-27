@@ -26,10 +26,10 @@ recorded in the parameter 'geojson.path'}
 UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
 a single UUID (eg., '12053a2b-9127-47a4-990f-7f5279cd89da')}
 
-\item{geojson.path}{the path of the GeoJSON file. By default caravanserail.geojson}
+\item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
 
-\item{cultural.periods}{the root of the EAMENA GitHub repository of reference
-where the reference datasets are stored}
+\item{cultural_periods}{the reference table where all the periods and subperiods are
+listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv}
 }
 \value{
 A hash() with listed cultural periods names in the field 'periods'
@@ -50,6 +50,6 @@ d_sql <- list_cultural.periods("eamena", d_sql, "culturalper", d_sql$uuid)
 # looking into a GeoJSON file
 geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
 d_sql <- list_cultural.periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
-plot_cultural.periods(d = d_sql, field = "period", export.plot = T )
+plot_cultural.periods(d = d_sql, field = "period")
 
 }

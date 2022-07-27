@@ -11,6 +11,7 @@
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it
 #' @param dataDir the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created.
+#' @param seg.size,seg.alpha,fig.width,fig.height parameters for the gglpot output
 #'
 #' @return A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
 #'
@@ -27,7 +28,11 @@ plot_cultural_periods <- function(d = NA,
                                   type.plot = "static",
                                   bin.width = 50,
                                   export.plot = F,
-                                  dataDir = paste0(system.file(package = "eamenaR"), "/results/")){
+                                  dataDir = paste0(system.file(package = "eamenaR"), "/results/"),
+                                  seg.size = 1,
+                                  seg.alpha = 0.5,
+                                  fig.width = 8,
+                                  fig.height = 8){
   # field = "periods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
   # field = "subperiods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
   df.all <- d[[field]]
@@ -47,7 +52,7 @@ plot_cultural_periods <- function(d = NA,
     cultper.byeamenaid <- ggplot2::ggplot(df) +
       ggplot2::geom_segment(ggplot2::aes(x = ea.duration.taq, xend = ea.duration.tpq,
                                          y = eamenaid , yend = eamenaid),
-                            size = 1, alpha = .1) +
+                            size = seg.size, alpha = seg.alpha) +
       ggplot2::xlab("ANE") +
       ggplot2::theme_bw() +
       ggplot2::theme(legend.position = "none",
@@ -57,11 +62,11 @@ plot_cultural_periods <- function(d = NA,
       gout <- paste0(dataDir, "cultural_", field, "_byeamenaid.png")
       ggplot2::ggsave(gout,
                       cultper.byeamenaid,
-                      width = 8,
-                      height = 8)
+                      width = fig.width,
+                      height = fig.height)
       print(paste(gout, "is exported"))
     } else {
-      ggplot2::print(cultper.byeamenaid)
+      print(cultper.byeamenaid)
     }
 
     # histogram
@@ -80,8 +85,8 @@ plot_cultural_periods <- function(d = NA,
       gout <- paste0(dataDir, "cultural_", field, "_histog.png")
       ggplot2::ggsave(gout,
                       cultper.histog,
-                      width = 8,
-                      height = 8)
+                      width = fig.width,
+                      height = fig.height)
       print(paste(gout, "is exported"))
     } else {
       print(cultper.histog)
