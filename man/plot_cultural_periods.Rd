@@ -12,7 +12,7 @@ plot_cultural_periods(
   plot.type = c("by.eamenaid", "histogram"),
   bin.width = 50,
   export.plot = F,
-  dataDir = paste0(system.file(package = "eamenaR"), "/results/"),
+  dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
   y.label.size = 6,
   seg.size = 1,
   fig.width = 8,
@@ -34,7 +34,7 @@ a cumulated histogram ("histogram"). By default, both of them}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
-\item{dataDir}{the folder where the outputs will be saved. By default: '/results'.
+\item{dataOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 
 \item{y.label.size, seg.size, fig.width, fig.height}{parameters for the gglpot output}
@@ -49,7 +49,7 @@ Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates
 
 d_sql <- hash::hash()
 d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-d_sql <- list_cultural_periods(db = "eamena", d = d_sql, field = "culturalper", uuid = d_sql[["uuid"]])
+d_sql <- list_cultural_periods(db = "geojson", d = d_sql, uuid = d_sql[["uuid"]])
 plot_cultural_periods(d = d_sql, field = "culturalper", export.plot = TRUE)
 
 }
