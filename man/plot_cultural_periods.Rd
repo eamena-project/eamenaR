@@ -8,12 +8,13 @@ are recorded by years}
 plot_cultural_periods(
   d = NA,
   field = NA,
-  type.plot = "static",
+  plotly.plot = F,
+  plot.type = c("by.eamenaid", "histogram"),
   bin.width = 50,
   export.plot = F,
   dataDir = paste0(system.file(package = "eamenaR"), "/results/"),
+  y.label.size = 6,
   seg.size = 1,
-  seg.alpha = 0.5,
   fig.width = 8,
   fig.height = 8
 )
@@ -24,16 +25,19 @@ plot_cultural_periods(
 \item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object
 to plot it. It should be 'periods' or 'subperiods'}
 
-\item{type.plot}{if "static" create a PNG, if "dynamic" create a HTML widget}
+\item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget}
+
+\item{plot.type}{whether will create the graphic of durations by EAMENA ID ("by.eamenaid") or
+a cumulated histogram ("histogram"). By default, both of them}
 
 \item{bin.width}{size of the bins, by default, 50 years}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
 \item{dataDir}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created.}
+If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 
-\item{seg.size, seg.alpha, fig.width, fig.height}{parameters for the gglpot output}
+\item{y.label.size, seg.size, fig.width, fig.height}{parameters for the gglpot output}
 }
 \value{
 A plotly chart if 'dynamic', or a gglpot if 'static', to display or save

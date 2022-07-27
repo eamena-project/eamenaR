@@ -128,6 +128,6 @@ list_cultural_periods <- function(db = 'eamena',
   )
   d[["periods"]] <- tidyr::tibble(periods = periods.out)
   d[["subperiods"]] <- tidyr::tibble(subperiods = subperiods.out)
-  print(paste0("the fields 'periods' and 'subperiods' have been created"))
+  message("the fields 'periods' and 'subperiods' have been created")
   return(d)
 }
