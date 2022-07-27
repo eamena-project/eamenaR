@@ -63,8 +63,6 @@ d <- list_cultural_periods(db = "geojson",
 plot_cultural_periods(d = d, field = "periods", plot.type = "by.eamenaid", export.plot = T)
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "by.eamenaid", export.plot = T)
 ```
-Here, the `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file (by default). These graphics are created by default in the `results/` folder. For periods
-
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_periods_byeamenaid.png" width="500">
 <br><br>
@@ -73,6 +71,7 @@ and superiods
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
+Here, the `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file (by default). These graphics are created by default in the `results/` folder. 
 Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
