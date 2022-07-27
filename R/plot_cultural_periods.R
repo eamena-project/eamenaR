@@ -5,14 +5,14 @@
 #'
 #' @param d a hash() object (a Python-like dictionary)
 #' @param field the field name where the periods, subperiods, etc. will be read in the a hash() object
-#' to plot it
+#' to plot it. It should be 'periods' or 'subperiods'
 #' @param type.plot if "static" create a PNG, if "dynamic" create a HTML widget
 #' @param bin.width size of the bins, by default, 50 years
-#' @param export.plot if True, export the plot
-#' @param dataDir the folder where the outputs will be saved. If it don't exist,
-#' it will be created
+#' @param export.plot if TRUE, export the plot, if FALSE will only display it
+#' @param dataDir the folder where the outputs will be saved. By default: '/results'.
+#' If it doesn't exist, it will be created.
 #'
-#' @return A plotly chart to display or save
+#' @return A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
 #'
 #' @examples
 #'
@@ -27,7 +27,7 @@ plot_cultural_periods <- function(d = NA,
                                   type.plot = "static",
                                   bin.width = 50,
                                   export.plot = F,
-                                  dataDir = paste0(getwd(), "/results/")){
+                                  dataDir = paste0(system.file(package = "eamenaR"), "/results/")){
   # field = "periods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/"
   # field = "subperiods" ; d <- d ; export.plot = F ; type.plot = "static" ;  bin.width = 50 ; dataDir = paste0(getwd(), "/results/")
   df.all <- d[[field]]
@@ -54,7 +54,7 @@ plot_cultural_periods <- function(d = NA,
                      axis.text.y = ggplot2::element_text(size = 6))
 
     if (export.plot) {
-      gout <- paste0(dataDir, "cultural_period_byeamenaid.png")
+      gout <- paste0(dataDir, "cultural_", field, "_byeamenaid.png")
       ggplot2::ggsave(gout,
                       cultper.byeamenaid,
                       width = 8,
@@ -77,7 +77,7 @@ plot_cultural_periods <- function(d = NA,
       ggplot2::xlab("ANE") +
       ggplot2::theme_bw()
     if(export.plot){
-      gout <- paste0(dataDir, "cultural_period_histog.png")
+      gout <- paste0(dataDir, "cultural_", field, "_histog.png")
       ggplot2::ggsave(gout,
                       cultper.histog,
                       width = 8,
@@ -139,15 +139,16 @@ plot_cultural_periods <- function(d = NA,
                                 inherit = T)
     }
     gplotly <- plotly::gplotly %>%
-      plotly::layout(yaxis = list(title = "Cultural periods",
+      plotly::layout(yaxis = list(title = paste0("Cultural ", field),
                                   showlegend = F,
                                   legend = list(orientation = "h"),
                                   showgrid = FALSE,
                                   showticklabels = FALSE,
                                   zeroline = FALSE))
     if(export.plot){
+      gout <- paste0(dataDir, "cultural_", field, "_period.html")
       htmlwidgets::saveWidget(htmlwidgets::as_widget(gplotly),
-                              paste0(getwd(), "/data/time/results/cultural_period.html"))
+                              gout)
     } else {
       plotly::gplotly
     }

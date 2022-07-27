@@ -11,9 +11,9 @@
 #' @param uuid the UUIDs of one or several HP, only useful if db = 'eamena'. These
 #' UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
 #' a single UUID (eg., '12053a2b-9127-47a4-990f-7f5279cd89da')
-#' @param geojson.path the path of the GeoJSON file. By default caravanserail.geojson
-#' @param cultural.periods the root of the EAMENA GitHub repository of reference
-#' where the reference datasets are stored
+#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
+#' @param cultural_periods the reference table where all the periods and subperiods are
+#' listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv
 #'
 #' @return A hash() with listed cultural periods names in the field 'periods'
 #' and listed cultural sub-periods names in the field 'subperiods'
@@ -29,7 +29,7 @@
 #' # looking into a GeoJSON file
 #' geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
 #' d_sql <- list_cultural.periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
-#' plot_cultural.periods(d = d_sql, field = "period", export.plot = T )
+#' plot_cultural.periods(d = d_sql, field = "period")
 #'
 #' @export
 list_cultural_periods <- function(db = 'eamena',
@@ -128,5 +128,6 @@ list_cultural_periods <- function(db = 'eamena',
   )
   d[["periods"]] <- tidyr::tibble(periods = periods.out)
   d[["subperiods"]] <- tidyr::tibble(subperiods = subperiods.out)
+  print(paste0("the fields 'periods' and 'subperiods' have been created"))
   return(d)
 }
