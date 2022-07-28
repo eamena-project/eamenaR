@@ -5,13 +5,10 @@
 \title{List the name of all the cultural period of a given HP}
 \usage{
 list_cultural_periods(
-  db = "eamena",
-  d = NA,
-  uuid = NA,
-  geojson.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail.geojson"),
-  cultural_periods = paste0(system.file(package = "eamenaR"),
-    "/extdata/cultural_periods.tsv")
+  data.name = "periodo",
+  periodo.url = "https://n2t.net/ark:/99152/p0dataset.csv",
+  export.plot = F,
+  dataOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
 \arguments{

@@ -35,9 +35,7 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 A map interactive (leaflet) or not
 }
 \description{
-Create two maps to be imported into a reveal.js showcase:
-1. a general map displaying all the HPs resulting from a EAMENA search ('geojson url' format)
-2. a highlight map on one particular HP linked to a 3D model, photograph, etc.
+Create a distribution map
 }
 \examples{
 

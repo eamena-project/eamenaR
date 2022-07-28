@@ -18,9 +18,11 @@ Imports:
     stringr,
     tidyr,
     dplyr,
+    DT,
     DescTools,
     sf,
     ggplot2,
+    leaflet,
     plotly,
     RColorBrewer,
     htmlwidgets
