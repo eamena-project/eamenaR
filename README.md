@@ -44,7 +44,7 @@ geojson_map(map.name = "caravanserail", export.plot = T)
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail.png" width="500">
 </p>
 
-Maps can also be computed on the GeoJSON fields' values, adding the [fields' names](https://github.com/eamena-oxford/eamenaR/blob/main/results/geojson_fields.tsv) in the function options. 
+Maps can also be computed on the GeoJSON fields' values, adding the [fields' names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields) in the function options. 
 
 ```
 geojson_map_temp(map.name = "caravanserail", 
@@ -59,12 +59,13 @@ It will create as many maps as different values, here a sample:
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-To retrieve the correspondances between these IDs and the EAMENA IDs, run
+To retrieve the correspondances between these IDs and the EAMENA IDs, running:
 
 ```
-geojson_stat(stat.name = "geojson_ids", export.stat = T)
+geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
+Will give the dataframe [caravanserail_list_ids.tsv]()
 
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
