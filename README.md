@@ -65,7 +65,17 @@ To retrieve the correspondances between these IDs and the EAMENA IDs, running:
 geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
-Will give the dataframe [caravanserail_list_ids.tsv]()
+Will give the dataframe [caravanserail_list_ids.tsv](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the IDs in a list, run:
+
+```
+geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
+```
+
+Will give:
+
+```
+1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, 4: EAMENA-0192600, 5: EAMENA-0192601, 6: EAMENA-0192602, 7: EAMENA-0192603, 8: EAMENA-0192604, 9: EAMENA-0192605, 10: EAMENA-0192606, 11: EAMENA-0192608, 12: EAMENA-0192609, 13: EAMENA-0192610, 14: EAMENA-0192611, 15: EAMENA-0192612, 16: EAMENA-0192613, 17: EAMENA-0192614, [...], 144: EAMENA-0194766, 145: EAMENA-0194767, 146: EAMENA-0194768, 147: EAMENA-0194769, 148: EAMENA-0194770, 149: EAMENA-0194771, 150: EAMENA-0194772, 151: EAMENA-0194773, 152: EAMENA-0194774, 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778)
+```
 
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
