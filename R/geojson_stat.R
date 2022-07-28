@@ -30,7 +30,7 @@ geojson_stat <- function(stat.name = "stat",
       dir.create(dataOut, showWarnings = FALSE)
       tout <- paste0(dataOut, stat.name, ".tsv")
       df <- data.frame(field.names = field.names)
-      write.table(df, tout, sep = "\t")
+      write.table(df, tout, sep = "\t", row.names = F)
       print(paste(tout, "is exported"))
     } else {
       cat(field.names, sep = "\n")
