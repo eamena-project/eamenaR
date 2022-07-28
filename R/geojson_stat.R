@@ -29,7 +29,8 @@ geojson_stat <- function(stat.name = "stat",
     if (export.stat) {
       dir.create(dataOut, showWarnings = FALSE)
       tout <- paste0(dataOut, stat.name, ".tsv")
-      df <- data.frame(field.names = field.names)
+      df <- data.frame(src.geojson = DescTools::SplitPath(geojson.path)$filename,
+                       field.names = field.names)
       write.table(df, tout, sep = "\t", row.names = F)
       print(paste(tout, "is exported"))
     } else {
