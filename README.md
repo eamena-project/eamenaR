@@ -59,7 +59,12 @@ It will create as many maps as different values, here a sample:
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-caravanserail_Disturbance.Cause.Type._Lack of Maintenance_Management_Legal Measures and Activities.png
+To retrieve the correspondances between these IDs and the EAMENA IDs, run
+
+```
+geojson_stat(stat.name = "geojson_ids", export.stat = T)
+```
+
 
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
