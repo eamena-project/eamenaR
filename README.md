@@ -53,9 +53,9 @@ geojson_map(map.name = "caravanserail", export.plot = T)
 Maps can also be calculated on the values of GeoJSON fields, by adding the [field names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields) in the function options.
 
 ```
-geojson_map_temp(map.name = "caravanserail", 
-                 field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
-                 export.plot = T)
+geojson_map(map.name = "caravanserail", 
+            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+            export.plot = T)
 ```
 
 It will create as many cards as there are different values, here is an example:
@@ -68,13 +68,13 @@ It will create as many cards as there are different values, here is an example:
 Retrieve the matches between these IDs and the EAMENA IDs by running:
 
 ```
-geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
+geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
 This will give the data frame [caravanserail_list_ids.tsv] (https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the IDs in a list (e.g. for a figure caption), run :
 
 ```
-geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
+geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
 ```
 
 Will give:
