@@ -1,7 +1,7 @@
-# ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
+# ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** allows to analyse GeoJSON files exported from [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or connect directly the Postgres DB of EAMENA
+The ***eamenaR*** allows to analyse GeoJSON files exported by [EAMEANA searches] (https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or to connect directly to the Postgres database of EAMENA
 
 # Install and load package
 
@@ -21,9 +21,14 @@ library(eamenaR)
 
 ## Prepare your data
 
+### GeoJSON file
+
+Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it into your web browser and create a GeoJSON file (see this [document](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme)).
+
 ### Geometries
 
-Return the Grid ID of an Heritage Place by comparing their geometry to a GeoJSON of Grid Squares (gs)
+Find the grid identifier of a heritage place by comparing its geometry to a GeoJSON of grid squares (gs). By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+
 
 ```
 library(dplyr)
@@ -35,7 +40,7 @@ Will return `"E00N35-44"`
 
 ## Spatial
 
-Distribution map of the default GeoJSON file **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
+Distribution map for the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
 ```
 geojson_map(map.name = "caravanserail", export.plot = T)
@@ -45,7 +50,7 @@ geojson_map(map.name = "caravanserail", export.plot = T)
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail.png" width="500">
 </p>
 
-Maps can also be computed on the GeoJSON fields' values, adding the [fields' names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields) in the function options. 
+Maps can also be calculated on the values of GeoJSON fields, by adding the [field names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields) in the function options.
 
 ```
 geojson_map_temp(map.name = "caravanserail", 
@@ -53,20 +58,20 @@ geojson_map_temp(map.name = "caravanserail",
                  export.plot = T)
 ```
 
-It will create as many maps as different values, here a sample:
+It will create as many cards as there are different values, here is an example:
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Disturbance.Cause.Type._Lack_of_Maintenance_Management_Legal_Measures_and_Activities.png" width="300">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-To retrieve the correspondances between these IDs and the EAMENA IDs, running:
+Retrieve the matches between these IDs and the EAMENA IDs by running:
 
 ```
 geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
-Will give the dataframe [caravanserail_list_ids.tsv](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the IDs in a list, run:
+This will give the data frame [caravanserail_list_ids.tsv] (https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the IDs in a list (e.g. for a figure caption), run :
 
 ```
 geojson_stat_temp(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
@@ -89,7 +94,7 @@ library(hash)
 d <- hash()
 ```
 
-Store all periods and subperiods represented in the GeoJSON to the `d` dictonnary, and plot them by EAMENA ID
+Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID
 
 ```
 d <- list_cultural_periods(db = "geojson", 
@@ -105,7 +110,7 @@ and superiods
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
-Here, the `plot_cultural_periods()` function will export two PNG diagrams for the [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file (by default). These graphics are created by default in the `results/` folder. 
+Here, the `plot_cultural_periods()` function will export two PNG charts for the default [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file. These charts are saved by default in the `results/` folder. 
 Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
