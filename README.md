@@ -110,7 +110,7 @@ and superiods
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
-Here, the `plot_cultural_periods()` function will export two PNG charts for the default [caravanserail.geojson](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) file. These charts are saved by default in the `results/` folder. 
+Here, the `plot_cultural_periods()` function will export two PNG charts for the default **caravanserail.geojson** file. These charts are saved by default in the `results/` folder. 
 Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
