@@ -65,13 +65,13 @@ It will create as many maps as there are different values, here is an example:
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-Retrieve the matches between these IDs and the EAMENA IDs by running:
+Retrieve the matches between these maps' IDs and the EAMENA IDs by running:
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
-This will give the data frame [caravanserail_list_ids.tsv](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the IDs in a list (e.g. for a figure caption), run :
+This will give the data frame [caravanserail_list_ids.tsv](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the maps' IDs listed (e.g. for a figure caption), run :
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
