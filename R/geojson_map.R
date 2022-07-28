@@ -28,7 +28,9 @@
 #' @export
 geojson_map_temp <- function(map.name = "map",
                              geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+
                              field.names = NA,
+
                              highlights.eamenaids = NA,
                              plotly.plot = F,
                              export.plot = F,
@@ -120,7 +122,30 @@ geojson_map_temp <- function(map.name = "map",
         }
       }
     } else {
-      ea.geojson.point.sub < ea.geojson.point
+      ea.geojson.point.sub <- ea.geojson.point
+      gmap <- ggmap::ggmap(stamenbck) +
+        ggplot2::geom_sf(data = ea.geojson.point.sub,
+                         colour = "black",
+                         inherit.aes = FALSE) +
+        ggrepel::geom_text_repel(data = ea.geojson.point.sub,
+                                 ggplot2::aes(x = sf::st_coordinates(ea.geojson.point.sub)[, "X"],
+                                              y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
+                                              label = rownames(ea.geojson.point.sub)),
+                                 size = 2,
+                                 inherit.aes = FALSE) +
+        ggplot2::labs(title = map.name) +
+        ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
+                                                          hjust = 0.5))
+      if (export.plot) {
+        dir.create(dataOut, showWarnings = FALSE)
+        gout <- paste0(dataOut, map.name, ".png")
+        ggplot2::ggsave(gout, gmap,
+                        width = fig.width,
+                        height = fig.height)
+        print(paste(gout, "is exported"))
+      } else {
+        print(gmap)
+      }
     }
 
     if(plotly.plot){
