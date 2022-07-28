@@ -26,17 +26,17 @@
 #'                  export.plot = T)
 #'
 #' @export
-geojson_map_temp <- function(map.name = "map",
-                             geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+geojson_map <- function(map.name = "map",
+                        geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
 
-                             field.names = NA,
+                        field.names = NA,
 
-                             highlights.eamenaids = NA,
-                             plotly.plot = F,
-                             export.plot = F,
-                             dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
-                             fig.width = 8,
-                             fig.height = 8){
+                        highlights.eamenaids = NA,
+                        plotly.plot = F,
+                        export.plot = F,
+                        dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                        fig.width = 8,
+                        fig.height = 8){
   # TODO: generalise from point to othe geometries
 
   # map.name = "caravanserail" ; geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
