@@ -106,6 +106,7 @@ geojson_map_temp <- function(map.name = "map",
             if (export.plot) {
               dir.create(dataOut, showWarnings = FALSE)
               field.value.norm <- gsub("/", "_", field.value)
+              field.value.norm <- gsub(" ", "_", field.value.norm)
               field.value.norm <- gsub("%", "perc", field.value.norm)
               gout <- paste0(dataOut, map.name, "_", field.name, "_", field.value.norm, ".png")
               ggplot2::ggsave(gout, gmap,
