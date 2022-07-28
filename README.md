@@ -55,8 +55,8 @@ geojson_map_temp(map.name = "caravanserail",
 It will create as many maps as different values, here a sample:
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Disturbance.Cause.Type._Lack of Maintenance_Management_Legal Measures and Activities.png" width="300">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_31-60perc.png" width="300">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Disturbance.Cause.Type._Lack_of_Maintenance_Management_Legal_Measures_and_Activities.png" width="300">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
 caravanserail_Disturbance.Cause.Type._Lack of Maintenance_Management_Legal Measures and Activities.png
