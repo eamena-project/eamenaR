@@ -9,9 +9,11 @@
 #' @param dataOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE
 #'
-#' @return A map interactive (leaflet) or not
+#' @return Show or export basic statistics on the GeoJSOn file
 #'
 #' @examples
+#'
+#' geojson_stat(stat.name = "geojson_fields", export.stat = T)
 #'
 #' @export
 geojson_stat <- function(stat.name = "stat",

@@ -24,11 +24,13 @@ geojson_stat(
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 }
 \value{
-A map interactive (leaflet) or not
+Show or export basic statistics on the GeoJSOn file
 }
 \description{
 Create a distribution map
 }
 \examples{
+
+geojson_stat(stat.name = "geojson_fields", export.stat = T)
 
 }

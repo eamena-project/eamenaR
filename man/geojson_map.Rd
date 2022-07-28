@@ -2,12 +2,14 @@
 % Please edit documentation in R/geojson_map.R
 \name{geojson_map}
 \alias{geojson_map}
+\alias{geojson_map_temp}
 \title{Create a map, whether static or interactive leaflet, from a GeoJSON file}
 \usage{
-geojson_map(
+geojson_map_temp(
   map.name = "map",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
+  field.names = NA,
   highlights.eamenaids = NA,
   plotly.plot = F,
   export.plot = F,
@@ -20,6 +22,9 @@ geojson_map(
 \item{map.name}{the name of the output map. By default "map".}
 
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
+
+\item{field.names}{a vector one or many field names for thematic cartography. If NA (by default)
+will create a general map}
 
 \item{highlights.eamenaids}{EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
 If NA (by default), no highlights}
@@ -38,5 +43,13 @@ A map interactive (leaflet) or not
 Create a distribution map
 }
 \examples{
+
+# plot a general map
+ geojson_map_temp(map.name = "caravanserail")
+
+# save different thematic map
+geojson_map_temp(map.name = "caravanserail",
+                 field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+                 export.plot = T)
 
 }

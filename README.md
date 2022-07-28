@@ -44,6 +44,23 @@ geojson_map(map.name = "caravanserail", export.plot = T)
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail.png" width="500">
 </p>
 
+Maps can also be computed on the GeoJSON fields' values, adding the [fields' names](https://github.com/eamena-oxford/eamenaR/blob/main/results/geojson_fields.tsv) in the function options. 
+
+```
+geojson_map_temp(map.name = "caravanserail", 
+                 field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+                 export.plot = T)
+```
+
+It will create as many maps as different values, here a sample:
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Disturbance.Cause.Type._Lack of Maintenance_Management_Legal Measures and Activities.png" width="300">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_31-60perc.png" width="300">
+</p>
+
+caravanserail_Disturbance.Cause.Type._Lack of Maintenance_Management_Legal Measures and Activities.png
+
 ## Cultural Periods
 ### Plot cultural period from a GeoJSON file
 
