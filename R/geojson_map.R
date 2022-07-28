@@ -182,3 +182,5 @@ geojson_map <- function(map.name = "map",
     }
   }
 }
+
+
