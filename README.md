@@ -1,7 +1,9 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** allows to analyse GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or to connect directly to the Postgres database of EAMENA
+The ***eamenaR*** allows to analyse GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or to connect directly to the Postgres database of EAMENA.  
+  
+[Spatial]((https://github.com/eamena-oxford/eamenaR#time)) and [Time](https://github.com/eamena-oxford/eamenaR#time)
 
 # Install and load package
 
@@ -86,6 +88,8 @@ Will give:
 ```
 
 ## Time
+
+Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-periods) or [EDTF](https://github.com/eamena-oxford/eamenaR#edtf) formats
 
 ### Cultural Periods
 
