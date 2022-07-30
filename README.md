@@ -85,9 +85,11 @@ Will give:
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
 
-## Cultural Periods
+## Time
 
-### Plot cultural period from a GeoJSON file
+### Cultural Periods
+
+#### Plot cultural period from a GeoJSON file
 
 Create a hash dictonnary named `d` to store all data
 
@@ -123,7 +125,7 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_histog.png" width="500">
 </p>
 
-## EDTF
+### EDTF
 
 Run an aoristic analysis of the . By default the function reads a sample dataset `disturbances_edtf.xlsx` and does the analysis by days (`"ymd"`)
 
