@@ -3,7 +3,7 @@
 
 The ***eamenaR*** allows to analyse GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or to connect directly to the Postgres database of EAMENA.  
   
-[Spatial]((https://github.com/eamena-oxford/eamenaR#time)) and [Time](https://github.com/eamena-oxford/eamenaR#time)
+[Spatial](https://github.com/eamena-oxford/eamenaR#time) and [Time](https://github.com/eamena-oxford/eamenaR#time)
 
 # Install and load package
 
