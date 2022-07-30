@@ -125,11 +125,22 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 
 ## EDTF
 
+Run an aoristic analysis of the . By default the function reads a sample dataset `disturbances_edtf.xlsx` and does the analysis by days (`"ymd"`)
+
 ```
-plot_edtf(data_file = "C:/Rprojects/eamenaR/inst/extdata/disturbances_edtf.xlsx",
-          edtf_span = "ym")
+plot_edtf()
 ```
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category.png" width="500">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ymd.png" width="500">
+</p>
+
+Aggregate the dates by months (`"ym"`)
+
+```
+plot_edtf(edtf_span = "ym")
+```
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ym.png" width="500">
 </p>
