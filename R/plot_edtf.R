@@ -136,3 +136,5 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     print(paste0("the PNG plot '", pout, "' has been saved to '", dirOut,"'"))
   }
 }
+
+
