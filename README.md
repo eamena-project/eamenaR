@@ -17,6 +17,8 @@ And load the package
 library(eamenaR)
 ```
 
+By default, output will be saved in the `results/` folder. You can change the output folder by changing the `dataOut` option in the various functions.
+
 # Main functions
 
 ## Prepare your data
@@ -84,6 +86,7 @@ Will give:
 ```
 
 ## Cultural Periods
+
 ### Plot cultural period from a GeoJSON file
 
 Create a hash dictonnary named `d` to store all data
@@ -110,7 +113,7 @@ and superiods
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
-Here, the `plot_cultural_periods()` function will export two PNG charts for the default **caravanserail.geojson** file. These charts are saved by default in the `results/` folder. 
+Here, the `plot_cultural_periods()` function will export two PNG charts for the default **caravanserail.geojson** file.
 Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
@@ -119,4 +122,11 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_histog.png" width="500">
 </p>
+
+## EDTF
+
+```
+plot_edtf(data_file = "C:/Rprojects/eamenaR/inst/extdata/disturbances_edtf.xlsx",
+          edtf_span = "ym")
+```
 

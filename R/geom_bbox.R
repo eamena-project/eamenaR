@@ -2,7 +2,8 @@
 #' @name geom_bbox
 #' @description Read one or various XLSX worksheets within a folder.
 #' Collect the xmin, xmax, ymin, xmax and creates the bounding box,
-#' that is to say, the extent of the geometries
+#' that is to say, the extent of the geometries. Can be used to preselect grids,
+#' to get stamen (ggmap), etc.
 #'
 #' @param dataDir the path to the folder where the XLSXs are
 #' @param x_column the column of the X coordinates, if NA the function will look the field 'wkt'

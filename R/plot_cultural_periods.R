@@ -11,7 +11,7 @@
 #'  a cumulated histogram ("histogram"). By default, both of them
 #' @param bin.width size of the bins, by default, 50 years
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it
-#' @param dataOut the folder where the outputs will be saved. By default: '/results'.
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE
 #' @param y.label.size,seg.size,fig.width,fig.height parameters for the gglpot output
 #'
@@ -31,13 +31,13 @@ plot_cultural_periods <- function(d = NA,
                                   plot.type = c("by.eamenaid", "histogram"),
                                   bin.width = 50,
                                   export.plot = F,
-                                  dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                                   y.label.size = 6,
                                   seg.size = 1,
                                   fig.width = 8,
                                   fig.height = 8){
-  # field = "periods" ; d <- d ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dataOut = paste0(getwd(), "/results/"
-  # field = "subperiods" ; d <- d_sql ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dataOut = paste0(getwd(), "/results/")
+  # field = "periods" ; d <- d ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dirOut = paste0(getwd(), "/results/"
+  # field = "subperiods" ; d <- d_sql ; export.plot = F ; plotly.plot = "static" ;  bin.width = 50 ; dirOut = paste0(getwd(), "/results/")
   df.all <- d[[field]]
   df <- df.all[[field]]
   df["ea.duration.tpq"][df["ea.duration.tpq"] == "Present"] <- format(Sys.Date(), "%Y")
@@ -61,8 +61,8 @@ plot_cultural_periods <- function(d = NA,
                        legend.text = ggplot2::element_text(size = y.label.size + 1))
 
       if (export.plot) {
-        dir.create(dataOut, showWarnings = FALSE)
-        gout <- paste0(dataOut, "cultural_", field, "_byeamenaid.png")
+        dir.create(dirOut, showWarnings = FALSE)
+        gout <- paste0(dirOut, "cultural_", field, "_byeamenaid.png")
         ggplot2::ggsave(gout,
                         cultper.byeamenaid,
                         width = fig.width,
@@ -87,8 +87,8 @@ plot_cultural_periods <- function(d = NA,
         ggplot2::xlab("ANE") +
         ggplot2::theme_bw()
       if(export.plot){
-        dir.create(dataOut, showWarnings = FALSE)
-        gout <- paste0(dataOut, "cultural_", field, "_histog.png")
+        dir.create(dirOut, showWarnings = FALSE)
+        gout <- paste0(dirOut, "cultural_", field, "_histog.png")
         ggplot2::ggsave(gout,
                         cultper.histog,
                         width = fig.width,
@@ -159,8 +159,8 @@ plot_cultural_periods <- function(d = NA,
                                   showticklabels = FALSE,
                                   zeroline = FALSE))
     if(export.plot){
-      dir.create(dataOut, showWarnings = FALSE)
-      gout <- paste0(dataOut, "cultural_", field, "_period.html")
+      dir.create(dirOut, showWarnings = FALSE)
+      gout <- paste0(dirOut, "cultural_", field, "_period.html")
       htmlwidgets::saveWidget(htmlwidgets::as_widget(gplotly),
                               gout)
     } else {

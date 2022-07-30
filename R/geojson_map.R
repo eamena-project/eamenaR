@@ -10,7 +10,7 @@
 #'  If NA (by default), no highlights
 #' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it
-#' @param dataOut the folder where the outputs will be saved. By default: '/results'.
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE
 #'
 #' @return A map interactive (leaflet) or not
@@ -18,29 +18,27 @@
 #' @examples
 #'
 #' # plot a general map
-#'  geojson_map_temp(map.name = "caravanserail")
+#'  geojson_map(map.name = "caravanserail")
 #'
 #' # save different thematic map
-#' geojson_map_temp(map.name = "caravanserail",
-#'                  field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
-#'                  export.plot = T)
+#' geojson_map(map.name = "caravanserail",
+#'            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+#'            export.plot = T)
 #'
 #' @export
 geojson_map <- function(map.name = "map",
                         geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-
                         field.names = NA,
-
                         highlights.eamenaids = NA,
                         plotly.plot = F,
                         export.plot = F,
-                        dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                        dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                         fig.width = 8,
                         fig.height = 8){
   # TODO: generalise from point to othe geometries
 
   # map.name = "caravanserail" ; geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
-  # highlights.eamenaids = NA ; plotly.plot = F ; export.plot = F ; dataOut = paste0(system.file(package = "eamenaR"), "/results/")
+  # highlights.eamenaids = NA ; plotly.plot = F ; export.plot = F ; dirOut = paste0(system.file(package = "eamenaR"), "/results/")
   # fig.width = 8 ; fig.height = 8 ;
   # field.names = c("Disturbance.Cause.Type.", "Threat.Cause.Type")
   # field.names = c("Damage.Extent.Type")
@@ -106,11 +104,11 @@ geojson_map <- function(map.name = "map",
                              plot.subtitle = ggplot2::element_text(size = 12,
                                                                    hjust = 0.5))
             if (export.plot) {
-              dir.create(dataOut, showWarnings = FALSE)
+              dir.create(dirOut, showWarnings = FALSE)
               field.value.norm <- gsub("/", "_", field.value)
               field.value.norm <- gsub(" ", "_", field.value.norm)
               field.value.norm <- gsub("%", "perc", field.value.norm)
-              gout <- paste0(dataOut, map.name, "_", field.name, "_", field.value.norm, ".png")
+              gout <- paste0(dirOut, map.name, "_", field.name, "_", field.value.norm, ".png")
               ggplot2::ggsave(gout, gmap,
                               width = fig.width,
                               height = fig.height)
@@ -137,8 +135,8 @@ geojson_map <- function(map.name = "map",
         ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
                                                           hjust = 0.5))
       if (export.plot) {
-        dir.create(dataOut, showWarnings = FALSE)
-        gout <- paste0(dataOut, map.name, ".png")
+        dir.create(dirOut, showWarnings = FALSE)
+        gout <- paste0(dirOut, map.name, ".png")
         ggplot2::ggsave(gout, gmap,
                         width = fig.width,
                         height = fig.height)
@@ -241,8 +239,8 @@ geojson_map <- function(map.name = "map",
         }
       }
       if (export.plot) {
-        dir.create(dataOut, showWarnings = FALSE)
-        gout <- paste0(dataOut, map.name, ".html")
+        dir.create(dirOut, showWarnings = FALSE)
+        gout <- paste0(dirOut, map.name, ".html")
         saveWidget(ea.map, gout)
         print(paste(gout, "is exported"))
       } else {

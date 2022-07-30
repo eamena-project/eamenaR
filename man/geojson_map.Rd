@@ -2,10 +2,9 @@
 % Please edit documentation in R/geojson_map.R
 \name{geojson_map}
 \alias{geojson_map}
-\alias{geojson_map_temp}
 \title{Create a map, whether static or interactive leaflet, from a GeoJSON file}
 \usage{
-geojson_map_temp(
+geojson_map(
   map.name = "map",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
@@ -13,7 +12,7 @@ geojson_map_temp(
   highlights.eamenaids = NA,
   plotly.plot = F,
   export.plot = F,
-  dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
   fig.height = 8
 )
@@ -33,7 +32,7 @@ If NA (by default), no highlights}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
-\item{dataOut}{the folder where the outputs will be saved. By default: '/results'.
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 }
 \value{
@@ -45,11 +44,11 @@ Create a distribution map
 \examples{
 
 # plot a general map
- geojson_map_temp(map.name = "caravanserail")
+ geojson_map(map.name = "caravanserail")
 
 # save different thematic map
-geojson_map_temp(map.name = "caravanserail",
-                 field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
-                 export.plot = T)
+geojson_map(map.name = "caravanserail",
+           field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+           export.plot = T)
 
 }

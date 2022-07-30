@@ -12,7 +12,7 @@ plot_cultural_periods(
   plot.type = c("by.eamenaid", "histogram"),
   bin.width = 50,
   export.plot = F,
-  dataOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   y.label.size = 6,
   seg.size = 1,
   fig.width = 8,
@@ -34,7 +34,7 @@ a cumulated histogram ("histogram"). By default, both of them}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
-\item{dataOut}{the folder where the outputs will be saved. By default: '/results'.
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 
 \item{y.label.size, seg.size, fig.width, fig.height}{parameters for the gglpot output}

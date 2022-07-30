@@ -32,7 +32,8 @@ a GeoJSON file
 \description{
 Read one or various XLSX worksheets within a folder.
 Collect the xmin, xmax, ymin, xmax and creates the bounding box,
-that is to say, the extent of the geometries
+that is to say, the extent of the geometries. Can be used to preselect grids,
+to get stamen (ggmap), etc.
 }
 \examples{
 

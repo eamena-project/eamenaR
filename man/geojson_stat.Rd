@@ -16,7 +16,8 @@ geojson_stat(
 \arguments{
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
 
-\item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields)}
+\item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields)
+The other options are: "list_ids" list EAMENA IDs ; etc.}
 
 \item{export.stat}{if TRUE, export the stats, if FALSE will only display it}
 
