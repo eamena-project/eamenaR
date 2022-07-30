@@ -134,6 +134,8 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 Run an aoristic analysis. By default the function reads a sample dataset `disturbances_edtf.xlsx` and does the analysis by days (`"ymd"`). Two plotly plots are created, one summing the threats, and one where each type of threat is individualised.
 
 ```
+library(dplyr)
+
 plot_edtf()
 ```
 
@@ -141,7 +143,7 @@ plot_edtf()
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ymd.png" width="500">
 </p>
 
-Aggregate the dates by months (`"ym"`)
+Aggregate the dates by months (`"ym"`) by thearts categories
 
 ```
 plot_edtf(edtf_span = "ym", edtf_analyse = "category")
