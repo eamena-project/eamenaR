@@ -130,3 +130,6 @@ plot_edtf(data_file = "C:/Rprojects/eamenaR/inst/extdata/disturbances_edtf.xlsx"
           edtf_span = "ym")
 ```
 
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category.png" width="500">
+</p>
