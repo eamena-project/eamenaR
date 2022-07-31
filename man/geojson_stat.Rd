@@ -10,7 +10,7 @@ geojson_stat(
     "/extdata/caravanserail.geojson"),
   stat = c("list_fields"),
   export.stat = F,
-  dataOut = paste0(system.file(package = "eamenaR"), "/results/")
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ The other options are: "list_ids" list EAMENA IDs ; etc.}
 
 \item{export.stat}{if TRUE, export the stats, if FALSE will only display it}
 
-\item{dataOut}{the folder where the outputs will be saved. By default: '/results'.
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 }
 \value{

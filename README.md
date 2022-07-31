@@ -1,9 +1,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** allows to analyse GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or to connect directly to the Postgres database of EAMENA.  
-  
-[Spatial](https://github.com/eamena-oxford/eamenaR#time) and [Time](https://github.com/eamena-oxford/eamenaR#time)
+The ***eamenaR*** package allows to analyse the typological, [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) facets of the (EAMENA database)[https://database.eamena.org/en/]. The two main sources of data are: GeoJSON files exported by [EAMEANA searches] (https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database. The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web.
 
 # Install and load package
 
@@ -19,7 +17,7 @@ And load the package
 library(eamenaR)
 ```
 
-By default, output will be saved in the `results/` folder. You can change the output folder by changing the `dataOut` option in the various functions.
+By default, the output will be saved in the `results/` folder. You can change the output folder by changing the `dirOut` option in the various functions.
 
 # Main functions
 
@@ -131,7 +129,7 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 
 ### EDTF
 
-Run an aoristic analysis. By default the function reads a sample dataset `disturbances_edtf.xlsx` and does the analysis by days (`"ymd"`). Two plotly plots are created, one summing the threats, and one where each type of threat is individualised.
+Performs an aoristic analysis. By default, the function reads the sample data `disturbances_edtf.xlsx` and performs the analysis by days (year-month-day: ``ymd``). Two graphs are created, one adding up all the threats, and the other where each category of threat is individualised.
 
 ```
 library(dplyr)
@@ -153,4 +151,4 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ym.png" width="500">
 </p>
 
-The plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
+The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)

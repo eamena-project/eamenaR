@@ -1,30 +1,25 @@
-#' Create an aoristic analysis of threats from a dataset
+#' Create an aoristic analysis of cultural heritage threats from a dataset.
 #' @name plot_edtf
-#' @description Use an XLSX file where R doesn't accept spaces in headers, so the spaces are replaced by dots.
+#' @description Use an XLSX file where cultural threats are listed and dated with EDTF.
+#' R doesn't accept spaces in headers, so the spaces are replaced by dots.
 #'
-#' @param data_file the path to the file where the XLSX is
-#' @param date_column the column of the EDTF data
-#' @param site_column the column of the site names
-#' @param cause_column the column of the Causes
-#' @param type_column the column of the Type of threats
-#' @param edtf_limits the min and max of the temporal anaylsis. Intersect with the limits of the dataset
-#' @param edtf_span the time span of the analysis: "myd" = years, months and days (by default);
-#' "my" = years and months, etc.
-#' @param edtf_analyse type of analysis. If "all" will sum the different categories,
-#' if "category" will plot all categories of threats
-#' @param edtf_analyse_category the field name of the threats category that will be analysed.
-#' "Disturbance.Type" (by default), or "Disturbance.Cause".
-#' @param edft_round round density. By default 4 decimals
-#' @param export.plot if TRUE will export, if FALSE (by default) will show
-#' @param type.plot file extension of the plot to export. Either "plotly" for an HTML dynamic plot,
-#'  or "png" for a static one.
+#' @param data_file the path to the dataset. By default "disturbances_edtf.xlsx".
+#' @param date_column the column of the EDTF data.
+#' @param site_column the column of the sites' names or sites' IDs.
+#' @param cause_column the column of the threats causes.
+#' @param type_column the column of the type of threats.
+#' @param edtf_limits the min and max dates of the time analysis. This interval will be crossed with the boundaries of the dataset. Useful when threats are recorded "before" (end date) or "after" (start date) a specific date.
+#' @param edtf_span the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.
+#' @param edtf_analyse type of analysis. If "all" will sum the different categories of threats, if "category" will plot all categories of threats separately, on a same graphic. By default both: `edtf_analyse = c("all", "category")`
+#' @param edtf_analyse_category the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".
+#' @param edft_round round precision for density, default 4 decimal places.
+#' @param export.plot if TRUE, saves the plot, if FALSE (default), displays the plot.
+#' @param type.plot file extension of the plot to be exported. Either "plotly" for a dynamic HTML plot, or "png" for a static plot.
+#' @param id.filter if not NA, will filter on this subset of sites (e.g. `id.filter = c("AM009")`)
+#' @param dataOut the path to the folder where the plot file will be created if `export.plot` is TRUE
+#' @param file_out the name of the plot that will be created if `export.plot` is TRUE
 #'
-#' @param id.filter if not NA, will filter on this subset of sites (ex: id.filter = c("AM009"))
-#' @param wkt_column the column of the WKT coordinates. Useful if the X,Y coordinates are already in
-#' @param dataOut the path to the folder where the GeoJSON file will be created.
-#' @param geojson.name the name of the GeoJSON that will be created
-#'
-#' @return a plot
+#' @return One to several plots
 #'
 #' @examples
 #'
@@ -58,8 +53,6 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     site = character(),
     date = character(),
     cat = character(),
-    # cause = character(),
-    # type = character(),
     density = integer())
   for(i in seq_len(nrow(df_syria))){
     if (i %% 50 == 0){print(message(paste0("read dates ", i, "/", nrow(df_syria))))}
@@ -71,13 +64,14 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     if("ym" %in% edtf_span){
       dates <- unique(format(as.Date(dates), "%Y-%m"))
     }
+    if("y" %in% edtf_span){
+      dates <- unique(format(as.Date(dates), "%Y"))
+    }
     n.dates <- length(dates)
     df.damage <- data.frame(
       site = rep(df_syria[i, site_column], n.dates),
       date = dates,
       cat = rep(df_syria[i, cat_column], n.dates),
-      # cause = rep(df_syria[i, cause_column], n.dates),
-      # type = rep(df_syria[i, type_column], n.dates),
       density = 1/n.dates)
     df_syria.out <- rbind(df_syria.out, df.damage)
   }
@@ -94,7 +88,6 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
   }
   if("plotly" %in% type.plot){
     if("all" %in% edtf_analyse){
-      # general
       p <- plotly::plot_ly(df_syria.out.general,
                            type = 'scatter',
                            x = ~date,

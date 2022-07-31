@@ -9,7 +9,7 @@ list_cultural_periods(
   data.name = "periodo",
   periodo.url = "https://n2t.net/ark:/99152/p0dataset.csv",
   export.plot = F,
-  dataOut = paste0(system.file(package = "eamenaR"), "/results/")
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ list_cultural_periods(
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
-\item{dataOut}{the folder where the outputs will be saved. By default: '/results'.
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 }
 \value{

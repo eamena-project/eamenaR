@@ -8,7 +8,7 @@ list_cultural_periods(
   data.name = "periodo",
   periodo.url = "https://n2t.net/ark:/99152/p0dataset.csv",
   export.plot = F,
-  dataOut = paste0(system.file(package = "eamenaR"), "/results/")
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
 \arguments{

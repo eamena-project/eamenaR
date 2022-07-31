@@ -9,7 +9,7 @@ geom_bbox(
   x_column = "xcoord",
   y_column = "ycoord",
   wkt_column = NA,
-  dataOut = dataDir,
+  dirOut = dataDir,
   geojson.name = "geojson.geojson"
 )
 }
@@ -22,7 +22,7 @@ geom_bbox(
 
 \item{wkt_column}{the column of the WKT coordinates. Useful if the X,Y coordinates are already in}
 
-\item{dataOut}{the path to the folder where the GeoJSON file will be created.}
+\item{dirOut}{the path to the folder where the GeoJSON file will be created.}
 
 \item{geojson.name}{the name of the GeoJSON that will be created}
 }
