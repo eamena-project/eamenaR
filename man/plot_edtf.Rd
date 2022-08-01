@@ -12,13 +12,14 @@ plot_edtf(
   analyse_column = "Disturbance.Type",
   rm_date = NA,
   edft_limits = "2004-01-01..2019-12-31",
-  edtf_unit = "myd",
+  edtf_unit = "ymd",
   edtf_analyse = c("all", "category"),
   edft_round = 4,
   id.filter = NA,
   type.plot = c("plotly"),
+  freeze_y = FALSE,
   export.plot = FALSE,
-  file_out = "df_out2",
+  file_out = "df_out",
   dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
@@ -33,7 +34,7 @@ plot_edtf(
 
 \item{rm_date}{the EDTF pattern dates that will be removed, for example c("..") removes all dates that 'occurred before' or 'occurred after'; c(":") will remove intervals; etc. By default NA}
 
-\item{edtf_unit}{the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.}
+\item{edtf_unit}{the time unit of analysis: "ymd" = years, months and days (default); "ym" = years and months; "y" = year.}
 
 \item{edtf_analyse}{type of analysis. If "all" will sum the different categories of threats, if "category" will plot all categories of threats separately, on a same graphic. By default both: `edtf_analyse = c("all", "category")`}
 
@@ -42,6 +43,8 @@ plot_edtf(
 \item{id.filter}{if not NA, will filter on this subset of sites (e.g. `id.filter = c("AM009")`)}
 
 \item{type.plot}{file extension of the plot to be exported. Either "plotly" for a dynamic HTML plot, or "png" for a static plot.}
+
+\item{freeze_y}{if TRUE, will freeze the Y-axis on the maximum value of the density. The default this option is FALSE.}
 
 \item{export.plot}{if TRUE, saves the plot, if FALSE (default), displays the plot.}
 
@@ -60,11 +63,11 @@ R doesn't accept spaces in headers, so the spaces are replaced by dots.
 }
 \examples{
 
-# by category on "Disturbance Type" column (by default)
+# by category on "Disturbance Type" column (by default), grouped by month
 library(dplyr)
 plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
 
-# same thing but without the EDTF dates tagged as occurred before/after
-plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..")
+# same thing but without the EDTF dates tagged as occurred before/after, and Y-axis freezed
+plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..", freeze_y = T)
 
 }

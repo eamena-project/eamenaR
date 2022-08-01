@@ -9,10 +9,11 @@
 #' @param analyse_column the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".
 #' @param rm_date the EDTF pattern dates that will be removed, for example c("..") removes all dates that 'occurred before' or 'occurred after'; c(":") will remove intervals; etc. By default NA
 #' @param edtf_limits the min and max dates of the time analysis. This interval will be crossed with the boundaries of the dataset. Useful when threats are recorded "before" (end date) or "after" (start date) a specific date.
-#' @param edtf_unit the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.
+#' @param edtf_unit the time unit of analysis: "ymd" = years, months and days (default); "ym" = years and months; "y" = year.
 #' @param edtf_analyse type of analysis. If "all" will sum the different categories of threats, if "category" will plot all categories of threats separately, on a same graphic. By default both: `edtf_analyse = c("all", "category")`
 #' @param edft_round round precision for density, default 4 decimal places.
 #' @param export.plot if TRUE, saves the plot, if FALSE (default), displays the plot.
+#' @param freeze_y if TRUE, will freeze the Y-axis on the maximum value of the density. The default this option is FALSE.
 #' @param type.plot file extension of the plot to be exported. Either "plotly" for a dynamic HTML plot, or "png" for a static plot.
 #' @param id.filter if not NA, will filter on this subset of sites (e.g. `id.filter = c("AM009")`)
 #' @param file_out the name of the plot that will be created if `export.plot` is TRUE
@@ -22,12 +23,12 @@
 #'
 #' @examples
 #'
-#' # by category on "Disturbance Type" column (by default)
+#' # by category on "Disturbance Type" column (by default), grouped by month
 #' library(dplyr)
 #' plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
 #'
-#' # same thing but without the EDTF dates tagged as occurred before/after
-#' plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..")
+#' # same thing but without the EDTF dates tagged as occurred before/after, and Y-axis freezed
+#' plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..", freeze_y = T)
 #'
 #' @export
 plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/extdata/disturbances_edtf.xlsx"),
@@ -36,16 +37,17 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                       analyse_column = "Disturbance.Type",
                       rm_date = NA,
                       edft_limits = "2004-01-01..2019-12-31",
-                      edtf_unit = "myd",
+                      edtf_unit = "ymd",
                       edtf_analyse = c("all", "category"),
                       edft_round = 4,
                       id.filter = NA,
                       type.plot = c("plotly"),
+                      freeze_y = FALSE,
                       export.plot = FALSE,
-                      file_out = "df_out2",
+                      file_out = "df_out",
                       dirOut = paste0(system.file(package = "eamenaR"), "/results/")){
   df <- openxlsx::read.xlsx(data_file,
-                                  sheet = 1)
+                            sheet = 1)
   if(!is.na(rm_date)){
     df <- df[-grep(rm_date, df[ , date_column], fixed = T), ]
   }
@@ -116,6 +118,12 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                            y = ~round(density, 4),
                            color = ~cat,
                            mode = 'line')
+      if(freeze_y){
+        ymax <- round(max(df.out.cat$density) + max(df.out.cat$density)/10, edft_round)
+        p <- p %>%
+          plotly::layout(yaxis = list(range=c(0, ymax))
+          )
+      }
       if(export.plot){
         dir.create(dirOut, showWarnings = FALSE)
         pout <- paste0(dirOut, file_out, "_threats_types.html")
