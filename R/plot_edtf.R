@@ -94,6 +94,7 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                            y = ~round(density, edft_round),
                            mode = 'line')
       if(export.plot){
+        dir.create(dirOut, showWarnings = FALSE)
         pout <- paste0(dirOut, file_out, "_threat.html")
         htmlwidgets::saveWidget(plotly::as_widget(p),
                                 pout)
@@ -111,6 +112,7 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                            color = ~cat,
                            mode = 'line')
       if(export.plot){
+        dir.create(dirOut, showWarnings = FALSE)
         pout <- paste0(dirOut, file_out, "_threats_types.html")
         htmlwidgets::saveWidget(plotly::as_widget(p),
                                 pout)

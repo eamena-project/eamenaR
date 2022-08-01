@@ -46,6 +46,7 @@ ref_cultural_periods <- function(db.con = NA,
                    ea.duration.taq = rep("", length(leaves.names)),
                    ea.duration.tpq = rep("", length(leaves.names)),
                    periodo = rep("", length(leaves.names)))
+  print(leaves.uuid)
   # durations
   for(i in seq(1, length(leaves.names))){
     # i <- 1
@@ -67,24 +68,19 @@ ref_cultural_periods <- function(db.con = NA,
       res <- DBI::dbGetQuery(db.con, sqll)
       df.name.duration <- rbind(df.name.duration, res)
     }
-    # The cultural period duration is recorded as "600 1200" in a scopeNote
+    # The cultural period duration is recorded as "600 1200" in a 'scopeNote'
     culturalper.duration <- df.name.duration[df.name.duration$valuetype == 'scopeNote', "value"]
     if(length(culturalper.duration) > 0){
-      # some Cultural Periods haven't any scopeNote
+      # some cultural periods haven't any 'scopeNote'
       taq <- stringr::str_split(culturalper.duration, pattern = "\t")[[1]][1]
       tpq <- stringr::str_split(culturalper.duration, pattern = "\t")[[1]][2]
+      # print(uuid)
       df[i, ] <- c(uuid, name, taq, tpq, "")
     } else {
-      print(paste(" - The (sub)period", name, "has no scopeNote (ie, no duration)"))
+      print(paste(" - The (sub)period", name, "has no 'scopeNote' (ie, no duration)"))
     }
     # df.name <- df.name.duration[df.name.duration$valuetype == 'scopeNote', "value"]
   }
-  if(export.table){
-    tout <- paste0(dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
-    write.table(df.periods, tout, sep ="\t", row.names = F)
-    print("     *table of periods and duration created")
-  } else {
-    d[[field]] <- df
-    return(d)
-  }
+  d[[field]] <- df
+  return(d)
 }
