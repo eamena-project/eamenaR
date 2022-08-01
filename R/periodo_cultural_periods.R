@@ -1,4 +1,4 @@
-#' Convert Perio.do CSV into a data.table table
+#' Convert Perio.do CSV into an interactive data.table
 #' @name periodo_cultural_periods
 #' @description read a release of the Perio.do cultural periods thesaurus
 #' and creates an interactive dataframe

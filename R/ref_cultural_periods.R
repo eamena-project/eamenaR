@@ -36,17 +36,18 @@ ref_cultural_periods <- function(db.con = NA,
                                  d = NA,
                                  field = NA){
   g <- d[[field]]
-  leaves.names <- igraph::V(g)[igraph::degree(g, mode="out") == 0]
+  leaves.names <- igraph::V(g)[igraph::degree(g,
+                                              mode="out") == 0]
   leaves.names <- leaves.names$name
   g.uuid <- d[[paste0(field, ".uuid")]]
-  leaves.uuid <- igraph::V(g.uuid)[igraph::degree(d[[field]], mode="out") == 0]
+  leaves.uuid <- igraph::V(g.uuid)[igraph::degree(d[[paste0(field, ".uuid")]],
+                                                  mode="out") == 0]
   leaves.uuid <- leaves.uuid$name
   df <- data.frame(ea.uuid = leaves.uuid,
                    ea.name = leaves.names,
                    ea.duration.taq = rep("", length(leaves.names)),
                    ea.duration.tpq = rep("", length(leaves.names)),
                    periodo = rep("", length(leaves.names)))
-  print(leaves.uuid)
   # durations
   for(i in seq(1, length(leaves.names))){
     # i <- 1
