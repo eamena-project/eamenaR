@@ -75,7 +75,7 @@ list_cultural_periods <- function(db = 'eamena',
       WHERE resourceinstanceid = '${a_uuid}'
                      ")
       print("DB")
-      con <- my_con(db) # load the Pg connection
+      # con <- my_con(db) # load the Pg connection
       df.part <- DBI::dbGetQuery(con, sqll)
       DBI::dbDisconnect(con)
     }

@@ -1,7 +1,19 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the typological, [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) facets of the (EAMENA database)[https://database.eamena.org/en/]. The two main sources of data are: GeoJSON files exported by [EAMEANA searches] (https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database. The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web.
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) facets of the (EAMENA database)[https://database.eamena.org/en/].  
+  
+The two main sources of data are: GeoJSON files exported by [EAMEANA searches] (https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database.  
+  
+The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web.  
+  
+The functions names refer to their content:
+
+| function prefix      | Description                          |
+| -----------          | -----------                          |
+| list_*               | structure a dataset                  |
+| plot_*               | creates a map, a graphic, etc.       |
+| ref_*                | creates a refence dataset            |
 
 # Install and load package
 
@@ -39,6 +51,10 @@ grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 grid.id
 ```
 Will return `"E00N35-44"`
+
+## Typology
+
+Whether the data is Heritage Places, Built Components, etc.
 
 ## Spatial
 
