@@ -33,7 +33,7 @@ d <- ref_cultural_periods(db.con = my_con, d = d, field = "subcultural_periods")
 
 # and export as TSV
 df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
-tout <- paste0(dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
+tout <- paste0(paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
 write.table(df.periods, tout, sep ="\t", row.names = F)
 
 # also, remember to disconnect

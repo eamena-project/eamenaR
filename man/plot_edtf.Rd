@@ -9,17 +9,16 @@ plot_edtf(
     "/extdata/disturbances_edtf.xlsx"),
   date_column = "EDTF",
   site_column = "S_ID",
-  cause_column = "Disturbance.Cause",
-  type_column = "Disturbance.Type",
+  analyse_column = "Disturbance.Type",
+  rm_date = NA,
   edft_limits = "2004-01-01..2019-12-31",
-  edtf_span = "myd",
+  edtf_unit = "myd",
   edtf_analyse = c("all", "category"),
-  edtf_analyse_category = "Disturbance.Type",
   edft_round = 4,
   id.filter = NA,
   type.plot = c("plotly"),
   export.plot = FALSE,
-  file_out = "df_syria_out2",
+  file_out = "df_out2",
   dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 }
@@ -30,15 +29,13 @@ plot_edtf(
 
 \item{site_column}{the column of the sites' names or sites' IDs.}
 
-\item{cause_column}{the column of the threats causes.}
+\item{analyse_column}{the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".}
 
-\item{type_column}{the column of the type of threats.}
+\item{rm_date}{the EDTF pattern dates that will be removed, for example c("..") removes all dates that 'occurred before' or 'occurred after'; c(":") will remove intervals; etc. By default NA}
 
-\item{edtf_span}{the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.}
+\item{edtf_unit}{the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.}
 
 \item{edtf_analyse}{type of analysis. If "all" will sum the different categories of threats, if "category" will plot all categories of threats separately, on a same graphic. By default both: `edtf_analyse = c("all", "category")`}
-
-\item{edtf_analyse_category}{the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".}
 
 \item{edft_round}{round precision for density, default 4 decimal places.}
 
@@ -63,7 +60,11 @@ R doesn't accept spaces in headers, so the spaces are replaced by dots.
 }
 \examples{
 
+# by category on "Disturbance Type" column (by default)
 library(dplyr)
-plot_edtf(data_file = "C:/Rprojects/eamena-arches-dev/data/time/Disturbances_EDTF.xlsx")
+plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
+
+# same thing but without the EDTF dates tagged as occurred before/after
+plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..")
 
 }

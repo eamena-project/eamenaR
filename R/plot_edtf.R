@@ -6,36 +6,38 @@
 #' @param data_file the path to the dataset. By default "disturbances_edtf.xlsx".
 #' @param date_column the column of the EDTF data.
 #' @param site_column the column of the sites' names or sites' IDs.
-#' @param cause_column the column of the threats causes.
-#' @param type_column the column of the type of threats.
+#' @param analyse_column the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".
+#' @param rm_date the EDTF pattern dates that will be removed, for example c("..") removes all dates that 'occurred before' or 'occurred after'; c(":") will remove intervals; etc. By default NA
 #' @param edtf_limits the min and max dates of the time analysis. This interval will be crossed with the boundaries of the dataset. Useful when threats are recorded "before" (end date) or "after" (start date) a specific date.
-#' @param edtf_span the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.
+#' @param edtf_unit the time unit of analysis: "myd" = years, months and days (default); "my" = years and months; "y" = year.
 #' @param edtf_analyse type of analysis. If "all" will sum the different categories of threats, if "category" will plot all categories of threats separately, on a same graphic. By default both: `edtf_analyse = c("all", "category")`
-#' @param edtf_analyse_category the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".
 #' @param edft_round round precision for density, default 4 decimal places.
 #' @param export.plot if TRUE, saves the plot, if FALSE (default), displays the plot.
 #' @param type.plot file extension of the plot to be exported. Either "plotly" for a dynamic HTML plot, or "png" for a static plot.
 #' @param id.filter if not NA, will filter on this subset of sites (e.g. `id.filter = c("AM009")`)
-#' @param dataOut the path to the folder where the plot file will be created if `export.plot` is TRUE
 #' @param file_out the name of the plot that will be created if `export.plot` is TRUE
+#' @param dataOut the path to the folder where the plot file will be created if `export.plot` is TRUE
 #'
 #' @return One to several plots
 #'
 #' @examples
 #'
+#' # by category on "Disturbance Type" column (by default)
 #' library(dplyr)
-#' plot_edtf(edtf_span = "ym", edtf_analyse = "category")
+#' plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
+#'
+#' # same thing but without the EDTF dates tagged as occurred before/after
+#' plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..")
 #'
 #' @export
 plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/extdata/disturbances_edtf.xlsx"),
                       date_column = "EDTF",
                       site_column = "S_ID",
-                      cause_column = "Disturbance.Cause",
-                      type_column = "Disturbance.Type",
+                      analyse_column = "Disturbance.Type",
+                      rm_date = NA,
                       edft_limits = "2004-01-01..2019-12-31",
-                      edtf_span = "myd",
+                      edtf_unit = "myd",
                       edtf_analyse = c("all", "category"),
-                      edtf_analyse_category = "Disturbance.Type",
                       edft_round = 4,
                       id.filter = NA,
                       type.plot = c("plotly"),
@@ -44,7 +46,10 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                       dirOut = paste0(system.file(package = "eamenaR"), "/results/")){
   df <- openxlsx::read.xlsx(data_file,
                                   sheet = 1)
-  cat_column <- edtf_analyse_category
+  if(!is.na(rm_date)){
+    df <- df[-grep(rm_date, df[ , date_column], fixed = T), ]
+  }
+  cat_column <- analyse_column
   if(!is.na(id.filter)){
     df <- df[df$S_ID %in% id.filter, ]
     file_out <- paste0(file_out, "_", paste0(as.character(id.filter), collapse = "_"))
@@ -58,13 +63,13 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     if (i %% 50 == 0){print(message(paste0("read dates ", i, "/", nrow(df))))}
     dates <- messydates::md_intersect(messydates::as_messydate(edft_limits),
                                       messydates::as_messydate(df[i, date_column]))
-    if("ymd" %in% edtf_span){
+    if("ymd" %in% edtf_unit){
       dates <- dates
     }
-    if("ym" %in% edtf_span){
+    if("ym" %in% edtf_unit){
       dates <- unique(format(as.Date(dates), "%Y-%m"))
     }
-    if("y" %in% edtf_span){
+    if("y" %in% edtf_unit){
       dates <- unique(format(as.Date(dates), "%Y"))
     }
     n.dates <- length(dates)

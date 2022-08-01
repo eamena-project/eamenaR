@@ -3,7 +3,7 @@
 \name{periodo_cultural_periods}
 \alias{periodo_cultural_periods}
 \alias{list_cultural_periods}
-\title{Convert Perio.do CSV into a data.table table}
+\title{Convert Perio.do CSV into an interactive data.table}
 \usage{
 list_cultural_periods(
   data.name = "periodo",
