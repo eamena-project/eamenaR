@@ -40,24 +40,24 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                       id.filter = NA,
                       type.plot = c("plotly"),
                       export.plot = FALSE,
-                      file_out = "df_syria_out2",
+                      file_out = "df_out2",
                       dirOut = paste0(system.file(package = "eamenaR"), "/results/")){
-  df_syria <- openxlsx::read.xlsx(data_file,
+  df <- openxlsx::read.xlsx(data_file,
                                   sheet = 1)
   cat_column <- edtf_analyse_category
   if(!is.na(id.filter)){
-    df_syria <- df_syria[df_syria$S_ID %in% id.filter, ]
+    df <- df[df$S_ID %in% id.filter, ]
     file_out <- paste0(file_out, "_", paste0(as.character(id.filter), collapse = "_"))
   }
-  df_syria.out <- data.frame(
+  df.out <- data.frame(
     site = character(),
     date = character(),
     cat = character(),
     density = integer())
-  for(i in seq_len(nrow(df_syria))){
-    if (i %% 50 == 0){print(message(paste0("read dates ", i, "/", nrow(df_syria))))}
+  for(i in seq_len(nrow(df))){
+    if (i %% 50 == 0){print(message(paste0("read dates ", i, "/", nrow(df))))}
     dates <- messydates::md_intersect(messydates::as_messydate(edft_limits),
-                                      messydates::as_messydate(df_syria[i, date_column]))
+                                      messydates::as_messydate(df[i, date_column]))
     if("ymd" %in% edtf_span){
       dates <- dates
     }
@@ -69,26 +69,26 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     }
     n.dates <- length(dates)
     df.damage <- data.frame(
-      site = rep(df_syria[i, site_column], n.dates),
+      site = rep(df[i, site_column], n.dates),
       date = dates,
-      cat = rep(df_syria[i, cat_column], n.dates),
+      cat = rep(df[i, cat_column], n.dates),
       density = 1/n.dates)
-    df_syria.out <- rbind(df_syria.out, df.damage)
+    df.out <- rbind(df.out, df.damage)
   }
 
   if("all" %in% edtf_analyse){
-    df_syria.out.general <- df_syria.out %>%
+    df.out.general <- df.out %>%
       group_by(date) %>%
       summarise(density = sum(density))
   }
   if("category" %in% edtf_analyse){
-    df_syria.out.cat <- df_syria.out %>%
+    df.out.cat <- df.out %>%
       group_by(date, cat) %>%
       summarise(density = sum(density))
   }
   if("plotly" %in% type.plot){
     if("all" %in% edtf_analyse){
-      p <- plotly::plot_ly(df_syria.out.general,
+      p <- plotly::plot_ly(df.out.general,
                            type = 'scatter',
                            x = ~date,
                            y = ~round(density, edft_round),
@@ -105,7 +105,7 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
     }
     if("category" %in% edtf_analyse){
       # type
-      p <- plotly::plot_ly(df_syria.out.cat,
+      p <- plotly::plot_ly(df.out.cat,
                            type = 'scatter',
                            x = ~date,
                            y = ~round(density, 4),
@@ -125,8 +125,8 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
   if("png" %in% type.plot){
     pout <- paste0(dirOut, file_out, ".png")
     png(pout, width = 18, height = 12, res = 300, units = "cm")
-    plot(density ~ date, df_syria.out, xaxt = "n", type = "l")
-    axis(1, df_syria.out$date, format(df_syria.out$date, "%b %y"), cex.axis = .7)
+    plot(density ~ date, df.out, xaxt = "n", type = "l")
+    axis(1, df.out$date, format(df.out$date, "%b %y"), cex.axis = .7)
     dev.off()
     print(paste0("the PNG plot '", pout, "' has been saved to '", dirOut,"'"))
   }
