@@ -34,7 +34,6 @@ list_concepts <- function(db.con = NA,
                           d = NA,
                           field = NA,
                           uuid = NA){
-  # field <- "cultural_period" ; uuid <- '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' ;  db.con = my_con
   sqll <- "
   SELECT conceptidfrom as from, conceptidto as to FROM relations
   "
@@ -46,7 +45,6 @@ list_concepts <- function(db.con = NA,
   # get the name of the nodes from their UUID
   l.uuids <- igraph::as_ids(igraph::V(subgraph.uuid))
   for(uuid_ in l.uuids){
-    # uuid_ <- "ea784c69-d61d-4bfc-9aa9-b3fb0bfa1b42"
     sqll <- stringr::str_interp("
     SELECT value FROM values
     WHERE conceptid = '${uuid_}'
@@ -60,6 +58,5 @@ list_concepts <- function(db.con = NA,
   d[[field]] <- subgraph.names
   field.uuid <- paste0(field, ".uuid")
   d[[field.uuid]] <- subgraph.uuid
-  # RPostgres::dbDisconnect(db.con)
   return(d)
 }

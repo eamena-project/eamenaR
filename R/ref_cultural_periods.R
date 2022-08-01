@@ -24,7 +24,7 @@
 #' d <- ref_cultural_periods(db.con = my_con, d = d, field = "subcultural_periods")
 #'
 #' # and export as TSV
-#' df.periods < rbind(d$cultural_periods, d$subcultural_periods)
+#' df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
 #' tout <- paste0(dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
 #' write.table(df.periods, tout, sep ="\t", row.names = F)
 #'
@@ -35,12 +35,9 @@
 ref_cultural_periods <- function(db.con = NA,
                                  d = NA,
                                  field = NA){
-  # d <- d_sql ; field = "CulturalPeriod_list" ; db = "eamena" ; export.table = F
-  # d <- list_cpts(db, d_sql, field, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4') # periods
-  # d <- list_cpts(db, d_sql, field = "SubCulturalPeriod_list", '16cb160e-7b31-4872-b2ca-6305ad311011') # subperiods
   g <- d[[field]]
   leaves.names <- igraph::V(g)[igraph::degree(g, mode="out") == 0]
-  leaves.names <- leaves.names$name # all the periods names (and superiods?)
+  leaves.names <- leaves.names$name
   g.uuid <- d[[paste0(field, ".uuid")]]
   leaves.uuid <- igraph::V(g.uuid)[igraph::degree(d[[field]], mode="out") == 0]
   leaves.uuid <- leaves.uuid$name
@@ -61,7 +58,6 @@ ref_cultural_periods <- function(db.con = NA,
     per.conceptid <- DBI::dbGetQuery(db.con, sqll)
     per.conceptid <- per.conceptid$conceptid
     df.name.duration <- data.frame(value = character(),
-                                   # languageid = character(),
                                    valuetype = character())
     # there are two concepts for the same value, so it is needed to loop..
     for(conceptid in per.conceptid){
