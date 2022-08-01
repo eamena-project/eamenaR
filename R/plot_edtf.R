@@ -24,7 +24,7 @@
 #' @examples
 #'
 #' library(dplyr)
-#' plot_edtf(data_file = "C:/Rprojects/eamena-arches-dev/data/time/Disturbances_EDTF.xlsx")
+#' plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 #'
 #' @export
 plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/extdata/disturbances_edtf.xlsx"),
