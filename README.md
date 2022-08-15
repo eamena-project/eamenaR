@@ -109,7 +109,11 @@ Whether the data is Heritage Places, Built Components, etc.
 
 ## Spatial
 
-Distribution map for the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
+Distribution maps for Heritages places and Geoarchaeology
+
+### Heritages places
+
+For the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
 ```
 geojson_map(map.name = "caravanserail", export.plot = T)
@@ -134,20 +138,6 @@ It will create as many maps as there are different values, here is an example:
   <img alt="img-name" src="./results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-For MaREA geoarchaeological data:
-
-```
-geojson_map(map.name = "geoarch",
-            ids = "GEOARCH.ID",
-            stamen.zoom = 6,
-            geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
-            export.plot = F)
-```
-
-<p align="center">
-  <img alt="img-name" src="./results/geoarchaeo.png" width="300">
-</p>
-
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
 
 ```
@@ -165,6 +155,21 @@ Will give:
 ```
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
+### Geoarchaeology
+
+For MaREA geoarchaeological data:
+
+```
+geojson_map(map.name = "geoarch",
+            ids = "GEOARCH.ID",
+            stamen.zoom = 6,
+            geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
+            export.plot = F)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/geoarchaeo.png" width="450">
+</p>
 
 ## Time
 
