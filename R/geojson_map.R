@@ -9,6 +9,7 @@
 #' will create a general map
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
 #'  If NA (by default), no highlights
+#' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 18 (building, very precise)
 #' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
@@ -18,7 +19,7 @@
 #'
 #' @examples
 #'
-#' # plot a general map
+#' # plot a general map of heritage places
 #'  geojson_map(map.name = "caravanserail")
 #'
 #' # save different thematic map
@@ -26,12 +27,20 @@
 #'            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
 #'            export.plot = T)
 #'
+#' # plot a general map of geoarchaeological data
+#' geojson_map(map.name = "geoarch",
+#'             ids = "GEOARCH.ID",
+#'             stamen.zoom = 6,
+#'             geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
+#'             export.plot = F)
+#'
 #' @export
 geojson_map <- function(map.name = "map",
                         geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
                         ids = "EAMENA.ID",
                         field.names = NA,
                         highlights.ids = NA,
+                        stamen.zoom = 8,
                         plotly.plot = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -44,16 +53,17 @@ geojson_map <- function(map.name = "map",
   # fig.width = 8 ; fig.height = 8 ;
   # field.names = c("Disturbance.Cause.Type.", "Threat.Cause.Type")
   # field.names = c("Damage.Extent.Type")
-  ea.geojson <- sf::st_read(geojson.path)
+  ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  ea.geojson <- sf::st_zm(ea.geojson) # rm Z
   ea.geojson.geom.types <- sf::st_geometry_type(ea.geojson$geometry)
 
   ea.geojson.point <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POINT", ]
   ea.geojson.line <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "LINESTRING", ]
   ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POLYGON", ]
   if(!is.na(highlights.ids)){
-    ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data$EAMENA.ID %in% highlights.ids, ])
-    ea.geojson.highlights.line <- row.names(ea.geojson.line[ea.geojson.line@data$EAMENA.ID %in% highlights.ids, ])
-    ea.geojson.highlights.polygon <- row.names(ea.geojson.polygon[ea.geojson.polygon@data$EAMENA.ID %in% highlights.ids, ])
+    ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data[ , ids] %in% highlights.ids, ])
+    ea.geojson.highlights.line <- row.names(ea.geojson.line[ea.geojson.line@data[ , ids] %in% highlights.ids, ])
+    ea.geojson.highlights.polygon <- row.names(ea.geojson.polygon[ea.geojson.polygon@data[ , ids] %in% highlights.ids, ])
   }
   if(!plotly.plot){
     left <- as.numeric(sf::st_bbox(ea.geojson.point)$xmin)
@@ -67,7 +77,7 @@ geojson_map <- function(map.name = "map",
               top = top + buffer
     )
     stamenbck <- ggmap::get_stamenmap(bbox,
-                                      zoom = 8,
+                                      zoom = stamen.zoom,
                                       maptype = "terrain-background")
     cpt.field.name <- 0
     if(!is.na(field.names)){
@@ -98,6 +108,7 @@ geojson_map <- function(map.name = "map",
                                                     y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
                                                     label = rownames(ea.geojson.point.sub)),
                                        size = 2,
+                                       max.overlaps = Inf,
                                        inherit.aes = FALSE) +
               ggplot2::labs(title = map.name,
                             subtitle = paste0(field.name, " = ", field.value)) +
@@ -132,6 +143,7 @@ geojson_map <- function(map.name = "map",
                                               y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
                                               label = rownames(ea.geojson.point.sub)),
                                  size = 2,
+                                 max.overlaps = Inf,
                                  inherit.aes = FALSE) +
         ggplot2::labs(title = map.name) +
         ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
@@ -150,17 +162,17 @@ geojson_map <- function(map.name = "map",
 
     if(plotly.plot){
       if(nrow(ea.geojson.point) > 0){
-        ea.geojson.point$lbl <- paste0("<b>", ea.geojson.point$EAMENA.ID,"</b><br>",
+        ea.geojson.point$lbl <- paste0("<b>", ea.geojson.point[ , ids],"</b><br>",
                                        ea.geojson.point$Site.Feature.Interpretation.Type, " (", ea.geojson.point$Cultural.Period.Type, ")",
                                        ea.geojson.point$Administrative.Division., ", ", ea.geojson.point$Country.Type, "<br>")
       }
       if(nrow(ea.geojson.line) > 0){
-        ea.geojson.line$lbl <- paste0("<b>", ea.geojson.line$EAMENA.ID,"</b><br>",
+        ea.geojson.line$lbl <- paste0("<b>", ea.geojson.line[ , ids],"</b><br>",
                                       ea.geojson.line$Site.Feature.Interpretation.Type, " (", ea.geojson.line$Cultural.Period.Type, ")",
                                       ea.geojson.line$Administrative.Division., ", ", ea.geojson.line$Country.Type, "<br>")
       }
       if(nrow(ea.geojson.polygon) > 0){
-        ea.geojson.polygon$lbl <- paste0("<b>", ea.geojson.polygon$EAMENA.ID,"</b><br>",
+        ea.geojson.polygon$lbl <- paste0("<b>", ea.geojson.polygon[ , ids],"</b><br>",
                                          ea.geojson.polygon$Site.Feature.Interpretation.Type, " (", ea.geojson.polygon$Cultural.Period.Type, ")",
                                          ea.geojson.polygon$Administrative.Division., ", ", ea.geojson.polygon$Country.Type, "<br>")
       }
@@ -173,7 +185,7 @@ geojson_map <- function(map.name = "map",
                                     weight = 1,
                                     radius = 3,
                                     popup = ~lbl,
-                                    label = ~EAMENA.ID,
+                                    label = ea.geojson.point[ , ids],
                                     fillOpacity = .5,
                                     opacity = .8)
       }
@@ -182,7 +194,7 @@ geojson_map <- function(map.name = "map",
           leaflet::addPolylines(data = ea.geojson.line,
                                 weight = 1,
                                 popup = ~lbl,
-                                label = ~EAMENA.ID,
+                                label = ea.geojson.line[ , ids],
                                 fillOpacity = .5,
                                 opacity = .8)
       }
@@ -191,7 +203,7 @@ geojson_map <- function(map.name = "map",
           leaflet::addPolygons(data = ea.geojson.polygon,
                                weight = 1,
                                popup = ~lbl,
-                               label = ~EAMENA.ID,
+                               label = ea.geojson.polygon[ , ids],
                                fillOpacity = .5,
                                opacity = .8)
       }
@@ -210,7 +222,7 @@ geojson_map <- function(map.name = "map",
               weight = 1,
               radius = 4,
               popup = ~lbl,
-              label = ~EAMENA.ID,
+              label = hl.geom[ , ids],
               color = "red",
               fillOpacity = 1,
               opacity = 1)
@@ -223,7 +235,7 @@ geojson_map <- function(map.name = "map",
               weight = 2,
               color = "red",
               popup = ~lbl,
-              label = ~EAMENA.ID,
+              label = hl.geom[ , ids],
               fillOpacity = .5,
               opacity = .8)
         }
@@ -235,7 +247,7 @@ geojson_map <- function(map.name = "map",
               weight = 5,
               color = "red",
               popup = ~lbl,
-              label = ~EAMENA.ID,
+              label = hl.geom[ , ids],
               fillOpacity = .5,
               opacity = .8)
         }

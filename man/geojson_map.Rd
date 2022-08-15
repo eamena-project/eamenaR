@@ -11,6 +11,7 @@ geojson_map(
   ids = "EAMENA.ID",
   field.names = NA,
   highlights.ids = NA,
+  stamen.zoom = 8,
   plotly.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -31,6 +32,8 @@ will create a general map}
 \item{highlights.ids}{EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
 If NA (by default), no highlights}
 
+\item{stamen.zoom}{the zoom of the Stamen basemap, between 0 (world, unprecise) to 18 (building, very precise)}
+
 \item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
@@ -46,12 +49,19 @@ Create a distribution map
 }
 \examples{
 
-# plot a general map
+# plot a general map of heritage places
  geojson_map(map.name = "caravanserail")
 
 # save different thematic map
 geojson_map(map.name = "caravanserail",
            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
            export.plot = T)
+
+# plot a general map of geoarchaeological data
+geojson_map(map.name = "geoarch",
+            ids = "GEOARCH.ID",
+            stamen.zoom = 6,
+            geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
+            export.plot = F)
 
 }

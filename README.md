@@ -134,7 +134,21 @@ It will create as many maps as there are different values, here is an example:
   <img alt="img-name" src="./results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
-Retrieve the matches between these maps' IDs and the EAMENA IDs by running:
+For MaREA geoarchaeological data:
+
+```
+geojson_map(map.name = "geoarch",
+            ids = "GEOARCH.ID",
+            stamen.zoom = 6,
+            geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
+            export.plot = F)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/geoarchaeo.png" width="500">
+</p>
+
+Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
