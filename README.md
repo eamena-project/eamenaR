@@ -76,7 +76,7 @@ The source file, or original dataset, is assumed to be an XLSX file but it is po
 Export a new BU worksheet. 
 
 <p align="center">
-  <img alt="img-name" src="../../www/bu-mapping-out.png" width="600">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out.png" width="600">
   <br>
     <em>screenshot of the output BU</em>
 </p>
@@ -84,7 +84,7 @@ Export a new BU worksheet.
 The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-line headers. Once done, the BU can be sent to EAMENA.
 
 <p align="center">
-  <img alt="img-name" src="../../www/bu-mapping-out-templated.png" width="800">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out-templated.png" width="800">
   <br>
     <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
@@ -116,7 +116,7 @@ geojson_map(map.name = "caravanserail", export.plot = T)
 ```
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail.png" width="500">
+  <img alt="img-name" src="./results/caravanserail.png" width="500">
 </p>
 
 Maps can also be calculated on the values of GeoJSON fields, by adding the [field names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields.tsv) in the function options.
@@ -130,8 +130,8 @@ geojson_map(map.name = "caravanserail",
 It will create as many maps as there are different values, here is an example:
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Disturbance.Cause.Type._Lack_of_Maintenance_Management_Legal_Measures_and_Activities.png" width="300">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
+  <img alt="img-name" src="./results/caravanserail_Disturbance.Cause.Type._Lack_of_Maintenance_Management_Legal_Measures_and_Activities.png" width="300">
+  <img alt="img-name" src="./results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
 </p>
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs by running:
@@ -177,11 +177,11 @@ plot_cultural_periods(d = d, field = "periods", plot.type = "by.eamenaid", expor
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "by.eamenaid", export.plot = T)
 ```
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_periods_byeamenaid.png" width="500">
+  <img alt="img-name" src="./results/cultural_periods_byeamenaid.png" width="500">
 <br><br>
 and superiods
 <br><br>
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_byeamenaid.png" width="500">
+  <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
 Here, the `plot_cultural_periods()` function will export two PNG charts for the default **caravanserail.geojson** file.
@@ -191,7 +191,7 @@ Periods and subperiods represented in a GeoJSON file can also be summed in a his
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)
 ```
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/cultural_subperiods_histog.png" width="500">
+  <img alt="img-name" src="./results/cultural_subperiods_histog.png" width="500">
 </p>
 
 ### EDTF
@@ -205,7 +205,7 @@ plot_edtf()
 ```
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ymd.png" width="500">
+  <img alt="img-name" src="./results/edtf_plotly_category_ymd.png" width="500">
 </p>
 
 Aggregate the dates by months (`"ym"`) by thearts categories
@@ -215,7 +215,7 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 ```
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/edtf_plotly_category_ym.png" width="500">
+  <img alt="img-name" src="./results/edtf_plotly_category_ym.png" width="500">
 </p>
 
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
