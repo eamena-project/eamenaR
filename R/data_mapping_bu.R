@@ -2,15 +2,16 @@
 #' @name data_mapping_bu
 #' @description
 
-#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformated XLSX datasets, the folder with the BU template, the folder for the outputs
-#' @param mapping.file.ggsheet is the maping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
-#' @param job the subfolder of `bu/` where are the unformated XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'
-#' @param job.type the name of the field in the `mapping.file` XLSX where is the type of computation to do: Fill by type of data:
-#'   - 'field': job field one-to-one correspondences, will be copied as it;
-#'   - 'value': constant values (ie, always the same value);
-#'   - 'expression': logical functions, mainly if statements;
+#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.
+#' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
+#' @param mapping.file.ggsheet is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
+#' @param job the subfolder of `bu/` where are the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.
+#' @param job.type the name of the field in the `mapping.file` XLSX giving the name of the mapping function to do:
+#'   - 'field': one-to-one correspondences, the source values will be copied as it into the target file;
+#'   - 'value': constant values (ie, always the same value) that will be copied into the target file;
+#'   - 'expression': logical functions (mainly if statements). These functions are written directly in the appropriate cell of the mapping file;
 #'   - 'escape': values depending from another column evaluated by 'expression'. This field is
-#'       not read
+#'       not read;
 #' @param eamena.field the name of the field in the `mapping.file` XLSX with the name of the EAMENA fields in a R format ('UNIQUEID', 'Assessment.Investigator.-.Actor', 'Investigator.Role.Type', etc.)
 #' @param eamena.id the unique key identifier for a single resource, by default 'UNIQUEID'
 #' @param verb if TRUE (by default): verbose
@@ -127,9 +128,3 @@ data_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
     }
   }
 }
-
-library(dplyr)
-
-data_mapping_bu(job = "mk",
-                verb = F,
-                mapping.file = "C:/Rprojects/eamena-arches-dev/data/bulk/mapping/mapping_BU.xlsx")

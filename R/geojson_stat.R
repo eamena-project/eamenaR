@@ -2,7 +2,7 @@
 #' @name geojson_stat
 #' @description Create a distribution map
 #'
-#' @stat.name the name of the output file By default "stat".
+#' @param stat.name the name of the output file By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
 #' @param stat the statistic that will be computed. By default 'list_fields' (list the fields)
 #' The other options are: "list_ids" list EAMENA IDs ; etc.

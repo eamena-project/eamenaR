@@ -14,6 +14,8 @@ geojson_stat(
 )
 }
 \arguments{
+\item{stat.name}{the name of the output file By default "stat".}
+
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
 
 \item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields)
