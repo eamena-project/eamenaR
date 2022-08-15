@@ -2,10 +2,9 @@
 % Please edit documentation in R/periodo_cultural_periods.R
 \name{periodo_cultural_periods}
 \alias{periodo_cultural_periods}
-\alias{list_cultural_periods}
-\title{Convert Perio.do CSV into an interactive data.table}
+\title{Convert PeriodO CSV into an interactive data.table}
 \usage{
-list_cultural_periods(
+periodo_cultural_periods(
   data.name = "periodo",
   periodo.url = "https://n2t.net/ark:/99152/p0dataset.csv",
   export.plot = F,
@@ -15,7 +14,7 @@ list_cultural_periods(
 \arguments{
 \item{data.name}{the name of the data.table. Only useful if export.plot is TRUE}
 
-\item{periodo.url}{the URL of the Perio.do CSV.}
+\item{periodo.url}{the URL of the PeriodO CSV.}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
 
@@ -26,7 +25,7 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE}
 A DT data.frame of the Periodo cultural periods
 }
 \description{
-read a release of the Perio.do cultural periods thesaurus
+read a release of the periodo cultural periods thesaurus
 and creates an interactive dataframe
 }
 \examples{

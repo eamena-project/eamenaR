@@ -1,6 +1,6 @@
-#' Fill an empty BU template with data from an unformated XLSX
+#' Fill an empty BU template with data from an unformatted XLSX
 #' @name data_mapping_bu
-#' @description
+#' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 
 #' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
@@ -20,6 +20,11 @@
 #'
 #' @examples
 #'
+#' data_mapping_bu()
+#'
+#' data_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
+#'                 mapping.file.ggsheet = T)
+#'
 #' @export
 data_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
                             mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
@@ -35,7 +40,9 @@ data_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
 
   # data source
   data.path.folder <- paste0(bu.path, job, "/")
-  l.bus <- list.files(data.path.folder, recursive = TRUE)
+  l.bus <- setdiff(list.files(data.path.folder),
+                   list.dirs(data.path.folder,
+                             recursive = FALSE, full.names = FALSE))
 
   # mapping file
   if(mapping.file.ggsheet){

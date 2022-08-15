@@ -2,7 +2,7 @@
 % Please edit documentation in R/data_mapping_bu.R
 \name{data_mapping_bu}
 \alias{data_mapping_bu}
-\title{Fill an empty BU template with data from an unformated XLSX}
+\title{Fill an empty BU template with data from an unformatted XLSX}
 \usage{
 data_mapping_bu(
   bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
@@ -41,7 +41,7 @@ data_mapping_bu(
 One or various XLSX files (almost) ready for an bulk upload process in the EAMENA DB. These files are names in the same way as the input file, except a `_out` suffix is added.
 }
 \description{
-Fill an empty BU template with data from an unformated XLSX
+Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 }
 \examples{
 
