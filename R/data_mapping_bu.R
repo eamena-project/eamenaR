@@ -1,5 +1,5 @@
 #' Fill an empty BU template with data from an unformatted XLSX
-#' @name data_mapping_bu
+#' @name list_mapping_bu
 #' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 
 #' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.
@@ -20,13 +20,13 @@
 #'
 #' @examples
 #'
-#' data_mapping_bu()
+#' list_mapping_bu()
 #'
-#' data_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
+#' list_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
 #'                 mapping.file.ggsheet = T)
 #'
 #' @export
-data_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
+list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
                             mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
                             mapping.file.ggsheet = F,
                             job = "mk",
