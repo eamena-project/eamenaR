@@ -145,7 +145,7 @@ geojson_map(map.name = "geoarch",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/geoarchaeo.png" width="500">
+  <img alt="img-name" src="./results/geoarchaeo.png" width="300">
 </p>
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
