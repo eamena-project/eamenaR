@@ -26,6 +26,7 @@ Imports:
     leaflet,
     plotly,
     RColorBrewer,
+    googlesheets4,
     htmlwidgets
 Suggests:
     knitr,
