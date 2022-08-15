@@ -8,8 +8,9 @@ geojson_map(
   map.name = "map",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
+  ids = "EAMENA.ID",
   field.names = NA,
-  highlights.eamenaids = NA,
+  highlights.ids = NA,
   plotly.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -22,10 +23,12 @@ geojson_map(
 
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
 
+\item{ids}{the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces)}
+
 \item{field.names}{a vector one or many field names for thematic cartography. If NA (by default)
 will create a general map}
 
-\item{highlights.eamenaids}{EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
+\item{highlights.ids}{EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
 If NA (by default), no highlights}
 
 \item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget}

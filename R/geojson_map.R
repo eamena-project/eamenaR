@@ -4,9 +4,10 @@
 #'
 #' @param map.name the name of the output map. By default "map".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
+#' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces)
 #' @param field.names a vector one or many field names for thematic cartography. If NA (by default)
 #' will create a general map
-#' @param highlights.eamenaids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
+#' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
 #'  If NA (by default), no highlights
 #' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it
@@ -28,8 +29,9 @@
 #' @export
 geojson_map <- function(map.name = "map",
                         geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                        ids = "EAMENA.ID",
                         field.names = NA,
-                        highlights.eamenaids = NA,
+                        highlights.ids = NA,
                         plotly.plot = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -38,7 +40,7 @@ geojson_map <- function(map.name = "map",
   # TODO: generalise from point to othe geometries
 
   # map.name = "caravanserail" ; geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
-  # highlights.eamenaids = NA ; plotly.plot = F ; export.plot = F ; dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+  # highlights.ids = NA ; plotly.plot = F ; export.plot = F ; dirOut = paste0(system.file(package = "eamenaR"), "/results/")
   # fig.width = 8 ; fig.height = 8 ;
   # field.names = c("Disturbance.Cause.Type.", "Threat.Cause.Type")
   # field.names = c("Damage.Extent.Type")
@@ -48,10 +50,10 @@ geojson_map <- function(map.name = "map",
   ea.geojson.point <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POINT", ]
   ea.geojson.line <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "LINESTRING", ]
   ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POLYGON", ]
-  if(!is.na(highlights.eamenaids)){
-    ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data$EAMENA.ID %in% highlights.eamenaids, ])
-    ea.geojson.highlights.line <- row.names(ea.geojson.line[ea.geojson.line@data$EAMENA.ID %in% highlights.eamenaids, ])
-    ea.geojson.highlights.polygon <- row.names(ea.geojson.polygon[ea.geojson.polygon@data$EAMENA.ID %in% highlights.eamenaids, ])
+  if(!is.na(highlights.ids)){
+    ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data$EAMENA.ID %in% highlights.ids, ])
+    ea.geojson.highlights.line <- row.names(ea.geojson.line[ea.geojson.line@data$EAMENA.ID %in% highlights.ids, ])
+    ea.geojson.highlights.polygon <- row.names(ea.geojson.polygon[ea.geojson.polygon@data$EAMENA.ID %in% highlights.ids, ])
   }
   if(!plotly.plot){
     left <- as.numeric(sf::st_bbox(ea.geojson.point)$xmin)
@@ -199,7 +201,7 @@ geojson_map <- function(map.name = "map",
           position = "topright") %>%
         leaflet::addScaleBar(position = "bottomright")
 
-      if(!is.na(highlights.eamenaids)){
+      if(!is.na(highlights.ids)){
         if(length(ea.geojson.highlights.point) > 0){
           hl.geom <- ea.geojson.point[rownames(ea.geojson.point@data) == ea.geojson.highlights.point, ]
           ea.map <- ea.map %>%
