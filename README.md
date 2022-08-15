@@ -45,7 +45,7 @@ Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it in
 Reformat data from a source file, using an [R script](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/bulk/functions/mapping_BU.R), and a mapping file
 
 <p align="center">
-  <img alt="img-name" src="../../www/bu-mapping-file.png" width="700">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
   <br>
     <em>screenshot of Google sheet mapping file</em>
 </p>
