@@ -40,9 +40,22 @@ By default, the output will be saved in the `results/` folder. You can change th
 Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it into your web browser and create a GeoJSON file (see this [document](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme)).
 
 ### BU mapping
-> Mapping a dataset (the source file) to the EAMENA BU (the target file) 
 
-Reformat data from a source file, using an [R script](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/bulk/functions/mapping_BU.R), and a mapping file
+Get a BU file (the target file) ready to be imported into EAMENA from a source file with the `list_mapping_bu()` function, a dataset (the source file) and a mapping file
+
+For example, the dataset prepared by Mohamed Kenawi (`mk`):
+
+```
+library(dplyr)
+
+list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
+                job = "mk",
+                verb = T,
+                mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
+                mapping.file.ggsheet = T)
+```
+
+#### Mapping file
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
@@ -50,15 +63,8 @@ Reformat data from a source file, using an [R script](https://github.com/eamena-
     <em>screenshot of Google sheet mapping file</em>
 </p>
 
-
-#### Mapping file
-
 The 'mapping_BU' online Google sheet establishes the correspondences between the source file and the BU. 
-  
-<p align="center">
-https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing
-</p>
-  
+    
 This mapping file has three columns, one for the target (EAMENA BU template), two for the source (author's data):
 
 1. EAMENA: names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field.
@@ -71,6 +77,10 @@ The EAMENA column will always be the same, but the mapping file aims to have sev
 
 The source file, or original dataset, is assumed to be an XLSX file but it is possible to work with a SHP, or any other suitable format.
 
+<p align="center">
+https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing
+</p>
+
 #### Output
 
 Export a new BU worksheet. 
@@ -81,7 +91,7 @@ Export a new BU worksheet.
     <em>screenshot of the output BU</em>
 </p>
 
-The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-line headers. Once done, the BU can be sent to EAMENA.
+The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-lines headers. Once done, the BU can be sent to EAMENA.
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out-templated.png" width="800">
@@ -162,7 +172,7 @@ For MaREA geoarchaeological data:
 ```
 geojson_map(map.name = "geoarch",
             ids = "GEOARCH.ID",
-            stamen.zoom = 6,
+            stamen.zoom = 6,d
             geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
             export.plot = F)
 ```
