@@ -57,29 +57,34 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
+The mapping file could be either a Google Sheet:
+<p align="center">
+https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing
+</p>
+
+Or an XLSX file
+
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
   <br>
     <em>screenshot of Google sheet mapping file</em>
 </p>
 
-The 'mapping_BU' online Google sheet establishes the correspondences between the source file and the BU. 
-    
-This mapping file has three columns, one for the target (EAMENA BU template), two for the source (author's data):
+This file establishes the correspondences between the source file and the BU. It has three columns, one for the target (EAMENA BU template), two for the source (author's data):
 
 1. EAMENA: names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field.
-2. initials: or job, two letters for the initial of the author (e.g. 'mk' = Mohamed Kenawi)
-3. initials_type: the type of action to perform on the source data (e.g. 'mk_type'). This can be: repeat a single value for the whole BU ('value'), get the different values of a source field and add these different values in a BU field ('field'), execute an R code ('expression'), etc.
+2. job: by convention, the initial of the author (e.g. 'mk' = Mohamed Kenawi)
+3. job_type: the type of action to perform on the source data (e.g. 'mk_type'). This can be: 
+  - repeat a single value for the whole BU ('value');
+  - get the different values of a source field and add these different values in a BU field ('field');
+  - execute an R code ('expression');
+  - etc.;
 
 The EAMENA column will always be the same, but the mapping file aims to have several authors columns. 
 
 #### Dataset
 
 The source file, or original dataset, is assumed to be an XLSX file but it is possible to work with a SHP, or any other suitable format.
-
-<p align="center">
-https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing
-</p>
 
 #### Output
 
