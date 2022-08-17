@@ -3,6 +3,7 @@
 #' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 
 #' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.
+#' @param bu.template.path the path to the BU template
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
 #' @param mapping.file.ggsheet is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
 #' @param job the subfolder of `bu/` where are the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.
@@ -25,8 +26,10 @@
 #' list_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
 #'                 mapping.file.ggsheet = T)
 #'
+#'
 #' @export
 list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
+                            bu.template.path = "C:/Rprojects/eamena-arches-dev/data/bulk/templates/Heritage Place BUS Template.xlsx",
                             mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
                             mapping.file.ggsheet = F,
                             job = "mk",
@@ -60,14 +63,21 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
     data <- data[rowSums(is.na(data)) != ncol(data),]
     if(verb){print(paste0(" - nb of rows: ", nrow(data)))}
     data[is.na(data)] <- "" # rm NA value for logical tests
-    # BU structure only
-    mapping.file.header <- na.omit(mapping.file[ , eamena.field])
-    bu <- data.frame(matrix(ncol = length(mapping.file.header),
-                            nrow = 0))
-    colnames(bu) <- mapping.file.header
+    # BU template for BU structure only
+    bu <- openxlsx::read.xlsx(bu.template.path, startRow = 3)
+    bu <- bu[0, ]
     for(i in seq(1, nrow(data))){
       bu[nrow(bu) + 1, ] <- NA
     }
+    #
+    #     # BU structure only
+    #     mapping.file.header <- na.omit(mapping.file[ , eamena.field])
+    #     bu <- data.frame(matrix(ncol = length(mapping.file.header),
+    #                             nrow = 0))
+    #     colnames(bu) <- mapping.file.header
+    #     for(i in seq(1, nrow(data))){
+    #       bu[nrow(bu) + 1, ] <- NA
+    #     }
 
     # - - - - - - - - - - - - - -
     # loops

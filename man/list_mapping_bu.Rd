@@ -6,6 +6,8 @@
 \usage{
 list_mapping_bu(
   bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
+ 
+    bu.template.path = "C:/Rprojects/eamena-arches-dev/data/bulk/templates/Heritage Place BUS Template.xlsx",
   mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
   mapping.file.ggsheet = F,
   job = "mk",
@@ -17,6 +19,8 @@ list_mapping_bu(
 }
 \arguments{
 \item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.}
+
+\item{bu.template.path}{the path to the BU template}
 
 \item{mapping.file}{the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).}
 
@@ -49,5 +53,6 @@ list_mapping_bu()
 
 list_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
                 mapping.file.ggsheet = T)
+
 
 }
