@@ -4,6 +4,7 @@
 #'
 #' @param stat.name the name of the output file By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
+#' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces)
 #' @param stat the statistic that will be computed. By default 'list_fields' (list the fields)
 #' The other options are: "list_ids" list EAMENA IDs ; etc.
 #' @param export.stat if TRUE, export the stats, if FALSE will only display it
@@ -19,6 +20,7 @@
 #' @export
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                         ids = "EAMENA.ID",
                          stat = c("list_fields"),
                          export.stat = F,
                          dirOut = paste0(system.file(package = "eamenaR"), "/results/")
@@ -45,11 +47,11 @@ geojson_stat <- function(stat.name = "stat",
       dir.create(dirOut, showWarnings = FALSE)
       tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
       df <- data.frame(id = row.names(ea.geojson),
-                       EAMENAID = ea.geojson$EAMENA.ID)
+                       ea.ids = ea.geojson[ , ids])
       write.table(df, tout, sep = "\t", row.names = F)
       print(paste(tout, "is exported"))
     } else {
-      cat(paste0(df$id,": ",df$EAMENAID), sep =", ")
+      cat(paste0(df$id,": ",df$ea.ids), sep =", ")
     }
   }
 }
