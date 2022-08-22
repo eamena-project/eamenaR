@@ -3,17 +3,17 @@
 #' @description Create a distribution map
 #'
 #' @param map.name the name of the output map. By default "map".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces)
-#' @param field.names a vector one or many field names for thematic cartography. If NA (by default)
+#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
+#' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces).
+#' @param field.names a vector one or many field names for thematic cartography. If NA (by default).
 #' will create a general map
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
-#'  If NA (by default), no highlights
-#' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 18 (building, very precise)
-#' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget
-#' @param export.plot if TRUE, export the plot, if FALSE will only display it
+#'  If NA (by default), no highlights.
+#' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
+#' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
+#' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is export plot is TRUE
+#' If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #'
 #' @return A map interactive (leaflet) or not
 #'
@@ -40,7 +40,7 @@ geojson_map <- function(map.name = "map",
                         ids = "EAMENA.ID",
                         field.names = NA,
                         highlights.ids = NA,
-                        stamen.zoom = 8,
+                        stamen.zoom = NA,
                         plotly.plot = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -54,6 +54,13 @@ geojson_map <- function(map.name = "map",
   # field.names = c("Disturbance.Cause.Type.", "Threat.Cause.Type")
   # field.names = c("Damage.Extent.Type")
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  if(is.na(stamen.zoom)){
+  bbox <- sf::st_bbox(ea.geojson)
+  stamen.zoom <- rosm:::tile.raster.autozoom(
+    rosm::extract_bbox(
+      matrix(bbox, ncol = 2, byrow = TRUE)),
+    epsg = 4326)
+  }
   ea.geojson <- sf::st_zm(ea.geojson) # rm Z
   ea.geojson.geom.types <- sf::st_geometry_type(ea.geojson$geometry)
 

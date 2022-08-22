@@ -43,6 +43,10 @@ Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it in
 
 Get a BU file (the target file) ready to be imported into EAMENA from a source file with the `list_mapping_bu()` function, a dataset (the source file) and a mapping file
 
+<center>
+unstructured file ➡️ ***eamenaR*** mapping function + mapping file ➡️ bulk upload file
+</center>
+
 For example, the dataset prepared by Mohamed Kenawi (`mk`):
 
 ```
@@ -82,11 +86,21 @@ This file establishes the correspondences between the source file and the BU. It
 
 The EAMENA column will always be the same, but the mapping file aims to have several authors columns. 
 
-#### Dataset
+The eamenaR function is `list_mapping_bu()`. Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the  `geom_within_gs()` to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+
+```
+library(dplyr)
+
+grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+grid.id
+```
+Will return `"E00N35-44"`
+
+#### Source file
 
 The source file, or original dataset, is assumed to be an XLSX file but it is possible to work with a SHP, or any other suitable format.
 
-#### Output
+#### Target file
 
 Export a new BU worksheet. 
 
@@ -103,20 +117,6 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
   <br>
     <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
-  
-
-### Geometries
-
-Find the grid identifier of a heritage place by comparing its geometry to a GeoJSON of grid squares (gs). By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
-
-
-```
-library(dplyr)
-
-grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
-grid.id
-```
-Will return `"E00N35-44"`
 
 ## Typology
 

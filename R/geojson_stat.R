@@ -7,9 +7,10 @@
 #' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces)
 #' @param stat the statistic that will be computed. By default 'list_fields' (list the fields)
 #' The other options are: "list_ids" list EAMENA IDs ; etc.
-#' @param export.stat if TRUE, export the stats, if FALSE will only display it
+#' @param export.stat if TRUE return the stats to be stored in a new variable
+#' @param write.stat if TRUE, export the stats in a new file, if FALSE will only display it
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is export plot is TRUE
+#' If it doesn't exist, it will be created. Only useful is write.stat is TRUE
 #'
 #' @return Show or export basic statistics on the GeoJSOn file
 #'
@@ -23,6 +24,7 @@ geojson_stat <- function(stat.name = "stat",
                          ids = "EAMENA.ID",
                          stat = c("list_fields"),
                          export.stat = F,
+                         write.stat = F,
                          dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 ){
   # geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
@@ -43,14 +45,20 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
   if("list_ids" %in% stat){
-    if (export.stat) {
+    df <- data.frame(id = row.names(ea.geojson),
+                     ea.ids = ea.geojson[[ids]])
+    if (write.stat) {
       dir.create(dirOut, showWarnings = FALSE)
       tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
-      df <- data.frame(id = row.names(ea.geojson),
-                       ea.ids = ea.geojson[ , ids])
       write.table(df, tout, sep = "\t", row.names = F)
       print(paste(tout, "is exported"))
-    } else {
+    }
+    if (export.stat) {
+      rownames(df) <- df$id
+      df$id <- NULL
+      return(df)
+    }
+    if (!export.stat & !write.stat){
       cat(paste0(df$id,": ",df$ea.ids), sep =", ")
     }
   }
