@@ -18,7 +18,7 @@ list_mapping_bu(
 )
 }
 \arguments{
-\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.}
+\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files.}
 
 \item{bu.template.path}{the path to the BU template}
 
@@ -26,7 +26,7 @@ list_mapping_bu(
 
 \item{mapping.file.ggsheet}{is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.}
 
-\item{job}{the subfolder of `bu/` where are the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.}
+\item{job}{the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.}
 
 \item{job.type}{the name of the field in the `mapping.file` XLSX giving the name of the mapping function to do:
 - 'field': one-to-one correspondences, the source values will be copied as it into the target file;
