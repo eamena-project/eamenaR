@@ -170,6 +170,17 @@ Will give:
 ```
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
+
+Plot the areas:
+
+```
+geojson_measurements(stat.name = "areas", plot.stat = T)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/areas.png" width="500">
+</p>
+
 ### Geoarchaeology
 
 For MaREA geoarchaeological data:
