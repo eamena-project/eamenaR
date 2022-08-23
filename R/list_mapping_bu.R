@@ -2,11 +2,11 @@
 #' @name list_mapping_bu
 #' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 
-#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of different subfolder: the folder where are the different jobs containing the unformatted XLSX datasets (ex: 'mk/'). The output subfolder `out/` will be created by the function to store the output files.
+#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files.
 #' @param bu.template.path the path to the BU template
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
 #' @param mapping.file.ggsheet is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
-#' @param job the subfolder of `bu/` where are the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.
+#' @param job the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.
 #' @param job.type the name of the field in the `mapping.file` XLSX giving the name of the mapping function to do:
 #'   - 'field': one-to-one correspondences, the source values will be copied as it into the target file;
 #'   - 'value': constant values (ie, always the same value) that will be copied into the target file;
@@ -137,7 +137,7 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
     bu <- bu[order(bu[ , eamena.id]),]
     row.names(bu) <- seq(1, nrow(bu))
 
-    out.bu <- paste0(dirOut, bu.name)
+    out.bu <- paste0(dirOut, DescTools::SplitPath(bu.name)$filename)
     out.bu.xlsx <- paste0(out.bu, "_out.xlsx")
     openxlsx::write.xlsx(bu, out.bu.xlsx, row.names = F, showNA = FALSE)
     if(verb){print(paste0(" - '", bu.name, "' done: ", out.bu.xlsx))
