@@ -44,7 +44,9 @@ Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it in
 Get a BU file (the target file) ready to be imported into EAMENA from a source file with the `list_mapping_bu()` function, a dataset (the source file) and a mapping file
 
 <center>
+  
 unstructured file ➡️ ***eamenaR*** mapping function + mapping file ➡️ bulk upload file
+  
 </center>
 
 For example, the dataset prepared by Mohamed Kenawi (`mk`):

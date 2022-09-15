@@ -6,9 +6,9 @@
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
 #' @param ids the IDs of the resources, by default "EAMENA.ID" (n.b: R fieldname format, without spaces)
 #' @param stat the statistic that will be computed. By default 'area'.
-#' @param plot.stat if TRUE will plot the stat as a graphic
+#' @param plot.stat if TRUE (by default) will plot the stat as a graphic
 #' @param export.stat if TRUE return the stats to be stored in a new variable
-#' @param write.stat if TRUE, export the stats in a new file, if FALSE will only display it
+#' @param write.stat if TRUE, export the stats in a new file.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is write.stat is TRUE
 #' @param verbose if TRUE (by default) verbose
@@ -24,7 +24,7 @@ geojson_measurements <- function(stat.name = "stat",
                                  geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
                                  ids = "EAMENA.ID",
                                  stat = c("area"),
-                                 plot.stat = F,
+                                 plot.stat = T,
                                  export.stat = F,
                                  write.stat = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
