@@ -2,7 +2,7 @@
 #' @name geojson_map
 #' @description Create a distribution map
 #'
-#' @param map.name the name of the output map. By default "map".
+#' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces).
 #' @param field.names a vector one or many field names for thematic cartography. If NA (by default).
@@ -115,6 +115,12 @@ geojson_map <- function(map.name = "map",
                                                     y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
                                                     label = rownames(ea.geojson.point.sub)),
                                        size = 2,
+                                       segment.color = "red",
+                                       segment.size = .1,
+                                       segment.alpha = .5,
+                                       min.segment.length = .3,
+                                       force = .5,
+                                       max.time = 1.5,
                                        max.overlaps = Inf,
                                        inherit.aes = FALSE) +
               ggplot2::labs(title = map.name,
@@ -150,6 +156,13 @@ geojson_map <- function(map.name = "map",
                                               y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
                                               label = rownames(ea.geojson.point.sub)),
                                  size = 2,
+                                 # segment.color = "red",
+                                 segment.size = .2,
+                                 segment.alpha = .5,
+                                 min.segment.length = .1,
+                                 force = .4,
+                                 max.time = 1.5,
+                                 max.iter = 30000,
                                  max.overlaps = Inf,
                                  inherit.aes = FALSE) +
         ggplot2::labs(title = map.name) +
@@ -170,18 +183,24 @@ geojson_map <- function(map.name = "map",
     if(plotly.plot){
       if(nrow(ea.geojson.point) > 0){
         ea.geojson.point$lbl <- paste0("<b>", ea.geojson.point[ , ids],"</b><br>",
-                                       ea.geojson.point$Site.Feature.Interpretation.Type, " (", ea.geojson.point$Cultural.Period.Type, ")",
-                                       ea.geojson.point$Administrative.Division., ", ", ea.geojson.point$Country.Type, "<br>")
+                                       ea.geojson.point$Site.Feature.Interpretation.Type,
+                                       " (", ea.geojson.point$Cultural.Period.Type, ")",
+                                       ea.geojson.point$Administrative.Division., ", ",
+                                       ea.geojson.point$Country.Type, "<br>")
       }
       if(nrow(ea.geojson.line) > 0){
         ea.geojson.line$lbl <- paste0("<b>", ea.geojson.line[ , ids],"</b><br>",
-                                      ea.geojson.line$Site.Feature.Interpretation.Type, " (", ea.geojson.line$Cultural.Period.Type, ")",
-                                      ea.geojson.line$Administrative.Division., ", ", ea.geojson.line$Country.Type, "<br>")
+                                      ea.geojson.line$Site.Feature.Interpretation.Type,
+                                      " (", ea.geojson.line$Cultural.Period.Type, ")",
+                                      ea.geojson.line$Administrative.Division., ", ",
+                                      ea.geojson.line$Country.Type, "<br>")
       }
       if(nrow(ea.geojson.polygon) > 0){
         ea.geojson.polygon$lbl <- paste0("<b>", ea.geojson.polygon[ , ids],"</b><br>",
-                                         ea.geojson.polygon$Site.Feature.Interpretation.Type, " (", ea.geojson.polygon$Cultural.Period.Type, ")",
-                                         ea.geojson.polygon$Administrative.Division., ", ", ea.geojson.polygon$Country.Type, "<br>")
+                                         ea.geojson.polygon$Site.Feature.Interpretation.Type,
+                                         " (", ea.geojson.polygon$Cultural.Period.Type, ")",
+                                         ea.geojson.polygon$Administrative.Division., ", ",
+                                         ea.geojson.polygon$Country.Type, "<br>")
       }
       ea.map <- leaflet::leaflet() %>%
         leaflet::addProviderTiles(leaflet::providers$"Esri.WorldImagery", group = "Ortho") %>%
