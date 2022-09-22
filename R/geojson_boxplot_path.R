@@ -26,40 +26,45 @@ geojson_boxplot_path <- function(plot.name = "box_path",
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   # stat distances
   bout <- ggplot(paths, aes(x = 0, y = dist.m)) +
+    ggplot2::facet_grid(. ~ route, scales="free") +
     ggplot2::geom_boxplot(data = paths,
                           ggplot2::aes(x = 0, y = dist.m),
                           alpha = 0,
-                          fatten = 1.5, width = 0.5, lwd = 0.3,
+                          fatten = 1.5,
+                          width = 0.75,
+                          lwd = 0.3,
                           inherit.aes = FALSE) +
-    ggplot2::geom_jitter(ggplot2::aes(color = "red"),
-                         position = position_jitter(seed = 1),
-                         size = 3, stroke = 0, alpha = 0.7) +
-    ggplot2::geom_text_repel(data = paths,
-                             position = position_jitter(seed = 1),
-                             ggplot2::aes(x = 0, y = dist.m,
-                                          label = paste0(from.id," <-> ", to.id))) +
+    ggplot2::geom_jitter(ggplot2::aes(color = route),
+                         position = position_jitter(w = 0.3),
+                         size = 2,
+                         stroke = 0,
+                         alpha = 0.7) +
+    # ggrepel::geom_text_repel(data = paths,
+    #                          position = position_jitter(seed = 1),
+    #                          ggplot2::aes(x = 0, y = dist.m,
+    #                                       label = paste0(from.id," <-> ", to.id))) +
     # geom_point(data = paths, aes(x = 0, y = dist.m),
     #            shape = 3,
     #            color = 'red') +
     ggplot2::theme_bw() +
     ggplot2::theme(legend.position = "none",
-                   plot.title = element_text(size = 10)) +
-    ggplot2::theme(axis.text.x = element_blank()) +
-    theme(axis.title.x = element_blank()) +
-    theme(axis.text.y = element_text(size = 8, angle = 90, vjust = 0, hjust=0.5)) +
+                   plot.title = ggplot2::element_text(size = 10)) +
+    ggplot2::theme(axis.text.x = ggplot2::element_blank()) +
+    ggplot2::theme(axis.title.x = ggplot2::element_blank()) +
+    ggplot2::theme(axis.text.y = ggplot2::element_text(size = 8, angle = 90, vjust = 0, hjust=0.5)) +
     ylab("distance (m)") +
     # theme(axis.title.y = element_text("distance (m)")) +
-    theme(axis.ticks.length = unit(2, "pt")) +
-    theme(axis.ticks = element_line(colour = "black", size = 0.2)) +
-    theme(panel.border = element_rect(colour= "black", size = 0.2)) +
-    theme(panel.grid.major.x = element_blank()) +
-    theme(panel.grid.minor.x =  element_blank()) +
-    theme(panel.grid.major.y = element_line(colour = "lightgrey", size = 0.1)) +
-    theme(panel.spacing = unit(2, "mm")) +
-    theme(strip.text = element_text(size = 8),
-          strip.background = element_rect(colour="black", size = 0.2)) +
+    ggplot2::theme(axis.ticks.length = unit(2, "pt")) +
+    ggplot2::theme(axis.ticks = ggplot2::element_line(colour = "black", size = 0.2)) +
+    ggplot2::theme(panel.border = ggplot2::element_rect(colour = "black", size = 0.2)) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank()) +
+    ggplot2::theme(panel.grid.minor.x =  ggplot2::element_blank()) +
+    ggplot2::theme(panel.grid.major.y = ggplot2::element_line(colour = "lightgrey", size = 0.1)) +
+    ggplot2::theme(panel.spacing = unit(2, "mm")) +
+    ggplot2::theme(strip.text = ggplot2::element_text(size = 8),
+                   strip.background = ggplot2::element_rect(colour = "black", size = 0.2)) +
     # scale_color_identity() +
-    ggtitle("Distribution of distances between two caravan")
+    ggtitle("Distribution of distances between two caravanserails by routes")
   if (export.plot) {
     dir.create(dirOut, showWarnings = FALSE)
     gout <- paste0(dirOut, plot.name, ".png")
