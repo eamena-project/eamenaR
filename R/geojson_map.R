@@ -47,12 +47,6 @@ geojson_map <- function(map.name = "map",
                         fig.width = 8,
                         fig.height = 8){
   # TODO: generalise from point to othe geometries
-
-  # map.name = "caravanserail" ; geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
-  # highlights.ids = NA ; plotly.plot = F ; export.plot = F ; dirOut = paste0(system.file(package = "eamenaR"), "/results/")
-  # fig.width = 8 ; fig.height = 8 ;
-  # field.names = c("Disturbance.Cause.Type.", "Threat.Cause.Type")
-  # field.names = c("Damage.Extent.Type")
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
   bbox <- sf::st_bbox(ea.geojson)

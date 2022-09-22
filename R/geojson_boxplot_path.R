@@ -1,33 +1,21 @@
 #' Create a boxplot with paths distances between different heritage places
 #' @name geojson_boxplot_path
-#' @description Create a distribution map of heritage places linked together by paths, for example for caravanserails
+#' @description
 #'
-#' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map_path".
+#' @param plot.name the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default "box_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
-#' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #'
-#' @return A PNG map of heritage places linked together by paths
+#' @return
 #'
 #' @examples
 #'
-#' # plot a general map of heritage places
-#'  geojson_map(map.name = "caravanserail")
-#'
-#' # save a map
-#' geojson_map_path(map.name = "map_paths_4",
-#'                  geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_2.geojson",
-#'                  csv.path = "C:/Rprojects/eamena-arches-dev/projects/caravanserail/caravanserail_paths_3.csv",
-#'                  export.plot = T,
-#'                  fig.width = 14,
-#'                  fig.height = 11,
-#'                  dirOut = "C:/Rprojects/eamena-arches-dev/projects/caravanserail/")
 #'
 #' @export
-geojson_boxplot_path <- function(map.name = "map_path",
+geojson_boxplot_path <- function(plot.name = "box_path",
                                  geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
                                  csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
                                  stamen.zoom = 8,
@@ -36,96 +24,51 @@ geojson_boxplot_path <- function(map.name = "map_path",
                                  fig.width = 8,
                                  fig.height = 8){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
-  # df <- eamenaR::geojson_stat(stat = c("list_ids"), geojson.path = geojson.path, export.stat = T)
-  # df$id <- rownames(df)
-  # paths <- read.table(csv.path, sep = ",", header = T)
-  # caravan.geom.sf <- geojsonsf::geojson_sf(geojson.path)
-  # paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
-  # for(i in seq(1, nrow(paths))){
-  #   from <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "from"], ]
-  #   to <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "to"], ]
-  #   paths[i, "from.id"] <- df[df$ea.ids == from$`EAMENA ID`, "id"]
-  #   paths[i, "to.id"] <- df[df$ea.ids == to$`EAMENA ID`, "id"]
-  #   paths[i, "from.geom"] <- sf::st_as_text(from$geometry)
-  #   paths[i, "to.geom"] <- sf::st_as_text(to$geometry)
-  #   paths[i, "dist.m"] <- as.numeric(sf::st_distance(from, to))
-  #   paths[i, "path.wkt"] <- sf::st_as_text(sf::st_cast(sf::st_union(from$geometry, to$geometry), "LINESTRING"))
-  # }
-  # paths <- paths[ , c("from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route")]
-
-  ## map
-  paths.caravans.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
-  sf::st_crs(paths.caravans.geom.sf) <- 4326
-  left <- as.numeric(sf::st_bbox(caravan.geom.sf)$xmin)
-  bottom <- as.numeric(sf::st_bbox(caravan.geom.sf)$ymin)
-  right <- as.numeric(sf::st_bbox(caravan.geom.sf)$xmax)
-  top <- as.numeric(sf::st_bbox(caravan.geom.sf)$ymax)
-  buffer <- mean(c(abs(left - right), abs(top - bottom)))/10
-  bbox <- c(left = left - buffer,
-            bottom = bottom - buffer,
-            right = right + buffer,
-            top = top + buffer
-  )
-  stamenbck <- ggmap::get_stamenmap(bbox,
-                                    zoom = stamen.zoom,
-                                    maptype = "terrain-background")
-  caravan.geojson.point <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "POINT", ]
-  caravan.geojson.line <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "LINESTRING", ]
-  caravan.geojson.polygon <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "POLYGON", ]
-
-  mout <- ggmap::ggmap(stamenbck) +
-    ggplot2::geom_sf(data = paths.caravans.geom.sf,
-                     ggplot2::aes(colour = route),
-                     # colour = "black",
-                     inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.point,
-                     colour = "black",
-                     inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.line,
-                     colour = "black",
-                     inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.polygon,
-                     colour = "black",
-                     inherit.aes = FALSE) +
-    ggrepel::geom_text_repel(data = caravan.geojson.point,
-                             ggplot2::aes(x = sf::st_coordinates(caravan.geojson.point)[, "X"],
-                                          y = sf::st_coordinates(caravan.geojson.point)[, "Y"],
-                                          label = rownames(caravan.geojson.point)),
-                             size = 2,
-                             segment.color = "red",
-                             segment.size = .1,
-                             segment.alpha = .5,
-                             min.segment.length = .3,
-                             force = .5,
-                             max.time = 1.5,
-                             max.overlaps = Inf,
-                             inherit.aes = FALSE) +
-    ggrepel::geom_text_repel(data = caravan.geojson.polygon,
-                             ggplot2::aes(x = sf::st_coordinates(sf::st_centroid(caravan.geojson.polygon))[, "X"],
-                                          y = sf::st_coordinates(sf::st_centroid(caravan.geojson.polygon))[, "Y"],
-                                          label = rownames(caravan.geojson.polygon)),
-                             size = 2,
-                             segment.color = "red",
-                             segment.size = .1,
-                             segment.alpha = .5,
-                             min.segment.length = .3,
-                             force = .5,
-                             max.time = 1.5,
-                             max.overlaps = Inf,
-                             inherit.aes = FALSE) +
-    ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
-                                                      hjust = 0.5),
-                   plot.subtitle = ggplot2::element_text(size = 12,
-                                                         hjust = 0.5))
+  # stat distances
+  bout <- ggplot(paths, aes(x = 0, y = dist.m)) +
+    ggplot2::geom_boxplot(data = paths,
+                          ggplot2::aes(x = 0, y = dist.m),
+                          alpha = 0,
+                          fatten = 1.5, width = 0.5, lwd = 0.3,
+                          inherit.aes = FALSE) +
+    ggplot2::geom_jitter(ggplot2::aes(color = "red"),
+                         position = position_jitter(seed = 1),
+                         size = 3, stroke = 0, alpha = 0.7) +
+    ggplot2::geom_text_repel(data = paths,
+                             position = position_jitter(seed = 1),
+                             ggplot2::aes(x = 0, y = dist.m,
+                                          label = paste0(from.id," <-> ", to.id))) +
+    # geom_point(data = paths, aes(x = 0, y = dist.m),
+    #            shape = 3,
+    #            color = 'red') +
+    ggplot2::theme_bw() +
+    ggplot2::theme(legend.position = "none",
+                   plot.title = element_text(size = 10)) +
+    ggplot2::theme(axis.text.x = element_blank()) +
+    theme(axis.title.x = element_blank()) +
+    theme(axis.text.y = element_text(size = 8, angle = 90, vjust = 0, hjust=0.5)) +
+    ylab("distance (m)") +
+    # theme(axis.title.y = element_text("distance (m)")) +
+    theme(axis.ticks.length = unit(2, "pt")) +
+    theme(axis.ticks = element_line(colour = "black", size = 0.2)) +
+    theme(panel.border = element_rect(colour= "black", size = 0.2)) +
+    theme(panel.grid.major.x = element_blank()) +
+    theme(panel.grid.minor.x =  element_blank()) +
+    theme(panel.grid.major.y = element_line(colour = "lightgrey", size = 0.1)) +
+    theme(panel.spacing = unit(2, "mm")) +
+    theme(strip.text = element_text(size = 8),
+          strip.background = element_rect(colour="black", size = 0.2)) +
+    # scale_color_identity() +
+    ggtitle("Distribution of distances between two caravan")
   if (export.plot) {
     dir.create(dirOut, showWarnings = FALSE)
-    gout <- paste0(dirOut, map.name, ".png")
+    gout <- paste0(dirOut, plot.name, ".png")
     ggplot2::ggsave(filename = gout,
-                    plot = mout,
+                    plot = bout,
                     height = fig.height,
                     width = fig.width)
     print(paste(gout, "is exported"))
   } else {
-    mout
+    bout
   }
 }

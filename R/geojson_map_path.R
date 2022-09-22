@@ -36,24 +36,6 @@ geojson_map_path <- function(map.name = "map_path",
                              fig.width = 8,
                              fig.height = 8){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
-  # df <- eamenaR::geojson_stat(stat = c("list_ids"), geojson.path = geojson.path, export.stat = T)
-  # df$id <- rownames(df)
-  # paths <- read.table(csv.path, sep = ",", header = T)
-  # caravan.geom.sf <- geojsonsf::geojson_sf(geojson.path)
-  # paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
-  # for(i in seq(1, nrow(paths))){
-  #   from <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "from"], ]
-  #   to <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "to"], ]
-  #   paths[i, "from.id"] <- df[df$ea.ids == from$`EAMENA ID`, "id"]
-  #   paths[i, "to.id"] <- df[df$ea.ids == to$`EAMENA ID`, "id"]
-  #   paths[i, "from.geom"] <- sf::st_as_text(from$geometry)
-  #   paths[i, "to.geom"] <- sf::st_as_text(to$geometry)
-  #   paths[i, "dist.m"] <- as.numeric(sf::st_distance(from, to))
-  #   paths[i, "path.wkt"] <- sf::st_as_text(sf::st_cast(sf::st_union(from$geometry, to$geometry), "LINESTRING"))
-  # }
-  # paths <- paths[ , c("from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route")]
-
-  ## map
   paths.caravans.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
   sf::st_crs(paths.caravans.geom.sf) <- 4326
   left <- as.numeric(sf::st_bbox(caravan.geom.sf)$xmin)
