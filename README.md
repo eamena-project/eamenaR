@@ -190,7 +190,7 @@ For MaREA geoarchaeological data:
 ```
 geojson_map(map.name = "geoarch",
             ids = "GEOARCH.ID",
-            stamen.zoom = 6,d
+            stamen.zoom = 6,
             geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
             export.plot = F)
 ```

@@ -35,7 +35,7 @@ geojson_map_path <- function(map.name = "map_path",
                              dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                              fig.width = 8,
                              fig.height = 8){
-  paths <- geojson_format_path(geojson.path, csv.path)
+  paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   # df <- eamenaR::geojson_stat(stat = c("list_ids"), geojson.path = geojson.path, export.stat = T)
   # df$id <- rownames(df)
   # paths <- read.table(csv.path, sep = ",", header = T)
