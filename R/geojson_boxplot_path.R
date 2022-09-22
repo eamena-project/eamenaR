@@ -1,5 +1,5 @@
-#' Create a map with paths between different heritage places
-#' @name geojson_map_path
+#' Create a boxplot with paths distances between different heritage places
+#' @name geojson_boxplot_path
 #' @description Create a distribution map of heritage places linked together by paths, for example for caravanserails
 #'
 #' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map_path".
@@ -27,14 +27,14 @@
 #'                  dirOut = "C:/Rprojects/eamena-arches-dev/projects/caravanserail/")
 #'
 #' @export
-geojson_map_path <- function(map.name = "map_path",
-                             geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-                             csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
-                             stamen.zoom = 8,
-                             export.plot = F,
-                             dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-                             fig.width = 8,
-                             fig.height = 8){
+geojson_boxplot_path <- function(map.name = "map_path",
+                                 geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                                 csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
+                                 stamen.zoom = 8,
+                                 export.plot = F,
+                                 dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                                 fig.width = 8,
+                                 fig.height = 8){
   paths <- geojson_format_path(geojson.path, csv.path)
   # df <- eamenaR::geojson_stat(stat = c("list_ids"), geojson.path = geojson.path, export.stat = T)
   # df$id <- rownames(df)
