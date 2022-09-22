@@ -15,7 +15,7 @@
 #' @examples
 #'
 #' # plot a general map of heritage places
-#'  geojson_map(map.name = "caravanserail")
+#'  geojson_map_path(map.name = "caravanserail")
 #'
 #' # save a map
 #' geojson_map_path(map.name = "map_paths_4",

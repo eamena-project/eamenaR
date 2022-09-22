@@ -12,14 +12,16 @@
 #' @export
 geojson_format_path <- function(geojson.path = geojson.path.,
                                 csv.path = csv.path.){
-  df <- eamenaR::geojson_stat(stat = c("list_ids"), geojson.path = geojson.path, export.stat = T)
+  df <- eamenaR::geojson_stat(stat = c("list_ids"),
+                              geojson.path = geojson.path,
+                              export.stat = T)
   df$id <- rownames(df)
   paths <- read.table(csv.path, sep = ",", header = T)
-  caravan.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+  hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
   paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
   for(i in seq(1, nrow(paths))){
-    from <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "from"], ]
-    to <- caravan.geom.sf[caravan.geom.sf$`EAMENA ID` == paths[i, "to"], ]
+    from <- hp.geom.sf[hp.geom.sf$`EAMENA ID` == paths[i, "from"], ]
+    to <- hp.geom.sf[hp.geom.sf$`EAMENA ID` == paths[i, "to"], ]
     paths[i, "from.id"] <- df[df$ea.ids == from$`EAMENA ID`, "id"]
     paths[i, "to.id"] <- df[df$ea.ids == to$`EAMENA ID`, "id"]
     paths[i, "from.geom"] <- sf::st_as_text(from$geometry)
