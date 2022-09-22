@@ -2,6 +2,7 @@
 
 export(geojson_get_field)
 export(geojson_map)
+export(geojson_map_path)
 export(geojson_measurements)
 export(geojson_stat)
 export(geom_bbox)

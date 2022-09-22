@@ -20,7 +20,7 @@ geojson_map(
 )
 }
 \arguments{
-\item{map.name}{the name of the output map. By default "map".}
+\item{map.name}{the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".}
 
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'.}
 

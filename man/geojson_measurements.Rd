@@ -10,7 +10,7 @@ geojson_measurements(
     "/extdata/caravanserail.geojson"),
   ids = "EAMENA.ID",
   stat = c("area"),
-  plot.stat = F,
+  plot.stat = T,
   export.stat = F,
   write.stat = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -28,11 +28,11 @@ geojson_measurements(
 
 \item{stat}{the statistic that will be computed. By default 'area'.}
 
-\item{plot.stat}{if TRUE will plot the stat as a graphic}
+\item{plot.stat}{if TRUE (by default) will plot the stat as a graphic}
 
 \item{export.stat}{if TRUE return the stats to be stored in a new variable}
 
-\item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it}
+\item{write.stat}{if TRUE, export the stats in a new file.}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is write.stat is TRUE}
