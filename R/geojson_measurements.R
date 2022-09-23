@@ -9,9 +9,9 @@
 #' @param csv.path if the parameter by.routes is TRUE, will use this CSV file to recover the route of the heritage places
 #' @param plot.stat if TRUE (by default) will plot the stat as a graphic.
 #' @param export.stat if TRUE return the stats to be stored in a new variable.
-#' @param write.stat if TRUE, export the stats in a new file.
+#' @param export.plot if TRUE, export the stats in a new file.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is write.stat is TRUE.
+#' If it doesn't exist, it will be created. Only useful is export.plot is TRUE.
 #' @param verbose if TRUE (by default) verbose.
 #'
 #' @return Show or export measurements statistics on the GeoJSON file
@@ -28,7 +28,7 @@ geojson_measurements <- function(stat.name = "stat",
                                  csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
                                  plot.stat = T,
                                  export.stat = F,
-                                 write.stat = F,
+                                 export.plot = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                                  fig.width = 8,
                                  fig.height = 8,
@@ -40,15 +40,17 @@ geojson_measurements <- function(stat.name = "stat",
     paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
     route.from.id <- paths[ , c("from.id", "route")]
     route.to.id <- paths[ , c("to.id", "route")]
-    names(route.from.id) <- names(route.to.id) <- c("id", "route")
+    names(route.from.id) <- names(route.to.id) <- c("idf", "route")
     route.id <- rbind(route.from.id, route.to.id)
+    route.id <- route.id[!duplicated(route.id), ]
+    route.id <- route.id[with(route.id, order(idf)), ]
   }
-  ea.geojson <- sf::st_read(geojson.path)
-  field.names <- colnames(ea.geojson)[! colnames(ea.geojson) %in% "geometry"]
+  hp.geojson <- sf::st_read(geojson.path)
+  field.names <- colnames(hp.geojson)[! colnames(hp.geojson) %in% "geometry"]
   if("area" %in% stat){
-    df.measurements <- data.frame(type = ea.geojson[["Dimension.Type"]],
-                                  value = ea.geojson[["Measurement.Number"]],
-                                  scale = ea.geojson[["Measurement.Unit"]]
+    df.measurements <- data.frame(type = hp.geojson[["Dimension.Type"]],
+                                  value = hp.geojson[["Measurement.Number"]],
+                                  scale = hp.geojson[["Measurement.Unit"]]
     )
     df.measurements <- na.omit(df.measurements)
     df.measurements$value <- as.numeric(df.measurements$value)
@@ -59,20 +61,18 @@ geojson_measurements <- function(stat.name = "stat",
       df.measure.type <- df.measurements[df.measurements$type == measurements.type, ]
       df.measure.type$idf <- rownames(df.measure.type)
       lmeasurements.scale <- unique(df.measurements$scale)
+      if(by.routes){
+        df.measure.type <- merge(df.measure.type, route.id, by = "idf", all.x = T)
+      }
       if(measurements.type == "Area"){
         gout <- ggplot2::ggplot(df.measure.type, ggplot2::aes(x = 0, y = value)) +
           ggplot2::geom_boxplot(data = df.measure.type,
                                 ggplot2::aes(x = 0, y = value),
                                 alpha = 0,
-                                fatten = 1.5, width = 0.5, lwd = 0.3,
+                                fatten = 1.5,
+                                width = 0.75,
+                                lwd = 0.3,
                                 inherit.aes = FALSE) +
-          ggplot2::geom_jitter(ggplot2::aes(color = "red"),
-                               position = ggplot2::position_jitter(seed = 1),
-                               size = 3, stroke = 0, alpha = 0.7) +
-          ggrepel::geom_text_repel(position = ggplot2::position_jitter(seed = 1),
-                                   max.overlaps = Inf,
-                                   ggplot2::aes(x = 0, y = value,
-                                                label = idf)) +
           ggplot2::theme_bw() +
           ggplot2::theme(legend.position = "none",
                          plot.title = ggplot2::element_text(size = 10),
@@ -89,9 +89,24 @@ geojson_measurements <- function(stat.name = "stat",
                          strip.text = ggplot2::element_text(size = 8),
                          strip.background = ggplot2::element_rect(colour="black", size = 0.2)) +
           ggplot2::ylab(paste0(measurements.type, " in ", lmeasurements.scale)) +
-          # scale_color_identity() +
           ggplot2::ggtitle(paste0("Distribution of ", measurements.type))
-        if(write.stat){
+        if(by.routes){
+          gout <- gout +
+            ggplot2::geom_jitter(ggplot2::aes(color = route),
+                                 position = ggplot2::position_jitter(w = 0.3),
+                                 size = 2,
+                                 stroke = 0,
+                                 alpha = 0.7) +
+            ggplot2::facet_grid(. ~ route, scales = "free")
+        } else {
+          gout <- gout +
+            ggplot2::geom_jitter(ggplot2::aes(color = "red"),
+                                 position = ggplot2::position_jitter(w = 0.3),
+                                 size = 2,
+                                 stroke = 0,
+                                 alpha = 0.7)
+        }
+        if(export.plot){
           ggplot2::ggsave(filename = paste0(dirOut, stat.name, ".png"),
                           plot = gout,
                           height = fig.height,
@@ -99,7 +114,7 @@ geojson_measurements <- function(stat.name = "stat",
           print(paste0("the '", stat.name,"' file has been saved into '", dirOut, "'"))
         }
         if(plot.stat){
-          print(gout)
+          return(gout)
         }
         if(export.stat){
           return(df.measurements)
@@ -108,3 +123,5 @@ geojson_measurements <- function(stat.name = "stat",
     }
   }
 }
+
+

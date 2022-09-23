@@ -173,14 +173,17 @@ Will give:
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
 
-Plot the areas:
+Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right):
 
 ```
-geojson_measurements(stat.name = "areas", plot.stat = T)
+require(gridExtra)
+p1 <- geojson_measurements(stat.name = "areas")
+p2 <- geojson_measurements(stat.name = "areas_by_routes", by.routes = T)
+grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/areas.png" width="500">
+  <img alt="img-name" src="./results/areas_sbs.png" width="500">
 </p>
 
 #### Paths
