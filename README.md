@@ -140,19 +140,31 @@ geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
   <img alt="img-name" src="./results/caravanserail.png" width="500">
 </p>
 
-Maps can also be calculated on the values of GeoJSON fields, by adding the [field names](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_fields.tsv) in the function options.
+Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the function options.
 
 ```
-geojson_map(map.name = "caravanserail", 
-            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+geojson_map(map.name = "caravanserail",
+            field.names = c("Damage Extent Type"),
+            fig.width = 11,
             export.plot = T)
 ```
 
-It will create as many maps as there are different values, here is an example:
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="500">
+</p>
+
+```
+geojson_map(map.name = "caravanserail",
+            field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
+            fig.width = 11,
+            export.plot = T)
+```
+
+It will create two series of maps, one for each field (`"Disturbance Cause Type ", "Damage Extent Type"`) and because in `"Damage Extent Type"` there are multiple values for a same row, it creates as many maps as there are different values, here is an example:
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_Disturbance.Cause.Type._Lack_of_Maintenance_Management_Legal_Measures_and_Activities.png" width="300">
-  <img alt="img-name" src="./results/caravanserail_Damage.Extent.Type_1-10perc.png" width="300">
+  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Human_Movement_Trampling.png" width="300">
+  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Ploughing.png" width="300">
 </p>
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
