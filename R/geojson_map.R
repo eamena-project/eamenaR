@@ -95,9 +95,12 @@ geojson_map <- function(map.name = "map",
         splitted.unique.values <- as.character(na.omit(splitted.unique.values))
         # splitted.unique.values[is.na(splitted.unique.values)] <- "NA"
         print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
+        symbology.field <- symbology[symbology$list == field.name, c("values", "colors")]
+        names(symbology.field)[names(symbology.field) == 'values'] <- field.name
+        ea.geojson.point <- merge(ea.geojson.point, symbology.field, by = field.name, all.x = T)
+        ea.geojson.point$colors[is.na(ea.geojson.point$colors)] <- 0
         for(field.value in splitted.unique.values){
           # field.value <- "Water and/or Wind Action"
-          symbology
           cpt.field.value <- cpt.field.value + 1
           print(paste0("        ", cpt.field.value, "/",length(splitted.unique.values),")    read '", field.value,"' field value"))
           ea.geojson.point.sub <- ea.geojson.point[grep(field.value, ea.geojson.point[[field.name]]), ]
