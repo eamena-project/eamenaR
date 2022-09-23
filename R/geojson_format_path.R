@@ -1,6 +1,6 @@
 #' Format data on paths
 #' @name geojson_format_path
-#' @description
+#' @description Use a dataframe of heritage places, and a file of paths between these heritage places, to format a new dataframe
 #'
 #' @param geojson.path the path of the GeoJSON file.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
@@ -17,6 +17,9 @@ geojson_format_path <- function(geojson.path = geojson.path.,
                               export.stat = T)
   df$id <- rownames(df)
   paths <- read.table(csv.path, sep = ",", header = T)
+  hp.in.paths <- unique(unique(paths$from), unique(paths$to))
+  in.paths.only <- setdiff(df$id, hp.in.paths)
+  paths <- paths[!(paths$from %in% in.paths.only | paths$to %in% in.paths.only), ]
   hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
   paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
   for(i in seq(1, nrow(paths))){
