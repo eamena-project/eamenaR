@@ -1,6 +1,6 @@
 #' Format data on paths
 #' @name geojson_format_path
-#' @description Use a dataframe of heritage places, and a file of paths between these heritage places, to format a new dataframe
+#' @description Use a dataframe of heritage places (like vertices) inherited from a GeoJSON, and a file of paths (like edges) inherited form a CSV, between these heritage places, to format a new dataframe. This new dataframe is used by thefunctions `geojson_map_path()`, `geojson_boxplot_path()`. The function cleans the datasets removing existing paths liking two heritage places taht not exist in the GeoJSON
 #'
 #' @param geojson.path the path of the GeoJSON file.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
