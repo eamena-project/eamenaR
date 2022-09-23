@@ -51,8 +51,8 @@ geojson_map <- function(map.name = "map",
                         dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                         fig.width = 8,
                         fig.height = 8){
-  # TODO: generalise from point to other geometries
-  symbology <- rio::import(paste0(symbology, '?raw=true'))
+  # TODO: generalise from point to other geometries: centroid Polygon, Lines
+  symbology <- openxlsx::read.xlsx(symbology)
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
     bbox <- sf::st_bbox(ea.geojson)
@@ -65,6 +65,7 @@ geojson_map <- function(map.name = "map",
   ea.geojson.geom.types <- sf::st_geometry_type(ea.geojson$geometry)
 
   ea.geojson.point <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POINT", ]
+  ea.geojson.point$idf <- rownames(ea.geojson.point)
   ea.geojson.line <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "LINESTRING", ]
   ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POLYGON", ]
   if(!is.na(highlights.ids)){
@@ -90,60 +91,135 @@ geojson_map <- function(map.name = "map",
                                       maptype = "terrain-background")
     cpt.field.name <- 0
     if(!is.na(field.names)){
-      # one map by field
+      # one map by field, if there are different values for the same field: one by value
+      cpt.field.value <- 0
+      cpt.field.name <- cpt.field.name + 1
       print(paste0("* there is/are '", length(field.names),"' different field name to read"))
       for(field.name in field.names){
         # field.name <- "Damage Extent Type"
+        # field.name <- "Disturbance Cause Type "
         # cpt.field.value <- 0
         # cpt.field.name <- cpt.field.name + 1
         # print(paste0(" ", cpt.field.name, "/",length(field.names),")    read '", field.name,"' field name"))
-        # aggregated.unique.values <- unique(ea.geojson.point[[field.name]])
-        # splitted.values <- stringr::str_split(aggregated.unique.values, ", ")
-        # splitted.unique.values <- unique(unlist(splitted.values))
-        # splitted.unique.values <- as.character(na.omit(splitted.unique.values))
-        print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
-        symbology.field <- symbology[symbology$list == field.name, c("values", "colors")]
-        names(symbology.field)[names(symbology.field) == 'values'] <- field.name
-        ea.geojson.point <- merge(ea.geojson.point, symbology.field, by = field.name, all.x = T)
-        ea.geojson.point$colors[is.na(ea.geojson.point$colors)] <- "#808080"
-        if(nrow(ea.geojson.point) > 0){
-          gmap <- ggmap::ggmap(stamenbck) +
-            ggplot2::geom_sf(data = ea.geojson.point,
-                             ggplot2::aes(color = colors),
-                             # colour = "black",
-                             inherit.aes = FALSE) +
-            ggrepel::geom_text_repel(data = ea.geojson.point,
-                                     ggplot2::aes(x = sf::st_coordinates(ea.geojson.point)[, "X"],
-                                                  y = sf::st_coordinates(ea.geojson.point)[, "Y"],
-                                                  label = rownames(ea.geojson.point)),
-                                     size = 2,
-                                     segment.color = "black",
-                                     segment.size = .1,
-                                     segment.alpha = .5,
-                                     min.segment.length = .3,
-                                     force = .5,
-                                     max.time = 1.5,
-                                     max.overlaps = Inf,
-                                     inherit.aes = FALSE) +
-            ggplot2::scale_color_identity(guide = "legend",
-                                          name = field.name,
-                                          label = symbology.field[[field.name]]) +
-            ggplot2::labs(title = map.name) +
-            ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
-                                                              hjust = 0.5))
+        aggregated.unique.values <- unique(ea.geojson.point[[field.name]])
+        splitted.values <- stringr::str_split(aggregated.unique.values, ", ")
+        different.values.in.the.field <- Reduce("|", unlist(lapply(splitted.values, length)) > 1)
+        if(different.values.in.the.field){
+          splitted.unique.values <- unique(unlist(splitted.values))
+          splitted.unique.values <- as.character(na.omit(splitted.unique.values))
         }
-        if (export.plot) {
-          dir.create(dirOut, showWarnings = FALSE)
-          field.value.norm <- gsub("/", "_", field.value)
-          field.value.norm <- gsub(" ", "_", field.value.norm)
-          field.value.norm <- gsub("%", "perc", field.value.norm)
-          gout <- paste0(dirOut, map.name, "_", field.name, "_", field.value.norm, ".png")
-          ggplot2::ggsave(gout, gmap,
-                          width = fig.width,
-                          height = fig.height)
-          print(paste(gout, "is exported"))
-        } else {
-          print(gmap)
+        # print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
+        symbology.field <- symbology[symbology$list == field.name, c("values", "colors")]
+        if(nrow(symbology.field) == 0){
+          # default colors
+          coloramp <- RColorBrewer::brewer.pal(11, "Spectral")
+          colors <- colorRampPalette(coloramp)(length(splitted.unique.values))
+          symbology.field <- data.frame(values = splitted.unique.values,
+                                        colors = colors)
+        }
+        names(symbology.field)[names(symbology.field) == 'values'] <- field.name
+
+        if(different.values.in.the.field){
+          # as many maps as there are different values
+          for(field.value in splitted.unique.values){
+            # field.value <- "Water and/or Wind Action"
+            cpt.field.value <- cpt.field.value + 1
+            print(paste0("        ", cpt.field.value, "/",
+                         length(splitted.unique.values),")    read '",
+                         field.value,"' field value"))
+            ea.geojson.point.sub <- ea.geojson.point[grep(field.value, ea.geojson.point[[field.name]]), ]
+            ea.geojson.point.sub <- merge(ea.geojson.point.sub, symbology.field, by = field.name, all.x = T)
+            ea.geojson.point.sub$colors[is.na(ea.geojson.point.sub$colors)] <- "#808080"
+            if(nrow(ea.geojson.point.sub) > 0){
+              gmap <- ggmap::ggmap(stamenbck) +
+                ggplot2::geom_sf(data = ea.geojson.point,
+                                 ggplot2::aes(color = "grey"),
+                                 inherit.aes = FALSE) +
+                ggplot2::geom_sf(data = ea.geojson.point.sub,
+                                 ggplot2::aes(color = "red"),
+                                 inherit.aes = FALSE) +
+                ggrepel::geom_text_repel(data = ea.geojson.point.sub,
+                                         ggplot2::aes(x = sf::st_coordinates(ea.geojson.point.sub)[, "X"],
+                                                      y = sf::st_coordinates(ea.geojson.point.sub)[, "Y"],
+                                                      label = idf),
+                                         size = 2,
+                                         segment.color = "black",
+                                         segment.size = .1,
+                                         segment.alpha = .5,
+                                         min.segment.length = .3,
+                                         force = .5,
+                                         max.time = 1.5,
+                                         max.overlaps = Inf,
+                                         inherit.aes = FALSE) +
+                ggplot2::scale_color_identity(guide = "legend",
+                                              name = field.name,
+                                              label = c("other", field.value)) +
+                ggplot2::labs(title = map.name,
+                              subtitle = paste0(field.name, " = ", field.value)) +
+                ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
+                                                                  hjust = 0.5),
+                               plot.subtitle = ggplot2::element_text(size = 12,
+                                                                     hjust = 0.5))
+              if (export.plot) {
+                dir.create(dirOut, showWarnings = FALSE)
+                field.value.norm <- gsub("/", "_", field.value)
+                field.value.norm <- gsub(" ", "_", field.value.norm)
+                field.value.norm <- gsub("%", "perc", field.value.norm)
+                gout <- paste0(dirOut, map.name, "_", field.name, "_", field.value.norm, ".png")
+                ggplot2::ggsave(gout, gmap,
+                                width = fig.width,
+                                height = fig.height)
+                print(paste(gout, "is exported"))
+              } else {
+                print(gmap)
+              }
+            }
+          }
+        }
+
+        if(!different.values.in.the.field){
+          # only 1 value by field
+          ea.geojson.point <- merge(ea.geojson.point, symbology.field, by = field.name, all.x = T)
+          ea.geojson.point$colors[is.na(ea.geojson.point$colors)] <- "#808080"
+          if(nrow(ea.geojson.point) > 0){
+            gmap <- ggmap::ggmap(stamenbck) +
+              ggplot2::geom_sf(data = ea.geojson.point,
+                               ggplot2::aes(color = colors),
+                               # colour = "black",
+                               inherit.aes = FALSE) +
+              ggrepel::geom_text_repel(data = ea.geojson.point,
+                                       ggplot2::aes(x = sf::st_coordinates(ea.geojson.point)[, "X"],
+                                                    y = sf::st_coordinates(ea.geojson.point)[, "Y"],
+                                                    label = rownames(ea.geojson.point)),
+                                       size = 2,
+                                       segment.color = "black",
+                                       segment.size = .1,
+                                       segment.alpha = .5,
+                                       min.segment.length = .3,
+                                       force = .5,
+                                       max.time = 1.5,
+                                       max.overlaps = Inf,
+                                       inherit.aes = FALSE) +
+              ggplot2::scale_color_identity(guide = "legend",
+                                            name = field.name,
+                                            label = symbology.field[[field.name]]) +
+              ggplot2::labs(title = map.name) +
+              ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
+                                                                hjust = 0.5))
+          }
+          if (export.plot) {
+            dir.create(dirOut, showWarnings = FALSE)
+            field.value.norm <- gsub("/", "_", field.name)
+            field.value.norm <- gsub(" ", "_", field.name)
+            # field.value.norm <- gsub("%", "perc", field.value.norm)
+            gout <- paste0(dirOut, map.name, "_", field.name, ".png")
+            ggplot2::ggsave(gout, gmap,
+                            width = fig.width,
+                            height = fig.height)
+            print(paste(gout, "is exported"))
+          } else {
+            print(gmap)
+          }
         }
       }
     } else {
