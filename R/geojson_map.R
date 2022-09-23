@@ -7,6 +7,7 @@
 #' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces).
 #' @param field.names a vector one or many field names for thematic cartography. If NA (by default), will create a general map
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.
+#' @param symbology the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
@@ -38,6 +39,7 @@ geojson_map <- function(map.name = "map",
                         ids = "EAMENA.ID",
                         field.names = NA,
                         highlights.ids = NA,
+                        symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
                         stamen.zoom = NA,
                         plotly.plot = F,
                         export.plot = F,
@@ -45,6 +47,7 @@ geojson_map <- function(map.name = "map",
                         fig.width = 8,
                         fig.height = 8){
   # TODO: generalise from point to other geometries
+  symbology <- rio::import(paste0(symbology, '?raw=true')
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
     bbox <- sf::st_bbox(ea.geojson)
@@ -94,6 +97,7 @@ geojson_map <- function(map.name = "map",
         print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
         for(field.value in splitted.unique.values){
           # field.value <- "Water and/or Wind Action"
+          symbology
           cpt.field.value <- cpt.field.value + 1
           print(paste0("        ", cpt.field.value, "/",length(splitted.unique.values),")    read '", field.value,"' field value"))
           ea.geojson.point.sub <- ea.geojson.point[grep(field.value, ea.geojson.point[[field.name]]), ]
