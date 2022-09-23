@@ -153,6 +153,14 @@ geojson_map(map.name = "caravanserail",
   <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="500">
 </p>
 
+The color of the value (optional) is recorded in the (`symbology.xlsx`)[https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx] file  
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/symbology-map.png" width="800">
+  <br>
+    <em>screenshot of the `symbology.xlsx` file registering the different colors of the values (only the columns `list`, `values` and `colors` are used)</em>
+</p>
+
 ```
 geojson_map(map.name = "caravanserail",
             field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
