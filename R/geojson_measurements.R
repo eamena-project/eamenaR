@@ -1,19 +1,20 @@
 #' Measurements on a GeoJSON file
 #' @name geojson_measurements
-#' @description Compute measurements (areas, L x l, etc.) on a GeoJSON file
+#' @description Compute measurements (areas, L x l, etc.) on a GeoJSON file creating a boxplot
 #'
 #' @param stat.name the name of the output file. By default "stat".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param ids the IDs of the resources, by default "EAMENA.ID" (n.b: R fieldname format, without spaces)
+#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param stat the statistic that will be computed. By default 'area'.
-#' @param plot.stat if TRUE (by default) will plot the stat as a graphic
-#' @param export.stat if TRUE return the stats to be stored in a new variable
+#' @param by.routes if TRUE, will stratified the values by the different routes (i.e groups)
+#' @param csv.path if the parameter by.routes is TRUE, will use this CSV file to recover the route of the heritage places
+#' @param plot.stat if TRUE (by default) will plot the stat as a graphic.
+#' @param export.stat if TRUE return the stats to be stored in a new variable.
 #' @param write.stat if TRUE, export the stats in a new file.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is write.stat is TRUE
-#' @param verbose if TRUE (by default) verbose
+#' If it doesn't exist, it will be created. Only useful is write.stat is TRUE.
+#' @param verbose if TRUE (by default) verbose.
 #'
-#' @return Show or export measurements statistics on the GeoJSOn file
+#' @return Show or export measurements statistics on the GeoJSON file
 #'
 #' @examples
 #'
@@ -22,8 +23,9 @@
 #' @export
 geojson_measurements <- function(stat.name = "stat",
                                  geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-                                 ids = "EAMENA.ID",
                                  stat = c("area"),
+                                 by.routes = F,
+                                 csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
                                  plot.stat = T,
                                  export.stat = F,
                                  write.stat = F,
@@ -34,6 +36,13 @@ geojson_measurements <- function(stat.name = "stat",
   # geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
   # stat.name = "stat" ; stat = c("list_ids") ; export.stat = F ;
   # dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+  if(by.routes){
+    paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
+    route.from.id <- paths[ , c("from.id", "route")]
+    route.to.id <- paths[ , c("to.id", "route")]
+    names(route.from.id) <- names(route.to.id) <- c("id", "route")
+    route.id <- rbind(route.from.id, route.to.id)
+  }
   ea.geojson <- sf::st_read(geojson.path)
   field.names <- colnames(ea.geojson)[! colnames(ea.geojson) %in% "geometry"]
   if("area" %in% stat){

@@ -21,8 +21,8 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                                  stamen.zoom = 8,
                                  export.plot = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-                                 fig.width = 8,
-                                 fig.height = 8){
+                                 fig.width = 9,
+                                 fig.height = 5){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   # stat distances
   bout <- ggplot2::ggplot(paths, ggplot2::aes(x = 0, y = dist.m)) +

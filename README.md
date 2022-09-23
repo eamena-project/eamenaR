@@ -183,6 +183,28 @@ geojson_measurements(stat.name = "areas", plot.stat = T)
   <img alt="img-name" src="./results/areas.png" width="500">
 </p>
 
+#### Paths
+
+Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.)
+
+```
+geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_paths.png" width="500">
+</p>
+
+Paths lenght can be visualized in a boxplot, by routes
+
+```
+geojson_boxplot_path(export.plot = T)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/box_path.png" width="500">
+</p>
+
 ### Geoarchaeology
 
 For MaREA geoarchaeological data:
