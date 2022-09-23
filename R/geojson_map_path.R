@@ -15,16 +15,8 @@
 #' @examples
 #'
 #' # plot a general map of heritage places
-#'  geojson_map_path(map.name = "caravanserail")
+#' geojson_map_path(map.name = "caravanserail_paths", export.plot = T)
 #'
-#' # save a map
-#' geojson_map_path(map.name = "map_paths_4",
-#'                  geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_2.geojson",
-#'                  csv.path = "C:/Rprojects/eamena-arches-dev/projects/caravanserail/caravanserail_paths_3.csv",
-#'                  export.plot = T,
-#'                  fig.width = 14,
-#'                  fig.height = 11,
-#'                  dirOut = "C:/Rprojects/eamena-arches-dev/projects/caravanserail/")
 #'
 #' @export
 geojson_map_path <- function(map.name = "map_path",
@@ -36,12 +28,14 @@ geojson_map_path <- function(map.name = "map_path",
                              fig.width = 8,
                              fig.height = 8){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
-  paths.caravans.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
-  sf::st_crs(paths.caravans.geom.sf) <- 4326
-  left <- as.numeric(sf::st_bbox(caravan.geom.sf)$xmin)
-  bottom <- as.numeric(sf::st_bbox(caravan.geom.sf)$ymin)
-  right <- as.numeric(sf::st_bbox(caravan.geom.sf)$xmax)
-  top <- as.numeric(sf::st_bbox(caravan.geom.sf)$ymax)
+  paths.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
+  sf::st_crs(paths.geom.sf) <- 4326
+  hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+  sf::st_crs(hp.geom.sf) <- 4326
+  left <- as.numeric(sf::st_bbox(hp.geom.sf)$xmin)
+  bottom <- as.numeric(sf::st_bbox(hp.geom.sf)$ymin)
+  right <- as.numeric(sf::st_bbox(hp.geom.sf)$xmax)
+  top <- as.numeric(sf::st_bbox(hp.geom.sf)$ymax)
   buffer <- mean(c(abs(left - right), abs(top - bottom)))/10
   bbox <- c(left = left - buffer,
             bottom = bottom - buffer,
@@ -51,28 +45,27 @@ geojson_map_path <- function(map.name = "map_path",
   stamenbck <- ggmap::get_stamenmap(bbox,
                                     zoom = stamen.zoom,
                                     maptype = "terrain-background")
-  caravan.geojson.point <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "POINT", ]
-  caravan.geojson.line <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "LINESTRING", ]
-  caravan.geojson.polygon <- caravan.geom.sf[sf::st_geometry_type(caravan.geom.sf$geometry) == "POLYGON", ]
+  hp.geojson.point <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POINT", ]
+  hp.geojson.line <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "LINESTRING", ]
+  hp.geojson.polygon <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POLYGON", ]
 
   mout <- ggmap::ggmap(stamenbck) +
-    ggplot2::geom_sf(data = paths.caravans.geom.sf,
+    ggplot2::geom_sf(data = paths.geom.sf,
                      ggplot2::aes(colour = route),
-                     # colour = "black",
                      inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.point,
+    ggplot2::geom_sf(data = hp.geojson.point,
                      colour = "black",
                      inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.line,
+    ggplot2::geom_sf(data = hp.geojson.line,
                      colour = "black",
                      inherit.aes = FALSE) +
-    ggplot2::geom_sf(data = caravan.geojson.polygon,
+    ggplot2::geom_sf(data = hp.geojson.polygon,
                      colour = "black",
                      inherit.aes = FALSE) +
-    ggrepel::geom_text_repel(data = caravan.geojson.point,
-                             ggplot2::aes(x = sf::st_coordinates(caravan.geojson.point)[, "X"],
-                                          y = sf::st_coordinates(caravan.geojson.point)[, "Y"],
-                                          label = rownames(caravan.geojson.point)),
+    ggrepel::geom_text_repel(data = hp.geojson.point,
+                             ggplot2::aes(x = sf::st_coordinates(hp.geojson.point)[, "X"],
+                                          y = sf::st_coordinates(hp.geojson.point)[, "Y"],
+                                          label = rownames(hp.geojson.point)),
                              size = 2,
                              segment.color = "black",
                              segment.size = .1,
@@ -82,10 +75,10 @@ geojson_map_path <- function(map.name = "map_path",
                              max.time = 1.5,
                              max.overlaps = Inf,
                              inherit.aes = FALSE) +
-    ggrepel::geom_text_repel(data = caravan.geojson.polygon,
-                             ggplot2::aes(x = sf::st_coordinates(sf::st_centroid(caravan.geojson.polygon))[, "X"],
-                                          y = sf::st_coordinates(sf::st_centroid(caravan.geojson.polygon))[, "Y"],
-                                          label = rownames(caravan.geojson.polygon)),
+    ggrepel::geom_text_repel(data = hp.geojson.polygon,
+                             ggplot2::aes(x = sf::st_coordinates(sf::st_centroid(hp.geojson.polygon))[, "X"],
+                                          y = sf::st_coordinates(sf::st_centroid(hp.geojson.polygon))[, "Y"],
+                                          label = rownames(hp.geojson.polygon)),
                              size = 2,
                              segment.color = "black",
                              segment.size = .1,
