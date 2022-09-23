@@ -22,7 +22,7 @@
 geojson_map_path <- function(map.name = "map_path",
                              geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
                              csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
-                             stamen.zoom = 8,
+                             stamen.zoom = NA,
                              export.plot = F,
                              dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                              fig.width = 8,
@@ -42,6 +42,12 @@ geojson_map_path <- function(map.name = "map_path",
             right = right + buffer,
             top = top + buffer
   )
+  if(is.na(stamen.zoom)){
+    stamen.zoom <- rosm:::tile.raster.autozoom(
+      rosm::extract_bbox(
+        matrix(bbox, ncol = 2, byrow = TRUE)),
+      epsg = 4326)
+  }
   stamenbck <- ggmap::get_stamenmap(bbox,
                                     zoom = stamen.zoom,
                                     maptype = "terrain-background")

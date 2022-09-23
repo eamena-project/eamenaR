@@ -5,10 +5,8 @@
 #' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces).
-#' @param field.names a vector one or many field names for thematic cartography. If NA (by default).
-#' will create a general map
-#' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map.
-#'  If NA (by default), no highlights.
+#' @param field.names a vector one or many field names for thematic cartography. If NA (by default), will create a general map
+#' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
@@ -24,7 +22,7 @@
 #'
 #' # save different thematic map
 #' geojson_map(map.name = "caravanserail",
-#'            field.names = c("Disturbance.Cause.Type.", "Damage.Extent.Type"),
+#'            field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
 #'            export.plot = T)
 #'
 #' # plot a general map of geoarchaeological data
@@ -46,14 +44,14 @@ geojson_map <- function(map.name = "map",
                         dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                         fig.width = 8,
                         fig.height = 8){
-  # TODO: generalise from point to othe geometries
+  # TODO: generalise from point to other geometries
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
-  bbox <- sf::st_bbox(ea.geojson)
-  stamen.zoom <- rosm:::tile.raster.autozoom(
-    rosm::extract_bbox(
-      matrix(bbox, ncol = 2, byrow = TRUE)),
-    epsg = 4326)
+    bbox <- sf::st_bbox(ea.geojson)
+    stamen.zoom <- rosm:::tile.raster.autozoom(
+      rosm::extract_bbox(
+        matrix(bbox, ncol = 2, byrow = TRUE)),
+      epsg = 4326)
   }
   ea.geojson <- sf::st_zm(ea.geojson) # rm Z
   ea.geojson.geom.types <- sf::st_geometry_type(ea.geojson$geometry)
@@ -84,7 +82,7 @@ geojson_map <- function(map.name = "map",
     if(!is.na(field.names)){
       print(paste0("* there is/are '", length(field.names),"' different field name to read"))
       for(field.name in field.names){
-        # field.name <- "Damage.Extent.Type"
+        # field.name <- "Damage Extent Type"
         cpt.field.value <- 0
         cpt.field.name <- cpt.field.name + 1
         print(paste0(" ", cpt.field.name, "/",length(field.names),")    read '", field.name,"' field name"))

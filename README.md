@@ -133,7 +133,7 @@ Distribution maps for Heritages places and Geoarchaeology
 For the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
 ```
-geojson_map(map.name = "caravanserail", export.plot = T)
+geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
 ```
 
 <p align="center">
