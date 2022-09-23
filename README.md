@@ -156,7 +156,7 @@ geojson_map(map.name = "caravanserail",
 The color of the value (optional) is recorded in the (`symbology.xlsx`)[https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx] file  
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/symbology-map.png" width="800">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/symbology-map.png" width="600">
   <br>
     <em>screenshot of the `symbology.xlsx` file registering the different colors of the values (only the columns `list`, `values` and `colors` are used)</em>
 </p>
@@ -171,9 +171,11 @@ geojson_map(map.name = "caravanserail",
 It will create two series of maps, one for each field (`"Disturbance Cause Type ", "Damage Extent Type"`) and because in `"Damage Extent Type"` there are multiple values for a same row, it creates as many maps as there are different values, here is an example:
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Human_Movement_Trampling.png" width="300">
-  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Ploughing.png" width="300">
+  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Human_Movement_Trampling.png" width="400">
+  <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Ploughing.png" width="400">
 </p>
+
+#### Heritages places IDs ➡️ EAMENA ID 
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
 
