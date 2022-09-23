@@ -172,20 +172,6 @@ Will give:
 ```
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
-
-Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right):
-
-```
-require(gridExtra)
-p1 <- geojson_measurements(stat.name = "areas")
-p2 <- geojson_measurements(stat.name = "areas_by_routes", by.routes = T)
-grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
-```
-
-<p align="center">
-  <img alt="img-name" src="./results/areas_sbs.png" width="500">
-</p>
-
 #### Paths
 
 Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.)
@@ -207,6 +193,24 @@ geojson_boxplot_path(export.plot = T)
 <p align="center">
   <img alt="img-name" src="./results/box_path.png" width="500">
 </p>
+
+
+#### Measurements
+
+Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right):
+
+```
+require(gridExtra)
+p1 <- geojson_measurements(stat.name = "areas")
+p2 <- geojson_measurements(stat.name = "areas_by_routes", by.routes = T)
+
+grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/areas_sbs.png" width="500">
+</p>
+
 
 ### Geoarchaeology
 
