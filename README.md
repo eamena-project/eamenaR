@@ -41,11 +41,11 @@ Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it in
 
 ### BU mapping
 
-Get a BU file (the target file) ready to be imported into EAMENA from a source file with the `list_mapping_bu()` function, a dataset (the source file) and a mapping file
+Get a BU file (target file) from an already structured file (source file) with the `list_mapping_bu()` function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 <center>
   
-unstructured file ➡️ ***eamenaR*** mapping function + mapping file ➡️ bulk upload file
+any structured file (source) ➡️ ***eamenaR*** mapping function + mapping file ➡️ bulk upload file (target)
   
 </center>
 
@@ -206,7 +206,7 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
   <img alt="img-name" src="./results/caravanserail_paths.png" width="500">
 </p>
 
-Paths lenght can be visualized in a boxplot, by routes
+Path lengths can be visualized in a boxplot, by routes
 
 ```
 geojson_boxplot_path(export.plot = T)
