@@ -41,7 +41,7 @@ Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it in
 
 ### BU mapping
 
-Get a BU file (target file, see [what is a BU](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the `list_mapping_bu()` function. This function uses a mapping file to create the equivalences between the source file and the target file
+Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the `list_mapping_bu()` function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 <center>
   
