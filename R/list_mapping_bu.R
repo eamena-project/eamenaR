@@ -2,8 +2,8 @@
 #' @name list_mapping_bu
 #' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
 
-#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files.
-#' @param bu.template.path the path to the BU template
+#' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.
+#' @param bu.template.path the path to the BU template.
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
 #' @param mapping.file.ggsheet is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
 #' @param job the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.
@@ -38,11 +38,11 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
                             eamena.id = "UNIQUEID",
                             verb = T){
 
-  dirOut <- paste0(bu.path, job, "/out/")
+  dirOut <- paste0(bu.path, "out/")
   dir.create(dirOut, showWarnings = FALSE)
 
   # data source
-  data.path.folder <- paste0(bu.path, job, "/")
+  data.path.folder <- paste0(bu.path)
   l.bus <- setdiff(list.files(data.path.folder),
                    list.dirs(data.path.folder,
                              recursive = FALSE, full.names = FALSE))
@@ -55,12 +55,19 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
   }
   cpt <- 0
   for(bu.name in l.bus){
+    # bu.name <- "EAMENA_2022-09-26_03-23-29.csv"
     cpt <- cpt + 1
     if(verb){print(paste0(cpt, "- read: ", bu.name))}
-    data.path <- paste0(bu.path, job, "/", bu.name)
-    data <- xlsx::read.xlsx(data.path,
-                            sheetIndex = 1)
-    data <- data[rowSums(is.na(data)) != ncol(data),]
+    data.path <- paste0(bu.path, bu.name)
+    f.extension <- DescTools::SplitPath(data.path)$extension
+    if(f.extension == "xlsx"){
+      data <- xlsx::read.xlsx(data.path,
+                              sheetIndex = 1)
+    }
+    if(f.extension == "csv"){
+      data <- read.csv(data.path)
+    }
+    data <- data[rowSums(is.na(data)) != ncol(data), ]
     if(verb){print(paste0(" - nb of rows: ", nrow(data)))}
     data[is.na(data)] <- "" # rm NA value for logical tests
     # BU template for BU structure only
@@ -82,54 +89,65 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
     # - - - - - - - - - - - - - -
     # loops
 
+
     # 'field'
-    if(verb){print(paste0("     works on 'field' field type"))}
-    mapping.file.fields <- mapping.file[mapping.file[ , job.type] == "field", ]
-    for(i in seq(1, nrow(mapping.file.fields))){
-      ea <- as.character(mapping.file.fields[i, eamena.field])
-      if(verb){print(paste0("           ... and read '", ea,"'"))}
-      x <- as.character(mapping.file.fields[i, job])
-      bu[ , ea] <- data[ , x]
+    if('field' %in% unique(mapping.file$v3_type)){
+      if(verb){print(paste0("     works on 'field' field type"))}
+      mapping.file.fields <- mapping.file[mapping.file[ , job.type] == "field", ]
+      mapping.file.fields <- mapping.file.fields[!is.na(mapping.file[ , job.type]), ]
+      for(i in seq(1, nrow(mapping.file.fields))){
+        ea <- as.character(mapping.file.fields[i, eamena.field])
+        if(verb){print(paste0("           ... and read '", ea,"'"))}
+        x <- as.character(mapping.file.fields[i, job])
+        if(verb){if(!x %in% colnames(data)){stop(paste0("The field name '", x,"' is not present in the file '", bu.name, "'"))}}
+        bu[ , ea] <- data[ , x]
+      }
     }
 
     # 'value'
-    if(verb){print(paste0("     works on 'value' field type"))}
-    mapping.file.value <- mapping.file[mapping.file[ , job.type] == "value", ]
-    for(i in seq(1, nrow(mapping.file.value))){
-      ea <- as.character(mapping.file.value[i, eamena.field])
-      if(verb){print(paste0("           ... and read '", ea,"'"))}
-      x <- as.character(mapping.file.value[i, job])
-      bu[ , ea] <- x
+    if('value' %in% unique(mapping.file$v3_type)){
+      if(verb){print(paste0("     works on 'value' field type"))}
+      mapping.file.value <- mapping.file[mapping.file[ , job.type] == "value", ]
+      for(i in seq(1, nrow(mapping.file.value))){
+        ea <- as.character(mapping.file.value[i, eamena.field])
+        if(verb){print(paste0("           ... and read '", ea,"'"))}
+        x <- as.character(mapping.file.value[i, job])
+        bu[ , ea] <- x
+      }
     }
 
     # 'expression'
-    if(verb){print(paste0("     works on 'expression' field type"))}
-    mapping.file.expres <- mapping.file[mapping.file[ , job.type] == "expression", ]
-    for(i in seq(1, nrow(mapping.file.expres))){
-      ea <- as.character(mapping.file.expres[i, eamena.field])
-      if(verb){print(paste0("           ... and read '", ea,"'"))}
-      x.text <- as.character(mapping.file.expres[i, job])
-      x.text <- gsub("[\r\n]", "\n", x.text)
-      eval(parse(text = x.text)) # the XLSX cell text is executed
+    if('expression' %in% unique(mapping.file$v3_type)){
+      if(verb){print(paste0("     works on 'expression' field type"))}
+      mapping.file.expres <- mapping.file[mapping.file[ , job.type] == "expression", ]
+      for(i in seq(1, nrow(mapping.file.expres))){
+        ea <- as.character(mapping.file.expres[i, eamena.field])
+        if(verb){print(paste0("           ... and read '", ea,"'"))}
+        x.text <- as.character(mapping.file.expres[i, job])
+        x.text <- gsub("[\r\n]", "\n", x.text)
+        eval(parse(text = x.text)) # the XLSX cell text is executed
+      }
     }
 
-    # 'value'
-    if(verb){print(paste0("     works on 'value' field type"))}
-    mapping.file.value <- mapping.file[mapping.file[ , job.type] == "value", ]
-    for(i in seq(1, nrow(mapping.file.value))){
-      ea <- as.character(mapping.file.value[i, eamena.field])
-      if(verb){print(paste0("           ... and read '", ea,"'"))}
-      x <- as.character(mapping.file.value[i, job])
-      bu[ , ea] <- x
-    }
+    # # 'value'
+    # if(verb){print(paste0("     works on 'value' field type"))}
+    # mapping.file.value <- mapping.file[mapping.file[ , job.type] == "value", ]
+    # for(i in seq(1, nrow(mapping.file.value))){
+    #   ea <- as.character(mapping.file.value[i, eamena.field])
+    #   if(verb){print(paste0("           ... and read '", ea,"'"))}
+    #   x <- as.character(mapping.file.value[i, job])
+    #   bu[ , ea] <- x
+    # }
 
     # 'other' column
-    if(verb){print(paste0("     works on 'other' field values"))}
-    mapping.file.other <- mapping.file[mapping.file[ , job.type] == "other", ]
-    for(i in seq(1, nrow(mapping.file.other))){
-      x.text <- as.character(mapping.file.other[i, job])
-      x.text <- gsub("[\r\n]", "\n", x.text)
-      eval(parse(text = x.text)) # the XLSX cell text is executed
+    if('other' %in% unique(mapping.file$v3_type)){
+      if(verb){print(paste0("     works on 'other' field values"))}
+      mapping.file.other <- mapping.file[mapping.file[ , job.type] == "other", ]
+      for(i in seq(1, nrow(mapping.file.other))){
+        x.text <- as.character(mapping.file.other[i, job])
+        x.text <- gsub("[\r\n]", "\n", x.text)
+        eval(parse(text = x.text)) # the XLSX cell text is executed
+      }
     }
 
     # delete surnumerary rows
