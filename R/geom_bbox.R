@@ -1,16 +1,11 @@
 #' Create the bounding box of BUs' geometries and save it as a GeoJSON file
 #' @name geom_bbox
-#' @description Read one or various XLSX worksheets within a folder.
-#' Collect the xmin, xmax, ymin, xmax and creates the bounding box,
-#' that is to say, the extent of the geometries. Can be used to preselect grids,
-#' to get stamen (ggmap), etc.
-#'
+#' @description Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax and creates the bounding box, that is to say, the extent of the geometries. Can be used to preselect grids, to get stamen (ggmap), etc. Used before the function \link[eamenaR]{geom_within_gs} and \link[eamenaR]{list_mapping_bu.R} to get the IDs of the potential grids.
 #' @param dataDir the path to the folder where the XLSXs are
-#' @param x_column the column of the X coordinates, if NA the function will look the field 'wkt'
-#' @param y_column the column of the Y coordinates, if NA the function will look the field 'wkt'
+#' @param x_column,y_column the column of the X and Y coordinates, if NA the function will look the field 'wkt'.
 #' @param wkt_column the column of the WKT coordinates. Useful if the X,Y coordinates are already in
 #' @param dirOut the path to the folder where the GeoJSON file will be created.
-#' @param geojson.name the name of the GeoJSON that will be created
+#' @param geojson.name the name of the GeoJSON that will be created.
 #'
 #' @return a GeoJSON file
 #'

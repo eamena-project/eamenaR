@@ -20,7 +20,8 @@
 #'
 #' @export
 geojson_stat <- function(stat.name = "stat",
-                         geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                         geojson.path = paste0(system.file(package = "eamenaR"),
+                                               "/extdata/caravanserail.geojson"),
                          ids = "EAMENA.ID",
                          stat = c("list_fields"),
                          export.stat = F,

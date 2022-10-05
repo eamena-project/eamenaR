@@ -20,11 +20,14 @@
 #'
 #' @export
 geojson_map_path <- function(map.name = "map_path",
-                             geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-                             csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
+                             geojson.path = paste0(system.file(package = "eamenaR"),
+                                                   "/extdata/caravanserail.geojson"),
+                             csv.path = paste0(system.file(package = "eamenaR"),
+                                               "/extdata/caravanserail_paths.csv"),
                              stamen.zoom = NA,
                              export.plot = F,
-                             dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                             dirOut = paste0(system.file(package = "eamenaR"),
+                                             "/results/"),
                              fig.width = 8,
                              fig.height = 8){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)

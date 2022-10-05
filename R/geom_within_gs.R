@@ -1,13 +1,9 @@
 #' Test if a resource (HP) geometry is within a Grid Square.
-#' @name geom_within_gs
-#' @description Test if the geometry of a resource (eg. Heritage Place) is
-#' within a Grid Square (gs). If so, return the ID of the Grid Square
 #'
-#' @param resource.wkt the WKT geometry of a resource, as a character format. This
-#' WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)")
-#' @param grid.squares.path a path to a GeoJSON file,
-#'  by default to the example 'grid_squares.geojson' This GeoJSON is an
-#' EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and convert to a sf object
+#' @name geom_within_gs
+#' @description Test if the geometry of a resource (eg. Heritage Place) is within a Grid Square (gs). If so, return the ID of the Grid Square.
+#' @param resource.wkt the WKT geometry of a resource, as a character format. This WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)").
+#' @param grid.squares.path a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the \link[eamenaR]{geom_bbox} function. The GeoJSON is read and convert to a `sf` object. This GeoJSON
 #'
 #' @return the ID of the Grid Square
 #'
@@ -20,7 +16,8 @@
 #'
 #' @export
 geom_within_gs <- function(resource.wkt = NA,
-                           grid.squares.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson")){
+                           grid.squares.path = paste0(system.file(package = "eamenaR"),
+                                                      "/extdata/grid_squares.geojson")){
   flag <- 0
   grid.squares.sf <- sf::st_read(grid.squares.path, quiet = T)
   resource.geom <- data.frame(wkt = resource.wkt)

@@ -5,7 +5,8 @@
 #' @param plot.name the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default "box_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
-#' @param export.plot if TRUE, export the plot, if FALSE will only display it.
+#' @param plotly.plot if TRUE, export the plot, if FALSE will only display it
+#' @param export.plot if TRUE, show the plot in Plotly window.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #'
@@ -13,12 +14,19 @@
 #'
 #' @examples
 #'
+#' # normal plot
+#' geojson_boxplot_path(export.plot = T)
+#'
+#' # Plotly plot
+#' geojson_boxplot_path(plotly.plot = T)
 #'
 #' @export
 geojson_boxplot_path <- function(plot.name = "box_path",
-                                 geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-                                 csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
-                                 stamen.zoom = 8,
+                                 geojson.path = paste0(system.file(package = "eamenaR"),
+                                                       "/extdata/caravanserail.geojson"),
+                                 csv.path = paste0(system.file(package = "eamenaR"),
+                                                   "/extdata/caravanserail_paths.csv"),
+                                 plotly.plot = F,
                                  export.plot = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                                  fig.width = 9,
@@ -84,5 +92,8 @@ geojson_boxplot_path <- function(plot.name = "box_path",
     print(paste(gout, "is exported"))
   } else {
     bout
+  }
+  if(plotly.plot){
+    plotly::ggplotly(bout)
   }
 }

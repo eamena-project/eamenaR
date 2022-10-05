@@ -26,6 +26,7 @@ Imports:
     ggplot2,
     leaflet,
     plotly,
+    shiny,
     RColorBrewer,
     googlesheets4,
     htmlwidgets
