@@ -18,9 +18,9 @@ list_mapping_bu(
 )
 }
 \arguments{
-\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files.}
+\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.}
 
-\item{bu.template.path}{the path to the BU template}
+\item{bu.template.path}{the path to the BU template. The output will be written into this structure}
 
 \item{mapping.file}{the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).}
 
@@ -45,7 +45,7 @@ list_mapping_bu(
 One or various XLSX files (almost) ready for an bulk upload process in the EAMENA DB. These files are names in the same way as the input file, except a `_out` suffix is added.
 }
 \description{
-Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU)
+Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU).
 }
 \examples{
 
@@ -53,6 +53,5 @@ list_mapping_bu()
 
 list_mapping_bu(mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
                 mapping.file.ggsheet = T)
-
 
 }

@@ -11,19 +11,15 @@ geom_within_gs(
 )
 }
 \arguments{
-\item{resource.wkt}{the WKT geometry of a resource, as a character format. This
-WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)")}
+\item{resource.wkt}{the WKT geometry of a resource, as a character format. This WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)").}
 
-\item{grid.squares.path}{a path to a GeoJSON file,
- by default to the example 'grid_squares.geojson' This GeoJSON is an
-EAMENA output of the Grids as a GeoJSON URL. The GeoJSON is read and convert to a sf object}
+\item{grid.squares.path}{a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the \link[eamenaR]{geom_bbox} function. The GeoJSON is read and convert to a `sf` object. This GeoJSON}
 }
 \value{
 the ID of the Grid Square
 }
 \description{
-Test if the geometry of a resource (eg. Heritage Place) is
-within a Grid Square (gs). If so, return the ID of the Grid Square
+Test if the geometry of a resource (eg. Heritage Place) is within a Grid Square (gs). If so, return the ID of the Grid Square.
 }
 \examples{
 

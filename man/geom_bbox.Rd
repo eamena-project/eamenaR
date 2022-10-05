@@ -16,24 +16,19 @@ geom_bbox(
 \arguments{
 \item{dataDir}{the path to the folder where the XLSXs are}
 
-\item{x_column}{the column of the X coordinates, if NA the function will look the field 'wkt'}
-
-\item{y_column}{the column of the Y coordinates, if NA the function will look the field 'wkt'}
+\item{x_column, y_column}{the column of the X and Y coordinates, if NA the function will look the field 'wkt'.}
 
 \item{wkt_column}{the column of the WKT coordinates. Useful if the X,Y coordinates are already in}
 
 \item{dirOut}{the path to the folder where the GeoJSON file will be created.}
 
-\item{geojson.name}{the name of the GeoJSON that will be created}
+\item{geojson.name}{the name of the GeoJSON that will be created.}
 }
 \value{
 a GeoJSON file
 }
 \description{
-Read one or various XLSX worksheets within a folder.
-Collect the xmin, xmax, ymin, xmax and creates the bounding box,
-that is to say, the extent of the geometries. Can be used to preselect grids,
-to get stamen (ggmap), etc.
+Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax and creates the bounding box, that is to say, the extent of the geometries. Can be used to preselect grids, to get stamen (ggmap), etc. Used before the function \link[eamenaR]{geom_within_gs} and \link[eamenaR]{list_mapping_bu.R} to get the IDs of the potential grids.
 }
 \examples{
 

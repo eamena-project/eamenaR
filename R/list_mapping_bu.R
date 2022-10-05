@@ -2,7 +2,7 @@
 #' @name list_mapping_bu
 #' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU).
 #' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.
-#' @param bu.template.path the path to the BU template.
+#' @param bu.template.path the path to the BU template. The output will be written into this structure
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).
 #' @param mapping.file.ggsheet is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.
 #' @param job the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.

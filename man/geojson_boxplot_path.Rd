@@ -10,7 +10,7 @@ geojson_boxplot_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
-  stamen.zoom = 8,
+  plotly.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 9,
@@ -24,7 +24,9 @@ geojson_boxplot_path(
 
 \item{csv.path}{the path to the CSV where the edges between two heritage places are recorded.}
 
-\item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
+\item{plotly.plot}{if TRUE, export the plot, if FALSE will only display it}
+
+\item{export.plot}{if TRUE, show the plot in Plotly window.}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
 If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
@@ -37,5 +39,10 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 }
 \examples{
 
+# normal plot
+geojson_boxplot_path(export.plot = T)
+
+# Plotly plot
+geojson_boxplot_path(plotly.plot = T)
 
 }

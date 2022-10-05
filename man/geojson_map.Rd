@@ -8,7 +8,7 @@ geojson_map(
   map.name = "map",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = "EAMENA.ID",
+  ids = "EAMENA ID",
   field.names = NA,
   highlights.ids = NA,
   symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),

@@ -31,4 +31,4 @@ geojson_analysis <- function(stat.name = "stat",
   ea.geojson <- sf::st_read(geojson.path)
 }
 
-geojson_analysis(stat.name = "factorial analyis", export.stat = T)
+# geojson_analysis(stat.name = "factorial analyis", export.stat = T)
