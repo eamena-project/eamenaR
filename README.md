@@ -120,6 +120,13 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
     <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
 
+### Fields
+
+#### Grid cell ID
+
+To recover the Grid cell ID for a given coordinates, use the `geom_bbox()` function on the BU file to retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the heritage places and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the `geom_within_gs()` function to retrieve the correct Grid square ID for each heritage place in the BU.
+
+
 ## Typology
 
 Whether the data is Heritage Places, Built Components, etc.
