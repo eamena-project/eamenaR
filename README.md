@@ -63,30 +63,27 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
-The mapping file could be either a Google Sheet:
-<p align="center">
-https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing
-</p>
+The mapping file could be either an XLSX file or a Google Sheet. This file establishes the correspondences between a source file and the structure of the EAMENA BU template (target). 
 
-Or an XLSX file
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
   <br>
-    <em>screenshot of Google sheet mapping file</em>
+    <em>screenshot of the Google sheet mapping file: https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing</em>
 </p>
 
-This file establishes the correspondences between the source file and the BU. It has three columns, one for the target (EAMENA BU template), two for the source (author's data):
+The mapping file has three columns, one for the target ('`EAMENA`'), two for the source (eg. '`mk`' and '`mk_type`'):
 
-1. '`EAMENA`': names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field.
-2. job: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
-3. job_type: the type of action to perform on the source data (e.g. '`mk_type`'). This can be: 
-  - repeat a single value for the whole BU ('value');
-  - get the different values of a source field and add these different values in a BU field ('field');
-  - execute an R code ('expression');
-  - etc.;
-
-The EAMENA column will always be the same, but the mapping file aims to have several authors columns. 
+1. **target**:
+  - '`EAMENA`': names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field. This column will always be the same. 
+2. **source**:
+  - The source depends on the different authors:
+    - job: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
+    - job_type: the type of action to perform on the source data (e.g. '`mk_type`'). This can be: 
+      - repeat a single value for the whole BU ('value');
+      - get the different values of a source field and add these different values in a BU field ('field');
+      - execute an R code ('expression');
+      - etc.;
 
 The eamenaR function is `list_mapping_bu()`. Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the  `geom_within_gs()` to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
