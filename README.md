@@ -78,9 +78,9 @@ Or an XLSX file
 
 This file establishes the correspondences between the source file and the BU. It has three columns, one for the target (EAMENA BU template), two for the source (author's data):
 
-1. EAMENA: names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field.
-2. job: by convention, the initial of the author (e.g. 'mk' = Mohamed Kenawi)
-3. job_type: the type of action to perform on the source data (e.g. 'mk_type'). This can be: 
+1. '`EAMENA`': names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field.
+2. job: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
+3. job_type: the type of action to perform on the source data (e.g. '`mk_type`'). This can be: 
   - repeat a single value for the whole BU ('value');
   - get the different values of a source field and add these different values in a BU field ('field');
   - execute an R code ('expression');
