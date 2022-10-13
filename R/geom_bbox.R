@@ -14,6 +14,11 @@
 #'
 #' geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2")
 #'
+#' geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
+#'           x_column = "Longitude.",
+#'           y_column = "Latitude",
+#'           geojson.name = "grids_bbox_mk2.geojson")
+#'
 #' @export
 geom_bbox <- function(dataDir = NA,
                       x_column = "xcoord",
@@ -62,8 +67,3 @@ geom_bbox <- function(dataDir = NA,
                            geojson.name,"' as been created in '",
                            dirOut,"'"))}
 }
-
-geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
-          x_column = "Longitude.",
-          y_column = "Latitude",
-          geojson.name = "grids_bbox_mk2.geojson")
