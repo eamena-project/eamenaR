@@ -14,10 +14,11 @@
 #'
 #' @examples
 #'
-#' geom_kml(kml.path <- "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
-#'          dirOut <- "C:/Rprojects/eamenaR/inst/extdata/",
+#' geom_kml(kml.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+#'          dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+#'          geom.types = "POLYGON",
 #'          export = T,
-#'          geojson.name = "WaypointsXXX.geojson")
+#'          geojson.name = "Waypoints.geojson")
 #'
 #' @export
 geom_kml <- function(kml.path = paste0(system.file(package = "eamenaR"),
@@ -28,11 +29,6 @@ geom_kml <- function(kml.path = paste0(system.file(package = "eamenaR"),
                                      "/extdata/"),
                      geojson.name = "Waypoints.geojson",
                      verbose = T){
-
-  # inDir <- "C:/Rprojects/eamenaR/inst/extdata/"
-  # fileName <- "Waypoints"
-  # inGeom <- paste0(inDir, fileName, ".kmz")
-  # outGeom <- paste0(inDir, fileName, ".geojson")
   ext <- DescTools::SplitPath(kml.path)$extension
   if(ext == "kmz"){
     # extract/de-compress gives a KML
@@ -58,11 +54,11 @@ geom_kml <- function(kml.path = paste0(system.file(package = "eamenaR"),
              delete_dsn = TRUE)
   }
 }
-st_sfc(geom)
 
-st_coordinates(st_sfc(geom))
-
-
-is.POINT <- grepl("POINT", st_as_text(geom$geometry))
+geom_kml(kml.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+         geom.types = "POLYGON",
+         dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+         export = T,
+         geojson.name = "Waypoints.geojson")
 
 
