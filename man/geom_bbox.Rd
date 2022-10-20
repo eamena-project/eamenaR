@@ -9,29 +9,37 @@ geom_bbox(
   x_column = "xcoord",
   y_column = "ycoord",
   wkt_column = NA,
-  dirOut = dataDir,
-  geojson.name = "geojson.geojson"
+  dirOut = NA,
+  geojson.name = "geojson.geojson",
+  verbose = T
 )
 }
 \arguments{
-\item{dataDir}{the path to the folder where the XLSXs are}
+\item{dataDir}{the path to the folder where the XLSXs are.}
 
 \item{x_column, y_column}{the column of the X and Y coordinates, if NA the function will look the field 'wkt'.}
 
-\item{wkt_column}{the column of the WKT coordinates. Useful if the X,Y coordinates are already in}
+\item{wkt_column}{the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.}
 
 \item{dirOut}{the path to the folder where the GeoJSON file will be created.}
 
 \item{geojson.name}{the name of the GeoJSON that will be created.}
+
+\item{verbose}{if TRUE (by default) then display different messages.}
 }
 \value{
 a GeoJSON file
 }
 \description{
-Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax and creates the bounding box, that is to say, the extent of the geometries. Can be used to preselect grids, to get stamen (ggmap), etc. Used before the function \link[eamenaR]{geom_within_gs} and \link[eamenaR]{list_mapping_bu.R} to get the IDs of the potential grids.
+Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the bounding box, that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
 }
 \examples{
 
-geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/")
+geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2")
+
+geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
+          x_column = "Longitude.",
+          y_column = "Latitude",
+          geojson.name = "grids_bbox_mk2.geojson")
 
 }

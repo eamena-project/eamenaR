@@ -10,7 +10,7 @@
 
 <h3>Description</h3>
 
-<p>Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax and creates the bounding box, that is to say, the extent of the geometries. Can be used to preselect grids, to get stamen (ggmap), etc. Used before the function geom_within_gs and list_mapping_bu.R to get the IDs of the potential grids.
+<p>Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the bounding box, that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(list_mapping_bu.R). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
 </p>
 
 
@@ -22,8 +22,9 @@ geom_bbox(
   x_column = "xcoord",
   y_column = "ycoord",
   wkt_column = NA,
-  dirOut = dataDir,
-  geojson.name = "geojson.geojson"
+  dirOut = NA,
+  geojson.name = "geojson.geojson",
+  verbose = T
 )
 </pre>
 
@@ -33,7 +34,7 @@ geom_bbox(
 <table summary="R argblock">
 <tr valign="top"><td><code>dataDir</code></td>
 <td>
-<p>the path to the folder where the XLSXs are</p>
+<p>the path to the folder where the XLSXs are.</p>
 </td></tr>
 <tr valign="top"><td><code>x_column, y_column</code></td>
 <td>
@@ -41,7 +42,7 @@ geom_bbox(
 </td></tr>
 <tr valign="top"><td><code>wkt_column</code></td>
 <td>
-<p>the column of the WKT coordinates. Useful if the X,Y coordinates are already in</p>
+<p>the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
@@ -50,6 +51,10 @@ geom_bbox(
 <tr valign="top"><td><code>geojson.name</code></td>
 <td>
 <p>the name of the GeoJSON that will be created.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) then display different messages.</p>
 </td></tr>
 </table>
 
@@ -64,7 +69,12 @@ geom_bbox(
 
 <pre>
 
-geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/")
+geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2")
+
+geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
+          x_column = "Longitude.",
+          y_column = "Latitude",
+          geojson.name = "grids_bbox_mk2.geojson")
 
 </pre>
 

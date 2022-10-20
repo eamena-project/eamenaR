@@ -9,16 +9,16 @@ list_mapping_bu(
  
     bu.template.path = "C:/Rprojects/eamena-arches-dev/data/bulk/templates/Heritage Place BUS Template.xlsx",
   mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
-  mapping.file.ggsheet = F,
+  mapping.file.ggsheet = FALSE,
   job = "mk",
   job.type = "mk_type",
   eamena.field = "EAMENA",
   eamena.id = "UNIQUEID",
-  verb = T
+  verbose = TRUE
 )
 }
 \arguments{
-\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option). The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.}
+\item{bu.path}{the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option description). Each job contains one to several BU worksheets. The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.}
 
 \item{bu.template.path}{the path to the BU template. The output will be written into this structure}
 
@@ -33,19 +33,21 @@ list_mapping_bu(
 - 'value': constant values (ie, always the same value) that will be copied into the target file;
 - 'expression': logical functions (mainly if statements). These functions are written directly in the appropriate cell of the mapping file;
 - 'escape': values depending from another column evaluated by 'expression'. This field is
-    not read;}
+    not read
+- 'other': when a column (ex: 'Seen') as a value (ex: 'Yes') that refers to several values scattered on different target columns.
+- 'supplem': to add supplementary rows like pipes '|' for already existing rows (ex: the alternative name of a place, two different actors)}
 
 \item{eamena.field}{the name of the field in the `mapping.file` XLSX with the name of the EAMENA fields in a R format ('UNIQUEID', 'Assessment.Investigator.-.Actor', 'Investigator.Role.Type', etc.)}
 
 \item{eamena.id}{the unique key identifier for a single resource, by default 'UNIQUEID'}
 
-\item{verb}{if TRUE (by default): verbose}
+\item{verbose}{if TRUE (by default): verbose}
 }
 \value{
 One or various XLSX files (almost) ready for an bulk upload process in the EAMENA DB. These files are names in the same way as the input file, except a `_out` suffix is added.
 }
 \description{
-Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU).
+Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU). This function can use, for example, \link[eamenaR]{geom_within_gs} to test if the coordinates are within a grid cell.
 }
 \examples{
 

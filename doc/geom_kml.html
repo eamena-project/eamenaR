@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extracting KMZ or KML coordinates from a file and adding this...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geom_kml"><tr><td>geom_kml</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Extracting KMZ or KML coordinates from a file and adding this coordinates into EAMENA for a same HP</h2>
+
+<h3>Description</h3>
+
+<p>Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). For a given HP, this data can be then imported into the EAMENA DB.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+geom_kml(
+  kml.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
+  geom.types = c("POINT", "LINE", "POLYGON"),
+  export = T,
+  dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+  geojson.name = "Waypoints.geojson",
+  verbose = T
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>kml.path</code></td>
+<td>
+<p>the path to the KML or KMZ file.</p>
+</td></tr>
+<tr valign="top"><td><code>geom.types</code></td>
+<td>
+<p>the types of geometries (&quot;POINT&quot;, &quot;LINE&quot; or &quot;POLYGON&quot;) that will be selected. By default all: 'c(&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;)'.</p>
+</td></tr>
+<tr valign="top"><td><code>export</code></td>
+<td>
+<p>if TRUE, will export the KML/KMZ file in a GeoJSON format.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the path to the folder where the GeoJSON file will be created.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.name</code></td>
+<td>
+<p>the name of the GeoJSON that will be created.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) then display different messages.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a GeoJSON file
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+geom_kml(kml.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+         dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+         geom.types = "POLYGON",
+         export = T,
+         geojson.name = "Waypoints.geojson")
+
+
+
+</pre>
+
+
+</div></body></html>

@@ -20,6 +20,8 @@
 #'          export = T,
 #'          geojson.name = "Waypoints.geojson")
 #'
+#'
+#'
 #' @export
 geom_kml <- function(kml.path = paste0(system.file(package = "eamenaR"),
                                        "/extdata/Waypoints.kmz"),
@@ -54,11 +56,3 @@ geom_kml <- function(kml.path = paste0(system.file(package = "eamenaR"),
              delete_dsn = TRUE)
   }
 }
-
-geom_kml(kml.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
-         geom.types = "POLYGON",
-         dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-         export = T,
-         geojson.name = "Waypoints.geojson")
-
-
