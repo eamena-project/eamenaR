@@ -46,14 +46,14 @@ Use [EAMENA](https://database.eamena.org/) to create a GeoJSON dataset. This dat
 
 In EAMENA, search for the resources, select Download and copy the **geojson url** (in green) to the clipboard.
 
-![](../../www/geojson-export.png)
+![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-export.png)
 
 2. **Get the GeoJSON content**  
   
   
 Paste the copied URL into the address bar, the result is something like :
 
-![](../../www/geojson-url.png)
+![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
 
 You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer
   
@@ -66,7 +66,7 @@ Copy the text content and save it in a new GeoJSON file, for example **caravanse
 
 Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
 
-![](../../www/geojson-io.png)
+![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-io.png)
 
 
 The format of a rectangle selection is 4 different points[^2], starting from the geographical origin (`xmin, ymin`), e.g.: `"POINT(0 0)"`
