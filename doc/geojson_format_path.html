@@ -1,44 +1,90 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Format data on paths</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-<link rel="stylesheet" type="text/css" href="R.css" />
-</head><body><div class="container">
-
-<table width="100%" summary="page for geojson_format_path"><tr><td>geojson_format_path</td><td style="text-align: right;">R Documentation</td></tr></table>
-
-<h2>Format data on paths</h2>
-
-<h3>Description</h3>
-
-<p>Use a dataframe of heritage places (like vertices) inherited from a GeoJSON, and a file of paths (like edges) inherited form a CSV, between these heritage places, to format a new dataframe. This new dataframe is used by thefunctions 'geojson_map_path()', 'geojson_boxplot_path()'. The function cleans the datasets removing existing paths liking two heritage places taht not exist in the GeoJSON
-</p>
-
-
-<h3>Usage</h3>
-
-<pre>
-geojson_format_path(geojson.path = geojson.path., csv.path = csv.path.)
-</pre>
-
-
-<h3>Arguments</h3>
-
-<table summary="R argblock">
-<tr valign="top"><td><code>geojson.path</code></td>
-<td>
-<p>the path of the GeoJSON file.</p>
-</td></tr>
-<tr valign="top"><td><code>csv.path</code></td>
-<td>
-<p>the path to the CSV where the edges between two heritage places are recorded.</p>
-</td></tr>
-</table>
-
-
-<h3>Value</h3>
-
-<p>A dataframe with the appropriate format
-</p>
-
-
-</div></body></html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert from/to GeoJSON, KMZ or KML</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="R.css" />
+    </head><body><div class="container">
+    
+    <table width="100%" summary="page for geojson_format_kml"><tr><td>geojson_format_kml</td><td style="text-align: right;">R Documentation</td></tr></table>
+    
+    <h2>Convert from/to GeoJSON, KMZ or KML</h2>
+    
+    <h3>Description</h3>
+    
+    <p>Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). At the same time, geometries drawn in EAMENA can be exported as GeoJSON. For a given HP, this data can be then imported into the EAMENA DB.
+    </p>
+    
+    
+    <h3>Usage</h3>
+    
+    <pre>
+    geojson_format_kml(
+      geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
+      geom.types = c("POINT", "LINE", "POLYGON"),
+      export = T,
+      dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+      geojson.name = "Waypoints",
+      verbose = T
+    )
+    </pre>
+    
+    
+    <h3>Arguments</h3>
+    
+    <table summary="R argblock">
+    <tr valign="top"><td><code>geom.path</code></td>
+    <td>
+    <p>the path to the KML, KMZ or GeoJSON file.</p>
+    </td></tr>
+    <tr valign="top"><td><code>geom.types</code></td>
+    <td>
+    <p>the types of geometries (&quot;POINT&quot;, &quot;LINE&quot; or &quot;POLYGON&quot;) that will be selected. By default all: 'c(&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;)'.</p>
+    </td></tr>
+    <tr valign="top"><td><code>export</code></td>
+    <td>
+    <p>if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.</p>
+    </td></tr>
+    <tr valign="top"><td><code>dirOut</code></td>
+    <td>
+    <p>the path to the folder where the KML/KMZ/GeoJSON file will be created.</p>
+    </td></tr>
+    <tr valign="top"><td><code>geojson.name</code></td>
+    <td>
+    <p>the name of the KML/KMZ/GeoJSON that will be created without the extension</p>
+    </td></tr>
+    <tr valign="top"><td><code>verbose</code></td>
+    <td>
+    <p>if TRUE (by default) then display different messages.</p>
+    </td></tr>
+    </table>
+    
+    
+    <h3>Value</h3>
+    
+    <p>a GeoJSON file or a KML file
+    </p>
+    
+    
+    <h3>Examples</h3>
+    
+    <pre>
+    
+    library(dplyr)
+    
+    # from KMZ to GeoJSON
+    geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+                       dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+                       geom.types = "POLYGON",
+                       export = T,
+                       geojson.name = "Waypoints_outGeoJSON")
+    
+    # from GeoJSON to KML
+    geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
+                       dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+                       export = T,
+                       geojson.name = "kites_outKML")
+    
+    </pre>
+    
+    
+    </div></body></html>
+    
