@@ -2,9 +2,9 @@
 
 export(geojson_analysis)
 export(geojson_boxplot_path)
+export(geojson_format_kml)
 export(geojson_format_path)
 export(geojson_get_field)
-export(geojson_kml)
 export(geojson_map)
 export(geojson_map_path)
 export(geojson_measurements)

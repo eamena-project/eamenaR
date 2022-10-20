@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Measurements on a GeoJSON file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_measurements"><tr><td>geojson_measurements</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Measurements on a GeoJSON file</h2>
+
+<h3>Description</h3>
+
+<p>Compute measurements (areas, L x l, etc.) on a GeoJSON file creating a boxplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+geojson_measurements(
+  stat.name = "stat",
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  stat = c("area"),
+  by.routes = F,
+  csv.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_paths.csv"),
+  plot.stat = T,
+  export.stat = F,
+  export.plot = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  fig.width = 8,
+  fig.height = 8,
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>stat.name</code></td>
+<td>
+<p>the name of the output file. By default &quot;stat&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.path</code></td>
+<td>
+<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+</td></tr>
+<tr valign="top"><td><code>stat</code></td>
+<td>
+<p>the statistic that will be computed. By default 'area'.</p>
+</td></tr>
+<tr valign="top"><td><code>by.routes</code></td>
+<td>
+<p>if TRUE, will stratified the values by the different routes (i.e groups)</p>
+</td></tr>
+<tr valign="top"><td><code>csv.path</code></td>
+<td>
+<p>if the parameter by.routes is TRUE, will use this CSV file to recover the route of the heritage places</p>
+</td></tr>
+<tr valign="top"><td><code>plot.stat</code></td>
+<td>
+<p>if TRUE (by default) will plot the stat as a graphic.</p>
+</td></tr>
+<tr valign="top"><td><code>export.stat</code></td>
+<td>
+<p>if TRUE return the stats to be stored in a new variable.</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, export the stats in a new file.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'.
+If it doesn't exist, it will be created. Only useful is export.plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) verbose.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Show or export measurements statistics on the GeoJSON file
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+geojson_measurements(stat.name = "areas", export.stat = T)
+
+</pre>
+
+
+</div></body></html>
