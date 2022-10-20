@@ -39,14 +39,6 @@ geojson_format_kml <- function(geom.path = paste0(system.file(package = "eamenaR
                                geojson.name = "Waypoints",
                                verbose = T){
   ext <- DescTools::SplitPath(geom.path)$extension
-
-  # path <- "C:/Rprojects/eamenaR/inst/extdata/"
-  # In <- "kites.geojson"
-  # pathIn <- paste0(path, In)
-  # pathOut <- paste0(path, DescTools::SplitPath(In)$filename, ".kml")
-  # xx <- sf::st_read()
-  # sf::st_write(xx, pathOut, driver = "kml", delete_dsn = TRUE)
-
   if(ext == "geojson"){
     geom <- sf::st_read(geom.path)
     toGeom <- ".kml"
@@ -62,15 +54,9 @@ geojson_format_kml <- function(geom.path = paste0(system.file(package = "eamenaR
     geom <- sf::st_read(geom.path)
     toGeom <- ".geojson"
   }
-  # td <- tempdir()
-  # # extract/de-compress gives a KML
-  # KML <- unzip(geom.path, exdir = td, junkpaths = TRUE)
-  # geom <- sf::st_read(KML)
   selectedGeom <- paste0(geom.types,  collapse = "|")
   geom <- geom %>%
     filter(grepl(selectedGeom, sf::st_geometry_type(geometry)))
-  ## check if is point
-  # is.POINT <- grepl("POINT", st_as_text(geom$geometry))
   if(export){
     if(ext == "kmz" | ext == "kml"){
       sf::st_write(geom,
