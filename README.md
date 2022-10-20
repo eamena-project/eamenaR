@@ -106,7 +106,7 @@ flowchart LR
     C --4. add new GeoJSON geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
-
+$\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_format_kml)  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/geojson_kml)  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_analysis)  
