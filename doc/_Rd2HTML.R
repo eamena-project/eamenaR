@@ -14,7 +14,7 @@ for(a.file in list.files(path.Rd)){
   cmd <- paste("pandoc -s -r html ", htmlOut, " -o ", rd, ".text", sep="")
   system(cmd)
   # unlink(htmlOut)
-  cat(paste0("      - HTML doc created!'",
+  cat(paste0("      - HTML doc created!",
              "\n",
              "        + raw path: ", htmlOut,
              "\n",
