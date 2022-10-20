@@ -93,8 +93,22 @@ The format of a rectangle selection is 4 different points[^2], starting from the
     ymin
 ]
 ```
-[^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
-[^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
+
+#### Integrating Google Earth geometries
+
+Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
+
+```mermaid
+flowchart LR
+    A[(EAMENA DB)] --1. export as GeoJSON--> B[GeoJSON file];
+    B((Google Earth)) --2. create POLYGON geometries--> B;
+    B --3. export as KML/KMZ--> C("geom_kml()"):::eamenaRfunction;
+    C --4. add new GeoJSON geometries--> A;
+    classDef eamenaRfunction fill:#e7deca;
+```
+
+$\colorbox{#e7deca}{{\color{black}{function}}}$: [geom_kml()](https://eamena-oxford.github.io/eamenaR/doc/geom_kml)  
+
 
 ### BU mapping
 
@@ -378,3 +392,6 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 </p>
 
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
+
+[^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
+[^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
