@@ -1,4 +1,4 @@
-#' Extracting KMZ or KML coordinates from a file and addin this coordinates into EAMENA for a same HP
+#' Extracting KMZ or KML coordinates from a file and adding this coordinates into EAMENA for a same HP
 #'
 #' @name geom_kml
 #' @description Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). For a given HP, this data can be then imported into the EAMENA DB.
