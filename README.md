@@ -7,7 +7,7 @@ The two main sources of data are: GeoJSON files exported by [EAMEANA searches](h
   
 The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web.  
   
-The functions names refer to their content:
+The functions names refer to their content :
 
 | function prefix      | Description                          |
 | -----------          | -----------                          |
