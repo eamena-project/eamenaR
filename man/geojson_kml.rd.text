@@ -1,0 +1,64 @@
+---
+title: "R: Convert from/to GeoJSON, KMZ or KML"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ------------- -----------------
+  geojson_kml     R Documentation
+  ------------- -----------------
+
+## Convert from/to GeoJSON, KMZ or KML
+
+### Description
+
+Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries
+drawn in Google Earth or Google Earth pro can be exported as KML or KMZ
+(ie, compressed KML). At the same time, geometries drawn in EAMENA can
+be exported as GeoJSON. For a given HP, this data can be then imported
+into the EAMENA DB.
+
+### Usage
+
+    geojson_kml(
+      geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
+      geom.types = c("POINT", "LINE", "POLYGON"),
+      export = T,
+      dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+      geojson.name = "Waypoints",
+      verbose = T
+    )
+
+### Arguments
+
+  ---------------- ----------------------------------------------------------------------------------------------------------------------------------------------
+  `geom.path`      the path to the KML, KMZ or GeoJSON file.
+  `geom.types`     the types of geometries (\"POINT\", \"LINE\" or \"POLYGON\") that will be selected. By default all: \'c(\"POINT\", \"LINE\", \"POLYGON\")\'.
+  `export`         if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.
+  `dirOut`         the path to the folder where the KML/KMZ/GeoJSON file will be created.
+  `geojson.name`   the name of the KML/KMZ/GeoJSON that will be created without the extension
+  `verbose`        if TRUE (by default) then display different messages.
+  ---------------- ----------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+a GeoJSON file or a KML file
+
+### Examples
+
+
+    library(dplyr)
+
+    # from KMZ to GeoJSON
+    geom_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+             dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+             geom.types = "POLYGON",
+             export = T,
+             geojson.name = "Waypoints_outGeoJSON")
+
+    # from GeoJSON to KML
+    geom_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
+             dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+             export = T,
+             geojson.name = "kites_outKML")
+:::

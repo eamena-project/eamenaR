@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Return the UUID of a HP from EAMENA ID</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for uuid_from_eamenaid"><tr><td>uuid_from_eamenaid</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Return the UUID of a HP from EAMENA ID</h2>
+
+<h3>Description</h3>
+
+<p>Return the UUID of a HP from EAMENA id and store it into a
+hash() object alongside the EAMENA id. A connection with the database is needed
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+uuid_from_eamenaid(
+  db.name = "eamena",
+  db.user = "postgres",
+  db.password = NA,
+  db.host = NA,
+  db.port = 5432,
+  d,
+  eamenaid,
+  field.uuid = "uuid",
+  field.eamenaid = "eamenaid"
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>db.name</code></td>
+<td>
+<p>the name of the database, by default 'eamena'.</p>
+</td></tr>
+<tr valign="top"><td><code>db.user</code></td>
+<td>
+<p>the name of the user, by default 'postgres'.</p>
+</td></tr>
+<tr valign="top"><td><code>db.password</code></td>
+<td>
+<p>the user database password.</p>
+</td></tr>
+<tr valign="top"><td><code>db.host</code></td>
+<td>
+<p>the name, or the IP, of the database.</p>
+</td></tr>
+<tr valign="top"><td><code>db.port</code></td>
+<td>
+<p>the database port number, by default: 5432.</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>eamenaid</code></td>
+<td>
+<p>a EAMENA ID (eg. &quot;EAMENA-0187363&quot;).</p>
+</td></tr>
+<tr valign="top"><td><code>field.uuid</code></td>
+<td>
+<p>the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.</p>
+</td></tr>
+<tr valign="top"><td><code>field.eamenaid</code></td>
+<td>
+<p>the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'eamenaid'.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a hash() object (a Python-like dictionary) with EAMENA ID and UUID.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+d_sql &lt;- hash::hash()
+d_sql &lt;- uuid_from_eamenaid(db.name = 'eamena',
+                            db.password = 'postgis',
+                            db.host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                            d = d_sql,
+                            eamenaid = "EAMENA-0187363")
+d_sql$uuid
+# [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
+
+</pre>
+
+
+</div></body></html>

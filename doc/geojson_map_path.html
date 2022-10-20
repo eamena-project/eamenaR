@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a map with paths between different heritage places</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_map_path"><tr><td>geojson_map_path</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a map with paths between different heritage places</h2>
+
+<h3>Description</h3>
+
+<p>Create a distribution map of heritage places linked together by paths, for example for caravanserails
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+geojson_map_path(
+  map.name = "map_path",
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  csv.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_paths.csv"),
+  stamen.zoom = NA,
+  export.plot = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  fig.width = 8,
+  fig.height = 8
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>map.name</code></td>
+<td>
+<p>the name of the output map and the name of the saved file (if export.plot is TRUE). By default &quot;map_path&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.path</code></td>
+<td>
+<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+</td></tr>
+<tr valign="top"><td><code>csv.path</code></td>
+<td>
+<p>the path to the CSV where the edges between two heritage places are recorded.</p>
+</td></tr>
+<tr valign="top"><td><code>stamen.zoom</code></td>
+<td>
+<p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, export the plot, if FALSE will only display it.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'.
+If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A PNG map of heritage places linked together by paths
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+# plot a general map of heritage places
+geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
+
+
+</pre>
+
+
+</div></body></html>
