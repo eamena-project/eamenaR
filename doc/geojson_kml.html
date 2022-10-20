@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="R.css" />
 </head><body><div class="container">
 
-<table width="100%" summary="page for XXXX"><tr><td>XXXX</td><td style="text-align: right;">R Documentation</td></tr></table>
+<table width="100%" summary="page for geojson_kml"><tr><td>geojson_kml</td><td style="text-align: right;">R Documentation</td></tr></table>
 
 <h2>Convert from/to GeoJSON, KMZ or KML</h2>
 
@@ -17,7 +17,7 @@
 <h3>Usage</h3>
 
 <pre>
-XXXX(
+geojson_kml(
   geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
   geom.types = c("POINT", "LINE", "POLYGON"),
   export = T,
@@ -71,14 +71,14 @@ XXXX(
 library(dplyr)
 
 # from KMZ to GeoJSON
-XXXX(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
                    geom.types = "POLYGON",
                    export = T,
                    geojson.name = "Waypoints_outGeoJSON")
 
 # from GeoJSON to KML
-XXXX(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
+geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
                    export = T,
                    geojson.name = "kites_outKML")

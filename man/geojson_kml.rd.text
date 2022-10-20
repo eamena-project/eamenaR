@@ -4,9 +4,9 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 ---
 
 ::: container
-  -------------------- -----------------
-  geojson_format_kml     R Documentation
-  -------------------- -----------------
+  ------------- -----------------
+  geojson_kml     R Documentation
+  ------------- -----------------
 
 ## Convert from/to GeoJSON, KMZ or KML
 
@@ -20,7 +20,7 @@ into the EAMENA DB.
 
 ### Usage
 
-    geojson_format_kml(
+    geojson_kml(
       geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
       geom.types = c("POINT", "LINE", "POLYGON"),
       export = T,
@@ -50,14 +50,14 @@ a GeoJSON file or a KML file
     library(dplyr)
 
     # from KMZ to GeoJSON
-    geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+    geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
                        dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
                        geom.types = "POLYGON",
                        export = T,
                        geojson.name = "Waypoints_outGeoJSON")
 
     # from GeoJSON to KML
-    geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
+    geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
                        dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
                        export = T,
                        geojson.name = "kites_outKML")

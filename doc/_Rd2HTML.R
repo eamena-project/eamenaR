@@ -21,6 +21,4 @@ for(a.file in list.files(pathMan)){
              "        + rendered path: ", htmlRenderedOut,
              "\n\n"))
 }
-# git push, work?
-# system("cd C:/Rprojects/eamenaR ; git add .; git commit -m 'Rd -> HTML' ; git push")
 
