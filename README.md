@@ -108,6 +108,7 @@ flowchart LR
 ```
 
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)  
+$\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/test)  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_analysis)  
 
 ### BU mapping
