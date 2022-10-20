@@ -1,6 +1,6 @@
 #' Convert from/to GeoJSON, KMZ or KML
 #'
-#' @name geojson_kml
+#' @name geojson_format_kml
 #' @description Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). At the same time, geometries drawn in EAMENA can be exported as GeoJSON. For a given HP, this data can be then imported into the EAMENA DB.
 #'
 #' @param geom.path the path to the KML, KMZ or GeoJSON file.
@@ -17,27 +17,27 @@
 #' library(dplyr)
 #'
 #' # from KMZ to GeoJSON
-#' geom_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
-#'          dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-#'          geom.types = "POLYGON",
-#'          export = T,
-#'          geojson.name = "Waypoints_outGeoJSON")
+#' geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
+#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+#'                    geom.types = "POLYGON",
+#'                    export = T,
+#'                    geojson.name = "Waypoints_outGeoJSON")
 #'
 #' # from GeoJSON to KML
-#' geom_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
-#'          dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-#'          export = T,
-#'          geojson.name = "kites_outKML")
+#' geojson_format_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
+#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
+#'                    export = T,
+#'                    geojson.name = "kites_outKML")
 #'
 #' @export
-geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
-                                           "/extdata/Waypoints.kmz"),
-                        geom.types = c("POINT", "LINE", "POLYGON"),
-                        export = T,
-                        dirOut = paste0(system.file(package = "eamenaR"),
-                                        "/extdata/"),
-                        geojson.name = "Waypoints",
-                        verbose = T){
+geojson_format_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
+                                                  "/extdata/Waypoints.kmz"),
+                               geom.types = c("POINT", "LINE", "POLYGON"),
+                               export = T,
+                               dirOut = paste0(system.file(package = "eamenaR"),
+                                               "/extdata/"),
+                               geojson.name = "Waypoints",
+                               verbose = T){
   ext <- DescTools::SplitPath(geom.path)$extension
 
   # path <- "C:/Rprojects/eamenaR/inst/extdata/"
@@ -73,9 +73,9 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
   # is.POINT <- grepl("POINT", st_as_text(geom$geometry))
   if(export){
     if(ext == "kmz" | ext == "kml"){
-    sf::st_write(geom,
-                 paste0(dirOut, geojson.name, toGeom),
-                 delete_dsn = TRUE)
+      sf::st_write(geom,
+                   paste0(dirOut, geojson.name, toGeom),
+                   delete_dsn = TRUE)
     }
     if(ext == "geojson"){
       sf::st_write(geom,
