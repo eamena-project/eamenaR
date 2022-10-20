@@ -87,7 +87,3 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
     plot(geom)
   }
 }
-
-
-
-
