@@ -60,7 +60,7 @@ You can reformat the (Geo)JSON layout to make it more readable using https://cod
 
 3. **Create a new GeoJSON file**  
   
-Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ()
+Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
 #### Share a GeoJSON geometry
 
