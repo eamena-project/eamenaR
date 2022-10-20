@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert PeriodO CSV into an interactive data.table</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for periodo_cultural_periods"><tr><td>periodo_cultural_periods</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert PeriodO CSV into an interactive data.table</h2>
+
+<h3>Description</h3>
+
+<p>read a release of the periodo cultural periods thesaurus
+and creates an interactive dataframe
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+periodo_cultural_periods(
+  data.name = "periodo",
+  periodo.url = "https://n2t.net/ark:/99152/p0dataset.csv",
+  export.plot = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data.name</code></td>
+<td>
+<p>the name of the data.table. Only useful if export.plot is TRUE</p>
+</td></tr>
+<tr valign="top"><td><code>periodo.url</code></td>
+<td>
+<p>the URL of the PeriodO CSV.</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, export the plot, if FALSE will only display it</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'.
+If it doesn't exist, it will be created. Only useful is export plot is TRUE</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A DT data.frame of the Periodo cultural periods
+</p>
+
+
+</div></body></html>
