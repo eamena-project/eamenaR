@@ -31,13 +31,13 @@
 #'
 #' @export
 geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
-                                                  "/extdata/Waypoints.kmz"),
-                               geom.types = c("POINT", "LINE", "POLYGON"),
-                               export = T,
-                               dirOut = paste0(system.file(package = "eamenaR"),
-                                               "/extdata/"),
-                               geojson.name = "Waypoints",
-                               verbose = T){
+                                           "/extdata/Waypoints.kmz"),
+                        geom.types = c("POINT", "LINE", "POLYGON"),
+                        export = T,
+                        dirOut = paste0(system.file(package = "eamenaR"),
+                                        "/extdata/"),
+                        geojson.name = "Waypoints",
+                        verbose = T){
   ext <- DescTools::SplitPath(geom.path)$extension
   if(ext == "geojson"){
     geom <- sf::st_read(geom.path)
@@ -68,6 +68,11 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                    paste0(dirOut, geojson.name, toGeom),
                    driver = "kml",
                    delete_dsn = TRUE)
+      # try this:
+      rgdal::writeOGR(geom,
+                      paste0(dirOut, geojson.name, "ZZZ", toGeom),
+                      driver="KML",
+                      layer="poly")
     }
   } else {
     plot(geom)
