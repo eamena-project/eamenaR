@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document id="root_doc">
+<Schema name="copper" id="copper">
+	<SimpleField name="copper" type="float"></SimpleField>
+</Schema>
+<Folder><name>copper</name>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">85</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75853624135808,50.9915621567178</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">81</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75786301788305,50.9910879029232</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">68</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75985541751295,50.9908927433765</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">81</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76174576970541,50.9904102356329</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">48</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76186270738117,50.9890255709571</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">61</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76303964098292,50.9883925366489</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">31</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75984329282049,50.9893916407069</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">29</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75787741953428,50.9893350268932</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">37</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75833785372193,50.9881470213434</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76078279077936,50.9875728618997</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76019504905425,50.9870983459807</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75792464948194,50.9863505704254</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">93</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75569670406275,50.9891262526795</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">31</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75704339827961,50.9883399284191</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75763497281676,50.9875200505676</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">86</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75506340331458,50.9882923009324</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">74</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75409907538523,50.9870189402934</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">69</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7531070321817,50.9858355480134</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">69</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75211553749502,50.9847150677111</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">95</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7511087876558,50.9834597939485</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">53</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75234773643936,50.9834648830742</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">35</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7532312564973,50.9835429938166</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">35</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75322747760397,50.9830665956949</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75964010225301,50.9853922461842</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75954726041956,50.9844756797724</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75982879953081,50.9840702750243</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75756454288456,50.9840685492958</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75705965324643,50.9832611644444</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75625272322606,50.983857004134</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.76247550814581,50.9855718596777</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">29</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75932955670694,50.9822021949462</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75569264984007,50.9814857258188</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75499212724445,50.9811373867951</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75676836243297,50.980673299633</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7567910096397,50.9799451288486</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">32</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75328909906964,50.9800641186473</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75218663828695,50.9811013184432</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">67</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75074082050022,50.981941830914</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">77</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75000319287152,50.9823036988139</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">108</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74864324761722,50.9813910868019</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">32</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75021349066651,50.9800738005995</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75115778709919,50.9788393617366</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74959027599575,50.9786824780721</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74899635022841,50.9773899383192</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">51</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74823209898502,50.9798013398631</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">50</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74732509108447,50.9785277449809</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">38</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74718691872388,50.9772427667127</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74716195442974,50.9758675477884</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74698031230129,50.9744838269228</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">32</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74596136562816,50.9734442799649</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74504748664984,50.9730965420996</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">47</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7465555541636,50.9802739755958</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">128</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7446437686074,50.9797944935969</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">117</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74278980863467,50.9794226689629</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">104</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74069409719209,50.9790875083989</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">76</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73871109204067,50.9785901683949</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">36</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74019747024153,50.9774530501812</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">34</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74176905142937,50.978149380156</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">90</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74459520467365,50.979039578799</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">80</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73752233772848,50.9776769067863</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">78</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73640339186063,50.9765746564882</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">77</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73595074279196,50.9750838696179</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">65</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73585601588772,50.9738526808613</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">66</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7347788297209,50.9726064676529</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">72</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73363126249382,50.9714593326226</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">75</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73249973647215,50.9705458488692</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">75</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73555105032773,50.9692872572816</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73869821703239,50.9675518843431</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">55</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74096673794626,50.9663584452737</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">47</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73084191744462,50.9677732235548</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">46</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73066521033129,50.9669827283149</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">55</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.729768210244,50.9669584192621</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">49</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72893346951614,50.9657294125332</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">39</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73040169796583,50.9660037241419</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">45</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72928387135357,50.9649912913701</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">48</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7301800316633,50.9649077402814</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">36</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72964496250136,50.9637767280289</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">36</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72612524013298,50.9651893471422</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">68</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7275846347628,50.9662008065654</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">88</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72857646558625,50.9675012707553</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">85</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72993420369966,50.9682253570604</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">76</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7451916904561,50.96231844754</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">63</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73186737843373,50.9697477244813</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">32</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75916262360456,50.9879915646531</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7356201370016,50.9708960555302</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73683830913427,50.9719620579924</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">36</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72915670819275,50.9670411266887</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">41</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72816580036895,50.9658665087496</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">33</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72704054930732,50.9638383354393</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72600468879762,50.9623402324025</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">38</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72922445414656,50.962735263558</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">37</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72319018482882,50.9628607996639</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">34</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72456653372424,50.964214114333</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">19</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7365873263447,50.9613739371577</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73308151808865,50.9607911996608</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73458799038591,50.9642743666842</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73541282402068,50.9660606720561</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73300925842453,50.9663465306797</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73139490441107,50.965569310471</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">18</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73174407135168,50.9627637478883</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73761241254672,50.9632854664232</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73995238209176,50.9640154471245</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74278684261421,50.9661011814377</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74405388139924,50.9698006952178</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74542036966897,50.9716122263729</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">18</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74954073524401,50.9723724483782</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74776752106001,50.9695464908401</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74701360316762,50.9677960073605</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74469637127722,50.9663649670126</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74138719933494,50.967354923591</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">30</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73986466990306,50.9674404709143</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73821482017712,50.969503933912</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73927477378635,50.9703546576293</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73908890078217,50.9721170397225</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7352295226803,50.971957915885</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73634968829575,50.9732399507463</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73806938330502,50.9747179147867</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">53</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74761229105811,50.9624277925778</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">33</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74545176314163,50.9756571186268</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74355004555877,50.9746112894055</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74026068439739,50.9764101493103</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">25</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73805628282554,50.9767404485262</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">30</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74101641736654,50.978412359255</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">47</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74695046224039,50.9797873506923</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">31</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74468707667693,50.9780325423074</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74973080069762,50.9766325764767</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">16</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74994977567117,50.9755082823092</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">17</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74807608555067,50.9744174950464</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">26</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75550980203048,50.9871223290828</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">34</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75318605973489,50.9850263000729</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">18</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74595972807204,50.969570084074</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">23</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74561437945596,50.9764296578443</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75636110509254,50.9849443120433</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">14</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7497841244298,50.9743582261178</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">46</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74192818556248,50.9710656680313</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">29</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74057003852211,50.9703237452531</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">19</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.74296392685375,50.9687613411206</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">31</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73053201163079,50.964385343225</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72930674496926,50.964236159703</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">29</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73002413935026,50.9630834637602</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">22</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.7321474412756,50.9595984683956</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73528038358116,50.9598228012411</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73660927956852,50.9586322684187</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">29</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73510587658979,50.9574412779349</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">38</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73357307086976,50.9580121724791</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">39</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73225323471614,50.9566138520321</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">35</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72910928777653,50.956793968865</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">42</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72572798754482,50.9576039145766</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">24</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73069951288422,50.9582005118259</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72921791320759,50.9599307592545</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">20</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73141645690526,50.9608231289454</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">39</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73001472884631,50.9618160626213</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">31</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.72702698628839,50.9619956595548</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">21</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.73544365845197,50.9625998680199</coordinates></Point>
+  </Placemark>
+  <Placemark>
+	<ExtendedData><SchemaData schemaUrl="#copper">
+		<SimpleData name="copper">27</SimpleData>
+	</SchemaData></ExtendedData>
+      <Point><coordinates>5.75195524139862,50.9608321506575</coordinates></Point>
+  </Placemark>
+</Folder>
+</Document></kml>
