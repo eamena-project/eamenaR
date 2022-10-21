@@ -98,6 +98,8 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 
 Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
 
+---
+
 ```mermaid
 flowchart LR
     A[(EAMENA DB)] --1. export as GeoJSON--> B[GeoJSON file];
@@ -107,10 +109,12 @@ flowchart LR
     classDef eamenaRfunction fill:#e7deca;
 ```
 
----
-legend:
+
+legend:  
 `- - -` : to be completed  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
+
+---
 
 ### BU mapping
 
