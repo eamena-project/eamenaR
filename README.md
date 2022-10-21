@@ -109,7 +109,7 @@ flowchart LR
 
 ---
 legend:
-- - - : to be completed 
+`- - -` : to be completed  
 $\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
 
 ### BU mapping
