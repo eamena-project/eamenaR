@@ -3,18 +3,27 @@
 
 The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) facets of the [EAMENA database](https://database.eamena.org/en/).  
   
-The two main sources of data are: GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database.  
-  
-The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web.  
-  
+The two main sources of data are: GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database (restricted to the DB manager). The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web. Together with these function, the package offers different methods to manage inputs and outputs from/to EAMENA.
+
+```mermaid
+flowchart LR
+    A[(EAMENA DB)] --export GeoJSON--> B("eamenaR"):::eamenaRpkg;
+    B --data management--> B;
+    B <--data exchange--> C((third part app));
+    B --import--> A;
+    B --creates--> D[maps<br>charts<br>listings<br>...]
+    classDef eamenaRpkg fill:#e3c071;
+```
+   
 The functions names refer to their content :
 
-| function prefix      | Description                          |
-| -----------          | -----------                          |
-| geojson_*            | all functions that deal with GeoJSON |
-| list_*               | structure a dataset                  |
-| plot_*               | creates a map, a graphic, etc.       |
-| ref_*                | creates a refence dataset            |
+| function prefix      | Description                                            |
+| -----------          | -----------                                            |
+| geojson_*            | all functions that deal with GeoJSON                   |
+| geom_*               | any other function that deals with geometries          |
+| list_*               | structure a dataset                                    |
+| plot_*               | creates a map, a graphic, etc.                         |
+| ref_*                | creates a refence dataset                              |
 
 # Install and load package
 
@@ -30,40 +39,23 @@ And load the package
 library(eamenaR)
 ```
 
-By default, the output will be saved in the `results/` folder. You can change the output folder by changing the `dirOut` option in the various functions.
+By default, the output will be saved in the `results/` or `extdata/` folders. You can change the output folder by changing the `dirOut` option in the various functions.
 
-# Main functions
+# Prepare your data
 
-## Prepare your data
+## GeoJSON files
 
-### GeoJSON files
-
-Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it into your web browser and create a GeoJSON file[^1].
-#### Export an EAMENA search to a GeoJSON file
-
-Use [EAMENA](https://database.eamena.org/) to create a GeoJSON dataset. This dataset can then be used by the [eamenaR](https://github.com/eamena-oxford/eamenaR#readme) package and the [reveal.js](https://github.com/eamena-oxford/reveal.js#readme) framework
-
-1. **EAMENA search**  
-
-In EAMENA, search for the resources, select Download and copy the **geojson url** (in green) to the clipboard.
+GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-export.png)
 
-2. **Get the GeoJSON content**  
-  
-  
-Paste the copied URL into the address bar, the result is something like :
+Paste the copied URL into your web browser and create a GeoJSON file[^1], the result is something like :
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
 
-You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer
-  
+You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
-3. **Create a new GeoJSON file**  
-  
-Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
-
-#### Share a GeoJSON geometry
+### Share a GeoJSON geometry
 
 Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
 
@@ -99,8 +91,6 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 
 Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
 
----
-  
 
 ```mermaid
 flowchart LR
@@ -116,15 +106,14 @@ flowchart LR
 
 legend:  
 `- - -` : to be completed  
-function: 
+functions: 
   - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
   - [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
----
 
 For example:
 
-1. Export **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) from EAMENA as a GeoJSON file (see: [Export an EAMENA search to a GeoJSON file](https://github.com/eamena-oxford/eamenaR#export-an-eamena-search-to-a-geojson-file))
-2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS:
+1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-oxford/eamenaR#geojson-files)), for example **caravanserail.geojson** Heritage Places.  
+2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
 
 ```
 library(dplyr)
@@ -134,12 +123,12 @@ geojson_kml(geom.types = c("POINT"),
 
 ![](results/geojson_kml_toKML.png)
 
-3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the new POLYGONS with the ResourceID of the HPs
+3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the new POLYGONS with the ResourceID of a given HP.
 
 ![](results/geojson_kml_toKML_polygon.png)
 
 4. Export as KML ('caravanserail_outKML2.kml')
-5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, ⚠️ but only the POLYGONs which are the new geometries
+5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
 
 ```
 geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
@@ -148,7 +137,7 @@ geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
             geojson.name = "caravanserail_outGeoJSON")
 ```
 
-The result is new POLYGON geometries (see example of 2 new created polygons: [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
+The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
 
 6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv) function
 
@@ -170,11 +159,16 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-o
 
 Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
-<center>
-  
-any structured file (source) ➡️ ***eamenaR*** mapping function + mapping file ➡️ bulk upload file (target)
-  
-</center>
+```mermaid
+flowchart LR
+    A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;;
+    B --uses mapping file--> B;
+    B --export--> C[BU file<br><em>target</em>];
+    classDef eamenaRfunction fill:#e7deca;
+```
+
+function: 
+  - [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu)  
 
 For example, the dataset prepared by Mohamed Kenawi (`mk`):
 
@@ -452,3 +446,4 @@ The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](ht
 
 [^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
+[^3]: Sometimes, a search in EAMENA returns different types of geometries. This is the case for the caravanserails where geometries can be both POINTs and POLYGONs.
