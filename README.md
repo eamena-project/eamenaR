@@ -102,19 +102,50 @@ Most of the geometries in EAMENA are POINTS (Center Point). The objective is to 
 
 ```mermaid
 flowchart LR
-    A[(EAMENA DB)] --1. export as GeoJSON--> B[GeoJSON file];
-    B((Google Earth)) --2. create POLYGON geometries--> B;
-    B --3. export as KML/KMZ--> C("geojson_kml()"):::eamenaRfunction;
-    C -.4. add new GeoJSON geometries.-> A;
+    A[(EAMENA DB)] --1. export as GeoJSON--> C("geojson_kml()"):::eamenaRfunction;
+    C --2. export as KML file--> B((Google Earth));
+    B --3. create POLYGON geometries--> B;
+    B --4. export as KML/KMZ--> C;
+    C -.5. add new GeoJSON geometries.-> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
 
 
 legend:  
 `- - -` : to be completed  
-$\colorbox{#e7deca}{{\color{black}{function}}}$: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
+fonction: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
 
 ---
+
+For example:
+
+1. Export caravanserails from EAMENA as a GeoJSON file (see: XXX)
+2. Convert caravanserail.geojson to a KML file with the geojson_kml() function, filtering on POINTS:
+
+```
+library(dplyr)
+geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
+            export = T,
+            geom.types = c("POINT"),
+            geojson.name = "caravanserail_outKML")
+```
+
+![](results/geojson_kml_toKML.png)
+
+Draw POLYGONS in Google Earth. Name the new POLYGONS with the ResourceID of the HPs
+
+![](geojson_kml_toKML_polygon.png)
+
+Export as KML (caravanserail_outKML2.kml). Convert this file into GeoJSON, but only for the POLYGONS which are the new geometries
+
+```
+geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/caravanserail_outKML2.kml",
+            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
+            export = T,
+            geom.types = c("POLYGON"),
+            geojson.name = "caravanserail_outGeoJSON")
+```
 
 ### BU mapping
 

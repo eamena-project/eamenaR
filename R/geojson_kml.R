@@ -8,7 +8,8 @@
 #' @param export if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.
 #' @param dirOut the path to the folder where the KML/KMZ/GeoJSON file will be created.
 #' @param geojson.name the name of the KML/KMZ/GeoJSON that will be created without the extension
-#' @param selectedFields for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: `c("EAMENA.ID"`.
+#' @param selectedName for KML export only. The field selected to be the KML name of the HP, by default "EAMENA.ID".
+#' @param selectedFields for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c("EAMENA.ID","Resource.Name", "resourceid").
 #' @param verbose if TRUE (by default) then display different messages.
 #'
 #' @return a GeoJSON file or a KML file
@@ -38,7 +39,8 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/extdata/"),
                         geojson.name = "Waypoints",
-                        selectedFields = c("EAMENA.ID","Resource.Name", "Geometry.Extent.Certainty"),
+                        selectedName = "EAMENA.ID",
+                        selectedFields = c("EAMENA.ID","Resource.Name", "resourceid"),
                         verbose = T){
   ext <- DescTools::SplitPath(geom.path)$extension
   if(ext == "geojson"){
@@ -79,6 +81,9 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       #   icon = "http://www.gstatic.com/mapspro/images/stock/962-wht-diamond-blank.png"
       # )
       # tried that
+      geom$name <- geom[[selectedName]]
+      # geom$Description <- geom[[selectedDescription]]
+      # geom$Description <- geom$resourceid
       sf::st_write(geom,
                    paste0(dirOut, geojson.name, toGeom),
                    driver = "kml",
@@ -97,9 +102,9 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
 #
 
 # # from GeoJSON to KML
-# library(dplyr)
-# geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-#             dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
-#             export = T,
-#             geom.types = c("POINT"),
-#             geojson.name = "caravanserail_outKML")
+library(dplyr)
+geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
+            export = T,
+            geom.types = c("POINT"),
+            geojson.name = "caravanserail_outKML")
