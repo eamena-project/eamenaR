@@ -106,15 +106,17 @@ flowchart LR
     C --2. export as KML file--> B((Google Earth));
     B --3. create POLYGON geometries--> B;
     B --4. export as KML/KMZ--> C;
-    C -.5. add new GeoJSON geometries.-> A;
+    C --5. add new GeoJSON geometries--> D("geojson_csv()"):::eamenaRfunction;
+    D -.6. import.-> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
 
 
 legend:  
 `- - -` : to be completed  
-fonction: [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
-
+function: 
+  - [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
+  - [geojson_csv()](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
 ---
 
 For example:
@@ -135,7 +137,7 @@ geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson
 
 Draw POLYGONS in Google Earth. Name the new POLYGONS with the ResourceID of the HPs
 
-![](geojson_kml_toKML_polygon.png)
+![](results/geojson_kml_toKML_polygon.png)
 
 Export as KML (caravanserail_outKML2.kml). Convert this file into GeoJSON, but only for the POLYGONS which are the new geometries
 
@@ -146,6 +148,8 @@ geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/carava
             geom.types = c("POLYGON"),
             geojson.name = "caravanserail_outGeoJSON")
 ```
+
+The result is new POLYGON geometries (see example of 2 new created polygons: [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
 
 ### BU mapping
 
