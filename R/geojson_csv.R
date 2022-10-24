@@ -18,7 +18,6 @@
 #' @export
 geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                                            "/extdata/caravanserail_outGeoJSON.geojson"),
-                        # geom.types = c("POINT", "LINE", "POLYGON"),
                         export = T,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/extdata/"),

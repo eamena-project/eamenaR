@@ -138,18 +138,32 @@ geojson_kml(geom.types = c("POINT"),
 ![](results/geojson_kml_toKML_polygon.png)
 
 4. Export as KML ('caravanserail_outKML2.kml')
-5. Convert 'caravanserail_outKML2.kml' into GeoJSON, ⚠️ but only the POLYGONs which are the new geometries
+5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, ⚠️ but only the POLYGONs which are the new geometries
 
 ```
 geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
                                            "/extdata/caravanserail_outKML2.kml")
-            dirOut = paste0(system.file(package = "eamenaR"),
-                                           "/extdata/"),
             geom.types = c("POLYGON"),
             geojson.name = "caravanserail_outGeoJSON")
 ```
 
 The result is new POLYGON geometries (see example of 2 new created polygons: [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
+
+6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv) function
+
+```
+geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/caravanserail_outGeoJSON.geojson"),
+                        csv.name = "caravanserail_outCSV")
+```
+
+The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP
+
+```
+"ResourceID","Geometric Place Expression"
+"8db560d5-d17d-40ff-8046-0157b1b698ab","MULTIPOLYGON (((61.4023 30.77373, 61.4019 30.77371, 61.40194 30.77344, 61.40235 30.77345, 61.4023 30.77373)))"
+"b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))"
+```
 
 ### BU mapping
 
