@@ -116,36 +116,35 @@ flowchart LR
 legend:  
 `- - -` : to be completed  
 function: 
-  - [geojson_kml()](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
-  - [geojson_csv()](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
+  - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
+  - [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
 ---
 
 For example:
 
-1. Export **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) from EAMENA as a GeoJSON file (see: [Export an EAMENA search to a GeoJSON file]())
-2. Convert caravanserail.geojson to a KML file with the geojson_kml() function, filtering on POINTS:
+1. Export **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) from EAMENA as a GeoJSON file (see: [Export an EAMENA search to a GeoJSON file](https://github.com/eamena-oxford/eamenaR#export-an-eamena-search-to-a-geojson-file))
+2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS:
 
 ```
 library(dplyr)
-geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
-            export = T,
-            geom.types = c("POINT"),
+geojson_kml(geom.types = c("POINT"),
             geojson.name = "caravanserail_outKML")
 ```
 
 ![](results/geojson_kml_toKML.png)
 
-Draw POLYGONS in Google Earth. Name the new POLYGONS with the ResourceID of the HPs
+3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the new POLYGONS with the ResourceID of the HPs
 
 ![](results/geojson_kml_toKML_polygon.png)
 
-Export as KML (caravanserail_outKML2.kml). Convert this file into GeoJSON, but only for the POLYGONS which are the new geometries
+4. Export as KML ('caravanserail_outKML2.kml')
+5. Convert 'caravanserail_outKML2.kml' into GeoJSON, ⚠️ but only the POLYGONs which are the new geometries
 
 ```
-geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/caravanserail_outKML2.kml",
-            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
-            export = T,
+geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/caravanserail_outKML2.kml")
+            dirOut = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/"),
             geom.types = c("POLYGON"),
             geojson.name = "caravanserail_outGeoJSON")
 ```
