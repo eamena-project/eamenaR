@@ -101,10 +101,18 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
 }
 #
 
-# # from GeoJSON to KML
-library(dplyr)
-geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-            dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
-            export = T,
-            geom.types = c("POINT"),
-            geojson.name = "caravanserail_outKML")
+# # # from GeoJSON to KML
+# library(dplyr)
+# geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+#             dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
+#             export = T,
+#             geom.types = c("POINT"),
+#             geojson.name = "caravanserail_outKML")
+
+# # # from GeoJSON to KML
+# library(dplyr)
+# geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/caravanserail_outKML2.kml",
+#             dirOut = "C:/Users/Thomas Huet/Desktop/GE-EAMENA/Waypoints/",
+#             export = T,
+#             geom.types = c("POLYGON"),
+#             geojson.name = "caravanserail_outGeoJSON")

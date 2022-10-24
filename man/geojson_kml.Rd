@@ -10,7 +10,8 @@ geojson_kml(
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
   geojson.name = "Waypoints",
-  selectedFields = c("EAMENA.ID", "Resource.Name", "Geometry.Extent.Certainty"),
+  selectedName = "EAMENA.ID",
+  selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
   verbose = T
 )
 }
@@ -25,7 +26,9 @@ geojson_kml(
 
 \item{geojson.name}{the name of the KML/KMZ/GeoJSON that will be created without the extension}
 
-\item{selectedFields}{for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: `c("EAMENA.ID"`.}
+\item{selectedName}{for KML export only. The field selected to be the KML name of the HP, by default "EAMENA.ID".}
+
+\item{selectedFields}{for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c("EAMENA.ID","Resource.Name", "resourceid").}
 
 \item{verbose}{if TRUE (by default) then display different messages.}
 }
