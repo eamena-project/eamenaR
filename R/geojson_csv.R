@@ -13,6 +13,8 @@
 #'
 #' @examples
 #'
+#' geojson_kml()
+#'
 #' @export
 geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                                            "/extdata/caravanserail_outGeoJSON.geojson"),
@@ -20,7 +22,17 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                         export = T,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/extdata/"),
-                        csv.name = "Waypoints",
+                        csv.name = "caravanserail_outCSV",
                         verbose = T){
-
+  if(verbose){print(paste0("*read: ", geom.path))}
+  geom <- sf::st_read(geom.path, quiet = TRUE)
+  geom.noZ <- sf::st_zm(geom)
+  if(verbose){print(paste0(" ... Z-dim is removed"))}
+  df <- data.frame("ResourceID" = geom.noZ$Name,
+                   "Geometric Place Expression" = sf::st_as_text(geom.noZ$geometry),
+                   check.names = FALSE)
+  outCSV <- paste0(dirOut, csv.name, ".csv")
+  write.table(df, outCSV,
+             row.names = FALSE, sep = ",")
+  if(verbose){print(paste0("Exported to: ", outCSV))}
 }

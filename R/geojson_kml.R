@@ -43,28 +43,32 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                         selectedFields = c("EAMENA.ID","Resource.Name", "resourceid"),
                         verbose = T){
   ext <- DescTools::SplitPath(geom.path)$extension
+  if(verbose){print(paste0("*read: ", geom.path))}
   if(ext == "geojson"){
-    geom <- sf::st_read(geom.path)
+    geom <- sf::st_read(geom.path, quiet = TRUE)
     toGeom <- ".kml"
   }
   if(ext == "kmz"){
     # extract/de-compress gives a KML
     td <- tempdir()
     KML <- unzip(geom.path, exdir = td, junkpaths = TRUE)
-    geom <- sf::st_read(KML)
+    geom <- sf::st_read(KML, quiet = TRUE)
     toGeom <- ".geojson"
   }
   if(ext == "kml"){
-    geom <- sf::st_read(geom.path)
+    geom <- sf::st_read(geom.path, quiet = TRUE)
     toGeom <- ".geojson"
   }
+  if(verbose){print(paste0(" ... done"))}
   selectedGeom <- paste0(geom.types,  collapse = "|")
+  if(verbose){print(paste0("Filter on selected geometries: ", selectedGeom))}
   geom <- geom %>%
     filter(grepl(selectedGeom, sf::st_geometry_type(geometry)))
   if(export){
+    outFile <- paste0(dirOut, geojson.name, toGeom)
     if(ext == "kmz" | ext == "kml"){
       sf::st_write(geom,
-                   paste0(dirOut, geojson.name, toGeom),
+                   outFile,
                    delete_dsn = TRUE)
     }
     if(ext == "geojson"){
@@ -85,7 +89,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       # geom$Description <- geom[[selectedDescription]]
       # geom$Description <- geom$resourceid
       sf::st_write(geom,
-                   paste0(dirOut, geojson.name, toGeom),
+                   outFile,
                    driver = "kml",
                    delete_dsn = TRUE)
       # # tried this:
@@ -95,6 +99,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       #                 driver="KML",
       #                 layer="poly")
     }
+    if(verbose){print(paste0("Exported file: ", outFile))}
   } else {
     plot(geom)
   }
