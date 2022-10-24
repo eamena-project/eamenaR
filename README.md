@@ -11,6 +11,7 @@ The functions names refer to their content :
 
 | function prefix      | Description                          |
 | -----------          | -----------                          |
+| geojson_*            | all functions that deal with GeoJSON |
 | list_*               | structure a dataset                  |
 | plot_*               | creates a map, a graphic, etc.       |
 | ref_*                | creates a refence dataset            |
@@ -167,7 +168,7 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-o
 
 ### BU mapping
 
-Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the `list_mapping_bu()` function. This function uses a mapping file to create the equivalences between the source file and the target file
+Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 <center>
   
@@ -211,7 +212,7 @@ The mapping file has three columns, one for the target ('`EAMENA`'), two for the
       - execute an R code ('expression');
       - etc.;
 
-The eamenaR function is `list_mapping_bu()`. Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the  `geom_within_gs()` to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The eamenaR function is [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu). Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
@@ -247,7 +248,7 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 
 #### Grid cell ID
 
-To recover the Grid cell ID for a given coordinates, use the `geom_bbox()` function on the BU file to retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the heritage places and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the `geom_within_gs()` function to retrieve the correct Grid square ID for each heritage place in the BU.
+To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file to retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the heritage places and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
 
 
 ## Typology
@@ -270,7 +271,7 @@ geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
   <img alt="img-name" src="./results/caravanserail.png" width="500">
 </p>
 
-Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the function options.
+Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function options.
 
 ```
 geojson_map(map.name = "caravanserail",
@@ -307,7 +308,7 @@ It will create two series of maps, one for each field (`"Disturbance Cause Type 
 
 #### Heritages places IDs ➡️ EAMENA ID 
 
-Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running:
+Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running the [`geojson_stat()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_stat) function:
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
@@ -326,7 +327,7 @@ Will give:
 ```
 #### Paths
 
-Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.)
+Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.). Map them using the [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) function
 
 ```
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
@@ -349,7 +350,7 @@ geojson_boxplot_path(export.plot = T)
 
 #### Measurements
 
-Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right):
+Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right) with the [`geojson_measurements()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_measurements) function:
 
 ```
 require(gridExtra)
@@ -366,7 +367,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 
 ### Geoarchaeology
 
-For MaREA geoarchaeological data:
+For MaREA geoarchaeological data, with the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function:
 
 ```
 geojson_map(map.name = "geoarch",
@@ -396,7 +397,7 @@ library(hash)
 d <- hash()
 ```
 
-Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID
+Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID using the [`list_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/list_cultural_periods) function
 
 ```
 d <- list_cultural_periods(db = "geojson", 
@@ -412,8 +413,7 @@ and superiods
   <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="500">
 </p>
 
-Here, the `plot_cultural_periods()` function will export two PNG charts for the default **caravanserail.geojson** file.
-Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
+Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)
@@ -426,6 +426,8 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 
 Performs an aoristic analysis. By default, the function reads the sample data `disturbances_edtf.xlsx` and performs the analysis by days (year-month-day: ``ymd``). Two graphs are created, one adding up all the threats, and the other where each category of threat is individualised.
 
+Run the [`plot_edtf()`](https://eamena-oxford.github.io/eamenaR/doc/plot_edtf) function with the default parameters.
+
 ```
 library(dplyr)
 
@@ -436,7 +438,7 @@ plot_edtf()
   <img alt="img-name" src="./results/edtf_plotly_category_ymd.png" width="500">
 </p>
 
-Aggregate the dates by months (`"ym"`) by thearts categories
+Aggregate the dates by months (`"ym"`) by thearts categories.
 
 ```
 plot_edtf(edtf_span = "ym", edtf_analyse = "category")
