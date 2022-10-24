@@ -99,6 +99,7 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
 
 ---
+  
 
 ```mermaid
 flowchart LR
@@ -110,7 +111,7 @@ flowchart LR
     D -.6. import.-> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
-
+  
 
 legend:  
 `- - -` : to be completed  
