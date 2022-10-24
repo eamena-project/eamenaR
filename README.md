@@ -38,7 +38,7 @@ By default, the output will be saved in the `results/` folder. You can change th
 ### GeoJSON files
 
 Create a search in EAMENA, in the export menu, copy the GeoJSON URL, paste it into your web browser and create a GeoJSON file[^1].
-#### Export an EAMENA search ot a GeoJSON file
+#### Export an EAMENA search to a GeoJSON file
 
 Use [EAMENA](https://database.eamena.org/) to create a GeoJSON dataset. This dataset can then be used by the [eamenaR](https://github.com/eamena-oxford/eamenaR#readme) package and the [reveal.js](https://github.com/eamena-oxford/reveal.js#readme) framework
 
@@ -122,7 +122,7 @@ function:
 
 For example:
 
-1. Export caravanserails from EAMENA as a GeoJSON file (see: XXX)
+1. Export **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) from EAMENA as a GeoJSON file (see: [Export an EAMENA search to a GeoJSON file]())
 2. Convert caravanserail.geojson to a KML file with the geojson_kml() function, filtering on POINTS:
 
 ```
