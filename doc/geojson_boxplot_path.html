@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a boxplot with paths distances between different...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_boxplot_path"><tr><td>geojson_boxplot_path</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a boxplot with paths distances between different heritage places</h2>
+
+<h3>Usage</h3>
+
+<pre>
+geojson_boxplot_path(
+  plot.name = "box_path",
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  csv.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_paths.csv"),
+  plotly.plot = F,
+  export.plot = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  fig.width = 9,
+  fig.height = 5
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>plot.name</code></td>
+<td>
+<p>the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default &quot;box_path&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.path</code></td>
+<td>
+<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+</td></tr>
+<tr valign="top"><td><code>csv.path</code></td>
+<td>
+<p>the path to the CSV where the edges between two heritage places are recorded.</p>
+</td></tr>
+<tr valign="top"><td><code>plotly.plot</code></td>
+<td>
+<p>if TRUE, export the plot, if FALSE will only display it</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, show the plot in Plotly window.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'.
+If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+# normal plot
+geojson_boxplot_path(export.plot = T)
+
+# Plotly plot
+geojson_boxplot_path(plotly.plot = T)
+
+</pre>
+
+
+</div></body></html>

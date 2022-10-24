@@ -35,4 +35,6 @@ Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Goo
 }
 \examples{
 
+geojson_kml()
+
 }
