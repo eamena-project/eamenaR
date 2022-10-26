@@ -30,6 +30,7 @@ geojson_csv <- function(geom.path = paste0(system.file(package = "eamenaR"),
   n <- nrow(geom.noZ)
   df <- data.frame("ResourceID" = geom.noZ$Name,
                    "Geometric Place Expression" = sf::st_as_text(geom.noZ$geometry),
+                   # TODO: modify these values
                    "Location Certainty" = rep("High", n),
                    "Geometry Extent Certainty" = rep("High", n),
                    "Geometry Type" = rep("Perimeter Polygon", n),
