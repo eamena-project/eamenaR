@@ -99,13 +99,10 @@ flowchart LR
     B --3. create POLYGON geometries--> B;
     B --4. KML/KMZ--> C;
     C --5. GeoJSON--> D("geojson_csv()"):::eamenaRfunction;
-    D -.6. import.-> A;
+    D --6. import--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
   
-
-legend:  
-`- - -` : to be completed  
 functions: 
   - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
   - [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
