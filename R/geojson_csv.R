@@ -27,8 +27,12 @@ geojson_csv <- function(geom.path = paste0(system.file(package = "eamenaR"),
   geom <- sf::st_read(geom.path, quiet = TRUE)
   geom.noZ <- sf::st_zm(geom)
   if(verbose){print(paste0(" ... Z-dim is removed"))}
+  n <- nrow(geom.noZ)
   df <- data.frame("ResourceID" = geom.noZ$Name,
                    "Geometric Place Expression" = sf::st_as_text(geom.noZ$geometry),
+                   "Location Certainty" = rep("High", n),
+                   "Geometry Extent Certainty" = rep("High", n),
+                   "Geometry Type" = rep("Perimeter Polygon", n),
                    check.names = FALSE)
   outCSV <- paste0(dirOut, csv.name, ".csv")
   write.table(df, outCSV,
