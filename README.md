@@ -158,7 +158,7 @@ These new geometries can be uploaded into EAMENA using the `-ow append` argument
 python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
 ```
 
-Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example EAMENA-0192281[^4] [geojson file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson) or [EAMENA record](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)
+Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the [geojson file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson) or the [EAMENA record](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab) of EAMENA-0192281[^4]. 
 
 ### BU mapping
 
