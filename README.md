@@ -7,7 +7,7 @@ The two main sources of data are: GeoJSON files exported by [EAMEANA searches](h
 
 ```mermaid
 flowchart LR
-    A[(EAMENA<br>DB)] --export GeoJSON--> B("eamenaR"):::eamenaRpkg;
+    A[(EAMENA<br>DB)] --export GeoJSON--> B{{"eamenaR"}}:::eamenaRpkg;
     B --data management--> B;
     B <--data exchange--> C((third part<br>app));
     B --import--> A;
