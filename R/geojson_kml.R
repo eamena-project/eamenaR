@@ -19,11 +19,8 @@
 #' library(dplyr)
 #'
 #' # from KMZ to GeoJSON
-#' geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
-#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-#'                    geom.types = "POLYGON",
-#'                    export = T,
-#'                    geojson.name = "Waypoints_outGeoJSON")
+#' library(dplyr)
+#' geojson_kml(geom.types = "POINT")
 #'
 #' # from GeoJSON to KML
 #' geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
@@ -105,6 +102,8 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
   }
 }
 #
+
+
 
 # # # from GeoJSON to KML
 # library(dplyr)

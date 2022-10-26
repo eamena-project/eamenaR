@@ -13,10 +13,10 @@
 #'
 #' @examples
 #'
-#' geojson_kml()
+#' geojson_csv()
 #'
 #' @export
-geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
+geojson_csv <- function(geom.path = paste0(system.file(package = "eamenaR"),
                                            "/extdata/caravanserail_outGeoJSON.geojson"),
                         export = T,
                         dirOut = paste0(system.file(package = "eamenaR"),

@@ -94,11 +94,11 @@ Most of the geometries in EAMENA are POINTS (Center Point). The objective is to 
 
 ```mermaid
 flowchart LR
-    A[(EAMENA DB)] --1. export as GeoJSON--> C("geojson_kml()"):::eamenaRfunction;
-    C --2. export as KML file--> B((Google Earth));
+    A[(EAMENA DB)] --1. GeoJSON--> C("geojson_kml()"):::eamenaRfunction;
+    C --2. KML--> B((Google Earth));
     B --3. create POLYGON geometries--> B;
-    B --4. export as KML/KMZ--> C;
-    C --5. export as GeoJSON--> D("geojson_csv()"):::eamenaRfunction;
+    B --4. KML/KMZ--> C;
+    C --5. GeoJSON--> D("geojson_csv()"):::eamenaRfunction;
     D -.6. import.-> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
@@ -199,11 +199,11 @@ The mapping file has three columns, one for the target ('`EAMENA`'), two for the
   - '`EAMENA`': names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field. This column will always be the same. 
 2. **source**:
   - The source depends on the different authors:
-    - job: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
-    - job_type: the type of action to perform on the source data (e.g. '`mk_type`'). This can be: 
-      - repeat a single value for the whole BU ('value');
-      - get the different values of a source field and add these different values in a BU field ('field');
-      - execute an R code ('expression');
+    - `job`: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
+    - `job_type`: the type of action to perform on the source data (e.g. '`mk_type`'). This can be: 
+      - '`value`': repeat a single value for the whole BU;
+      - '`field`': get the different values of a source field and add these different values in a BU field;
+      - '`expression`': execute an R code snippet;
       - etc.;
 
 The eamenaR function is [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu). Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
@@ -242,7 +242,7 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 
 #### Grid cell ID
 
-To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file to retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the heritage places and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
+To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file. This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
 
 
 ## Typology
