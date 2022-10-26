@@ -142,9 +142,9 @@ The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](htt
 6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv) function
 
 ```
-geojson_csv <- function(geom.path = paste0(system.file(package = "eamenaR"),
-                                           "/extdata/caravanserail_outGeoJSON.geojson"),
-                        csv.name = "caravanserail_outCSV")
+geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
+                               "/extdata/caravanserail_outGeoJSON.geojson"),
+            csv.name = "caravanserail_outCSV")
 ```
 
 The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP
