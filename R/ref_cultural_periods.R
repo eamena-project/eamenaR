@@ -1,7 +1,12 @@
 #' Create a list of child-concepts below Cultural Period of all periods with their duration
 #' @name ref_cultural_periods
 #' @description create a list concepts below Cultural Period of all periods
-#' with their durations. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
+#' with their duration. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
+#'
+#' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format
+#' @param d a hash() object (a Python-like dictionary)
+#' @param field the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods"
+#' @param verbose if TRUE (by default), print messages
 #'
 #' @return NA
 #'
@@ -15,13 +20,18 @@
 #'                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                     port = 5432)
 #'
-#' # get cultural periods
-#' d <- list_concepts(db.con = my_con, d = d, field = "cultural_periods", uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-#' d <- ref_cultural_periods(db.con = my_con, d = d, field = "cultural_periods")
-#'
-#' # get subcultural periods
-#' d <- list_concepts(db.con = my_con, d = d, field = "subcultural_periods", uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
-#' d <- ref_cultural_periods(db.con = my_con, d = d, field = "subcultural_periods")
+#'# get cultural periods
+#'d <- list_child_concepts(db.con = my_con, d = d,
+#'                         field = "cultural_periods",
+#'                         uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+#'d <- ref_cultural_periods(db.con = my_con, d = d,
+#'                          field = "cultural_periods")
+#'# get subcultural periods
+#'d <- list_child_concepts(db.con = my_con, d = d,
+#'                         field = "subcultural_periods",
+#'                         uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+#'d <- ref_cultural_periods(db.con = my_con, d = d,
+#'                          field = "subcultural_periods")
 #'
 #' # and export as TSV
 #' df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
@@ -34,7 +44,8 @@
 #' @export
 ref_cultural_periods <- function(db.con = NA,
                                  d = NA,
-                                 field = NA){
+                                 field = NA,
+                                 verbose = TRUE){
   g <- d[[field]]
   leaves.names <- igraph::V(g)[igraph::degree(g,
                                               mode="out") == 0]
@@ -53,7 +64,7 @@ ref_cultural_periods <- function(db.con = NA,
     # i <- 1
     name <- leaves.names[i]
     uuid <- leaves.uuid[i]
-    print(paste(i, name))
+    if(verbose){print(paste(i, name))}
     sqll <- stringr::str_interp("
       SELECT conceptid::text FROM values WHERE value = '${name}'
                          ")
@@ -72,13 +83,15 @@ ref_cultural_periods <- function(db.con = NA,
     # The cultural period duration is recorded as "600 1200" in a 'scopeNote'
     culturalper.duration <- df.name.duration[df.name.duration$valuetype == 'scopeNote', "value"]
     if(length(culturalper.duration) > 0){
-      # some cultural periods haven't any 'scopeNote'
-      taq <- stringr::str_split(culturalper.duration, pattern = "\t")[[1]][1]
-      tpq <- stringr::str_split(culturalper.duration, pattern = "\t")[[1]][2]
+      # some cultural periods haven't any 'scopeNote', split on \t or [space]
+      taq <- stringr::str_split(culturalper.duration, pattern = "\t| ")[[1]][1]
+      tpq <- stringr::str_split(culturalper.duration, pattern = "\t| ")[[1]][2]
       # print(uuid)
       df[i, ] <- c(uuid, name, taq, tpq, "")
     } else {
-      print(paste(" - The (sub)period", name, "has no 'scopeNote' (ie, no duration)"))
+      if(verbose){print(paste(" - The (sub)period",
+                              name,
+                              "has no 'scopeNote' (ie, no duration)"))}
     }
     # df.name <- df.name.duration[df.name.duration$valuetype == 'scopeNote', "value"]
   }

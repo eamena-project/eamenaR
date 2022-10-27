@@ -3,10 +3,7 @@
 #' @description With a given concept UUID (v. Reference Data Manager), find all
 #' the cultural periods, subperiods, etc., of a given HP
 #'
-#' @param db the name of the database or dataset, by default 'eamena'.
-#' If 'eamena': will connect the Pg database.
-#' If 'geojson', will read the GeoJSON file path
-#' recorded in the parameter 'geojson.path'
+#' @param db the name of the database or dataset, by default 'eamena'. If 'eamena': will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.
 #' @param d a hash() object (a Python-like dictionary)
 #' @param uuid the UUIDs of one or several HP, only useful if db = 'eamena'. These
 #' UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
