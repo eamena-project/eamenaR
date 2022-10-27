@@ -386,7 +386,11 @@ Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-
 
 ### Cultural Periods
 
-#### Plot cultural period from a GeoJSON file
+#### Reference cultural periods
+
+Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) to retrieve cultural periods list directly from the EAMENA DB
+
+#### Plot cultural periods from a GeoJSON file
 
 Create a hash dictonnary named `d` to store all data
 
