@@ -15,10 +15,7 @@ list_cultural_periods(
 )
 }
 \arguments{
-\item{db}{the name of the database or dataset, by default 'eamena'.
-If 'eamena': will connect the Pg database.
-If 'geojson', will read the GeoJSON file path
-recorded in the parameter 'geojson.path'}
+\item{db}{the name of the database or dataset, by default 'eamena'. If 'eamena': will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.}
 
 \item{d}{a hash() object (a Python-like dictionary)}
 

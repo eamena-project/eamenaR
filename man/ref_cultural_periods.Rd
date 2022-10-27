@@ -4,14 +4,23 @@
 \alias{ref_cultural_periods}
 \title{Create a list of child-concepts below Cultural Period of all periods with their duration}
 \usage{
-ref_cultural_periods(db.con = NA, d = NA, field = NA)
+ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
+}
+\arguments{
+\item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format}
+
+\item{d}{a hash() object (a Python-like dictionary)}
+
+\item{field}{the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods"}
+
+\item{verbose}{if TRUE (by default), print messages}
 }
 \value{
 NA
 }
 \description{
 create a list concepts below Cultural Period of all periods
-with their durations. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
+with their duration. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
 }
 \examples{
 
@@ -24,12 +33,17 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                     port = 5432)
 
 # get cultural periods
-d <- list_concepts(db.con = my_con, d = d, field = "cultural_periods", uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-d <- ref_cultural_periods(db.con = my_con, d = d, field = "cultural_periods")
-
+d <- list_child_concepts(db.con = my_con, d = d,
+                        field = "cultural_periods",
+                        uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+d <- ref_cultural_periods(db.con = my_con, d = d,
+                         field = "cultural_periods")
 # get subcultural periods
-d <- list_concepts(db.con = my_con, d = d, field = "subcultural_periods", uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
-d <- ref_cultural_periods(db.con = my_con, d = d, field = "subcultural_periods")
+d <- list_child_concepts(db.con = my_con, d = d,
+                        field = "subcultural_periods",
+                        uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+d <- ref_cultural_periods(db.con = my_con, d = d,
+                         field = "subcultural_periods")
 
 # and export as TSV
 df.periods <- rbind(d$cultural_periods, d$subcultural_periods)

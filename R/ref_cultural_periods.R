@@ -86,6 +86,10 @@ ref_cultural_periods <- function(db.con = NA,
       # some cultural periods haven't any 'scopeNote', split on \t or [space]
       taq <- stringr::str_split(culturalper.duration, pattern = "\t| ")[[1]][1]
       tpq <- stringr::str_split(culturalper.duration, pattern = "\t| ")[[1]][2]
+      if(tpq == 'Present'){
+        # replaced by current year
+        tpq <- format(Sys.Date(), "%Y")
+      }
       # print(uuid)
       df[i, ] <- c(uuid, name, taq, tpq, "")
     } else {

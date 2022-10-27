@@ -2,17 +2,14 @@
 % Please edit documentation in R/geojson_csv.R
 \name{geojson_csv}
 \alias{geojson_csv}
-\alias{geojson_kml}
 \title{Convert from GeoJSON to CSV}
 \usage{
-geojson_kml(
-  geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
-  geom.types = c("POINT", "LINE", "POLYGON"),
+geojson_csv(
+  geom.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_outGeoJSON.geojson"),
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
-  geojson.name = "Waypoints",
-  selectedName = "EAMENA.ID",
-  selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
+  csv.name = "caravanserail_outCSV",
   verbose = T
 )
 }
@@ -23,9 +20,9 @@ geojson_kml(
 
 \item{dirOut}{the path to the folder where the CSV file will be created.}
 
-\item{verbose}{if TRUE (by default) then display different messages.}
-
 \item{csv.name}{the name of the CSV that will be created without the extension}
+
+\item{verbose}{if TRUE (by default) then display different messages.}
 }
 \value{
 a CSV file
@@ -35,6 +32,6 @@ Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Goo
 }
 \examples{
 
-geojson_kml()
+geojson_csv()
 
 }

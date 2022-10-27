@@ -43,11 +43,8 @@ Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Goo
 library(dplyr)
 
 # from KMZ to GeoJSON
-geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/Waypoints.kmz",
-                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-                   geom.types = "POLYGON",
-                   export = T,
-                   geojson.name = "Waypoints_outGeoJSON")
+library(dplyr)
+geojson_kml(geom.types = "POINT")
 
 # from GeoJSON to KML
 geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
