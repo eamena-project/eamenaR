@@ -1,9 +1,9 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) facets of the [EAMENA database](https://database.eamena.org/en/).  
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data of the [EAMENA database](https://database.eamena.org/en/).  
   
-The two main sources of data are: GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database (restricted to the DB manager). The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web. Together with these function, the package offers different methods to manage inputs and outputs from/to EAMENA.
+The two main sources of data are: GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database (restricted access). The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web. Together with these function, the package offers different methods to manage inputs and outputs from/to EAMENA.
 
 ```mermaid
 flowchart LR
@@ -39,7 +39,10 @@ And load the package
 library(eamenaR)
 ```
 
-By default, the output will be saved in the `results/` or `extdata/` folders. You can change the output folder by changing the `dirOut` option in the various functions.
+---
+**How it works ?**
+The root directory on your local computer will be (*run*): `system.file(package = "eamenaR")`. By default, output will be saved in the `results/` folder. You can change this output folder by changing the `dirOut` option in the various functions to your choice. The `inst/extdata/` folder collects different sample files (GeoJSON, KML/KMZ, XLSX, etc.). 
+---
 
 # Prepare your data
 
@@ -386,9 +389,56 @@ Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-
 
 ### Cultural Periods
 
-#### Reference cultural periods
+#### Cultural and Subcultural periods references
 
-Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) to retrieve cultural periods list directly from the EAMENA DB
+Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) to retrieve cultural periods list directly from the EAMENA DB. 
+
+```
+# create an hash dictionnary to store the cultural ans subcultural periods
+d <- hash::hash()
+# replace 'xxx' with the username and password
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+# get cultural periods and subcultural periods
+d <- list_child_concepts(db.con = my_con, d = d, 
+                         field = "cultural_periods", 
+                         uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+d <- ref_cultural_periods(db.con = my_con, d = d,
+                          field = "cultural_periods")
+d <- list_child_concepts(db.con = my_con, d = d, 
+                         field = "subcultural_periods", 
+                         uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+d <- ref_cultural_periods(db.con = my_con, d = d,
+                          field = "subcultural_periods")
+# export as TSV
+df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
+tout <- paste0("C:/Rprojects/eamenaR/results/cultural_periods.tsv")
+write.table(df.periods, tout, sep ="\t", row.names = F)
+# disconnect from the DB
+RPostgres::dbDisconnect(my_con)
+```
+
+Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
+
+---
+**How it works ?**
+
+This function connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="450">
+</p>
+
+The start date and end date are stored in the `ScopeNote` of each cultural periods and subperiods
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="450">
+</p>
+---
 
 #### Plot cultural periods from a GeoJSON file
 

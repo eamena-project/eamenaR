@@ -20,13 +20,13 @@ NA
 }
 \description{
 create a list concepts below Cultural Period of all periods
-with their duration. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
+with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
 }
 \examples{
 
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                    user = 'postgres',
+                    user = 'xxx',
                     password = xxx,
                     dbname = 'eamena',
                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
@@ -45,12 +45,14 @@ d <- list_child_concepts(db.con = my_con, d = d,
 d <- ref_cultural_periods(db.con = my_con, d = d,
                          field = "subcultural_periods")
 
-# and export as TSV
+# export as TSV
 df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
-tout <- paste0(paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
-write.table(df.periods, tout, sep ="\t", row.names = F)
+tout <- paste0(paste0(system.file(package = "eamenaR"), "/results/"))
+dir.create(tout, showWarnings = FALSE)
+write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
+            sep ="\t", row.names = F)
 
-# also, remember to disconnect
+# remember to disconnect from the DB
 RPostgres::dbDisconnect(my_con)
 
 }

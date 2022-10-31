@@ -1,7 +1,7 @@
 #' Create a list of child-concepts below Cultural Period of all periods with their duration
 #' @name ref_cultural_periods
 #' @description create a list concepts below Cultural Period of all periods
-#' with their duration. Duration of each period are listed in the 'scopeNote' of this period. A periodo colum is added to the output dataframe. If 'export.table' then write a CSV file
+#' with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
 #'
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format
 #' @param d a hash() object (a Python-like dictionary)
@@ -14,7 +14,7 @@
 #'
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-#'                     user = 'postgres',
+#'                     user = 'xxx',
 #'                     password = xxx,
 #'                     dbname = 'eamena',
 #'                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
@@ -33,12 +33,14 @@
 #'d <- ref_cultural_periods(db.con = my_con, d = d,
 #'                          field = "subcultural_periods")
 #'
-#' # and export as TSV
+#' # export as TSV
 #' df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
-#' tout <- paste0(paste0(system.file(package = "eamenaR"), "/extdata/"), "cultural_periods.tsv")
-#' write.table(df.periods, tout, sep ="\t", row.names = F)
+#' tout <- paste0(paste0(system.file(package = "eamenaR"), "/results/"))
+#' dir.create(tout, showWarnings = FALSE)
+#' write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
+#'             sep ="\t", row.names = F)
 #'
-#' # also, remember to disconnect
+#' # remember to disconnect from the DB
 #' RPostgres::dbDisconnect(my_con)
 #'
 #' @export
@@ -57,8 +59,7 @@ ref_cultural_periods <- function(db.con = NA,
   df <- data.frame(ea.uuid = leaves.uuid,
                    ea.name = leaves.names,
                    ea.duration.taq = rep("", length(leaves.names)),
-                   ea.duration.tpq = rep("", length(leaves.names)),
-                   periodo = rep("", length(leaves.names)))
+                   ea.duration.tpq = rep("", length(leaves.names)))
   # durations
   for(i in seq(1, length(leaves.names))){
     # i <- 1
