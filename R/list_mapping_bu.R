@@ -1,6 +1,6 @@
 #' Fill an empty BU template with data from an unformatted XLSX
 #' @name list_mapping_bu
-#' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU). This function can use, for example, \link[eamenaR]{geom_within_gs} to test if the coordinates are within a grid cell.
+#' @description Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU). This function can use, for example, \link[eamenaR]{geom_within_gs()} to test if the coordinates are within a grid cell.
 #' @param bu.path the path to the BU folder. The BU folder (`bu/`) is the root of job folders (ex: 'mk/', see the 'job' option description). Each job contains one to several BU worksheets. The output subfolder `out/` will be created by the function to store the output files. BU files could be either XLSX or CSV.
 #' @param bu.template.path the path to the BU template. The output will be written into this structure
 #' @param mapping.file the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).

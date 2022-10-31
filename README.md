@@ -181,8 +181,8 @@ Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxfo
 ```mermaid
 flowchart LR
     A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;;
-    B --2. mapping file--> B;
-    B --1. export--> C[BU file<br><em>target</em>];
+    B --1. mapping file--> B;
+    B --2. export--> C[BU file<br><em>target</em>];
     classDef eamenaRfunction fill:#e7deca;
 ```
 
@@ -194,10 +194,11 @@ For example, the dataset prepared by Mohamed Kenawi (`mk`):
 ```
 library(dplyr)
 
+ggsheet <- 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'
 list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
                 job = "mk",
                 verb = T,
-                mapping.file = 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625',
+                mapping.file = ggsheet,
                 mapping.file.ggsheet = T)
 ```
 
