@@ -15,7 +15,7 @@ Together with analysis functions, the package offers different methods to manage
 
 ```mermaid
 flowchart LR
-    A[(EAMENA<br>DB)] --export GeoJSON--> B{{"eamenaR"}}:::eamenaRpkg;
+    A[(EAMENA<br>DB)] --export<br>GeoJSON--> B{{"eamenaR"}}:::eamenaRpkg;
     B --data management--> B;
     B <--data exchange--> C((third part<br>app));
     B --import--> A;
@@ -445,7 +445,7 @@ Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/re
   
 **How it works ?**
 
-This function connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
+These two functions connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="550">
