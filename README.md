@@ -3,7 +3,15 @@
 
 The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data of the [EAMENA database](https://database.eamena.org/en/).  
   
-The two main sources of data are: GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), or via a direct connection to the EAMENA PostgreSQL database (restricted access). The two main types of output are static graphs and maps, for publication on paper, and interactive graphs and maps for publication on the web. Together with these function, the package offers different methods to manage inputs and outputs from/to EAMENA.
+The two main sources of data are: 
+* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), 
+* data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access). 
+
+The two main types of output are:
+* static graphs and maps, for publication on paper;
+* interactive graphs and maps for publication on the web;
+
+Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA.
 
 ```mermaid
 flowchart LR
@@ -17,13 +25,13 @@ flowchart LR
    
 The functions names refer to their content :
 
-| function prefix      | Description                                            |
-| -----------          | -----------                                            |
-| geojson_*            | all functions that deal with GeoJSON                   |
-| geom_*               | any other function that deals with geometries          |
-| list_*               | structure a dataset                                    |
-| plot_*               | creates a map, a graphic, etc.                         |
-| ref_*                | creates a refence dataset                              |
+| Function prefix      | Description                                            | Example                |
+| -----------          | -----------                                            |------                  |
+| geojson_*            | all functions that deal with GeoJSON                   | geojson_map()          |
+| geom_*               | any other function that deals with geometries          | geom_bbox()            |
+| list_*               | structure a dataset                                    | list_mapping_bu()      |
+| plot_*               | creates a map, a graphic, etc.                         | plot_edtf()            |
+| ref_*                | creates a refence dataset                              | ref_cultural_periods() |
 
 # Install and load package
 
