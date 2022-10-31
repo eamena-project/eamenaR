@@ -238,7 +238,7 @@ Export a new BU worksheet.
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out.png" width="600">
   <br>
-    <em>screenshot of the output BU</em>
+  <em>screenshot of the output BU</em>
 </p>
 
 The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-lines headers. Once done, the BU can be sent to EAMENA.
@@ -246,7 +246,7 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out-templated.png" width="800">
   <br>
-    <em>screenshot of the output BU once copied/pasted into the template</em>
+  <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
 
 ### Fields
@@ -427,20 +427,32 @@ RPostgres::dbDisconnect(my_con)
 
 Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
 
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods.png" width="450">
+    <br>
+  <em>screenshot of the</em> `cultural_periods.tsv` <em>dataframe</em>
+</p>
+
 ---
+  
 **How it works ?**
 
 This function connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="450">
+  <br>
+  <em>screenshot of the Reference Data Manager, parent node Cultural Period</em>
 </p>
 
 The start date and end date are stored in the `ScopeNote` of each cultural periods and subperiods
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="450">
+  <br>
+  <em>screenshot of the Reference Data Manager, child node Palaeolithic (Levant/Mesopotamia/Arabia)</em>
 </p>
+  
 ---
 
 #### Plot cultural periods from a GeoJSON file
