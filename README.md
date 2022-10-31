@@ -40,9 +40,11 @@ library(eamenaR)
 ```
 
 ---
+
 **How it works ?**  
 
 The root directory on your local computer will be (*run*): `system.file(package = "eamenaR")`. By default, output will be saved in the `results/` folder. You can change this output folder by changing the `dirOut` option in the various functions to your choice. The `inst/extdata/` folder collects different sample files (GeoJSON, KML/KMZ, XLSX, etc.). 
+
 ---
 
 # Prepare your data
