@@ -4,12 +4,12 @@
 The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data of the [EAMENA database](https://database.eamena.org/en/).  
   
 The two main sources of data are: 
-* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme), 
-* data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access). 
+* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme); 
+* data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access); 
 
 The two main types of output are:
 * static graphs and maps, for publication on paper;
-* interactive graphs and maps for publication on the web;
+* interactive graphs and maps for publication on the web (with Plotly and Leaflet);
 
 Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA.
 
@@ -25,13 +25,13 @@ flowchart LR
    
 The functions names refer to their content :
 
-| Function prefix      | Description                                            | Example                |
-| -----------          | -----------                                            |------                  |
-| geojson_*            | all functions that deal with GeoJSON                   | geojson_map()          |
-| geom_*               | any other function that deals with geometries          | geom_bbox()            |
-| list_*               | structure a dataset                                    | list_mapping_bu()      |
-| plot_*               | creates a map, a graphic, etc.                         | plot_edtf()            |
-| ref_*                | creates a refence dataset                              | ref_cultural_periods() |
+| Function prefix      | Description                                            | Example                  |
+| -----------          | -----------                                            |------                    |
+| geojson_*            | all functions that deal with GeoJSON                   | `geojson_map()`          |
+| geom_*               | any other function that deals with geometries          | `geom_bbox()`            |
+| list_*               | structure a dataset                                    | `list_mapping_bu()`      |
+| plot_*               | creates a map, a graphic, etc.                         | `plot_edtf()`            |
+| ref_*                | creates a refence dataset                              | `ref_cultural_periods()` |
 
 # Install and load package
 
@@ -402,7 +402,7 @@ Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-
 
 #### Cultural and Subcultural periods references
 
-Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) to retrieve cultural periods list directly from the EAMENA DB. 
+Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) and [`list_child_concepts()`](https://eamena-oxford.github.io/eamenaR/doc/list_child_concepts) to retrieve the list of cultural periods and subperiods directly from the EAMENA DB. 
 
 ```
 # create an hash dictionnary to store the cultural ans subcultural periods
@@ -436,7 +436,7 @@ RPostgres::dbDisconnect(my_con)
 Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods.png" width="450">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods.png" width="550">
     <br>
   <em>screenshot of the</em> `cultural_periods.tsv` <em>dataframe</em>
 </p>
@@ -448,7 +448,7 @@ Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/re
 This function connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="450">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="550">
   <br>
   <em>screenshot of the Reference Data Manager, parent node Cultural Period</em>
 </p>
@@ -456,7 +456,7 @@ This function connects the EAMENA DB to parse the arborescence of periods and su
 The start date and end date are stored in the `ScopeNote` of each cultural periods and subperiods
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="450">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="550">
   <br>
   <em>screenshot of the Reference Data Manager, child node Palaeolithic (Levant/Mesopotamia/Arabia)</em>
 </p>
