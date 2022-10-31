@@ -181,8 +181,8 @@ Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxfo
 ```mermaid
 flowchart LR
     A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;;
-    B --uses mapping file--> B;
-    B --export--> C[BU file<br><em>target</em>];
+    B --2. mapping file--> B;
+    B --1. export--> C[BU file<br><em>target</em>];
     classDef eamenaRfunction fill:#e7deca;
 ```
 
@@ -445,7 +445,7 @@ Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/re
   
 **How it works ?**
 
-These two functions connects the EAMENA DB to parse the arborescence of periods and superiods concepts (a tree-like structure) to retrieve the name of the cultural periods and subperiods, and their start date (*tpq*) and end date (*taq*).
+These two functions connects the EAMENA DB to parse the arborescence of periods (parents) and superiods (childs) concepts (a tree-like structure) to retrieve their names, their start date (*tpq*) and end date (*taq*).
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="550">
@@ -453,7 +453,7 @@ These two functions connects the EAMENA DB to parse the arborescence of periods 
   <em>screenshot of the Reference Data Manager, parent node Cultural Period</em>
 </p>
 
-The start date and end date are stored in the `ScopeNote` of each cultural periods and subperiods
+These latters (start date and end date) are stored in the `scopeNote` of each cultural periods and subperiods
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="550">
