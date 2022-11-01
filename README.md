@@ -110,7 +110,7 @@ Most of the geometries in EAMENA are POINTS (Center Point). The objective is to 
 flowchart LR
     A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
     C --2. KML/KMZ--> B((Google<br>Earth));
-    B --3. create<br><b>POLYGON</b><br>geometries--> B;
+    B --3. create<br><b>POLYGON</b>--> B;
     B --4. KML/KMZ--> C;
     C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
     D --6. append<br>new geometries--> A;
