@@ -1,11 +1,14 @@
-#' Test if a resource (HP) geometry is within a Grid Square.
+#' Test if a resource (HP) geometry is within a Grid Square (gs).
 #'
 #' @name geom_within_gs
 #' @description Test if the geometry of a resource (eg. Heritage Place) is within a Grid Square (gs). If so, return the ID of the Grid Square.
 #' @param resource.wkt the WKT geometry of a resource, as a character format. This WKT geometry can comes from a BU sheet (ex: "POINT(0.9 35.8)").
-#' @param grid.squares.path a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the \link[eamenaR]{geom_bbox} function. The GeoJSON is read and convert to a `sf` object. This GeoJSON
+#' @param gs.path a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the \link[eamenaR]{geom_bbox} function. The GeoJSON is read and convert to a `sf` object.
+#' @param verbose if TRUE (by default): verbose.
 #'
-#' @return the ID of the Grid Square
+#' @details when this function is called for a dataframe, it has to be nested into a loop.
+#'
+#' @return the ID of the Grid Square for each WKT geometries.
 #'
 #' @examples
 #'
@@ -16,25 +19,28 @@
 #'
 #' @export
 geom_within_gs <- function(resource.wkt = NA,
-                           grid.squares.path = paste0(system.file(package = "eamenaR"),
-                                                      "/extdata/grid_squares.geojson")){
+                           gs.path = paste0(system.file(package = "eamenaR"),
+                                            "/extdata/grid_squares.geojson"),
+                           verbose = T){
   flag <- 0
-  grid.squares.sf <- sf::st_read(grid.squares.path, quiet = T)
+  gs.sf <- sf::st_read(gs.path, quiet = T)
   resource.geom <- data.frame(wkt = resource.wkt)
   resource.sf <- sf::st_as_sf(resource.geom, wkt = "wkt")
-  for(gs in seq(1, nrow(grid.squares.sf))){
-    grid.square.wkt <- grid.squares.sf$geometry[[gs]]
+  for(gs in seq(1, nrow(gs.sf))){
+    grid.square.wkt <- gs.sf$geometry[[gs]]
     is.within <- sf::st_within(resource.sf, grid.square.wkt) %>%
       lengths > 0
     if(is.within){
       flag <- 1
-      return(grid.squares.sf$Grid.ID[[gs]])
+      if(verbose){print("OK: this geometry exists in the grid squares")}
+      return(gs.sf$Grid.ID[[gs]])
     }
   }
   if(!flag) {
     missed <- paste0("this geometry is not in '",
-                     DescTools::SplitPath(grid.squares.path)$fullfilename,
+                     DescTools::SplitPath(gs.path)$fullfilename,
                      "'")
-    return(missed)
+    warnings(missed)
   }
 }
+
