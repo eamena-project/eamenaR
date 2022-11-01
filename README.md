@@ -68,7 +68,7 @@ Paste the copied URL into your web browser and create a GeoJSON file[^1], the re
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
 
 You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
-Take me to [pookie](#pookie)
+
 ### Share a GeoJSON geometry
 
 Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
@@ -150,7 +150,7 @@ geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
 
 The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
 
-<a name="pookie"></a>
+
 6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv) function
 
 ```
@@ -169,6 +169,7 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-o
 
 These new geometries can be uploaded into EAMENA using the `-ow append` argument in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
 
+<a name="bu_append"></a>
 ```
 python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
 ```
