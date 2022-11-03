@@ -31,7 +31,7 @@ The functions names refer to their content :
 | geom_*               | any other function that deals with geometries          | `geom_bbox()`            |
 | list_*               | structure a dataset                                    | `list_mapping_bu()`      |
 | plot_*               | creates a map, a graphic, etc.                         | `plot_edtf()`            |
-| ref_*                | creates a refence dataset                              | `ref_cultural_periods()` |
+| ref_*                | direct connection to the EAMENA PostgreSQL database    | `ref_cultural_periods()` |
 
 # Install and load package
 
@@ -55,7 +55,7 @@ The root directory on your local computer will be (*run*): `system.file(package 
 
 ---
 
-# Prepare your data
+# Data
 
 ## GeoJSON files
 
@@ -267,15 +267,15 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file. This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
 
 
-## Typology
+# Typology
 
 Whether the data is Heritage Places, Built Components, etc.
 
-## Spatial
+# Spatial
 
 Distribution maps for Heritages places and Geoarchaeology
 
-### Heritages places
+## Heritages places
 
 For the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
@@ -322,7 +322,7 @@ It will create two series of maps, one for each field (`"Disturbance Cause Type 
   <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Ploughing.png" width="400">
 </p>
 
-#### Heritages places IDs ➡️ EAMENA ID 
+### Heritages places IDs ➡️ EAMENA ID 
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running the [`geojson_stat()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_stat) function:
 
@@ -341,7 +341,7 @@ Will give:
 ```
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
-#### Paths
+### Paths
 
 Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.). Map them using the [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) function
 
@@ -364,7 +364,7 @@ geojson_boxplot_path(export.plot = T)
 </p>
 
 
-#### Measurements
+### Measurements
 
 Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right) with the [`geojson_measurements()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_measurements) function:
 
@@ -381,7 +381,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 </p>
 
 
-### Geoarchaeology
+## Geoarchaeology
 
 For MaREA geoarchaeological data, with the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function:
 
@@ -397,13 +397,13 @@ geojson_map(map.name = "geoarch",
   <img alt="img-name" src="./results/geoarchaeo.png" width="450">
 </p>
 
-## Time
+# Time
 
 Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-periods) or [EDTF](https://github.com/eamena-oxford/eamenaR#edtf) formats
 
-### Cultural Periods
+## Cultural Periods
 
-#### Cultural and Subcultural periods references
+### Cultural and Subcultural periods references
 
 Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) and [`list_child_concepts()`](https://eamena-oxford.github.io/eamenaR/doc/list_child_concepts) to retrieve the list of cultural periods and subperiods directly from the EAMENA DB. 
 
@@ -466,7 +466,7 @@ These latters (start date and end date) are stored in the `scopeNote` of each cu
   
 ---
 
-#### Plot cultural periods from a GeoJSON file
+### Plot cultural periods from a GeoJSON file
 
 Create a hash dictonnary named `d` to store all data
 
@@ -501,7 +501,7 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
   <img alt="img-name" src="./results/cultural_subperiods_histog.png" width="500">
 </p>
 
-### EDTF
+## EDTF
 
 Performs an aoristic analysis. By default, the function reads the sample data `disturbances_edtf.xlsx` and performs the analysis by days (year-month-day: ``ymd``). Two graphs are created, one adding up all the threats, and the other where each category of threat is individualised.
 
@@ -528,6 +528,31 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 </p>
 
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
+
+# Users
+
+The function [`ref_users()`](https://eamena-oxford.github.io/eamenaR/doc/ref_users) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
+
+```
+d <- hash::hash()
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+d <- ref_users(db.con = my_con,
+               d = d,
+               date.after = "2020-08-01",
+               plot.g = T,
+               fig.width = 14)
+```
+
+Gives
+
+<p align="center">
+  <img alt="img-name" src="./results/users_date_joined.png" width="500">
+</p>
 
 [^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
