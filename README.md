@@ -63,7 +63,7 @@ GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-export.png)
 
-Paste the copied URL into your web browser and create a GeoJSON file[^1], the result is something like :
+Paste the copied URL into your web browser and create a GeoJSON file, the result is something like :
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
 
