@@ -548,13 +548,15 @@ d <- ref_users(db.con = my_con,
                fig.width = 14)
 ```
 
-Gives
+The option `plot.g = T` gives this plot:
 
 <p align="center">
   <img alt="img-name" src="./results/users_date_joined.png" width="600">
 </p>
 
-The 03/11/22, the total number of users is **466**:
+Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The other statistic calculated is the total number of users (minus those who have an account but have never logged in)
+
+On 03/11/2022, the total number of users is **466**.
 
 ```
 d$total_users
