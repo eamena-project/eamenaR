@@ -1,7 +1,6 @@
 #' Create a list of child-concepts below Cultural Period of all periods with their duration
 #' @name ref_cultural_periods
-#' @description create a list concepts below Cultural Period of all periods
-#' with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
+#' @description create a list concepts below Cultural Period of all periods with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
 #'
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format
 #' @param d a hash() object (a Python-like dictionary)
@@ -15,7 +14,7 @@
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 #'                     user = 'xxx',
-#'                     password = xxx,
+#'                     password = 'xxx',
 #'                     dbname = 'eamena',
 #'                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                     port = 5432)

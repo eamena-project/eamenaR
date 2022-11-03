@@ -1,0 +1,50 @@
+---
+title: "R: Basic statistics on a GeoJSON file"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  -------------- -----------------
+  geojson_stat     R Documentation
+  -------------- -----------------
+
+## Basic statistics on a GeoJSON file
+
+### Description
+
+Basic descriptive statistics on a GeoJSON file
+
+### Usage
+
+    geojson_stat(
+      stat.name = "stat",
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      ids = "EAMENA.ID",
+      stat = c("list_fields"),
+      export.stat = F,
+      write.stat = F,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+    )
+
+### Arguments
+
+  ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+  `stat.name`      the name of the output file. By default \"stat\".
+  `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'
+  `ids`            the IDs of the resources, by default \"EAMENA.ID\" (n.b: R fieldname format, without spaces)
+  `stat`           the type of statistic that will be computed. By default \'list_fields\' (list the fields). The other options are: \"list_ids\" list EAMENA IDs ; etc.
+  `export.stat`    if TRUE return the stats to be stored in a new variable
+  `write.stat`     if TRUE, export the stats in a new file, if FALSE will only display it
+  `dirOut`         the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is write.stat is TRUE.
+  ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+Show or export basic statistics on the GeoJSON file
+
+### Examples
+
+
+    geojson_stat(stat.name = "geojson_fields", export.stat = T)
+:::

@@ -163,9 +163,9 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
     # 'supplem' column for supplementary rows
     if('supplem' %in% unique(mapping.file[[job.type]])){
       if(verbose){print(paste0("     works on 'supplem' field values"))}
-      mapping.file.other <- mapping.file[mapping.file[ , job.type] == "supplem", ]
-      for(i in seq(1, nrow(mapping.file.other))){
-        x.text <- as.character(mapping.file.other[i, job])
+      mapping.file.supplem <- mapping.file[mapping.file[ , job.type] == "supplem", ]
+      for(i in seq(1, nrow(mapping.file.supplem))){
+        x.text <- as.character(mapping.file.supplem[i, job])
         x.text <- gsub("[\r\n]", "\n", x.text)
         eval(parse(text = x.text)) # the XLSX cell text is executed
       }

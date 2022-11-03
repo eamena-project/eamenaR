@@ -1,0 +1,50 @@
+---
+title: "R: Convert from GeoJSON to CSV"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ------------- -----------------
+  geojson_csv     R Documentation
+  ------------- -----------------
+
+## Convert from GeoJSON to CSV
+
+### Description
+
+Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries
+drawn in Google Earth or Google Earth pro can be exported as KML or KMZ
+(ie, compressed KML). At the same time, geometries drawn in EAMENA can
+be exported as GeoJSON. For a given HP, this data can be then imported
+into the EAMENA DB.
+
+### Usage
+
+    geojson_csv(
+      geom.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail_outGeoJSON.geojson"),
+      export = T,
+      dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+      csv.name = "caravanserail_outCSV",
+      verbose = T
+    )
+
+### Arguments
+
+  ------------- --------------------------------------------------------------------------------
+  `geom.path`   the path to the GeoJSON file. This file comes from the geojson_kml() function.
+  `export`      if TRUE (by default), will export the GeoJSON to a CSV file.
+  `dirOut`      the path to the folder where the CSV file will be created.
+  `csv.name`    the name of the CSV that will be created without the extension
+  `verbose`     if TRUE (by default) then display different messages.
+  ------------- --------------------------------------------------------------------------------
+
+### Value
+
+a CSV file
+
+### Examples
+
+
+    geojson_csv()
+:::

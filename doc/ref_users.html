@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Statistics about EAMENA users</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for ref_users"><tr><td>ref_users</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Statistics about EAMENA users</h2>
+
+<h3>Description</h3>
+
+<p>statistics about EAMENA users (total number, activities, etc.)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ref_users(
+  db.con = NA,
+  d = NA,
+  stat = c("all"),
+  stat.type = c("all"),
+  plot.g = F,
+  export.plot.g = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  date.after = NA,
+  fig.width = 8,
+  fig.height = 8,
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>db.con</code></td>
+<td>
+<p>the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>stat</code></td>
+<td>
+<p>the type of statistic that will be computed. This is also the the hash dictionnary ('d') field name that will be filled with this statistics, e.g. &quot;total_users&quot;, &quot;date_joined&quot;, etc., or &quot;all&quot;. By default: &quot;all&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>stat.type</code></td>
+<td>
+<p>the type of stat chart, or diagram that will be plotted. Choice: &quot;ecdf&quot; for cumulative function, etc. By default &quot;all&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>plot.g</code></td>
+<td>
+<p>if TRUE will create a plot (FALSE by default).</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot.g</code></td>
+<td>
+<p>if TRUE will export the plot (FALSE by default).</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>date.after</code></td>
+<td>
+<p>the date after which the calculation is made. Usefull to limit the analysis. By default, none.</p>
+</td></tr>
+<tr valign="top"><td><code>fig.width, fig.height</code></td>
+<td>
+<p>dimension of the exported plot in cm.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a hash() object. If plot.g and export.plot.g are set to TRUE will also create and save plots
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+d &lt;- hash::hash()
+my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+d &lt;- ref_users(db.con = my_con,
+               d = d,
+               date.after = "2020-08-01",
+               plot.g = T,
+               export.plot.g = T,
+               fig.width = 14)
+
+</pre>
+
+
+</div></body></html>

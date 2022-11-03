@@ -22,15 +22,13 @@ geojson_stat(
 
 \item{ids}{the IDs of the resources, by default "EAMENA.ID" (n.b: R fieldname format, without spaces)}
 
-\item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields)
-The other options are: "list_ids" list EAMENA IDs ; etc.}
+\item{stat}{the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.}
 
 \item{export.stat}{if TRUE return the stats to be stored in a new variable}
 
 \item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is write.stat is TRUE}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.}
 }
 \value{
 Show or export basic statistics on the GeoJSON file

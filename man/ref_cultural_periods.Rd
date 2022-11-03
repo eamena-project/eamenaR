@@ -19,15 +19,14 @@ ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
 NA
 }
 \description{
-create a list concepts below Cultural Period of all periods
-with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
+create a list concepts below Cultural Period of all periods with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
 }
 \examples{
 
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                     user = 'xxx',
-                    password = xxx,
+                    password = 'xxx',
                     dbname = 'eamena',
                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                     port = 5432)

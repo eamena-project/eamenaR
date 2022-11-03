@@ -17,14 +17,12 @@
 <h3>Usage</h3>
 
 <pre>
-geojson_kml(
-  geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
-  geom.types = c("POINT", "LINE", "POLYGON"),
+geojson_csv(
+  geom.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_outGeoJSON.geojson"),
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
-  geojson.name = "Waypoints",
-  selectedName = "EAMENA.ID",
-  selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
+  csv.name = "caravanserail_outCSV",
   verbose = T
 )
 </pre>
@@ -45,13 +43,13 @@ geojson_kml(
 <td>
 <p>the path to the folder where the CSV file will be created.</p>
 </td></tr>
-<tr valign="top"><td><code>verbose</code></td>
-<td>
-<p>if TRUE (by default) then display different messages.</p>
-</td></tr>
 <tr valign="top"><td><code>csv.name</code></td>
 <td>
 <p>the name of the CSV that will be created without the extension</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) then display different messages.</p>
 </td></tr>
 </table>
 
@@ -66,7 +64,7 @@ geojson_kml(
 
 <pre>
 
-geojson_kml()
+geojson_csv()
 
 </pre>
 

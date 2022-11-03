@@ -47,7 +47,7 @@ list_mapping_bu(
 One or various XLSX files (almost) ready for an bulk upload process in the EAMENA DB. These files are names in the same way as the input file, except a `_out` suffix is added.
 }
 \description{
-Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU). This function can use, for example, \link[eamenaR]{geom_within_gs} to test if the coordinates are within a grid cell.
+Use a mapping file to recast the values of a source file into a format adapted to the bulk upload process (BU). This function can use, for example, \link[eamenaR]{geom_within_gs()} to test if the coordinates are within a grid cell.
 }
 \examples{
 

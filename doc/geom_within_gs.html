@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Test if a resource (HP) geometry is within a Grid Square.</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Test if a resource (HP) geometry is within a Grid Square...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for geom_within_gs"><tr><td>geom_within_gs</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Test if a resource (HP) geometry is within a Grid Square.</h2>
+<h2>Test if a resource (HP) geometry is within a Grid Square (gs).</h2>
 
 <h3>Description</h3>
 
@@ -19,8 +19,8 @@
 <pre>
 geom_within_gs(
   resource.wkt = NA,
-  grid.squares.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/grid_squares.geojson")
+  gs.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson"),
+  verbose = T
 )
 </pre>
 
@@ -32,16 +32,26 @@ geom_within_gs(
 <td>
 <p>the WKT geometry of a resource, as a character format. This WKT geometry can comes from a BU sheet (ex: &quot;POINT(0.9 35.8)&quot;).</p>
 </td></tr>
-<tr valign="top"><td><code>grid.squares.path</code></td>
+<tr valign="top"><td><code>gs.path</code></td>
 <td>
-<p>a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the geom_bbox function. The GeoJSON is read and convert to a 'sf' object. This GeoJSON</p>
+<p>a path to a GeoJSON file, by default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of the Grids as a GeoJSON URL. The name of the grids can be calculated with the geom_bbox function. The GeoJSON is read and convert to a 'sf' object.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default): verbose.</p>
 </td></tr>
 </table>
 
 
+<h3>Details</h3>
+
+<p>when this function is called for a dataframe, it has to be nested into a loop.
+</p>
+
+
 <h3>Value</h3>
 
-<p>the ID of the Grid Square
+<p>the ID of the Grid Square for each WKT geometries.
 </p>
 
 
