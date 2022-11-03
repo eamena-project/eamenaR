@@ -554,6 +554,14 @@ Gives
   <img alt="img-name" src="./results/users_date_joined.png" width="600">
 </p>
 
+The 03/11/22, the total number of users is **466**:
+
+```
+d$total_users
+#   count
+# 1   466
+```
+
 [^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
 [^3]: Sometimes, a search in EAMENA returns different types of geometries. This is the case for the caravanserails where geometries can be both POINTs and POLYGONs.
