@@ -551,7 +551,7 @@ d <- ref_users(db.con = my_con,
 Gives
 
 <p align="center">
-  <img alt="img-name" src="./results/users_date_joined.png" width="500">
+  <img alt="img-name" src="./results/users_date_joined.png" width="600">
 </p>
 
 [^1]: JavaScript is THE interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
