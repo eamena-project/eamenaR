@@ -54,11 +54,11 @@ ref_users <- function(db.con = NA,
   if("date_joined" %in% stat | "all" %in% stat){
     if(verbose){print(paste0("    - run statistic: '", "date_joined", "'"))}
     sqll <- "
-      SELECT date_joined FROM auth_user
+      SELECT date_joined FROM auth_user WHERE last_login IS NOT NULL
             "
     d[["date_joined"]] <- DBI::dbGetQuery(db.con, sqll)
     if(plot.g){
-      gtit <- "Number of EAMENA DB users"
+      gtit <- "Evolution of the number of users of the EAMENA database"
       date_joined <- format(d$date_joined, "%Y-%m-%d")
       dates.ymd <- lubridate::ymd(date_joined$date_joined)
       dates.ym <- format(dates.ymd, "%Y-%m")
@@ -71,11 +71,16 @@ ref_users <- function(db.con = NA,
         df <- data.frame(dates = dates.ym)
         dates.date.joined <- ggplot2::ggplot(df, ggplot2::aes(dates)) +
           ggplot2::stat_bin(ggplot2::aes(y=cumsum(..count..)), geom="step") +
-          ggplot2::ggtitle(gtit) +
-          ggplot2::xlab("date joined") +
-          ggplot2::ylab("nb of users") +
+          # ggplot2::ggtitle() +
+          # m <- m + theme()
+          # ggplot2::xlab() +
+          # ggplot2::ylab() +
           ggplot2::scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
           ggplot2::theme_bw() +
+          ggplot2::labs(x = "date joined",
+                        y = "nb of users",
+                        title = gtit,
+                        subtitle = "who logged at least once") +
           ggplot2::theme(legend.position = "bottom",
                          axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
       }
