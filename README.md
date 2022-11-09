@@ -16,8 +16,8 @@ Together with analysis functions, the package offers different methods to manage
 ```mermaid
 flowchart LR
     A[(EAMENA<br>DB)] --export<br>GeoJSON--> B{{"eamenaR"}}:::eamenaRpkg;
-    B --data management--> B;
-    B <--data exchange--> C((third part<br>app));
+    B --data<br>management--> B;
+    B <--data<br>exchange--> C((third part<br>app));
     B --import--> A;
     B --creates--> D[maps<br>charts<br>listings<br>...]
     classDef eamenaRpkg fill:#e3c071;
@@ -81,16 +81,15 @@ d <- ref_are_duplicates(d = d,
 Creates this kind of table:
 
 <p align="center">
-
+  
 | field                           | 563567f7-eef0-4683-9e88-5e4be2452f80 | fb0a2ef4-023f-4d13-b931-132799bb7a6c | dist |
 |---------------------------------|--------------------------------------|--------------------------------------|------|
 | Assessment.Investigator...Actor | Hamed Rahnama                        | Hamed Rahnama, Bijan Rouhani         | 0.18 |
 | Assessment.Activity.Date        | 2021-05-25                           | 2022-08-21, 2022-08-30               | 0.32 |
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
-
-  <br>
-    <em>screenshot of the Google sheet mapping file: https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing</em>
+  
+    <em>screenshot of the Google sheet mapping file</em>
 </p>
 
 
