@@ -46,6 +46,7 @@ ref_are_duplicates <- function(db.con = NA,
     # selected.fields <- c(selected.fields)
     ea.geojson <- sf::st_read(geojson.path)
     ea.geojson <- ea.geojson[ea.geojson$resourceid %in% resourceid.list, selected.fields]
+    myrownames <- colnames(ea.geojson)
     ea.geojson <- as.data.frame(t(ea.geojson))
     colnames(ea.geojson) <- resourceid.list
 
@@ -80,13 +81,15 @@ ref_are_duplicates <- function(db.con = NA,
                                   round(df$dist, round.dist))
     )
     colnames(df) <- c(resourceid.list[1], resourceid.list[2], "dist")
+    df$field <- myrownames
+    df <- df[ , c(4, 1, 2, 3)]
     d[[field]] <- df
     if(export.table){
       if(DescTools::SplitPath(fileOut)$extension == "xlsx"){
         openxlsx::write.xlsx(df, paste0(dirOut, fileOut))
       }
       if(DescTools::SplitPath(fileOut)$extension == "csv"){
-        write.table(df, paste0(dirOut, fileOut))
+        write.table(df, paste0(dirOut, fileOut), row.names = F)
       }
       if(verbose){print(paste0("  - the '", fileOut, "' dataframe has been exorted in '", dirOut, "'"))
       }
