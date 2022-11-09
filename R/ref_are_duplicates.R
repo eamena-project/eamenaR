@@ -89,7 +89,7 @@ ref_are_duplicates <- function(db.con = NA,
         openxlsx::write.xlsx(df, paste0(dirOut, fileOut))
       }
       if(DescTools::SplitPath(fileOut)$extension == "csv"){
-        write.table(df, paste0(dirOut, fileOut), row.names = F)
+        write.table(df, paste0(dirOut, fileOut), row.names = F, sep = ",")
       }
       if(verbose){print(paste0("  - the '", fileOut, "' dataframe has been exorted in '", dirOut, "'"))
       }
