@@ -79,8 +79,6 @@ d <- ref_are_duplicates(d = d,
 ```
 
 Creates this kind of table:
-
-<p align="center">
   
 | field                           | 563567f7-eef0-4683-9e88-5e4be2452f80 | fb0a2ef4-023f-4d13-b931-132799bb7a6c | dist |
 |---------------------------------|--------------------------------------|--------------------------------------|------|
@@ -88,10 +86,6 @@ Creates this kind of table:
 | Assessment.Activity.Date        | 2021-05-25                           | 2022-08-21, 2022-08-30               | 0.32 |
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
-  
-    <em>screenshot of the Google sheet mapping file</em>
-</p>
-
 
 Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceIDs of the function (respectively the two caravanserais `EAMENA-0207209` and `EAMENA-0182057`). The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
 
