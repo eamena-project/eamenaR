@@ -69,7 +69,7 @@ You can reformat the (Geo)JSON layout to make it more readable using https://cod
 
 ## Duplicates
 
-The [`ref_are_duplicates()`](https://eamena-oxford.github.io/eamenaR/doc/ref_are_duplicates) function allows to identify duplicates in a GeoJSON file, or directly in the EAMENA DB. Using fuzzy matching between a selection of fields, for two HP identified by their ResourceID, this function creates a dataframe with the matching score between each fields:
+The function [`ref_are_duplicates()`](https://eamena-oxford.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score between each field:
 
 ```
 d <- hash::hash()
@@ -87,7 +87,7 @@ Creates this kind of table:
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
 
-The CSV output is here: 
+Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceID of the function (respectively the two caravanserails `EAMENA-0207209` and `EAMENA-0182057`). The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
 
 ## Share a GeoJSON geometry
 
