@@ -87,7 +87,7 @@ Creates this kind of table:
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
 
-Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceIDs of the function (respectively the two caravanserais `EAMENA-0207209` and `EAMENA-0182057`). The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
+Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceIDs of the function (respectively the two caravanserails `EAMENA-0207209` and `EAMENA-0182057`). The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
 
 ## Share a GeoJSON geometry
 
@@ -184,6 +184,7 @@ geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
 
 The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
 
+<a name="bulk_append"></a>
 ```
 "resourceid","Geometric Place Expression","Location Certainty","Geometry Extent Certainty"
 "8db560d5-d17d-40ff-8046-0157b1b698ab","MULTIPOLYGON (((61.4023 30.77373, 61.4019 30.77371, 61.40194 30.77344, 61.40235 30.77345, 61.4023 30.77373)))","High","High"
