@@ -30,12 +30,12 @@ Complex interactive statistics on a GeoJSON file with the Shiny package
 
   ---------------- ---------------------------------------------------------------------------------------------------------------------------------------------------
   `stat.name`      the name of the output file. By default \"stat\".
-  `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'
-  `ids`            the IDs of the resources, by default \"EAMENA.ID\" (n.b: R fieldname format, without spaces)
-  `export.stat`    if TRUE return the stats to be stored in a new variable
-  `write.stat`     if TRUE, export the stats in a new file, if FALSE will only display it
+  `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
+  `ids`            the IDs of the resources, by default \"EAMENA.ID\" (nb: R field names format, without spaces).
+  `export.stat`    if TRUE return the stats to be stored in a new variable.
+  `write.stat`     if TRUE, export the stats in a new file, if FALSE will only display it.
   `dirOut`         the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is write.stat is TRUE
-  `stat`           the statistic that will be computed. By default \'list_fields\' (list the fields) The other options are: \"list_ids\" list EAMENA IDs ; etc.
+  `stat`           the statistic that will be computed. By default \'list_fields\' (list the fields). The other options are: \"list_ids\" list EAMENA IDs ; etc.
   ---------------- ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Value

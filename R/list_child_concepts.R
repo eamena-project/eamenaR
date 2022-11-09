@@ -1,11 +1,11 @@
 #' List the name of all the child-concepts below a certain Concept node
-#' @name list_child_concepts
-#' @description With a given concept UUID (v. Reference Data Manager), find all
-#' the childs. This function has been tested only for Cultural and Subcultural periods
 #'
-#' @param db.con a `dbConnect` connection to the database
-#' @param d a hash() object (a Python-like dictionary)
-#' @param field the field name that will be created in the a hash() object
+#' @name list_child_concepts
+#' @description With a given concept UUID (v. Reference Data Manager), find all the childs. This function has been tested only for Cultural and Subcultural periods.
+#'
+#' @param db.con a `dbConnect` connection to the database.
+#' @param d a hash() object (a Python-like dictionary).
+#' @param field the field name that will be created in the a hash() object.
 #' @param uuid the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..
 #'
 #' @return A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe

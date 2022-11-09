@@ -17,19 +17,17 @@ geojson_analysis(
 \arguments{
 \item{stat.name}{the name of the output file. By default "stat".}
 
-\item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
+\item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'.}
 
-\item{ids}{the IDs of the resources, by default "EAMENA.ID" (n.b: R fieldname format, without spaces)}
+\item{ids}{the IDs of the resources, by default "EAMENA.ID" (nb: R field names format, without spaces).}
 
-\item{export.stat}{if TRUE return the stats to be stored in a new variable}
+\item{export.stat}{if TRUE return the stats to be stored in a new variable.}
 
-\item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it}
+\item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is write.stat is TRUE}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE}
 
-\item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields)
-The other options are: "list_ids" list EAMENA IDs ; etc.}
+\item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.}
 }
 \value{
 Show or export basic statistics on the GeoJSON file

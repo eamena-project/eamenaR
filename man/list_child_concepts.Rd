@@ -7,11 +7,11 @@
 list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 }
 \arguments{
-\item{db.con}{a `dbConnect` connection to the database}
+\item{db.con}{a `dbConnect` connection to the database.}
 
-\item{d}{a hash() object (a Python-like dictionary)}
+\item{d}{a hash() object (a Python-like dictionary).}
 
-\item{field}{the field name that will be created in the a hash() object}
+\item{field}{the field name that will be created in the a hash() object.}
 
 \item{uuid}{the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..}
 }
@@ -19,8 +19,7 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 }
 \description{
-With a given concept UUID (v. Reference Data Manager), find all
-the childs. This function has been tested only for Cultural and Subcultural periods
+With a given concept UUID (v. Reference Data Manager), find all the childs. This function has been tested only for Cultural and Subcultural periods.
 }
 \examples{
 .

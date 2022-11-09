@@ -57,8 +57,6 @@ The root directory on your local computer will be (*run*): `system.file(package 
 
 # Data
 
-## GeoJSON files
-
 GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-export.png)
@@ -69,7 +67,29 @@ Paste the copied URL into your web browser and create a GeoJSON file, the result
 
 You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
 
-### Share a GeoJSON geometry
+## Duplicates
+
+The [`ref_are_duplicates()`](https://eamena-oxford.github.io/eamenaR/doc/ref_are_duplicates) function allows to identify duplicates in a GeoJSON file, or directly in the EAMENA DB. Using fuzzy matching between a selection of fields, for two HP identified by their ResourceID, this function creates a dataframe with the matching score between each fields:
+
+```
+d <- hash::hash()
+d <- ref_are_duplicates(d = d,
+                        export.table = T,
+                        fileOut = "duplicates.csv")
+```
+
+Creates this kind of table:
+
+|  | 563567f7-eef0-4683-9e88-5e4be2452f80                                                                                                     | fb0a2ef4-023f-4d13-b931-132799bb7a6c                                                                                                                                             | dist     |
+|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|------|
+| Assessment.Investigator...Actor      | Hamed Rahnama                                                                                                                            | Hamed Rahnama, Bijan Rouhani                                                                                                                     | 0.18 |
+| Assessment.Activity.Date             | 2021-05-25                                                                                                                               | 2022-08-21, 2022-08-30                                                                                                                           | 0.32 |
+| Resource.Name                        | Bedasht Caravanserai, <U+06A9><U+0627><U+0631><U+0648><U+0646><U+0633><U+0631><U+0627><U+06CC> <U+0628><U+062F><U+0634><U+062A>, CVNS-IR | CVNS-IR, Bedasht Caravanserai, <U+06A9><U+0627><U+0631><U+0648><U+0627><U+0646><U+0633><U+0631><U+0627><U+06CC> <U+0628><U+062F><U+0634><U+062A> | 0.26 |
+| geometry                             | c(55.05059, 36.42466)                                                                                                                    | c(55.05059, 36.42466)                                                                                                                            | 0    |
+
+The real output is here: 
+
+## Share a GeoJSON geometry
 
 Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
 
@@ -101,7 +121,7 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 ]
 ```
 
-#### Integrating Google Earth geometries
+### Integrating Google Earth geometries
 
 Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
 
@@ -179,7 +199,7 @@ python manage.py packages -o import_business_data -s "./data/test/caravanserail_
 
 Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the [geojson file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson) or the [EAMENA record](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab) of EAMENA-0192281[^4]. 
 
-### BU mapping
+## BU mapping
 
 Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
@@ -207,7 +227,7 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
                 mapping.file.ggsheet = T)
 ```
 
-#### Mapping file
+### Mapping file
 
 The mapping file could be either an XLSX file or a Google Sheet. This file establishes the correspondences between a source file and the structure of the EAMENA BU template (target). 
 
@@ -231,7 +251,7 @@ The mapping file has three columns, one for the target ('`EAMENA`'), two for the
       - '`expression`': execute an R code snippet;
       - etc.;
 
-The eamenaR function is [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu). Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The eamenaR function is [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu). Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries[^5]. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
@@ -241,11 +261,11 @@ grid.id
 ```
 Will return `"E00N35-44"`
 
-#### Source file
+### Source file
 
 The source file, or original dataset, is assumed to be an XLSX file but it is possible to work with a SHP, or any other suitable format.
 
-#### Target file
+### Target file
 
 Export a new BU worksheet. 
 
@@ -262,13 +282,6 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
   <br>
   <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
-
-### Fields
-
-#### Grid cell ID
-
-To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file. This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
-
 
 # Typology
 
@@ -571,3 +584,4 @@ d$total_users
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
 [^3]: Sometimes, a search in EAMENA returns different types of geometries. This is the case for the caravanserails where geometries can be both POINTs and POLYGONs.
 [^4]: EAMENA-0192281 ResourceID = `8db560d5-d17d-40ff-8046-0157b1b698ab`
+[^5]: To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file. This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
