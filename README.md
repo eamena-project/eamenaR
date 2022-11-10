@@ -89,41 +89,11 @@ Creates this kind of table:
 
 Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceIDs of the function (respectively the two caravanserails `EAMENA-0207209` and `EAMENA-0182057`). The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
 
-## Share a GeoJSON geometry
-
-Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
-
-![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-io.png)
-
-
-The format of a rectangle selection is 4 different points[^2], starting from the geographical origin (`xmin, ymin`), e.g.: `"POINT(0 0)"`
-
-```
-[
-    xmin,
-    ymin
-],
-[
-    xmax,
-    ymin
-],
-[
-    xmax,
-    ymax
-],
-[
-    xmin
-    ymax
-],
-[
-    xmin,
-    ymin
-]
-```
+## BU
 
 ### Integrating Google Earth geometries
 
-Most of the geometries in EAMENA are POINTS (Center Point). The objective is to acquire new geometries created in Google Earth and to add them to already existing records in EAMENA.
+Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries created in third part app, like Google Earth, and to append them to already existing records in EAMENA.
 
 
 ```mermaid
@@ -157,7 +127,9 @@ geojson_kml(geom.types = c("POINT"),
 
 ![](results/geojson_kml_toKML.png)
 
-3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the new POLYGONS with the ResourceID of a given HP.
+<a name="bulk_append_3"></a>
+
+3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the newly created POLYGONS with the ResourceID of a given HP.
 
 ![](results/geojson_kml_toKML_polygon.png)
 
@@ -184,23 +156,49 @@ geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
 
 The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
 
-<a name="bulk_append"></a>
+<a name="bulk_append_6"></a>
 ```
 "resourceid","Geometric Place Expression","Location Certainty","Geometry Extent Certainty"
 "8db560d5-d17d-40ff-8046-0157b1b698ab","MULTIPOLYGON (((61.4023 30.77373, 61.4019 30.77371, 61.40194 30.77344, 61.40235 30.77345, 61.4023 30.77373)))","High","High"
 "b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
 ```
 
-These new geometries can be uploaded into EAMENA using the `-ow append` argument in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
+7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_eamenaid()`](https://eamena-oxford.github.io/eamenaR/doc/uuid_eamenaid) function, in a loop to confirm the existence of the ResourceID
 
-<a name="bu_append"></a>
+```
+mycsv <- "https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
+df <- read.csv(mycsv)
+for(i in seq(1, nrow(df))){
+  eamenaid <- df[i, "ResourceID"]
+  d <- uuid_eamenaid(db.con = my_con,
+                     d = d,
+                     id = eamenaid,
+                     disconn = FALSE)
+  print(paste0(as.character(i), ") ", eamenaid, " <-> ", d$eamenaid))
+}
+DBI::dbDisconnect(my_con)
+```
+
+Will give:
+
+```
+[1] "1) 8db560d5-d17d-40ff-8046-0157b1b698ab <-> EAMENA-0192281"
+[1] "2) b8305141-789e-4aaa-976a-c85859e0870f <-> EAMENA-0182054"
+```
+
+As there are no `NA` in front of the ResourceID, the HP listed in the CSV file exist in the DB.
+
+8. To append these geometries to the DB, use the `-ow append` option in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
+
+<a name="bu_append_8"></a>
 ```
 python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
 ```
 
-Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the [geojson file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson) or the [EAMENA record](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab) of EAMENA-0192281[^4]. 
+Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the whole dataset of caravanserails
+[caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
 
-## BU mapping
+### BU mapping
 
 Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
@@ -228,7 +226,7 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
                 mapping.file.ggsheet = T)
 ```
 
-### Mapping file
+#### Mapping file
 
 The mapping file could be either an XLSX file or a Google Sheet. This file establishes the correspondences between a source file and the structure of the EAMENA BU template (target). 
 
@@ -262,11 +260,11 @@ grid.id
 ```
 Will return `"E00N35-44"`
 
-### Source file
+#### Source file
 
 The source file, or original dataset, is assumed to be an XLSX file but it is possible to work with a SHP, or any other suitable format.
 
-### Target file
+#### Target file
 
 Export a new BU worksheet. 
 
@@ -579,6 +577,40 @@ On 03/11/2022, the total number of users is **466**.
 d$total_users
 #   count
 # 1   466
+```
+
+# Others
+
+## Share a GeoJSON geometry
+
+Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
+
+![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-io.png)
+
+
+The format of a rectangle selection is 4 different points[^2], starting from the geographical origin (`xmin, ymin`), e.g.: `"POINT(0 0)"`
+
+```
+[
+    xmin,
+    ymin
+],
+[
+    xmax,
+    ymin
+],
+[
+    xmax,
+    ymax
+],
+[
+    xmin
+    ymax
+],
+[
+    xmin,
+    ymin
+]
 ```
 
 [^1]: JavaScript is **THE** interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).

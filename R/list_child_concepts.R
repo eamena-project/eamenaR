@@ -15,11 +15,11 @@
 #' # in the connection parameters, replace 'xxx' by the password
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-#'                     user = 'postgres',
-#'                     password = xxx,
-#'                     dbname = 'eamena',
-#'                     host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-#'                     port = 5432)
+#'                                user = 'postgres',
+#'                                password = xxx,
+#'                                dbname = 'eamena',
+#'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+#'                                port = 5432)
 #'
 #' # Disturbance Extent Type
 #' d <- list_concepts(db.con = my_con, d = d, field = "Disturbance Extent Type", uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
