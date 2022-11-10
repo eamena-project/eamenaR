@@ -91,7 +91,11 @@ Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799
 
 ## BU
 
-### Integrating Google Earth geometries
+The Bulk upload procedure
+
+### BU append
+
+#### Integrating Google Earth geometries
 
 Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries created in third part app, like Google Earth, and to append them to already existing records in EAMENA.
 
@@ -315,7 +319,7 @@ geojson_map(map.name = "caravanserail",
   <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="500">
 </p>
 
-The color of the value (optional) is recorded in the (`symbology.xlsx`)[https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx] file  
+The color of the value (optional) is recorded in the [`symbology.xlsx`](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx) file  
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/symbology-map.png" width="600">
@@ -330,12 +334,23 @@ geojson_map(map.name = "caravanserail",
             export.plot = T)
 ```
 
-It will create two series of maps, one for each field (`"Disturbance Cause Type ", "Damage Extent Type"`) and because in `"Damage Extent Type"` there are multiple values for a same row, it creates as many maps as there are different values, here is an example:
+It will create two series of maps, one for each field (`"Disturbance Cause Type "`, `"Damage Extent Type"`) and because in `"Damage Extent Type"` there are multiple values for a same row, it creates as many maps as there are different values, here is an example:
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Human_Movement_Trampling.png" width="400">
   <img alt="img-name" src="./results/caravanserail_Disturbance Cause Type _Ploughing.png" width="400">
 </p>
+
+Finally, Plotly can be used to create an interactive map:
+
+```
+geojson_map(map.name = "caravanserail",
+            geojson.path = paste0(exdata, "caravanserail_polygon.geojson"),
+            plotly.plot = T,
+            export.plot = F)
+```
+
+Will plot [this map](https://eamena-oxford.github.io/eamena-arches-dev/data/geojson/maps/caravanserail)
 
 ### Heritages places IDs ➡️ EAMENA ID 
 
