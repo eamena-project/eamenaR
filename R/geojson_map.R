@@ -324,7 +324,7 @@ geojson_map <- function(map.name = "map",
                              weight = 1,
                              popup = ~lbl,
                              label = ~idf,
-                             fillOpacity = .5,
+                             fillOpacity = 0,
                              opacity = .8)
     }
     ea.map <- ea.map %>%
