@@ -477,7 +477,7 @@ mbrshp <- morph_nds_group(nodes = nodes,
 It gives a Kmeans plot with 2 centers:
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_group_kmeans.png" width="500">
+  <img alt="img-name" src="./results/caravanserail_group_kmeans.png" width="700">
   <br>Kmeans with 2 centers
 </p>
 
