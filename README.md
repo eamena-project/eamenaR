@@ -429,7 +429,9 @@ conv_wkt_to_jpg(nodes = nodes,
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail/EAMENA-0164899.jpg" width="200">
+  <br>panel<br>
   <img alt="img-name" src="./results/caravanserail/EAMENA-0164904.jpg" width="200">
+  <br>panel<br>
   <img alt="img-name" src="./results/caravanserail/EAMENA-0164905.jpg" width="200">
   <img alt="img-name" src="./results/caravanserail/EAMENA-0164906.jpg" width="200">
 </p>
