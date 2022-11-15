@@ -412,8 +412,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 
 ### Shape analysis
 
-Using POLYGONS (even LINES), like [caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For this latter, we use the Momocs functions of the [iconr](https://github.com/zoometh/iconr) package.
-
+The use of POLYGONES (or even LINES), such as [caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For the latter, we use the Momocs functions integrated in the [iconr](https://github.com/zoometh/iconr) package.
 ```
 library(Momocs)
 library(iconr)
@@ -425,7 +424,7 @@ conv_wkt_to_jpg(nodes = nodes,
                 dataDir = dataDir,
                 out.dir = "_out")
 ```
-`conv_geojson_to_wkt()` and `conv_wkt_to_jpg()` convert from GeoJSON to JPG, creating this kind of outputs:
+`conv_geojson_to_wkt()` and `conv_wkt_to_jpg()` convert from GeoJSON to JPG, passing through WKT, creating this kind of outputs:
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail/EAMENA-0164899.jpg" width="120">
@@ -447,7 +446,7 @@ dist <- morph_nds_compar(nodes = nodes,
                          out.dir = "_out")
 ```
 
-The variable `dist` store the distance matrix between each pairs of caravanserails. The output plots are :
+The variable `dist` stores the distance matrix between each pairs of caravanserails. The `morph_nds_compar()` output plots are :
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail_compar_panel.png" width="500">
@@ -466,7 +465,8 @@ The variable `dist` store the distance matrix between each pairs of caravanserai
   <br>HCA
 </p>
 
-And shape analysis classifications
+
+After the shape comparisons, a classification can be made with `morph_nds_group()`. The HCA shows that there are two main groups (or centres, `nb.centers = 2`). We can reuse this parameter for shape classification:
 
 ```
 mbrshp <- morph_nds_group(nodes = nodes,
@@ -474,11 +474,14 @@ mbrshp <- morph_nds_group(nodes = nodes,
                           dataDir = dataDir,
                           out.dir = "_out")
 ```
+It gives a Kmeans plot with 2 centers:
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail_group_kmeans.png" width="500">
   <br>Kmeans with 2 centers
 </p>
+
+The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
 
 ## Geoarchaeology
 
