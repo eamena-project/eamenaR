@@ -469,16 +469,15 @@ The variable `dist` store the distance matrix between each pairs of caravanserai
 And shape analysis classifications
 
 ```
-dist <- morph_nds_compar(nodes = nodes,
-                         cex = .5,
-                         lwd = .5,
-                         colored = FALSE,
-                         dataDir = dataDir,
-                         out.dir = "_out")
+mbrshp <- morph_nds_group(nodes = nodes,
+                          nb.centers = 2,
+                          dataDir = dataDir,
+                          out.dir = "_out")
 ```
 
 <p align="center">
   <img alt="img-name" src="./results/caravanserail_group_kmeans.png" width="500">
+  <br>Kmeans with 2 centers
 </p>
 
 ## Geoarchaeology
