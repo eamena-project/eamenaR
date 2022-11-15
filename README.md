@@ -449,19 +449,19 @@ dist <- morph_nds_compar(nodes = nodes,
 The variable `dist` stores the distance matrix between each pairs of caravanserails. The `morph_nds_compar()` output plots are :
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_compar_panel.png" width="600">
+  <img alt="img-name" src="./results/caravanserail_compar_panel.png" width="700">
   <br>panel
 </p>
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_compar_stack.png" width="600">
+  <img alt="img-name" src="./results/caravanserail_compar_stack.png" width="700">
   <br>stack
 </p>
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_compar_PCA.png" width="600">
+  <img alt="img-name" src="./results/caravanserail_compar_PCA.png" width="700">
   <br>PCA
 </p>
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_group_clust.png" width="600">
+  <img alt="img-name" src="./results/caravanserail_group_clust.png" width="700">
   <br>HCA
 </p>
 
