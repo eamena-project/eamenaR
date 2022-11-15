@@ -428,11 +428,12 @@ conv_wkt_to_jpg(nodes = nodes,
 `conv_geojson_to_wkt()` and `conv_wkt_to_jpg()` convert from GeoJSON to JPG, creating this kind of outputs:
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail/EAMENA-0164899.jpg" width="150">
-  <img alt="img-name" src="./results/caravanserail/EAMENA-0164904.jpg" width="150">
-  <img alt="img-name" src="./results/caravanserail/EAMENA-0164905.jpg" width="150">
-  <img alt="img-name" src="./results/caravanserail/EAMENA-0164906.jpg" width="150">
-  <img alt="img-name" src="./results/caravanserail/EAMENA-0164943.jpg" width="150">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164899.jpg" width="120">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164904.jpg" width="120">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164905.jpg" width="120">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164906.jpg" width="120">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164943.jpg" width="120">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164999.jpg" width="120">
 </p>
 
 These JPGs are analysed through shape analysis comparisons (here, we limit the study to 50 caravanserails)
