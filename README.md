@@ -410,6 +410,70 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
   <img alt="img-name" src="./results/areas_sbs.png" width="500">
 </p>
 
+### Shape analysis
+
+Using POLYGONS (even LINES), like [caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For this latter, we use the Momocs functions of the [iconr](https://github.com/zoometh/iconr) package.
+
+```
+library(Momocs)
+library(iconr)
+
+dataDir <- "C:/Rprojects/eamena-arches-dev/projects/caravanserail"
+nodes <- conv_geojson_to_wkt(dataDir = dataDir)
+conv_wkt_to_jpg(nodes = nodes,
+                ids = "site",
+                dataDir = dataDir,
+                out.dir = "_out")
+```
+`conv_geojson_to_wkt()` and `conv_wkt_to_jpg()` convert from GeoJSON to JPG, creating this kind of outputs:
+
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164899.jpg" width="300">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164904.jpg" width="300">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164905.jpg" width="300">
+  <img alt="img-name" src="./results/caravanserail/EAMENA-0164906.jpg" width="300">
+</p>
+
+These JPGs are analysed through shape analysis comparisons (here, we limit the study to 50 caravanserails)
+
+```
+dist <- morph_nds_compar(nodes = nodes,
+                         cex = .5,
+                         lwd = .5,
+                         colored = FALSE,
+                         dataDir = dataDir,
+                         out.dir = "_out")
+```
+
+The variable `dist` store the distance matrix between each pairs of caravanserails. The output plots are :
+
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_compar_panel.png" width="500">
+</p>
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_compar_stack.png" width="500">
+</p>
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_compar_PCA.png" width="500">
+</p>
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_group_clust.png" width="500">
+</p>
+
+And shape analysis classifications
+
+```
+dist <- morph_nds_compar(nodes = nodes,
+                         cex = .5,
+                         lwd = .5,
+                         colored = FALSE,
+                         dataDir = dataDir,
+                         out.dir = "_out")
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail_group_kmeans.png" width="500">
+</p>
 
 ## Geoarchaeology
 
