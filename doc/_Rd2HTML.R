@@ -22,3 +22,4 @@ for(a.file in list.files(pathMan)){
              "\n\n"))
 }
 
+
