@@ -424,6 +424,7 @@ conv_wkt_to_jpg(nodes = nodes,
                 dataDir = dataDir,
                 out.dir = "_out")
 ```
+
 `conv_geojson_to_wkt()` and `conv_wkt_to_jpg()` convert from GeoJSON to JPG, passing through WKT, creating this kind of outputs:
 
 <p align="center">
