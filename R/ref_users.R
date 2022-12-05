@@ -73,7 +73,9 @@ ref_users <- function(db.con = NA,
         # dates.ym <- dates.ym[dates.ym > date.after] # OK
       }
       #date.before <- lubridate::ymd(date.before)
-      date.before <- format(date.before, "%Y-%m")
+      if(lubridate::is.Date(date.before)){
+        date.before <- format(date.before, "%Y-%m")
+      }
       # interval
       dates.ym <- dates.ym[dates.ym > date.after & dates.ym < date.before]
       dates.ym <- lubridate::ym(dates.ym)

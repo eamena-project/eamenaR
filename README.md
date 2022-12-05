@@ -659,6 +659,13 @@ The option `plot.g = T` gives this plot:
 
 Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The other statistic calculated is the total number of users (minus those who have an account but have never logged in)
 
+The total number of users can be be restrict to an interval, adding 
+
+```
+
+```
+
+
 On 03/11/2022, the total number of users is **466**.
 
 ```
