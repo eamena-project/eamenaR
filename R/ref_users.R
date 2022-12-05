@@ -1,4 +1,5 @@
 #' Statistics about EAMENA users
+#'
 #' @name ref_users
 #' @description statistics about EAMENA users (total number, activities, etc.)
 #'

@@ -232,8 +232,7 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
-The mapping file could be either an XLSX file or a Google Sheet. This file establishes the correspondences between a source file and the structure of the EAMENA BU template (target). 
-
+To establishe the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
@@ -241,10 +240,10 @@ The mapping file could be either an XLSX file or a Google Sheet. This file estab
     <em>screenshot of the Google sheet mapping file: https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing</em>
 </p>
 
-The mapping file has three columns, one for the target ('`EAMENA`'), two for the source (eg. '`mk`' and '`mk_type`'):
+For each 'job', the mapping file has three columns, one for the target ('`EAMENA`', always the same), two for the source (eg. '`mk`' and '`mk_type`', depending on the job):
 
-1. **target**:
-  - '`EAMENA`': names of the fields in the EAMENA BU spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field. This column will always be the same. 
+1. ***target***, **by default `EAMENA`**:
+  - '`EAMENA`': names of the fields in the EAMENA BU template spreadsheet in R format (spaces replaced by dots). Empty cells correspond to expressions that are not directly linked to an EAMENA field. This column will always be the same. 
 2. **source**:
   - The source depends on the different authors:
     - `job`: by convention, the initial of the author (e.g. '`mk`' = Mohamed Kenawi)
@@ -252,9 +251,10 @@ The mapping file has three columns, one for the target ('`EAMENA`'), two for the
       - '`value`': repeat a single value for the whole BU;
       - '`field`': get the different values of a source field and add these different values in a BU field;
       - '`expression`': execute an R code snippet;
+      - '`escape`': the value is calculated in another field;
       - etc.;
 
-The eamenaR function is [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu). Alongside with scripted parts recorded in the mapping file, `list_mapping_bu()` uses also the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries[^5]. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The `list_mapping_bu()` function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries[^5]. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
