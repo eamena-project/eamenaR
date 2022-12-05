@@ -2,14 +2,16 @@
 #' @name ref_users
 #' @description statistics about EAMENA users (total number, activities, etc.)
 #'
-#' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.
+#' @param db.con the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param stat the type of statistic that will be computed. This is also the the hash dictionnary (`d`) field name that will be filled with this statistics, e.g. "total_users", "date_joined", etc., or "all". By default: "all".
-#' @param stat.type the type of stat chart, or diagram that will be plotted. Choice: "ecdf" for cumulative function, etc. By default "all".
+#' @param stat.type the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. By default "all".
+#' @stat.name the name of the output file. By default "users".
 #' @param plot.g if TRUE will create a plot (FALSE by default).
 #' @param export.plot.g if TRUE will export the plot (FALSE by default).
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.
-#' @param date.after the date after which the calculation is made. Usefull to limit the analysis. By default, none.
+#' @param date.after the date after which the calculation is made. Usefull to limit the analysis. By default, NA.
+#' @param date.before the date before which the calculation is made. Usefull to limit the analysis. By default, the current date (`Sys.Date()`)
 #' @param fig.width,fig.height dimension of the exported plot in cm.
 #' @param verbose if TRUE (by default), print messages
 #'
@@ -36,10 +38,12 @@ ref_users <- function(db.con = NA,
                       d = NA,
                       stat = c("all"),
                       stat.type = c("all"),
+                      stat.name = "users",
                       plot.g = F,
                       export.plot.g = F,
                       dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                       date.after = NA,
+                      date.before = Sys.Date(),
                       fig.width = 8,
                       fig.height = 8,
                       verbose = TRUE){
@@ -57,20 +61,28 @@ ref_users <- function(db.con = NA,
       SELECT date_joined FROM auth_user WHERE last_login IS NOT NULL
             "
     d[["date_joined"]] <- DBI::dbGetQuery(db.con, sqll)
+    users.tot <- nrow(d[["date_joined"]])
     if(plot.g){
       gtit <- "Evolution of the number of users of the EAMENA database"
       date_joined <- format(d$date_joined, "%Y-%m-%d")
       dates.ymd <- lubridate::ymd(date_joined$date_joined)
-      dates.ym <- format(dates.ymd, "%Y-%m")
+      dates.ym <- format(dates.ymd, "%Y-%m") # to character
       if(!is.na(date.after)){
-        dates.ym <- dates.ym[dates.ym > date.after]
-        gtit <- paste(gtit, "since", date.after)
+        date.after <- lubridate::ymd(date.after)
+        date.after <- format(date.after, "%Y-%m") # to character
+        # dates.ym <- dates.ym[dates.ym > date.after] # OK
       }
+      #date.before <- lubridate::ymd(date.before)
+      date.before <- format(date.before, "%Y-%m")
+      # interval
+      dates.ym <- dates.ym[dates.ym > date.after & dates.ym < date.before]
       dates.ym <- lubridate::ym(dates.ym)
+      gsubtit <- paste0(length(dates.ym), " users who logged at least once between ",
+                        date.after, " and ", date.before, " (total users: ", users.tot, ")")
       if("ecdf" %in% stat | "all" %in% stat.type){
         df <- data.frame(dates = dates.ym)
         dates.date.joined <- ggplot2::ggplot(df, ggplot2::aes(dates)) +
-          ggplot2::stat_bin(ggplot2::aes(y=cumsum(..count..)), geom="step") +
+          ggplot2::stat_bin(ggplot2::aes(y = cumsum(..count..)), geom = "step") +
           # ggplot2::ggtitle() +
           # m <- m + theme()
           # ggplot2::xlab() +
@@ -80,7 +92,7 @@ ref_users <- function(db.con = NA,
           ggplot2::labs(x = "date joined",
                         y = "nb of users",
                         title = gtit,
-                        subtitle = "who logged at least once") +
+                        subtitle = gsubtit) +
           ggplot2::theme(legend.position = "bottom",
                          axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
       }
@@ -98,7 +110,8 @@ ref_users <- function(db.con = NA,
                          axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
       }
       if(export.plot.g){
-        gout <- paste0(dirOut, "users_date_joined.png")
+        dir.create(dirOut, showWarnings = FALSE)
+        gout <- paste0(dirOut, stat.name, ".png")
         ggplot2::ggsave(gout,
                         dates.date.joined,
                         width = fig.width,
