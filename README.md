@@ -651,15 +651,13 @@ d <- ref_users(db.con = my_con,
                fig.width = 14)
 ```
 
-The option `plot.g = T` gives this plot:
+Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The option `plot.g = T` gives this plot:
 
 <p align="center">
   <img alt="img-name" src="./results/users_date_joined.png" width="600">
 </p>
 
-Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The other statistic calculated is the total number of users (minus those who have an account but have never logged in)
-
-The total number of users can be be restrict to an interval (options `date.after` and `date.before`), for example limiting the count to the year 2022: 
+The total number of users can also be restricted to an interval (options `date.after` and `date.before`), for example limiting the count to the year 2022: 
 
 ```
 d <- ref_users(db.con = my_con,
@@ -681,8 +679,10 @@ d <- ref_users(db.con = my_con,
 ```
 d$total_users
 #   count
-# 1   466
+# 1   480
 ```
+
+The other statistic calculated is the total number of users (minus those who have an account but have never logged in)
 
 # Others
 
