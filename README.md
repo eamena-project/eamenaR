@@ -1,7 +1,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data of the [EAMENA database](https://database.eamena.org/en/).  
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-oxford/eamenaR#users), etc.) from the [EAMENA database](https://database.eamena.org/en/).  
   
 The two main sources of data are: 
 * GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme); 
