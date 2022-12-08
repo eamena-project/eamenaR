@@ -292,7 +292,11 @@ Whether the data is Heritage Places, Built Components, etc.
 
 # Spatial
 
-Distribution maps for Heritages places and Geoarchaeology
+Distribution maps for Heritages places and Geoarchaeology.
+
+---
+
+The [`ref_hps()`](https://eamena-oxford.github.io/eamenaR/doc/ref_hps) function allows a back-end connection.
 
 ## Heritages places
 
