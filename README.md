@@ -256,7 +256,7 @@ For each 'job', the mapping file has three columns, one for the target ('`EAMENA
       - '`escape`': the value is calculated in another field;
       - etc.;
 
-The `list_mapping_bu()` function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries[^5]. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The `list_mapping_bu()` function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
@@ -268,6 +268,17 @@ Will return `"E00N35-44"`
 
 #### Collect the grid squares
 
+Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function. 
+
+```
+dataDir <- "C:/Users/Thomas Huet/Downloads/2022-12-08-20221208T154207Z-001/2022-12-08/"
+
+geom_bbox(dataDir = dataDir,
+          dirOut = dataDir,
+          wkt_column = "Point")
+```
+
+This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**, by default: `mbr.geojson`, like this:
 
 ```
 {
@@ -314,13 +325,15 @@ Will return `"E00N35-44"`
 }
 ```
 
-Copy/paste this `mbr.geojson` in the EAMENA DB to select and export the GeoJSON file of grid squares
+Copy/paste this `mbr.geojson` into the EAMENA DB map filter, to select and export the GeoJSON file of grid squares. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-mbr.png" width="600">
   <br>
   <em>screenshot of the grid squares selection, export them as a new GeoJSON file </em>
 </p>
+
+Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file[^5] and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
 
 #### Source file
 
@@ -783,5 +796,5 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 [^1]: JavaScript is **THE** interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
 [^3]: Sometimes, a search in EAMENA returns different types of geometries. This is the case for the caravanserails where geometries can be both POINTs and POLYGONs.
-[^4]: EAMENA-0192281 ResourceID = `8db560d5-d17d-40ff-8046-0157b1b698ab`
-[^5]: To recover the Grid cell ID for a given coordinates, use the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function on the BU file. This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
+[^4]: EAMENA-0192281 ResourceID = `8db560d5-d17d-40ff-8046-0157b1b698ab` 
+[^5]: You can 'beautify' it using https://codebeautify.org/jsonviewer
