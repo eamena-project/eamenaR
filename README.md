@@ -278,7 +278,7 @@ geom_bbox(dataDir = dataDir,
           wkt_column = "Point")
 ```
 
-This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box) of the HPs and creates as a **GeoJSON file**, by default: `mbr.geojson`, like this:
+This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box, or MBR) of the HPs and creates as a **GeoJSON file**, by default: `mbr.geojson`, like this:
 
 ```
 {
