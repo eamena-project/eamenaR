@@ -2,13 +2,13 @@
 #'
 #' @name geom_bbox
 #'
-#' @description Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the bounding box, that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
+#' @description Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the minimum bounding box (MBR), that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
 #'
 #' @param dataDir the path to the folder where the XLSXs are.
 #' @param x_column,y_column the column of the X and Y coordinates, if NA the function will look the field 'wkt'.
 #' @param wkt_column the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.
 #' @param dirOut the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.
-#' @param geojson.name the name of the GeoJSON that will be created.
+#' @param geojson.name the name of the GeoJSON that will be created, by default 'mbr' (minimum bound rectangle)
 #' @param verbose if TRUE (by default) then display different messages.
 #'
 #' @return the bounding box of the dataset as a GeoJSON file
@@ -29,7 +29,7 @@ geom_bbox <- function(dataDir = NA,
                       wkt_column = NA,
                       dirOut = paste0(system.file(package = "eamenaR"),
                                       "/results/"),
-                      geojson.name = "geojson.geojson",
+                      geojson.name = "mbr.geojson",
                       verbose = TRUE){
   # options(java.parameters = "-Xmx1000m")
   # l.bus <- list.files(dataDir, full.names = T)
@@ -38,7 +38,7 @@ geom_bbox <- function(dataDir = NA,
                              recursive = FALSE, full.names = FALSE))
   l.bus <- l.bus[grep(".xlsx", l.bus)]
   if(verbose){print(paste0("* work with the job/folder: ", dataDir))}
-  if(verbose){print(paste0("* read '", length(l.bus),"' different XLSX"))}
+  if(verbose){print(paste0("  - there are/is '", length(l.bus),"' different XLSX to read"))}
   if(length(l.bus) == 0){
     stop("There is no XLSX file(s) in the folder")
   }
@@ -46,9 +46,9 @@ geom_bbox <- function(dataDir = NA,
   # l.bus <- l.bus[l.bus.ext[] == "geojson"]
   wktcoord <- xcoord <- ycoord <- c()
   for(bu.name in l.bus){
-    # bu.name <- "AAA_f10_text.xlsx"; bu.name <- "37.xlsx" ; bu.name <- "40_51 Kenawi_modif_out_headers.xlsx"
-    bu.path <- paste0(dataDir, l.bus)
-    if(verbose){print(paste0("* read: ", l.bus))}
+    # bu.name <- "AAA_f10_text.xlsx"; bu.name <- "37.xlsx" ; bu.name <- "40_51 Kenawi_modif_out_headers.xlsx" ; bu.name <- "AAA-f-5_Kenawi.xlsx"
+    bu.path <- paste0(dataDir, bu.name)
+    if(verbose){print(paste0("* read: ", bu.path))}
     df <- xlsx::read.xlsx(bu.path, sheetIndex = 1)
     if(verbose){print(paste0("     nb of rows: ", nrow(df)))}
     if(!is.na(wkt_column)){

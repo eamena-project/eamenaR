@@ -208,9 +208,11 @@ Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxfo
 
 ```mermaid
 flowchart LR
-    A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;;
+    A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
+    A -. a. get MBR .-> D("geom_bbox()"):::eamenaRfunction;
     B --1. mapping file--> B;
     B --2. export--> C[BU file<br><em>target</em>];
+    D -. b. creates .-> E[mbr.geojson];
     classDef eamenaRfunction fill:#e7deca;
 ```
 
@@ -232,7 +234,7 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
-To establishe the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
+To establish the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
@@ -263,6 +265,62 @@ grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 grid.id
 ```
 Will return `"E00N35-44"`
+
+#### Collect the grid squares
+
+
+```
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "buffer": {
+                    "width": "0",
+                    "unit": "m"
+                },
+                "inverted": false
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            1.69683243400041,
+                            36.4166328242747
+                        ],
+                        [
+                            8.05870602835295,
+                            36.4166328242747
+                        ],
+                        [
+                            8.05870602835295,
+                            37.0812995946245
+                        ],
+                        [
+                            1.69683243400041,
+                            37.0812995946245
+                        ],
+                        [
+                            1.69683243400041,
+                            36.4166328242747
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}
+```
+
+Copy/paste this `mbr.geojson` in the EAMENA DB to select and export the GeoJSON file of grid squares
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-mbr.png" width="600">
+  <br>
+  <em>screenshot of the grid squares selection, export them as a new GeoJSON file </em>
+</p>
 
 #### Source file
 
