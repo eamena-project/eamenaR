@@ -39,15 +39,15 @@ uuid_eamenaid(
 a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
 }
 \description{
-Return the ResourceID (which is a UUID) of a HP from EAMENA id, or the opposite, and store these ID into a hash() object. A connection with the EAMENA database is needed.
+Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID
 }
 \examples{
 
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'postgres',
-                               password = 'postgis',
-                               dbname = 'eamena',
+                               password = 'xxx',
+                               dbname = 'xxx',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
 

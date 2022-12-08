@@ -39,8 +39,7 @@ geojson_map(
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 }
 \value{
 A map interactive (leaflet) or not

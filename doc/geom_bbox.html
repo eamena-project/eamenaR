@@ -19,12 +19,12 @@
 <pre>
 geom_bbox(
   dataDir = NA,
-  x_column = "xcoord",
-  y_column = "ycoord",
+  x_column = NA,
+  y_column = NA,
   wkt_column = NA,
-  dirOut = NA,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   geojson.name = "geojson.geojson",
-  verbose = T
+  verbose = TRUE
 )
 </pre>
 
@@ -46,7 +46,7 @@ geom_bbox(
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the path to the folder where the GeoJSON file will be created.</p>
+<p>the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.name</code></td>
 <td>
@@ -61,7 +61,7 @@ geom_bbox(
 
 <h3>Value</h3>
 
-<p>a GeoJSON file
+<p>the bounding box of the dataset as a GeoJSON file
 </p>
 
 

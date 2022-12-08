@@ -1,7 +1,7 @@
 #' Return the UUID of a HP from EAMENA ID, or the opposite
 #'
 #' @name uuid_id
-#' @description Return the ResourceID (which is a UUID) of a HP from EAMENA id, or the opposite, and store these ID into a hash() object. A connection with the EAMENA database is needed.
+#' @description Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID
 #'
 #' @param db.name the name of the database, by default 'eamena'.
 #' @param db.user the name of the user, by default 'postgres'.
@@ -21,8 +21,8 @@
 #'d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 #'                                user = 'postgres',
-#'                                password = 'postgis',
-#'                                dbname = 'eamena',
+#'                                password = 'xxx',
+#'                                dbname = 'xxx',
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
 #'
@@ -66,7 +66,7 @@ uuid_eamenaid <- function(db.con = NA,
       SELECT
       resourceinstanceid AS resourceid
       FROM tiles
-      WHERE tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text SIMILAR to '%(${ids})%'
+      WHERE tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text SIMILAR TO '%(${ids})%'
                        ")
     }
     df <- RPostgres::dbGetQuery(db.con, sqll)

@@ -6,12 +6,12 @@
 \usage{
 geom_bbox(
   dataDir = NA,
-  x_column = "xcoord",
-  y_column = "ycoord",
+  x_column = NA,
+  y_column = NA,
   wkt_column = NA,
-  dirOut = NA,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   geojson.name = "geojson.geojson",
-  verbose = T
+  verbose = TRUE
 )
 }
 \arguments{
@@ -21,14 +21,14 @@ geom_bbox(
 
 \item{wkt_column}{the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.}
 
-\item{dirOut}{the path to the folder where the GeoJSON file will be created.}
+\item{dirOut}{the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.}
 
 \item{geojson.name}{the name of the GeoJSON that will be created.}
 
 \item{verbose}{if TRUE (by default) then display different messages.}
 }
 \value{
-a GeoJSON file
+the bounding box of the dataset as a GeoJSON file
 }
 \description{
 Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the bounding box, that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.

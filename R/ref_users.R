@@ -7,7 +7,7 @@
 #' @param d a hash() object (a Python-like dictionary).
 #' @param stat the type of statistic that will be computed. This is also the the hash dictionnary (`d`) field name that will be filled with this statistics, e.g. "total_users", "date_joined", etc., or "all". By default: "all".
 #' @param stat.type the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. By default "all".
-#' @stat.name the name of the output file. By default "users".
+#' @param stat.name the name of the output file. By default "users".
 #' @param plot.g if TRUE will create a plot (FALSE by default).
 #' @param export.plot.g if TRUE will export the plot (FALSE by default).
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.

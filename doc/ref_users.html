@@ -22,10 +22,12 @@ ref_users(
   d = NA,
   stat = c("all"),
   stat.type = c("all"),
+  stat.name = "users",
   plot.g = F,
   export.plot.g = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   date.after = NA,
+  date.before = Sys.Date(),
   fig.width = 8,
   fig.height = 8,
   verbose = TRUE
@@ -38,7 +40,7 @@ ref_users(
 <table summary="R argblock">
 <tr valign="top"><td><code>db.con</code></td>
 <td>
-<p>the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.</p>
+<p>the parameters for the Postgresql EAMENA DB, in a 'RPostgres::dbConnect()' format.</p>
 </td></tr>
 <tr valign="top"><td><code>d</code></td>
 <td>
@@ -50,7 +52,11 @@ ref_users(
 </td></tr>
 <tr valign="top"><td><code>stat.type</code></td>
 <td>
-<p>the type of stat chart, or diagram that will be plotted. Choice: &quot;ecdf&quot; for cumulative function, etc. By default &quot;all&quot;.</p>
+<p>the type of stat chart, or diagram that will be plotted. Choice: &quot;edtf&quot; for cumulative function, etc. By default &quot;all&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>stat.name</code></td>
+<td>
+<p>the name of the output file. By default &quot;users&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>plot.g</code></td>
 <td>
@@ -66,7 +72,11 @@ ref_users(
 </td></tr>
 <tr valign="top"><td><code>date.after</code></td>
 <td>
-<p>the date after which the calculation is made. Usefull to limit the analysis. By default, none.</p>
+<p>the date after which the calculation is made. Usefull to limit the analysis. By default, NA.</p>
+</td></tr>
+<tr valign="top"><td><code>date.before</code></td>
+<td>
+<p>the date before which the calculation is made. Usefull to limit the analysis. By default, the current date ('Sys.Date()')</p>
 </td></tr>
 <tr valign="top"><td><code>fig.width, fig.height</code></td>
 <td>

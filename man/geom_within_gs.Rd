@@ -7,7 +7,7 @@
 geom_within_gs(
   resource.wkt = NA,
   gs.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson"),
-  verbose = T
+  verbose = TRUE
 )
 }
 \arguments{

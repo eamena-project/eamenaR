@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Statistics about EAMENA Heritage places (spatial...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for ref_hps"><tr><td>ref_hps</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Statistics about EAMENA Heritage places (spatial distribution)</h2>
+
+<h3>Description</h3>
+
+<p>statistics about EAMENA Heritage places
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ref_hps(
+  db.con = NA,
+  d = NA,
+  stat.name = "eamena-hps",
+  stat.format = ".geojson",
+  plot.map = F,
+  export.map = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  date.after = NA,
+  date.before = Sys.Date(),
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>db.con</code></td>
+<td>
+<p>the parameters for the Postgresql EAMENA DB, in a 'RPostgres::dbConnect()' format.</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>stat.name</code></td>
+<td>
+<p>the name of the output file. By default &quot;eamena-hps&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>stat.format</code></td>
+<td>
+<p>the extension of the geographic file (&quot;.geojson&quot;, &quot;.shp&quot;). GeoJSON by default.</p>
+</td></tr>
+<tr valign="top"><td><code>plot.map</code></td>
+<td>
+<p>if TRUE will plot a map (FALSE by default).</p>
+</td></tr>
+<tr valign="top"><td><code>export.map</code></td>
+<td>
+<p>if TRUE will export the map (FALSE by default).</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.map is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>date.after</code></td>
+<td>
+<p>the date after which the calculation is made. Usefull to limit the analysis. By default, NA.</p>
+</td></tr>
+<tr valign="top"><td><code>date.before</code></td>
+<td>
+<p>the date before which the calculation is made. Usefull to limit the analysis. By default, the current date ('Sys.Date()')</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a hash() object. If plot.map and export.map are set to TRUE will also create and save maps
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+d &lt;- hash::hash()
+my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+d &lt;- ref_hps(db.con = my_con,
+            d = d,
+            date.after = '2021-12-31',
+            date.before = '2023-01-01',
+            stat.name = "eamena-hps-2022",
+            stat.format = ".shp",
+            dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
+            export.map = TRUE)
+
+</pre>
+
+
+</div></body></html>

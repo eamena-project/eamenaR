@@ -9,23 +9,27 @@ ref_users(
   d = NA,
   stat = c("all"),
   stat.type = c("all"),
+  stat.name = "users",
   plot.g = F,
   export.plot.g = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   date.after = NA,
+  date.before = Sys.Date(),
   fig.width = 8,
   fig.height = 8,
   verbose = TRUE
 )
 }
 \arguments{
-\item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.}
+\item{db.con}{the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.}
 
 \item{d}{a hash() object (a Python-like dictionary).}
 
 \item{stat}{the type of statistic that will be computed. This is also the the hash dictionnary (`d`) field name that will be filled with this statistics, e.g. "total_users", "date_joined", etc., or "all". By default: "all".}
 
-\item{stat.type}{the type of stat chart, or diagram that will be plotted. Choice: "ecdf" for cumulative function, etc. By default "all".}
+\item{stat.type}{the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. By default "all".}
+
+\item{stat.name}{the name of the output file. By default "users".}
 
 \item{plot.g}{if TRUE will create a plot (FALSE by default).}
 
@@ -33,7 +37,9 @@ ref_users(
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.}
 
-\item{date.after}{the date after which the calculation is made. Usefull to limit the analysis. By default, none.}
+\item{date.after}{the date after which the calculation is made. Usefull to limit the analysis. By default, NA.}
+
+\item{date.before}{the date before which the calculation is made. Usefull to limit the analysis. By default, the current date (`Sys.Date()`)}
 
 \item{fig.width, fig.height}{dimension of the exported plot in cm.}
 
