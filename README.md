@@ -378,7 +378,7 @@ geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail.png" width="500">
+  <img alt="img-name" src="./results/caravanserail.png" width="700">
 </p>
 
 Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function options.
@@ -391,7 +391,7 @@ geojson_map(map.name = "caravanserail",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="500">
+  <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="700">
 </p>
 
 The color of the value (optional) is recorded in the [`symbology.xlsx`](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx) file  
@@ -455,7 +455,7 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_paths.png" width="500">
+  <img alt="img-name" src="./results/caravanserail_paths.png" width="700">
 </p>
 
 Path lengths can be visualized in a boxplot, by routes
@@ -465,7 +465,7 @@ geojson_boxplot_path(export.plot = T)
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/box_path.png" width="500">
+  <img alt="img-name" src="./results/box_path.png" width="700">
 </p>
 
 
@@ -482,7 +482,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/areas_sbs.png" width="500">
+  <img alt="img-name" src="./results/areas_sbs.png" width="700">
 </p>
 
 ### Shape analysis
@@ -663,11 +663,11 @@ plot_cultural_periods(d = d, field = "periods", plot.type = "by.eamenaid", expor
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "by.eamenaid", export.plot = T)
 ```
 <p align="center">
-  <img alt="img-name" src="./results/cultural_periods_byeamenaid.png" width="500">
+  <img alt="img-name" src="./results/cultural_periods_byeamenaid.png" width="700">
 <br><br>
 and superiods
 <br><br>
-  <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="500">
+  <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="700">
 </p>
 
 Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
@@ -676,7 +676,7 @@ Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/do
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)
 ```
 <p align="center">
-  <img alt="img-name" src="./results/cultural_subperiods_histog.png" width="500">
+  <img alt="img-name" src="./results/cultural_subperiods_histog.png" width="700">
 </p>
 
 ## EDTF
@@ -692,7 +692,7 @@ plot_edtf()
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/edtf_plotly_category_ymd.png" width="500">
+  <img alt="img-name" src="./results/edtf_plotly_category_ymd.png" width="700">
 </p>
 
 Aggregate the dates by months (`"ym"`) by thearts categories.
@@ -702,7 +702,7 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/edtf_plotly_category_ym.png" width="500">
+  <img alt="img-name" src="./results/edtf_plotly_category_ym.png" width="700">
 </p>
 
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
