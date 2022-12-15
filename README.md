@@ -458,7 +458,8 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
   <img alt="img-name" src="./results/caravanserail_paths.png" width="700">
 </p>
 
-Path lengths can be visualized in a boxplot, by routes
+Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
+
 
 ```
 geojson_boxplot_path(export.plot = T)

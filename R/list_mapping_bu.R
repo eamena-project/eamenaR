@@ -156,6 +156,9 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
       for(i in seq(1, nrow(mapping.file.other))){
         x.text <- as.character(mapping.file.other[i, job])
         x.text <- gsub("[\r\n]", "\n", x.text)
+        # # print(colnames(data))
+        # if(verbose){if(!x %in% colnames(data)){
+        #   stop(paste0("The field name '", x, "' is not present in the file '", bu.name, "'"))}}
         eval(parse(text = x.text)) # the XLSX cell text is executed
       }
     }
