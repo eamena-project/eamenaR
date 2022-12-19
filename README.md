@@ -474,7 +474,7 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) in a [VisNetwork](http
   - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1
   - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_2
   - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_3
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_5
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_4
 
 
 Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails

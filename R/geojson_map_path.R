@@ -71,7 +71,9 @@ geojson_map_path <- function(map.name = "paths",
       colnames(edges)[which(names(edges) == "dist.m")] <- "value"
       edges$title <- paste(round(edges$value/1000, 0), "km") # to km
       colnames(nodes)[which(names(nodes) == "dist.m")] <- "value"
-      visRoute <- visNetwork::visNetwork(nodes, edges) %>%
+      visRoute <- visNetwork::visNetwork(nodes, edges,
+                                         main = paste0("route ", route),
+                                         width = "90%", height = "90vh") %>%
         visNetwork::visEdges(arrows = "to") %>%
         visNetwork::visOptions(highlightNearest = T)
       if(!export.plot){print(visRoute)}
