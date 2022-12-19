@@ -70,7 +70,7 @@ geojson_map <- function(map.name = "map",
   ea.geojson.point$idf <- rownames(ea.geojson.point)
   ea.geojson.line <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "LINESTRING", ]
   ea.geojson.line$idf <- rownames(ea.geojson.line)
-  ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) == "POLYGON" | sf::st_geometry_type(ea.geojson$geometry) == "MULTIPOLYGON", ]
+  ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) %in% c("POLYGON", "MULTIPOLYGON"), ]
   ea.geojson.polygon$idf <- rownames(ea.geojson.polygon)
   if(!is.na(highlights.ids)){
     ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data[ , ids] %in% highlights.ids, ])

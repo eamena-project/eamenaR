@@ -65,7 +65,7 @@ Paste the copied URL into your web browser and create a GeoJSON file, the result
 
 ![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
 
-You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
+You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
 
 ## Duplicates
 
@@ -117,11 +117,11 @@ functions:
 
 For example:
 
-1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-oxford/eamenaR#geojson-files)), for example **caravanserail.geojson** Heritage Places.  
+1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-oxford/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
 
 <a name="geojson_kml"></a>  
 
-2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
+2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
 
 ```
 library(dplyr)
@@ -204,7 +204,7 @@ Now, each of these two HP has two different kind of geometries: POINT and POLYGO
 
 ### BU mapping
 
-Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
+Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 ```mermaid
 flowchart LR
@@ -216,8 +216,9 @@ flowchart LR
     classDef eamenaRfunction fill:#e7deca;
 ```
 
-function: 
-  - [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu)  
+functions: 
+  - [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu)  
+  - [geom_bbox()](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox)  
 
 For example, the dataset prepared by Mohamed Kenawi (`mk`):
 
@@ -234,7 +235,7 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
-To establish the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [`list_mapping_bu()`](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
+To establish the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
@@ -256,7 +257,7 @@ For each 'job', the mapping file has three columns, one for the target ('`EAMENA
       - '`escape`': the value is calculated in another field;
       - etc.;
 
-The `list_mapping_bu()` function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
@@ -268,7 +269,7 @@ Will return `"E00N35-44"`
 
 #### Collect the grid squares
 
-Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [`geom_bbox()`](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function. 
+Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [geom_bbox()](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function. 
 
 ```
 dataDir <- "C:/Users/Thomas Huet/Downloads/2022-12-08-20221208T154207Z-001/2022-12-08/"
@@ -371,7 +372,7 @@ The [`ref_hps()`](https://eamena-oxford.github.io/eamenaR/doc/ref_hps) function 
 
 ## Heritages places
 
-For the default GeoJSON file **caravanserail.geojson** Heritage Places ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson))
+Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file
 
 ```
 geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
@@ -671,7 +672,7 @@ and superiods
   <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="700">
 </p>
 
-Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
+Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)

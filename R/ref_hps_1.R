@@ -11,8 +11,9 @@
 #' @param plot.map if TRUE will plot a map (FALSE by default).
 #' @param export.map if TRUE will export the map (FALSE by default).
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.map is TRUE.
-#' @param date.after the date after which the calculation is made. Usefull to limit the analysis. By default, NA.
-#' @param date.before the date before which the calculation is made. Usefull to limit the analysis. By default, the current date (`Sys.Date()`)
+#' @param date.after the date after which the calculation is made. Useful to limit the analysis. By default, NA.
+#' @param date.before the date before which the calculation is made. Useful to limit the analysis. By default, the current date (`Sys.Date()`)
+#' @param team.name only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). The possible values to limit the analysis are: "EAMENA Project Staff", "MarEA Project Staff", "موظف في مشروع ""ايمينا""", "Government Authority/Staff", "Volunteer/Independent Researcher", "مؤسسة غير حكومية (مؤسسة أهلية)", "Student/Trainee", "باحث أكاديمي", "Academic Researcher", "Private Sector", "Non-Governmental Organisation (NGO)", "مؤسسة حكومية/ موظف".
 #' @param verbose if TRUE (by default), print messages
 #'
 #' @return a hash() object. If plot.map and export.map are set to TRUE will also create and save maps
@@ -45,10 +46,11 @@ ref_hps_1 <- function(db.con = NA,
                     dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                     date.after = NA,
                     date.before = Sys.Date(),
+                    team.name = NA,
                     verbose = TRUE){
   if(verbose){print("*start HPS' distribution")}
   date.before <- as.character(date.before)
-  sqll.body <- "
+  sqll <- "
 SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
 	-- EAMENA ID
     SELECT * FROM (
@@ -85,7 +87,7 @@ SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
   # limit on HPs creation dates
   if(!is.na(date.after) & !is.na(date.before)){
     if(verbose){print("   - limit on dates of creation")}
-    sqll.cond.creationdate <- stringr::str_interp("
+    sqll.cond <- stringr::str_interp("
           ,
           (
           	-- date of creation
@@ -93,23 +95,33 @@ SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
               resourceinstanceid::TEXT AS ri,
           	createdtime::date AS cdate
               FROM resource_instances
-          	WHERE createdtime::date > '2020-12-31'::date
-              AND createdtime::date < '2022-01-01'::date
+          	WHERE createdtime::date > '%${date.after}%'::date
+              AND createdtime::date < '%${date.before}%'::date
           ) AS created
 
           WHERE ids.ri = staff.ri AND ids.ri = coords.ri AND ids.ri = created.ri
                                               ")
-    sqll <- paste0(sqll.body, "\n", sqll.cond.creationdate)
+    sqll <- paste0(sqll, "\n", sqll.cond)
   }
+
   # limit on HPs creation dates
   if(is.na(date.after)){
     if(verbose){print("   - limit on dates of creation")}
-    sqll.cond.creationdate <- stringr::str_interp("
+    sqll.cond <- stringr::str_interp("
         WHERE ids.ri = staff.ri AND ids.ri = coords.ri
                                               ")
-    sqll <- paste0(sqll.body, "\n", sqll.cond.creationdate)
+    sqll <- paste0(sqll, "\n", sqll.cond)
   }
 
+  # limit on teams
+  if(!is.na(team.name)){
+    if(verbose){print("   - limit on team names")}
+    # TODO: authorise different team names
+    sqll.cond <- stringr::str_interp("
+        AND staff.teamname LIKE '%${team.name}%'
+                                              ")
+    sqll <- paste0(sqll, "\n", sqll.cond)
+  }
   coords <- d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
   DBI::dbDisconnect(db.con)
   hps.geojson <- sf::st_as_sf(coords,
@@ -118,7 +130,7 @@ SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
                               agr = "constant",
                               na.fail = FALSE)
   if(export.map){
-    if(verbose){print("*write file")}
+    if(verbose){print("* write file")}
     outFile <- paste0(dirOut, stat.name, stat.format)
     sf::st_write(hps.geojson, outFile, append = FALSE)
   }
