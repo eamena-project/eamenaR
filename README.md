@@ -459,8 +459,25 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
   <img alt="img-name" src="./results/caravanserail_paths.png" width="700">
 </p>
 
-Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
+#### Interactive
 
+A good way to control the paths, avoiding double edges, etc. is to run an interactive plot of these paths:
+
+```
+geojson_map_path(routes = c(0, 1, 2, 3, 4),
+                 interactive = T,
+                 export.plot = F)
+```
+Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) in a [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget:
+
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_0
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_2
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_3
+  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_5
+
+
+Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
 
 ```
 geojson_boxplot_path(export.plot = T)
