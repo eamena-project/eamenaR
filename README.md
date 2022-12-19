@@ -495,7 +495,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/paths_profile.png" width="500">
+  <img alt="img-name" src="./results/paths_profile.png" width="700">
 </p>
 
 #### Boxplots
