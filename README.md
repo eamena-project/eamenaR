@@ -456,7 +456,7 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_paths.png" width="700">
+  <img alt="img-name" src="./results/caravanserail_paths_map.png" width="700">
 </p>
 
 #### Interactive
@@ -477,7 +477,7 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [V
   - [route 4](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_4)
 
 <p align="center">
-  <img alt="img-name" src="./results/paths_map_route_1.png" width="700">
+  <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
 </p>
 
 Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails

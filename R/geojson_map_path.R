@@ -1,13 +1,13 @@
-#' Create a map with paths between different heritage places
+#' Create a map and a profile with paths between different heritage places
 #'
 #' @name geojson_map_path
 #'
-#' @description Create a distribution map of heritage places linked together by paths, for example for caravanserails
+#' @description Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails
 #'
 #' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.
-#' @param export.type the type of output: a map (`map`) or a profile (`profile`).
+#' @param export.type the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.
 #' @param routes limit the study to some routes. By default NA, no limitation.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param interactive if TRUE will plot a VisNetwork. By default FALSE.
@@ -28,6 +28,18 @@
 #'                  routes = c(0, 1, 2, 3, 4),
 #'                  interactive = T,
 #'                  export.plot = T,
+#'                  dirOut = "C:/Rprojects/eamenaR/results/")
+#'
+#' # create the profile of each route
+#' df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+#' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+#'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+#'                  routes = c(0, 1, 2, 3, 4),
+#'                  export.type = "profile",
+#'                  export.plot = T,
+#'                  fig.height = 11,
+#'                  fig.width = 18,
 #'                  dirOut = "C:/Rprojects/eamenaR/results/")
 #'
 #' @export
@@ -160,17 +172,171 @@ geojson_map_path <- function(map.name = "paths",
     if (export.plot) {
       if(verbose){print(paste0("    - export 'map'"))}
       dir.create(dirOut, showWarnings = FALSE)
-      gout <- paste0(dirOut, map.name, ".png")
-      ggplot2::ggsave(filename = gout,
+      gout <- paste0(map.name, "_map", ".png")
+      ggplot2::ggsave(filename = paste0(dirOut, gout),
                       plot = mapOut,
                       height = fig.height,
                       width = fig.width)
-      if(verbose){print(paste0("    - 'map' is exported"))}
+      if(verbose){print(paste0("    - the routes' map '", gout,"' is exported into: '", dirOut,"'"))}
     } else {
       mapOut
     }
   }
   if("profile" %in% export.type){
+    # to store values
+    df.dist.Zs <- data.frame(dist = numeric(),
+                             hp = character(),
+                             Zs = numeric(),
+                             route = character())
+    # routes <- unique(paths.geom.sf$route)
+    for(route in routes){
+      # paths by routes
+      if(verbose){print(paste0("\n", "* read route: '", route, "'"))}
+      # route <- 1
+      # subset
+      paths.route <- paths.geom.sf[paths.geom.sf$route == route, ]
+      # paths.route <- paths.geom.sf
+      paths.route.df <- data.frame(from = paths.route$from,
+                                   to = paths.route$to,
+                                   dist.m = paths.route$dist.m)
 
+      # "EAMENA-0207260" %in% paths.route.df$to
+      # "EAMENA-0207260" %in% df1
+
+      # unique values
+      paths.route.df.hp.names <- unique(as.vector(as.matrix(paths.route.df[ , c("from", "to")])))
+
+      # paths.route.df.hp.names <- unique(paths.route.df[ , c("from", "to")])
+      #
+      # paths.route.df.hp.names <- unique(unique(paths.route.df$from),
+      #                                   unique(paths.route.df$to))
+      # hps
+      hps.route <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] %in% paths.route.df.hp.names, ]
+
+      # "EAMENA-0207260" %in% paths.route.df.hp.names
+
+      hps.route$name <- hps.route[["EAMENA ID"]]
+
+      # "EAMENA-0207260" %in%  hps.route$name
+
+      # check
+      if(verbose){print("  - check if all HPs are in the paths, and vice versa")}
+      if(length(hps.route$name) != length(paths.route.df.hp.names)){
+        if(verbose){print("    - missing data somewhere (HPs or paths)")}
+        # possible duplicates
+        # unique(paths.route.df.hp.names[! paths.route.df.hp.names %in% hps.route$name])
+        # unique(hps.route$name[! hps.route$name %in% paths.route.df.hp.names])
+        setdiff(hps.route$name, paths.route.df.hp.names)
+        setdiff(paths.route.df.hp.names, hps.route$name)
+        n_occur <- data.frame(table(hps.route$name))
+        n_occur[n_occur$Freq > 1,]
+        n_occur <- data.frame(table(paths.route.df.hp.names))
+        n_occur[n_occur$Freq > 1,]
+      } else {
+        if(verbose){print("    - check done")}
+      }
+
+      hps.route.df <- as.data.frame(hps.route)
+      # reorder columns
+      idx.name <- ncol(hps.route.df)
+      hps.route.df <- hps.route.df[ , c(idx.name, 2:idx.name - 1)]
+
+      # hps.route.df[hps.route.df$name == start.node, "Z"]
+
+      #colnames(hps.route.df)
+
+      # g <- igraph::graph_from_data_frame(paths.route.df,
+      #                                    directed = TRUE,
+      #                                    vertices = hps.route.df)
+      # unique(paths.route.df$from, paths.route.df$to)
+      g <- igraph::graph_from_data_frame(paths.route.df,
+                                         directed = TRUE)
+      if(verbose){print("  - set the weight of the edges")}
+      E(g)$weight <- E(g)$dist.m
+      # get the start node
+      if(1 == 1){
+        if(verbose){print("  - find one starting node in the path")}
+        node.deg.1 <- degree(g, mode = 'in') == 0
+        df.nodes <- as.data.frame(node.deg.1)
+        df.nodes$EAMENAID <- rownames(df.nodes)
+        start.node <- df.nodes[df.nodes$node.deg.1 == TRUE, "EAMENAID"]
+        start.node <- start.node[1] # only one
+        if(verbose){print(paste0("    - the starting node of route '", route, "' is: '", start.node, "'"))}
+      }
+      # start.node <- "EAMENA-0207504"
+      start.node.z <- hps.route.df[hps.route.df$name == start.node, "Z"]
+      not.start.node <- V(g)$name[!V(g)$name %in% start.node]
+      if(verbose){print(paste0("  - calculate distances from the starting node '", start.node,
+                               "' to any other HPs on the route '", route, "'"))}
+      df.dist <- distances(
+        graph = g,
+        v = start.node,
+        # v = rep(start.node, length(not.start.node)),
+        to = not.start.node
+      )
+      rownames(df.dist) <- "dist"
+      # add HP names
+      df.dist <- rbind(df.dist, colnames(df.dist))
+      # add the route
+      df.dist <- rbind(df.dist, rep(route, ncol(df.dist)))
+      # add the Z
+      Zs <- c()
+      for(c in colnames(df.dist)){
+        # c <- "EAMENA-0207260"
+        Z <- hps.route.df[hps.route.df$name == c, "Z"]
+        if(verbose){print(paste0("    - HP '", c, " altitude: ", Z, " m"))}
+        Zs <- c(Zs, Z)
+      }
+      # df.Zs <- t(data.frame(hp = colnames(df.dist),
+      #                       Z = Zs))
+
+      # c <- "EAMENA-0207505"))
+      df.dist.Z <- rbind(df.dist, Zs)
+      df.dist.Z <- as.data.frame(t(df.dist.Z))
+      colnames(df.dist.Z)[which(names(df.dist.Z) == "V2")] <- "hp"
+      colnames(df.dist.Z)[which(names(df.dist.Z) == "V3")] <- "route"
+      # add the HP origin
+      df.dist.Z <- rbind(df.dist.Z, data.frame(dist = 0,
+                                               hp = start.node,
+                                               Zs = start.node.z,
+                                               route = route,
+                                               row.names = start.node))
+      rownames(df.dist.Z) <- paste0(rownames(df.dist.Z), ".", route)
+      # aggregate the route to a bigger df
+      df.dist.Zs <- rbind(df.dist.Zs, df.dist.Z)
+    }
+    # type conversion
+    df.dist.Zs$Zs <- as.numeric(as.character(df.dist.Zs$Zs))
+    df.dist.Zs$dist <- as.numeric(as.character(df.dist.Zs$dist))
+    # df.dist.Z[ , c("Zs", "dist")] <-
+    df.dist.Zs$dist <- df.dist.Zs$dist/1000
+    # recovers ids (short names for plotting)
+    df.ids <- eamenaR::geojson_stat(stat = c("list_ids"),
+                                    geojson.path = geojson.path,
+                                    export.stat = T)
+    df.ids <- data.frame(id = rownames(df.ids),
+                         hp = df.ids$ea.ids)
+    df.complete <- merge(df.dist.Zs, df.ids, by = "hp", all.x = T)
+    # create profile
+    gout <- ggplot2::ggplot(df.complete, aes(x = dist, y = Zs, label = id)) +
+      ggplot2::facet_grid(route ~ .) +
+      ggplot2::geom_point() +
+      ggplot2::geom_line() +
+      ggrepel::geom_text_repel(max.overlaps = Inf) +
+      ggplot2::xlab("distance (km)") +
+      ggplot2::ylab("elevation (m)") +
+      ggplot2::theme_bw()
+    if (export.plot) {
+      if(verbose){print(paste0("    - export 'profile'"))}
+      dir.create(dirOut, showWarnings = FALSE)
+      profOut <- paste0(map.name, "_profile", ".png")
+      ggplot2::ggsave(filename = paste0(dirOut, profOut),
+                      plot = gout,
+                      height = fig.height,
+                      width = fig.width)
+      if(verbose){print(paste0("    - the routes' profile '", profOut,"' is exported into: '", dirOut,"'"))}
+    } else {
+      gout
+    }
   }
 }

@@ -2,7 +2,7 @@
 #'
 #' @name geojson_addZ
 #'
-#' @description
+#' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
 #'
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param geojson.out the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`)
@@ -13,6 +13,9 @@
 #' @return
 #'
 #' @examples
+#'
+#' df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
 #'
 #'
 #' @export
