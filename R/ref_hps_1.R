@@ -13,7 +13,7 @@
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.map is TRUE.
 #' @param date.after the date after which the calculation is made. Useful to limit the analysis. By default, NA.
 #' @param date.before the date before which the calculation is made. Useful to limit the analysis. By default, the current date (`Sys.Date()`)
-#' @param team.name only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). The possible values to limit the analysis are: "EAMENA Project Staff", "MarEA Project Staff", "موظف في مشروع ""ايمينا""", "Government Authority/Staff", "Volunteer/Independent Researcher", "مؤسسة غير حكومية (مؤسسة أهلية)", "Student/Trainee", "باحث أكاديمي", "Academic Researcher", "Private Sector", "Non-Governmental Organisation (NGO)", "مؤسسة حكومية/ موظف".
+#' @param team.name only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). The possible values to limit the analysis are: "EAMENA Project Staff", "MarEA Project Staff", "Government Authority/Staff", "Volunteer/Independent Researcher", "Student/Trainee", "Academic Researcher", "Private Sector", "Non-Governmental Organisation (NGO)", etc.
 #' @param verbose if TRUE (by default), print messages
 #'
 #' @return a hash() object. If plot.map and export.map are set to TRUE will also create and save maps

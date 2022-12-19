@@ -12,23 +12,32 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 
 ### Description
 
-Use a dataframe of heritage places (like vertices) inherited from a
-GeoJSON, and a file of paths (like edges) inherited form a CSV, between
-these heritage places, to format a new dataframe. This new dataframe is
-used by thefunctions \'geojson_map_path()\', \'geojson_boxplot_path()\'.
-The function cleans the datasets removing existing paths liking two
-heritage places taht not exist in the GeoJSON
+Use a dataframe of heritage places (ie, places, vertices), and a file of
+paths (like edges) between these heritage places, to format a new
+dataframe. At first, the heritage place file is a inherited from a
+GeoJSON and the links between these places is a CSV. The function cleans
+the datasets removing existing paths linking two heritage places that
+don\'t not exist in the GeoJSON. This new dataframe is used by the
+functions \'geojson_map_path()\', \'geojson_boxplot_path()\' to model
+the dataset with network analysis.
 
 ### Usage
 
-    geojson_format_path(geojson.path = geojson.path., csv.path = csv.path.)
+    geojson_format_path(
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      csv.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail_paths.csv"),
+      verbose = TRUE
+    )
 
 ### Arguments
 
-  ---------------- -------------------------------------------------------------------------------
-  `geojson.path`   the path of the GeoJSON file.
-  `csv.path`       the path to the CSV where the edges between two heritage places are recorded.
-  ---------------- -------------------------------------------------------------------------------
+  ---------------- -----------------------------------------------------------------------------------------------------------------------
+  `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
+  `csv.path`       the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
+  `verbose`        if TRUE (by default), print messages
+  ---------------- -----------------------------------------------------------------------------------------------------------------------
 
 ### Value
 

@@ -10,7 +10,7 @@ geom_bbox(
   y_column = NA,
   wkt_column = NA,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-  geojson.name = "geojson.geojson",
+  geojson.name = "mbr.geojson",
   verbose = TRUE
 )
 }
@@ -23,7 +23,7 @@ geom_bbox(
 
 \item{dirOut}{the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.}
 
-\item{geojson.name}{the name of the GeoJSON that will be created.}
+\item{geojson.name}{the name of the GeoJSON that will be created, by default 'mbr' (minimum bound rectangle)}
 
 \item{verbose}{if TRUE (by default) then display different messages.}
 }
@@ -31,7 +31,7 @@ geom_bbox(
 the bounding box of the dataset as a GeoJSON file
 }
 \description{
-Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the bounding box, that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
+Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the minimum bounding box (MBR), that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
 }
 \examples{
 

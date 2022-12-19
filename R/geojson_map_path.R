@@ -22,6 +22,13 @@
 #' # plot a general map of heritage places
 #' geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 #'
+#' # create an interactive map of each route
+#' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+#'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+#'                  routes = c(0, 1, 2, 3, 4),
+#'                  interactive = T,
+#'                  export.plot = T,
+#'                  dirOut = "C:/Rprojects/eamenaR/results/")
 #'
 #' @export
 geojson_map_path <- function(map.name = "paths",

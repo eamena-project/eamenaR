@@ -18,16 +18,20 @@
 
 <pre>
 geojson_map_path(
-  map.name = "map_path",
+  map.name = "paths",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  export.type = c("map"),
+  routes = NA,
+  interactive = FALSE,
   stamen.zoom = NA,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
-  fig.height = 8
+  fig.height = 8,
+  verbose = TRUE
 )
 </pre>
 
@@ -45,7 +49,19 @@ geojson_map_path(
 </td></tr>
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
-<p>the path to the CSV where the edges between two heritage places are recorded.</p>
+<p>the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.</p>
+</td></tr>
+<tr valign="top"><td><code>export.type</code></td>
+<td>
+<p>the type of output: a map ('map') or a profile ('profile').</p>
+</td></tr>
+<tr valign="top"><td><code>routes</code></td>
+<td>
+<p>limit the study to some routes. By default NA, no limitation.</p>
+</td></tr>
+<tr valign="top"><td><code>interactive</code></td>
+<td>
+<p>if TRUE will plot a VisNetwork. By default FALSE.</p>
 </td></tr>
 <tr valign="top"><td><code>stamen.zoom</code></td>
 <td>
@@ -57,8 +73,11 @@ geojson_map_path(
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages</p>
 </td></tr>
 </table>
 
@@ -76,6 +95,13 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
 # plot a general map of heritage places
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 
+# create an interactive map of each route
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                 routes = c(0, 1, 2, 3, 4),
+                 interactive = T,
+                 export.plot = T,
+                 dirOut = "C:/Rprojects/eamenaR/results/")
 
 </pre>
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add a Z value to geometries</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_addZ"><tr><td>geojson_addZ</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Add a Z value to geometries</h2>
+
+<h3>Usage</h3>
+
+<pre>
+geojson_addZ(
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  geojson.out = NA,
+  elevation.api = "open-elevation",
+  sleep = 0.3,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  verbose = T
+)
+
+geojson_addZ(
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  geojson.out = NA,
+  elevation.api = "open-elevation",
+  sleep = 0.3,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  verbose = T
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>geojson.path</code></td>
+<td>
+<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.out</code></td>
+<td>
+<p>the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable 'geojson.path')</p>
+</td></tr>
+<tr valign="top"><td><code>sleep</code></td>
+<td>
+<p>the time delay between two API request in seconds. By default 0.3.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default): verbose</p>
+</td></tr>
+<tr valign="top"><td><code>map.name</code></td>
+<td>
+<p>the name of the output map and the name of the saved file (if export.plot is TRUE). By default &quot;map&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>ids</code></td>
+<td>
+<p>the IDs of the resources, by default &quot;EAMENA.ID&quot; (R fieldname format, without spaces).</p>
+</td></tr>
+<tr valign="top"><td><code>field.names</code></td>
+<td>
+<p>a vector one or many field names for thematic cartography. If NA (by default), will create a general map</p>
+</td></tr>
+<tr valign="top"><td><code>highlights.ids</code></td>
+<td>
+<p>EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.</p>
+</td></tr>
+<tr valign="top"><td><code>symbology</code></td>
+<td>
+<p>the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.</p>
+</td></tr>
+<tr valign="top"><td><code>stamen.zoom</code></td>
+<td>
+<p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>plotly.plot</code></td>
+<td>
+<p>if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, export the plot, if FALSE will only display it.</p>
+</td></tr>
+</table>
+
+
+</div></body></html>
