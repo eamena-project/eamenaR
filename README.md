@@ -482,7 +482,7 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [V
 
 #### Profiles
 
-Heritages places can be drawn with their elevation using two functions: [`geojson_addZ()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
+Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
 
 ```
 df <- geojson_addZ()
@@ -497,6 +497,8 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
 <p align="center">
   <img alt="img-name" src="./results/paths_profile.png" width="700">
 </p>
+
+The numbers of the HP are the same as the [previous map](https://github.com/eamena-oxford/eamenaR#heritages-places-ids-%EF%B8%8F-eamena-id)
 
 #### Boxplots
 
