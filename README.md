@@ -468,14 +468,17 @@ geojson_map_path(routes = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = F)
 ```
-Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) in a [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget:
+Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget:
 
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_0
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_2
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_3
-  - https://eamena-oxford.github.io/eamenaR/results/paths_map_route_4
+  - [route 0](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_0)
+  - [route 1](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1)
+  - [route 2](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_2)
+  - [route 3](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_3)
+  - [route 4](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_4)
 
+<p align="center">
+  <img alt="img-name" src="./results/paths_map_route_1.png" width="700">
+</p>
 
 Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
 
