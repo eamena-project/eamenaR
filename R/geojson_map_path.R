@@ -15,7 +15,7 @@
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #' @param verbose if TRUE (by default), print messages
 #'
-#' @return A PNG map of heritage places linked together by paths
+#' @return A PNG map and an HMTL map of heritage places linked together by paths
 #'
 #' @examples
 #'

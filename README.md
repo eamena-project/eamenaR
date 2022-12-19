@@ -468,13 +468,7 @@ geojson_map_path(routes = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = F)
 ```
-Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget:
-
-  - [route 0](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_0)
-  - [route 1](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1)
-  - [route 2](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_2)
-  - [route 3](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_3)
-  - [route 4](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_4)
+Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1)
 
 <p align="center">
   <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
