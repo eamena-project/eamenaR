@@ -8,6 +8,12 @@
 
 <h2>Add a Z value to geometries</h2>
 
+<h3>Description</h3>
+
+<p>Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
+</p>
+
+
 <h3>Usage</h3>
 
 <pre>
@@ -89,6 +95,19 @@ geojson_addZ(
 <p>if TRUE, export the plot, if FALSE will only display it.</p>
 </td></tr>
 </table>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+
+
+df &lt;- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+
+
+</pre>
 
 
 </div></body></html>

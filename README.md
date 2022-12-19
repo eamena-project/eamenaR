@@ -480,6 +480,26 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [V
   <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
 </p>
 
+#### Profiles
+
+Heritages places can be drawn with their elevation using two functions: [`geojson_addZ()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
+
+```
+df <- geojson_addZ()
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 routes = c(0, 1, 2, 3, 4),
+                 export.type = "profile",
+                 export.plot = T,
+                 fig.height = 11,
+                 fig.width = 18)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/paths_profile.png" width="500">
+</p>
+
+#### Boxplots
+
 Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
 
 ```

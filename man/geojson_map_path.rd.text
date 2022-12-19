@@ -1,5 +1,5 @@
 ---
-title: "R: Create a map with paths between different heritage places"
+title: "R: Create a map and a profile with paths between different\\..."
 viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 ---
 
@@ -8,12 +8,12 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
   geojson_map_path     R Documentation
   ------------------ -----------------
 
-## Create a map with paths between different heritage places
+## Create a map and a profile with paths between different heritage places
 
 ### Description
 
-Create a distribution map of heritage places linked together by paths,
-for example for caravanserails
+Create a distribution map and an elevation profile of heritage places
+linked together by paths, for example for caravanserails
 
 ### Usage
 
@@ -40,7 +40,7 @@ for example for caravanserails
   `map.name`       the name of the output map and the name of the saved file (if export.plot is TRUE). By default \"map_path\".
   `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
   `csv.path`       the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
-  `export.type`    the type of output: a map (\'map\') or a profile (\'profile\').
+  `export.type`    the type of output: a map (\'map\') or a profile (\'profile\'). For this latter the Z should be calculated with the \'geojson_addZ()\' function.
   `routes`         limit the study to some routes. By default NA, no limitation.
   `interactive`    if TRUE will plot a VisNetwork. By default FALSE.
   `stamen.zoom`    the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
@@ -65,5 +65,17 @@ A PNG map of heritage places linked together by paths
                      routes = c(0, 1, 2, 3, 4),
                      interactive = T,
                      export.plot = T,
+                     dirOut = "C:/Rprojects/eamenaR/results/")
+
+    # create the profile of each route
+    df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                       dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+    geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                     csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                     routes = c(0, 1, 2, 3, 4),
+                     export.type = "profile",
+                     export.plot = T,
+                     fig.height = 11,
+                     fig.width = 18,
                      dirOut = "C:/Rprojects/eamenaR/results/")
 :::

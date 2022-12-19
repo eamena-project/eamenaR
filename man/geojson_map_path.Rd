@@ -2,7 +2,7 @@
 % Please edit documentation in R/geojson_map_path.R
 \name{geojson_map_path}
 \alias{geojson_map_path}
-\title{Create a map with paths between different heritage places}
+\title{Create a map and a profile with paths between different heritage places}
 \usage{
 geojson_map_path(
   map.name = "paths",
@@ -28,7 +28,7 @@ geojson_map_path(
 
 \item{csv.path}{the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.}
 
-\item{export.type}{the type of output: a map (`map`) or a profile (`profile`).}
+\item{export.type}{the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.}
 
 \item{routes}{limit the study to some routes. By default NA, no limitation.}
 
@@ -46,7 +46,7 @@ geojson_map_path(
 A PNG map of heritage places linked together by paths
 }
 \description{
-Create a distribution map of heritage places linked together by paths, for example for caravanserails
+Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails
 }
 \examples{
 
@@ -59,6 +59,18 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
                  routes = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = T,
+                 dirOut = "C:/Rprojects/eamenaR/results/")
+
+# create the profile of each route
+df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                 routes = c(0, 1, 2, 3, 4),
+                 export.type = "profile",
+                 export.plot = T,
+                 fig.height = 11,
+                 fig.width = 18,
                  dirOut = "C:/Rprojects/eamenaR/results/")
 
 }

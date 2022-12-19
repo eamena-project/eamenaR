@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a map with paths between different heritage places</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a map and a profile with paths between different...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_map_path"><tr><td>geojson_map_path</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create a map with paths between different heritage places</h2>
+<h2>Create a map and a profile with paths between different heritage places</h2>
 
 <h3>Description</h3>
 
-<p>Create a distribution map of heritage places linked together by paths, for example for caravanserails
+<p>Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails
 </p>
 
 
@@ -53,7 +53,7 @@ geojson_map_path(
 </td></tr>
 <tr valign="top"><td><code>export.type</code></td>
 <td>
-<p>the type of output: a map ('map') or a profile ('profile').</p>
+<p>the type of output: a map ('map') or a profile ('profile'). For this latter the Z should be calculated with the 'geojson_addZ()' function.</p>
 </td></tr>
 <tr valign="top"><td><code>routes</code></td>
 <td>
@@ -101,6 +101,18 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
                  routes = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = T,
+                 dirOut = "C:/Rprojects/eamenaR/results/")
+
+# create the profile of each route
+df &lt;- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                 routes = c(0, 1, 2, 3, 4),
+                 export.type = "profile",
+                 export.plot = T,
+                 fig.height = 11,
+                 fig.width = 18,
                  dirOut = "C:/Rprojects/eamenaR/results/")
 
 </pre>

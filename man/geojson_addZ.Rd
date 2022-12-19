@@ -59,11 +59,14 @@ geojson_addZ(
 \description{
 
 
-
+Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
 }
 \examples{
 
 
+
+df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
 
 
 }
