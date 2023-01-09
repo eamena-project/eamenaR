@@ -10,8 +10,8 @@
 #' @param by the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).
 #' @param plotly.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param export.plot if TRUE, show the plot in Plotly window.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is export plot is TRUE.
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.
+#' @param verbose if TRUE (by default), print messages.
 #'
 #' @return
 #'
@@ -37,7 +37,9 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                                  export.plot = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                                  fig.width = 9,
-                                 fig.height = 5){
+                                 fig.height = 5,
+                                 verbose = TRUE){
+  if(verbose){print("format the nodes (HPs, GeoJSON) and edges (paths, CSV)")}
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   # facets or not
   if(by %in% colnames(paths)){
@@ -77,6 +79,7 @@ geojson_boxplot_path <- function(plot.name = "box_path",
     ggplot2::ggtitle("Distribution of distances between two caravanserails by routes")
   if(!is.na(by)){
     # print(colnames(paths))
+    if(verbose){print(paste0("the boxplots will be filtered on the column: '", by,"'"))}
     bout <- bout +
       ggplot2::facet_grid(. ~ by, scales = "free")
   }
@@ -105,14 +108,13 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                     plot = bout,
                     height = fig.height,
                     width = fig.width)
-    print(paste(gout, "is exported"))
+    if(verbose){print(paste0(gout, " is exported"))}
   } else {
     print(bout)
-    print(paste("boxplot is plotted"))
+    if(verbose){print(paste0("boxplot is plotted"))}
   }
   if(plotly.plot){
     plotly::ggplotly(bout)
   }
 }
 
-geojson_boxplot_path()

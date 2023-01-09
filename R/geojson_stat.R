@@ -1,5 +1,7 @@
 #' Basic statistics on a GeoJSON file
+#'
 #' @name geojson_stat
+#'
 #' @description Basic descriptive statistics on a GeoJSON file
 #'
 #' @param stat.name the name of the output file. By default "stat".
@@ -15,6 +17,9 @@
 #' @examples
 #'
 #' geojson_stat(stat.name = "geojson_fields", export.stat = T)
+#'
+#' # list HP names
+#' geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
 #'
 #' @export
 geojson_stat <- function(stat.name = "stat",

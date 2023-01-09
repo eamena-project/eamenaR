@@ -2,7 +2,7 @@
 #'
 #' @name geojson_map_path
 #'
-#' @description Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails
+#' @description Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails.
 #'
 #' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
@@ -13,16 +13,24 @@
 #' @param interactive if TRUE will plot a VisNetwork. By default FALSE.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
-#' @param verbose if TRUE (by default), print messages
+#' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A PNG map and an HMTL map of heritage places linked together by paths
 #'
 #' @examples
 #'
+#' library(dplyr)
+#'
 #' # plot a general map of heritage places
 #' geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 #'
 #' # create an interactive map of each route
+#' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+#'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+#'                  routes = c(0, 1, 2, 3, 4),
+#'                  interactive = T)
+#'
+#' # create an interactive map of each route and export
 #' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
 #'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
 #'                  routes = c(0, 1, 2, 3, 4),
@@ -33,6 +41,12 @@
 #' # create the profile of each route
 #' df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
 #'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+#' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+#'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+#'                  routes = c(0, 1, 2, 3, 4),
+#'                  export.type = "profile")
+#'
+#' # create the profile of each route and export
 #' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
 #'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
 #'                  routes = c(0, 1, 2, 3, 4),
@@ -58,6 +72,7 @@ geojson_map_path <- function(map.name = "map_path",
                              fig.width = 8,
                              fig.height = 8,
                              verbose = TRUE){
+  r.id <- eamenaR::ref_ids("id")
   if(verbose){print("* paths between HPs")}
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   paths.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
@@ -211,11 +226,15 @@ geojson_map_path <- function(map.name = "map_path",
       # paths.route.df.hp.names <- unique(unique(paths.route.df$from),
       #                                   unique(paths.route.df$to))
       # hps
-      hps.route <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] %in% paths.route.df.hp.names, ]
+
+      hps.route <- hp.geom.sf[hp.geom.sf[[r.id]] %in% paths.route.df.hp.names, ]
+      # hps.route <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] %in% paths.route.df.hp.names, ]
+
 
       # "EAMENA-0207260" %in% paths.route.df.hp.names
 
-      hps.route$name <- hps.route[["EAMENA ID"]]
+      hps.route$name <- hps.route[[r.id]]
+      # hps.route$name <- hps.route[["EAMENA ID"]]
 
       # "EAMENA-0207260" %in%  hps.route$name
 
@@ -229,9 +248,9 @@ geojson_map_path <- function(map.name = "map_path",
         setdiff(hps.route$name, paths.route.df.hp.names)
         setdiff(paths.route.df.hp.names, hps.route$name)
         n_occur <- data.frame(table(hps.route$name))
-        n_occur[n_occur$Freq > 1,]
+        n_occur[n_occur$Freq > 1, ]
         n_occur <- data.frame(table(paths.route.df.hp.names))
-        n_occur[n_occur$Freq > 1,]
+        n_occur[n_occur$Freq > 1, ]
       } else {
         if(verbose){print("    - check done")}
       }
@@ -252,23 +271,25 @@ geojson_map_path <- function(map.name = "map_path",
       g <- igraph::graph_from_data_frame(paths.route.df,
                                          directed = TRUE)
       if(verbose){print("  - set the weight of the edges")}
-      E(g)$weight <- E(g)$dist.m
+      igraph::E(g)$weight <- igraph::E(g)$dist.m
       # get the start node
       if(1 == 1){
         if(verbose){print("  - find one starting node in the path")}
-        node.deg.1 <- degree(g, mode = 'in') == 0
+        node.deg.1 <- igraph::degree(g, mode = 'in') == 0
         df.nodes <- as.data.frame(node.deg.1)
-        df.nodes$EAMENAID <- rownames(df.nodes)
-        start.node <- df.nodes[df.nodes$node.deg.1 == TRUE, "EAMENAID"]
+        # print("||||")
+        # print(colnames(df.nodes))
+        df.nodes$id <- rownames(df.nodes)
+        start.node <- df.nodes[df.nodes$node.deg.1 == TRUE, "id"]
         start.node <- start.node[1] # only one
         if(verbose){print(paste0("    - the starting node of route '", route, "' is: '", start.node, "'"))}
       }
       # start.node <- "EAMENA-0207504"
       start.node.z <- hps.route.df[hps.route.df$name == start.node, "Z"]
-      not.start.node <- V(g)$name[!V(g)$name %in% start.node]
+      not.start.node <- igraph::V(g)$name[!igraph::V(g)$name %in% start.node]
       if(verbose){print(paste0("  - calculate distances from the starting node '", start.node,
                                "' to any other HPs on the route '", route, "'"))}
-      df.dist <- distances(
+      df.dist <- igraph::distances(
         graph = g,
         v = start.node,
         # v = rep(start.node, length(not.start.node)),
@@ -318,7 +339,7 @@ geojson_map_path <- function(map.name = "map_path",
                          hp = df.ids$ea.ids)
     df.complete <- merge(df.dist.Zs, df.ids, by = "hp", all.x = T)
     # create profile
-    gout <- ggplot2::ggplot(df.complete, aes(x = dist, y = Zs, label = id)) +
+    gout <- ggplot2::ggplot(df.complete, ggplot2::aes(x = dist, y = Zs, label = id)) +
       ggplot2::facet_grid(route ~ .) +
       ggplot2::geom_point() +
       ggplot2::geom_line() +

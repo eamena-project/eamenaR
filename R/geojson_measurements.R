@@ -1,6 +1,8 @@
 #' Measurements on a GeoJSON file
+#'
 #' @name geojson_measurements
-#' @description Compute measurements (areas, L x l, etc.) on a GeoJSON file creating a boxplot
+#'
+#' @description Compute measurements (areas, L x l, etc.) on a GeoJSON file and output a boxplot
 #'
 #' @param stat.name the name of the output file. By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
@@ -18,18 +20,25 @@
 #'
 #' @examples
 #'
-#' geojson_measurements(stat.name = "areas", export.stat = T)
+#' # boxplot for all heritage places
+#' geojson_measurements(stat.name = "areas")
+#'
+#' # by route and export
+#' geojson_measurements(stat.name = "areas", by.route = T, export.stat = T)
 #'
 #' @export
 geojson_measurements <- function(stat.name = "stat",
-                                 geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
+                                 geojson.path = paste0(system.file(package = "eamenaR"),
+                                                       "/extdata/caravanserail.geojson"),
                                  stat = c("area"),
-                                 by.routes = F,
-                                 csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
-                                 plot.stat = T,
-                                 export.stat = F,
-                                 export.plot = F,
-                                 dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                                 by.routes = FALSE,
+                                 csv.path = paste0(system.file(package = "eamenaR"),
+                                                   "/extdata/caravanserail_paths.csv"),
+                                 plot.stat = TRUE,
+                                 export.stat = FALSE,
+                                 export.plot = FALSE,
+                                 dirOut = paste0(system.file(package = "eamenaR"),
+                                                 "/results/"),
                                  fig.width = 8,
                                  fig.height = 8,
                                  verbose = TRUE){
@@ -123,5 +132,4 @@ geojson_measurements <- function(stat.name = "stat",
     }
   }
 }
-
 

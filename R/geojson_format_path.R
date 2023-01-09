@@ -18,10 +18,10 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
                                 csv.path = paste0(system.file(package = "eamenaR"),
                                                   "/extdata/caravanserail_paths.csv"),
                                 verbose = TRUE){
+  r.id <- eamenaR::ref_ids("id")
   df <- eamenaR::geojson_stat(stat = c("list_ids"),
                               geojson.path = geojson.path,
                               export.stat = T)
-  ids <- read.csv(paste0(getwd(), "/inst/extdata/ids.csv"))
   df$id <- rownames(df)
   paths <- read.table(csv.path, sep = ",", header = T)
   hp.in.paths <- unique(unique(paths$from),
@@ -33,12 +33,16 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
   for(i in seq(1, nrow(paths))){
     path.from <- paths[i, "from"]
     path.to <- paths[i, "to"]
-    from <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.from, ]
-    to <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.to, ]
+    # from <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.from, ]
+    # to <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.to, ]
+    from <- hp.geom.sf[hp.geom.sf[[r.id]] == path.from, ]
+    to <- hp.geom.sf[hp.geom.sf[[r.id]] == path.to, ]
+
     tryCatch(
       #try to do this
       {
-        paths[i, "from.id"] <- df[df$ea.ids == from[["EAMENA ID"]], "id"]
+        # paths[i, "from.id"] <- df[df$ea.ids == from[["EAMENA ID"]], "id"]
+        paths[i, "from.id"] <- df[df$ea.ids == from[[r.id]], "id"]
       },
       #if an error occurs, tell me the error
       error = function(e) {
@@ -53,8 +57,8 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       #   return(NA)
       # }
     )
-    # paths[i, "from.id"] <- df[df$ea.ids == from[["EAMENA ID"]], "id"]
-    paths[i, "to.id"] <- df[df$ea.ids == to[["EAMENA ID"]], "id"]
+    # paths[i, "to.id"] <- df[df$ea.ids == to[["EAMENA ID"]], "id"]
+    paths[i, "to.id"] <- df[df$ea.ids == to[[r.id]], "id"]
     paths[i, "from.geom"] <- sf::st_as_text(from$geometry)
     paths[i, "to.geom"] <- sf::st_as_text(to$geometry)
     paths[i, "dist.m"] <- as.numeric(sf::st_distance(from, to))

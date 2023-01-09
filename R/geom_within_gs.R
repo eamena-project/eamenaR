@@ -51,6 +51,8 @@ geom_within_gs <- function(resource.wkt = NA,
       warnings(missed)
     }
   }
-  if(err == 1){return(NA)}
+  if(err == 1){
+    return(NA)
+    }
 }
 

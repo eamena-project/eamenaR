@@ -1,5 +1,7 @@
 #' Create a map, whether static or interactive leaflet, from a GeoJSON file
+#'
 #' @name geojson_map
+#'
 #' @description Create a distribution map
 #'
 #' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".
@@ -9,7 +11,7 @@
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.
 #' @param symbology the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
-#' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
+#' @param leaflet.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #'
@@ -47,12 +49,17 @@ geojson_map <- function(map.name = "map",
                         symbology = paste0(system.file(package = "eamenaR"),
                                            "/extdata/symbology.xlsx"),
                         stamen.zoom = NA,
-                        plotly.plot = F,
+                        fields.for.labels = c("Site Feature Interpretation Type",
+                                              "Cultural Period Type",
+                                              "Administrative Division ",
+                                              "Country Type "),
+                        leaflet.plot = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/results/"),
                         fig.width = 8,
                         fig.height = 8){
+
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   symbology <- openxlsx::read.xlsx(symbology)
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
@@ -79,7 +86,7 @@ geojson_map <- function(map.name = "map",
   }
 
   # non plolty
-  if(!plotly.plot){
+  if(!leaflet.plot){
     left <- as.numeric(sf::st_bbox(ea.geojson.point)$xmin)
     bottom <- as.numeric(sf::st_bbox(ea.geojson.point)$ymin)
     right <- as.numeric(sf::st_bbox(ea.geojson.point)$xmax)
@@ -264,35 +271,51 @@ geojson_map <- function(map.name = "map",
   }
 
   # yes plotly
-  if(plotly.plot){
+  if(leaflet.plot){
+    # labels
+    labels.pt <-"paste0('<b>', ea.geojson.point[[ids]][a.pt],'</b>'"
+    labels.ln <-"paste0('<b>', ea.geojson.line[[ids]][a.pt],'</b>'"
+    labels.pl <-"paste0('<b>', ea.geojson.polygon[[ids]][a.pt],'</b>'"
+    for(ffl in fields.for.labels){
+      labels.pt <- paste0(labels.pt, paste0(", '<br>', ea.geojson.point[['", ffl, "']][a.pt]"))
+      labels.ln <- paste0(labels.ln, paste0(", '<br>', ea.geojson.line[['", ffl, "']][a.pt]"))
+      labels.pl <- paste0(labels.pl, paste0(", '<br>', ea.geojson.polygon[['", ffl, "']][a.pt]"))
+    }
+    labels.pt <- paste0(labels.pt, ")")
+    labels.ln <- paste0(labels.ln, ")")
+    labels.pl <- paste0(labels.pl, ")")
+    # add geometries
     if(nrow(ea.geojson.point) > 0){
       ea.geojson.point$lbl <- NA
       for(a.pt in seq(1, nrow(ea.geojson.point))){
-        ea.geojson.point[a.pt, "lbl"] <- paste0("<b>", ea.geojson.point[[ids]][a.pt],"</b><br>",
-                                                ea.geojson.point[["Site Feature Interpretation Type"]][a.pt],
-                                                " - ", ea.geojson.point[["Cultural Period Type"]][a.pt], " - ",
-                                                ea.geojson.point[["Administrative Division "]][a.pt], " ",
-                                                ea.geojson.point[["Country Type "]][a.pt], "<br>")
+        ea.geojson.point[a.pt, "lbl"] <- eval(parse(text = labels.pt))
+        # ea.geojson.point[a.pt, "lbl"] <- paste0("<b>", ea.geojson.point[[ids]][a.pt],"</b><br>",
+        #                                         ea.geojson.point[["Site Feature Interpretation Type"]][a.pt],
+        #                                         " - ", ea.geojson.point[["Cultural Period Type"]][a.pt], " - ",
+        #                                         ea.geojson.point[["Administrative Division "]][a.pt], " ",
+        #                                         ea.geojson.point[["Country Type "]][a.pt], "<br>")
       }
     }
     if(nrow(ea.geojson.line) > 0){
       ea.geojson.line$lbl <- NA
       for(a.pt in seq(1, nrow(ea.geojson.line))){
-        ea.geojson.line[a.pt, "lbl"] <- paste0("<b>", ea.geojson.line[[ids]][a.pt],"</b><br>",
-                                                ea.geojson.line[["Site Feature Interpretation Type"]][a.pt],
-                                                " - ", ea.geojson.line[["Cultural Period Type"]][a.pt], " - ",
-                                                ea.geojson.line[["Administrative Division "]][a.pt], " ",
-                                                ea.geojson.line[["Country Type "]][a.pt], "<br>")
+        ea.geojson.line[a.pt, "lbl"] <- eval(parse(text = labels.ln))
+        # ea.geojson.line[a.pt, "lbl"] <- paste0("<b>", ea.geojson.line[[ids]][a.pt],"</b><br>",
+        #                                         ea.geojson.line[["Site Feature Interpretation Type"]][a.pt],
+        #                                         " - ", ea.geojson.line[["Cultural Period Type"]][a.pt], " - ",
+        #                                         ea.geojson.line[["Administrative Division "]][a.pt], " ",
+        #                                         ea.geojson.line[["Country Type "]][a.pt], "<br>")
       }
     }
     if(nrow(ea.geojson.polygon) > 0){
       ea.geojson.polygon$lbl <- NA
       for(a.pt in seq(1, nrow(ea.geojson.polygon))){
-        ea.geojson.polygon[a.pt, "lbl"] <- paste0("<b>", ea.geojson.polygon[[ids]][a.pt],"</b><br>",
-                                               ea.geojson.polygon[["Site Feature Interpretation Type"]][a.pt],
-                                               " - ", ea.geojson.polygon[["Cultural Period Type"]][a.pt], " - ",
-                                               ea.geojson.polygon[["Administrative Division "]][a.pt], " ",
-                                               ea.geojson.polygon[["Country Type "]][a.pt], "<br>")
+        ea.geojson.polygon[a.pt, "lbl"] <- eval(parse(text = labels.pl))
+        # ea.geojson.polygon[a.pt, "lbl"] <- paste0("<b>", ea.geojson.polygon[[ids]][a.pt],"</b><br>",
+        #                                        ea.geojson.polygon[["Site Feature Interpretation Type"]][a.pt],
+        #                                        " - ", ea.geojson.polygon[["Cultural Period Type"]][a.pt], " - ",
+        #                                        ea.geojson.polygon[["Administrative Division "]][a.pt], " ",
+        #                                        ea.geojson.polygon[["Country Type "]][a.pt], "<br>")
       }
     }
     ea.map <- leaflet::leaflet() %>%
@@ -381,3 +404,5 @@ geojson_map <- function(map.name = "map",
     }
   }
 }
+
+geojson_map(map.name = "caravanserail", leaflet.plot = T)
