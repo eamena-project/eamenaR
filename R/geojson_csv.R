@@ -1,9 +1,10 @@
 #' Convert from GeoJSON to CSV
 #'
 #' @name geojson_csv
-#' @description Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). At the same time, geometries drawn in EAMENA can be exported as GeoJSON. For a given HP, this data can be then imported into the EAMENA DB.
 #'
-#' @param geom.path the path to the GeoJSON file. This file comes from the geojson_kml() function.
+#' @description This function allows file format conversion from GeoJSON to CSV. The output CSV file then can be imported into the EAMENA DB with a bulk upload append procedure.
+#'
+#' @param geom.path the path to the GeoJSON file. This file comes from the `geojson_kml()` function.
 #' @param export if TRUE (by default), will export the GeoJSON to a CSV file.
 #' @param dirOut the path to the folder where the CSV file will be created.
 #' @param csv.name the name of the CSV that will be created without the extension

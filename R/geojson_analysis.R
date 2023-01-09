@@ -1,5 +1,7 @@
 #' Complex interactive statistics on a GeoJSON file
+#'
 #' @name geojson_analysis
+#'
 #' @description Complex interactive statistics on a GeoJSON file with the Shiny package
 #'
 #' @param stat.name the name of the output file. By default "stat".

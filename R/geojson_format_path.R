@@ -2,12 +2,13 @@
 #'
 #' @name geojson_format_path
 #'
-#' @description Use a dataframe of heritage places (ie, places, vertices), and a file of paths (like edges) between these heritage places, to format a new dataframe. At first, the heritage place file is a inherited from a GeoJSON and the links between these places is a CSV. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions `geojson_map_path()`, `geojson_boxplot_path()` to model the dataset with network analysis.
+#' @description Use a dataframe of heritage places (ie, places, vertices), and a file of paths (as edges) between these heritage places, to format a new dataframe. The heritage places (HP) are stored in a GeoJSON file. The paths between these HP are stored in a CSV file. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions `geojson_map_path()`, `geojson_boxplot_path()` to model the dataset with network analysis.
+#'
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.
-#' @param verbose if TRUE (by default), print messages
+#' @param verbose if TRUE (by default), print messages.
 #'
-#' @return A dataframe with the appropriate format
+#' @return A dataframe with the appropriate columns: "from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route"
 #'
 #' @examples
 #'

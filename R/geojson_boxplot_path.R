@@ -1,11 +1,14 @@
-#' Create a boxplot with paths distances between different heritage places
+#' Create a boxplot or various boxplots of path lengths between different heritage places
+#'
 #' @name geojson_boxplot_path
+#'
 #' @description
 #'
 #' @param plot.name the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default "box_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
-#' @param plotly.plot if TRUE, export the plot, if FALSE will only display it
+#' @param by the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).
+#' @param plotly.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param export.plot if TRUE, show the plot in Plotly window.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.
 #' If it doesn't exist, it will be created. Only useful is export plot is TRUE.
@@ -14,11 +17,14 @@
 #'
 #' @examples
 #'
-#' # normal plot
-#' geojson_boxplot_path(export.plot = T)
+#' # normal plot (show only, one boxplot)
+#' geojson_boxplot_path()
+#'
+#' # normal plot (export, a boxplot for each 'route')
+#' geojson_boxplot_path(export.plot = T, by = "route")
 #'
 #' # Plotly plot
-#' geojson_boxplot_path(plotly.plot = T)
+#' geojson_boxplot_path(plotly.plot = T, by = "route")
 #'
 #' @export
 geojson_boxplot_path <- function(plot.name = "box_path",
@@ -26,15 +32,20 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                                                        "/extdata/caravanserail.geojson"),
                                  csv.path = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail_paths.csv"),
+                                 by = NA,
                                  plotly.plot = F,
                                  export.plot = F,
                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
                                  fig.width = 9,
                                  fig.height = 5){
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
+  # facets or not
+  if(by %in% colnames(paths)){
+    names(paths)[names(paths) == by] <- "by"
+  } else {paths$by <- 1}
   # stat distances
   bout <- ggplot2::ggplot(paths, ggplot2::aes(x = 0, y = dist.m)) +
-    ggplot2::facet_grid(. ~ route, scales="free") +
+    # ggplot2::facet_grid(. ~ route, scales = "free") +
     ggplot2::geom_boxplot(data = paths,
                           ggplot2::aes(x = 0, y = dist.m),
                           alpha = 0,
@@ -42,7 +53,7 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                           width = 0.75,
                           lwd = 0.3,
                           inherit.aes = FALSE) +
-    ggplot2::geom_jitter(ggplot2::aes(color = route),
+    ggplot2::geom_jitter(ggplot2::aes(color = by),
                          position = ggplot2::position_jitter(w = 0.3),
                          size = 2,
                          stroke = 0,
@@ -64,6 +75,11 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                    strip.background = ggplot2::element_rect(colour = "black", size = 0.2)) +
     ggplot2::ylab("distance (m)") +
     ggplot2::ggtitle("Distribution of distances between two caravanserails by routes")
+  if(!is.na(by)){
+    # print(colnames(paths))
+    bout <- bout +
+      ggplot2::facet_grid(. ~ by, scales = "free")
+  }
 
     # ggplot2::theme_bw() +
     # ggplot2::theme(legend.position = "none",
@@ -91,9 +107,12 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                     width = fig.width)
     print(paste(gout, "is exported"))
   } else {
-    bout
+    print(bout)
+    print(paste("boxplot is plotted"))
   }
   if(plotly.plot){
     plotly::ggplotly(bout)
   }
 }
+
+geojson_boxplot_path()

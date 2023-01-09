@@ -43,7 +43,7 @@
 #'                  dirOut = "C:/Rprojects/eamenaR/results/")
 #'
 #' @export
-geojson_map_path <- function(map.name = "paths",
+geojson_map_path <- function(map.name = "map_path",
                              geojson.path = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail.geojson"),
                              csv.path = paste0(system.file(package = "eamenaR"),

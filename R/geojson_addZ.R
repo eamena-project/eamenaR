@@ -5,10 +5,10 @@
 #' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
 #'
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param geojson.out the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`)
+#' @param geojson.out the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
-#' @param verbose if TRUE (by default): verbose
+#' @param verbose if TRUE (by default): verbose.
 #'
 #' @return
 #'
