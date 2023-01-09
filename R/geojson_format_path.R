@@ -21,6 +21,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
   df <- eamenaR::geojson_stat(stat = c("list_ids"),
                               geojson.path = geojson.path,
                               export.stat = T)
+  ids <- read.csv(paste0(getwd(), "/inst/extdata/ids.csv"))
   df$id <- rownames(df)
   paths <- read.table(csv.path, sep = ",", header = T)
   hp.in.paths <- unique(unique(paths$from),
