@@ -130,7 +130,3 @@ list_cultural_periods <- function(db = 'eamena',
   message("the fields 'periods' and 'subperiods' have been created")
   return(d)
 }
-
-d_sql <- hash::hash()
-d_sql <- eamenaR::uuid_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-d_sql <- list_cultural_periods("eamena", d_sql, "culturalper", d_sql$uuid)
