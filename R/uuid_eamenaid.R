@@ -1,6 +1,7 @@
 #' Return the UUID of a HP from EAMENA ID, or the opposite
 #'
-#' @name uuid_id
+#' @name uuid_eamenaid
+#'
 #' @description Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID
 #'
 #' @param db.name the name of the database, by default 'eamena'.
@@ -12,7 +13,7 @@
 #' @param id a EAMENA ID (eg. "EAMENA-0187363") or a ResourceID (eg. "12053a2b-9127-47a4-990f-7f5279cd89da").
 #' @param field.uuid the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.
 #' @param field.id the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.
-#' @param disconn if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con))
+#' @param disconn if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).
 #'
 #' @return a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
 #'

@@ -1,39 +1,41 @@
 #' List the name of all the cultural period of a given HP
+#'
 #' @name list_cultural_periods
-#' @description With a given concept UUID (v. Reference Data Manager), find all
-#' the cultural periods, subperiods, etc., of a given HP
 #'
-#' @param db the name of the database or dataset, by default 'eamena'. If 'eamena': will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.
+#' @description With a given concept UUID (v. Reference Data Manager), find all the cultural periods, subperiods, etc., of a given HP
+#'
+#' @param db the name of the database or dataset. If `db = 'eamena'` (by default): will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.
 #' @param d a hash() object (a Python-like dictionary)
-#' @param uuid the UUIDs of one or several HP, only useful if db = 'eamena'. These
-#' UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
-#' a single UUID (eg., '12053a2b-9127-47a4-990f-7f5279cd89da')
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param cultural_periods the reference table where all the periods and subperiods are
-#' listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv
+#' @param uuid the UUIDs of one or several HP, only useful if `db = 'eamena'`. These UUID can be stored in the `d` variable (eg., `d_sql[["uuid"]]`), a vector, or a single UUID (eg., `'12053a2b-9127-47a4-990f-7f5279cd89da'`)
+#' @param geojson.path the path of the GeoJSON file. Only useful is `db = 'geojson'`. By default 'caravanserail.geojson'
+#' @param cultural_periods the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv
 #'
-#' @return A hash() with listed cultural periods names in the field 'periods'
-#' and listed cultural sub-periods names in the field 'subperiods'
+#' @return A hash() with listed cultural periods names in the field 'periods' and listed cultural sub-periods names in the field 'subperiods'
 #'
 #' @examples
 #'
 #' # looking into the EAMENA DB
 #' d_sql <- hash::hash()
 #' d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-#' d_sql <- list_cultural.periods("eamena", d_sql, "culturalper", d_sql$uuid)
+#' d_sql <- list_cultural_periods("eamena", d_sql, "culturalper", d_sql$uuid)
 #'
 #'
 #' # looking into a GeoJSON file
 #' geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
-#' d_sql <- list_cultural.periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+#' d_sql <- list_cultural_periods(db = "geojson",
+#'                                d = d_sql,
+#'                                field = "culturalper",
+#'                                geojson.path)
 #' plot_cultural.periods(d = d_sql, field = "period")
 #'
 #' @export
 list_cultural_periods <- function(db = 'eamena',
                                   d = NA,
                                   uuid = NA,
-                                  geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson"),
-                                  cultural_periods = paste0(system.file(package = "eamenaR"), "/extdata/cultural_periods.tsv")){
+                                  geojson.path = paste0(system.file(package = "eamenaR"),
+                                                        "/extdata/caravanserail.geojson"),
+                                  cultural_periods = paste0(system.file(package = "eamenaR"),
+                                                            "/extdata/cultural_periods.tsv")){
 
 
 
