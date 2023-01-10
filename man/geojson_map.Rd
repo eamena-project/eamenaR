@@ -13,7 +13,9 @@ geojson_map(
   highlights.ids = NA,
   symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
   stamen.zoom = NA,
-  plotly.plot = F,
+  fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
+    "Administrative Division ", "Country Type "),
+  leaflet.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
@@ -35,7 +37,7 @@ geojson_map(
 
 \item{stamen.zoom}{the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.}
 
-\item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.}
+\item{leaflet.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 

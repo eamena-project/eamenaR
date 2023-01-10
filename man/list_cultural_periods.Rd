@@ -15,38 +15,36 @@ list_cultural_periods(
 )
 }
 \arguments{
-\item{db}{the name of the database or dataset, by default 'eamena'. If 'eamena': will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.}
+\item{db}{the name of the database or dataset. If `db = 'eamena'` (by default): will connect the Pg database. If 'geojson', will read the GeoJSON file path recorded in the parameter 'geojson.path'.}
 
 \item{d}{a hash() object (a Python-like dictionary)}
 
-\item{uuid}{the UUIDs of one or several HP, only useful if db = 'eamena'. These
-UUID can be stored in the `d` variable (eg., d_sql[["uuid"]]), a vector, or
-a single UUID (eg., '12053a2b-9127-47a4-990f-7f5279cd89da')}
+\item{uuid}{the UUIDs of one or several HP, only useful if `db = 'eamena'`. These UUID can be stored in the `d` variable (eg., `d_sql[["uuid"]]`), a vector, or a single UUID (eg., `'12053a2b-9127-47a4-990f-7f5279cd89da'`)}
 
-\item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
+\item{geojson.path}{the path of the GeoJSON file. Only useful is `db = 'geojson'`. By default 'caravanserail.geojson'}
 
-\item{cultural_periods}{the reference table where all the periods and subperiods are
-listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv}
+\item{cultural_periods}{the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv}
 }
 \value{
-A hash() with listed cultural periods names in the field 'periods'
-and listed cultural sub-periods names in the field 'subperiods'
+A hash() with listed cultural periods names in the field 'periods' and listed cultural sub-periods names in the field 'subperiods'
 }
 \description{
-With a given concept UUID (v. Reference Data Manager), find all
-the cultural periods, subperiods, etc., of a given HP
+With a given concept UUID (v. Reference Data Manager), find all the cultural periods, subperiods, etc., of a given HP
 }
 \examples{
 
 # looking into the EAMENA DB
 d_sql <- hash::hash()
 d_sql <- uuid_from_eamenaid("eamena", "EAMENA-0187363", d_sql, "uuid")
-d_sql <- list_cultural.periods("eamena", d_sql, "culturalper", d_sql$uuid)
+d_sql <- list_cultural_periods("eamena", d_sql, "culturalper", d_sql$uuid)
 
 
 # looking into a GeoJSON file
 geojson.path <- "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
-d_sql <- list_cultural.periods(db = "geojson", d = d_sql, field = "culturalper", geojson.path)
+d_sql <- list_cultural_periods(db = "geojson",
+                               d = d_sql,
+                               field = "culturalper",
+                               geojson.path)
 plot_cultural.periods(d = d_sql, field = "period")
 
 }

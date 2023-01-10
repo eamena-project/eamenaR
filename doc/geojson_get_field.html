@@ -17,7 +17,11 @@
 <h3>Usage</h3>
 
 <pre>
-geojson_get_field(geojson.path, field = "EAMENA.ID")
+geojson_get_field(
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  field = "EAMENA ID"
+)
 </pre>
 
 
@@ -26,8 +30,7 @@ geojson_get_field(geojson.path, field = "EAMENA.ID")
 <table summary="R argblock">
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path to the GeoJSON file,
-eg: &quot;https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson&quot;</p>
+<p>the path to the GeoJSON file, eg: &quot;https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson&quot;</p>
 </td></tr>
 <tr valign="top"><td><code>field</code></td>
 <td>

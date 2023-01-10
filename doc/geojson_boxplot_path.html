@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a boxplot with paths distances between different...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a boxplot or various boxplots of path lengths between...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for geojson_boxplot_path"><tr><td>geojson_boxplot_path</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create a boxplot with paths distances between different heritage places</h2>
+<h2>Create a boxplot or various boxplots of path lengths between different heritage places</h2>
 
 <h3>Usage</h3>
 
@@ -17,11 +17,13 @@ geojson_boxplot_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  by = NA,
   plotly.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 9,
-  fig.height = 5
+  fig.height = 5,
+  verbose = TRUE
 )
 </pre>
 
@@ -41,9 +43,13 @@ geojson_boxplot_path(
 <td>
 <p>the path to the CSV where the edges between two heritage places are recorded.</p>
 </td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).</p>
+</td></tr>
 <tr valign="top"><td><code>plotly.plot</code></td>
 <td>
-<p>if TRUE, export the plot, if FALSE will only display it</p>
+<p>if TRUE, export the plot, if FALSE will only display it.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
@@ -51,8 +57,11 @@ geojson_boxplot_path(
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages.</p>
 </td></tr>
 </table>
 
@@ -61,11 +70,14 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
 
 <pre>
 
-# normal plot
-geojson_boxplot_path(export.plot = T)
+# normal plot (show only, one boxplot)
+geojson_boxplot_path()
+
+# normal plot (export, a boxplot for each 'route')
+geojson_boxplot_path(export.plot = T, by = "route")
 
 # Plotly plot
-geojson_boxplot_path(plotly.plot = T)
+geojson_boxplot_path(plotly.plot = T, by = "route")
 
 </pre>
 

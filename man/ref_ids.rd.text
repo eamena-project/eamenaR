@@ -1,0 +1,46 @@
+---
+title: "R: Find the equivalences between eamenaR concepts and
+  specific\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  --------- -----------------
+  ref_ids     R Documentation
+  --------- -----------------
+
+## Find the equivalences between eamenaR concepts and specific Arches instances
+
+### Description
+
+This function read a table of correspondences between labels used in
+this R package, and labels used of a given instance of Arches. For
+example \'id\' in this eamenaR package refers the \'EAMENA ID\' in the
+EAMENA DB. This is useful to generalise the function to Arches instances
+having different labels. See the table here:
+https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv
+
+### Usage
+
+    ref_ids(
+      r.name = NA,
+      ids.path = paste0(system.file(package = "eamenaR"), "/extdata/ids.csv")
+    )
+
+### Arguments
+
+  ------------ ---------------------------------------
+  `r.name`     the eamenaR label, by default NA.
+  `ids.path`   the path to the correspondance table.
+  ------------ ---------------------------------------
+
+### Value
+
+A string which is the label used in the DB
+
+### Examples
+
+
+    ref_ids("id")
+    # "EAMENA ID"
+:::

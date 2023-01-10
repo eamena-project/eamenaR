@@ -1,5 +1,5 @@
 ---
-title: "R: Convert from/to GeoJSON, KMZ or KML"
+title: "R: Convert between GeoJSON and KMZ/KML"
 viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 ---
 
@@ -8,7 +8,7 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
   geojson_kml     R Documentation
   ------------- -----------------
 
-## Convert from/to GeoJSON, KMZ or KML
+## Convert between GeoJSON and KMZ/KML
 
 ### Description
 
@@ -26,34 +26,34 @@ into the EAMENA DB.
       export = T,
       dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
       geojson.name = "Waypoints",
-      selectedName = "EAMENA.ID",
-      selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
+      select.name = "EAMENA ID",
+      select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
       verbose = T
     )
 
 ### Arguments
 
-  ------------------ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  `geom.path`        the path to the KML, KMZ or GeoJSON file.
-  `geom.types`       the types of geometries (\"POINT\", \"LINE\" or \"POLYGON\") that will be selected. By default all: \'c(\"POINT\", \"LINE\", \"POLYGON\")\'.
-  `export`           if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.
-  `dirOut`           the path to the folder where the KML/KMZ/GeoJSON file will be created.
-  `geojson.name`     the name of the KML/KMZ/GeoJSON that will be created without the extension
-  `selectedName`     for KML export only. The field selected to be the KML name of the HP, by default \"EAMENA.ID\".
-  `selectedFields`   for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c(\"EAMENA.ID\",\"Resource.Name\", \"resourceid\").
-  `verbose`          if TRUE (by default) then display different messages.
-  ------------------ --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ----------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `geom.path`       the path to the KML, KMZ or GeoJSON file.
+  `geom.types`      the types of geometries (\"POINT\", \"LINE\" or \"POLYGON\") that will be selected. By default all: \'c(\"POINT\", \"LINE\", \"POLYGON\")\'.
+  `export`          if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.
+  `dirOut`          the path to the folder where the KML/KMZ/GeoJSON file will be created.
+  `geojson.name`    the name of the KML/KMZ/GeoJSON that will be created without the extension
+  `select.name`     for KML export only. The field selected to be the KML name of the HP, by default \"EAMENA ID\".
+  `select.fields`   for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c(\"EAMENA ID\",\"Resource Name\", \"resourceid\").
+  `verbose`         if TRUE (by default) then display different messages.
+  ----------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Value
 
-a GeoJSON file or a KML file
+a GeoJSON file or a KML file, depending on the input file.
 
 ### Examples
 
 
     library(dplyr)
 
-    # from KMZ to GeoJSON
+    # from KMZ to GeoJSON, with the default 'Waypoints.kmz' input file
     library(dplyr)
     geojson_kml(geom.types = "POINT")
 

@@ -404,5 +404,3 @@ geojson_map <- function(map.name = "map",
     }
   }
 }
-
-geojson_map(map.name = "caravanserail", leaflet.plot = T)

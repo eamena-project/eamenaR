@@ -40,4 +40,7 @@ Basic descriptive statistics on a GeoJSON file
 
 geojson_stat(stat.name = "geojson_fields", export.stat = T)
 
+# list HP names
+geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
+
 }

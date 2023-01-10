@@ -9,12 +9,12 @@ geojson_measurements(
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
   stat = c("area"),
-  by.routes = F,
+  by.routes = FALSE,
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
-  plot.stat = T,
-  export.stat = F,
-  export.plot = F,
+  plot.stat = TRUE,
+  export.stat = FALSE,
+  export.plot = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
   fig.height = 8,
@@ -47,10 +47,14 @@ If it doesn't exist, it will be created. Only useful is export.plot is TRUE.}
 Show or export measurements statistics on the GeoJSON file
 }
 \description{
-Compute measurements (areas, L x l, etc.) on a GeoJSON file creating a boxplot
+Compute measurements (areas, L x l, etc.) on a GeoJSON file and output a boxplot
 }
 \examples{
 
-geojson_measurements(stat.name = "areas", export.stat = T)
+# boxplot for all heritage places
+geojson_measurements(stat.name = "areas")
+
+# by route and export
+geojson_measurements(stat.name = "areas", by.route = T, export.stat = T)
 
 }

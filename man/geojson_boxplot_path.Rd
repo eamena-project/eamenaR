@@ -2,7 +2,7 @@
 % Please edit documentation in R/geojson_boxplot_path.R
 \name{geojson_boxplot_path}
 \alias{geojson_boxplot_path}
-\title{Create a boxplot with paths distances between different heritage places}
+\title{Create a boxplot or various boxplots of path lengths between different heritage places}
 \usage{
 geojson_boxplot_path(
   plot.name = "box_path",
@@ -10,11 +10,13 @@ geojson_boxplot_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  by = NA,
   plotly.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 9,
-  fig.height = 5
+  fig.height = 5,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -24,12 +26,15 @@ geojson_boxplot_path(
 
 \item{csv.path}{the path to the CSV where the edges between two heritage places are recorded.}
 
-\item{plotly.plot}{if TRUE, export the plot, if FALSE will only display it}
+\item{by}{the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).}
+
+\item{plotly.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
 \item{export.plot}{if TRUE, show the plot in Plotly window.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
+
+\item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
 
@@ -39,10 +44,13 @@ If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 }
 \examples{
 
-# normal plot
-geojson_boxplot_path(export.plot = T)
+# normal plot (show only, one boxplot)
+geojson_boxplot_path()
+
+# normal plot (export, a boxplot for each 'route')
+geojson_boxplot_path(export.plot = T, by = "route")
 
 # Plotly plot
-geojson_boxplot_path(plotly.plot = T)
+geojson_boxplot_path(plotly.plot = T, by = "route")
 
 }

@@ -27,13 +27,13 @@ geojson_addZ(
 \arguments{
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'.}
 
-\item{geojson.out}{the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`)}
+\item{geojson.out}{the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).}
 
 \item{sleep}{the time delay between two API request in seconds. By default 0.3.}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 
-\item{verbose}{if TRUE (by default): verbose}
+\item{verbose}{if TRUE (by default): verbose.}
 
 \item{map.name}{the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".}
 

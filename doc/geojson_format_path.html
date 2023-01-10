@@ -10,7 +10,7 @@
 
 <h3>Description</h3>
 
-<p>Use a dataframe of heritage places (ie, places, vertices), and a file of paths (like edges) between these heritage places, to format a new dataframe. At first, the heritage place file is a inherited from a GeoJSON and the links between these places is a CSV. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions 'geojson_map_path()', 'geojson_boxplot_path()' to model the dataset with network analysis.
+<p>Use a dataframe of heritage places (ie, places, vertices), and a file of paths (as edges) between these heritage places, to format a new dataframe. The heritage places (HP) are stored in a GeoJSON file. The paths between these HP are stored in a CSV file. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions 'geojson_map_path()', 'geojson_boxplot_path()' to model the dataset with network analysis.
 </p>
 
 
@@ -40,14 +40,14 @@ geojson_format_path(
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-<p>if TRUE (by default), print messages</p>
+<p>if TRUE (by default), print messages.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A dataframe with the appropriate format
+<p>A dataframe with the appropriate columns: &quot;from.id&quot;, &quot;from&quot;, &quot;to.id&quot;, &quot;to&quot;, &quot;from.geom&quot;, &quot;to.geom&quot;, &quot;path.wkt&quot;, &quot;dist.m&quot;, &quot;route&quot;
 </p>
 
 

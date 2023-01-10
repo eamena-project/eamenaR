@@ -5,7 +5,7 @@
 \title{Create a map and a profile with paths between different heritage places}
 \usage{
 geojson_map_path(
-  map.name = "paths",
+  map.name = "map_path",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
@@ -40,20 +40,28 @@ geojson_map_path(
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 
-\item{verbose}{if TRUE (by default), print messages}
+\item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
-A PNG map of heritage places linked together by paths
+A PNG map and an HMTL map of heritage places linked together by paths
 }
 \description{
-Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails
+Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails.
 }
 \examples{
+
+library(dplyr)
 
 # plot a general map of heritage places
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 
 # create an interactive map of each route
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                 routes = c(0, 1, 2, 3, 4),
+                 interactive = T)
+
+# create an interactive map of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
                  routes = c(0, 1, 2, 3, 4),
@@ -64,6 +72,12 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
 # create the profile of each route
 df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+                 csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+                 routes = c(0, 1, 2, 3, 4),
+                 export.type = "profile")
+
+# create the profile of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
                  routes = c(0, 1, 2, 3, 4),

@@ -4,11 +4,14 @@
 \alias{geojson_get_field}
 \title{Get values of a given field in a GeoJSON file.}
 \usage{
-geojson_get_field(geojson.path, field = "EAMENA.ID")
+geojson_get_field(
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  field = "EAMENA ID"
+)
 }
 \arguments{
-\item{geojson.path}{the path to the GeoJSON file,
-eg: "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"}
+\item{geojson.path}{the path to the GeoJSON file, eg: "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"}
 
 \item{field}{a field name, in R format, eg: EAMENA.ID}
 }

@@ -11,7 +11,7 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 
 \item{d}{a hash() object (a Python-like dictionary).}
 
-\item{field}{the field name that will be created in the a hash() object.}
+\item{field}{the field name that will be created in the `d` hash() object.}
 
 \item{uuid}{the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..}
 }
@@ -19,12 +19,12 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 }
 \description{
-With a given concept UUID (v. Reference Data Manager), find all the childs. This function has been tested only for Cultural and Subcultural periods.
+With a given concept UUID (v. Reference Data Manager), find all the child nodes. This function has been tested only for Cultural and Subcultural periods.
 }
 \examples{
 .
 
-# in the connection parameters, replace 'xxx' by the password
+# create a Postgres connection (replace 'xxx' by the password)
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'postgres',
@@ -34,18 +34,28 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                port = 5432)
 
 # Disturbance Extent Type
-d <- list_concepts(db.con = my_con, d = d, field = "Disturbance Extent Type", uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
-d$`Disturbance Extent Type`
-IGRAPH 54d42e5 DN-- 8 7 --
-  + attr: name (v/c)
-  + edges from 54d42e5 (vertex names):
-  [1] Disturbance Extent Type->Unknown   Disturbance Extent Type->1-10\%     Disturbance Extent Type->11-30\%
-  [4] Disturbance Extent Type->91-100\%   Disturbance Extent Type->61-90\%    Disturbance Extent Type->No Visible/Known
-  [7] Disturbance Extent Type->31-60\%
+d <- list_concepts(db.con = my_con, d = d,
+                   field = "Disturbance Extent Type",
+                   uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
+
+# show the subgraph below
+d[["Disturbance Extent Type"]]
+## IGRAPH 54d42e5 DN-- 8 7 --
+##   + attr: name (v/c)
+##   + edges from 54d42e5 (vertex names):
+##   [1] Disturbance Extent Type->Unknown   Disturbance Extent Type->1-10\%     Disturbance Extent Type->11-30\%
+##   [4] Disturbance Extent Type->91-100\%   Disturbance Extent Type->61-90\%    Disturbance Extent Type->No Visible/Known
+##   [7] Disturbance Extent Type->31-60\%
 
 # Cultural periods & Subcultural periods
-d <- list_concepts(db.con = my_con, d = d, field = "cultural_periods", uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-d <- list_concepts(db.con = my_con, d = d, field = "subcultural_periods", uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+d <- list_concepts(db.con = my_con,
+                   d = d,
+                   field = "cultural_periods",
+                   uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+d <- list_concepts(db.con = my_con,
+                   d = d,
+                   field = "subcultural_periods",
+                   uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
 
 # disconnect
 RPostgres::dbDisconnect(my_con)

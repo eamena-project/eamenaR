@@ -17,13 +17,13 @@ geojson_format_path(
 
 \item{csv.path}{the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.}
 
-\item{verbose}{if TRUE (by default), print messages}
+\item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
-A dataframe with the appropriate format
+A dataframe with the appropriate columns: "from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route"
 }
 \description{
-Use a dataframe of heritage places (ie, places, vertices), and a file of paths (like edges) between these heritage places, to format a new dataframe. At first, the heritage place file is a inherited from a GeoJSON and the links between these places is a CSV. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions `geojson_map_path()`, `geojson_boxplot_path()` to model the dataset with network analysis.
+Use a dataframe of heritage places (ie, places, vertices), and a file of paths (as edges) between these heritage places, to format a new dataframe. The heritage places (HP) are stored in a GeoJSON file. The paths between these HP are stored in a CSV file. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions `geojson_map_path()`, `geojson_boxplot_path()` to model the dataset with network analysis.
 }
 \examples{
 

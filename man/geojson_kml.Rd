@@ -2,7 +2,7 @@
 % Please edit documentation in R/geojson_kml.R
 \name{geojson_kml}
 \alias{geojson_kml}
-\title{Convert from/to GeoJSON, KMZ or KML}
+\title{Convert between GeoJSON and KMZ/KML}
 \usage{
 geojson_kml(
   geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
@@ -10,8 +10,8 @@ geojson_kml(
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
   geojson.name = "Waypoints",
-  selectedName = "EAMENA.ID",
-  selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
+  select.name = "EAMENA ID",
+  select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
   verbose = T
 )
 }
@@ -26,14 +26,14 @@ geojson_kml(
 
 \item{geojson.name}{the name of the KML/KMZ/GeoJSON that will be created without the extension}
 
-\item{selectedName}{for KML export only. The field selected to be the KML name of the HP, by default "EAMENA.ID".}
+\item{select.name}{for KML export only. The field selected to be the KML name of the HP, by default "EAMENA ID".}
 
-\item{selectedFields}{for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c("EAMENA.ID","Resource.Name", "resourceid").}
+\item{select.fields}{for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c("EAMENA ID","Resource Name", "resourceid").}
 
 \item{verbose}{if TRUE (by default) then display different messages.}
 }
 \value{
-a GeoJSON file or a KML file
+a GeoJSON file or a KML file, depending on the input file.
 }
 \description{
 Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). At the same time, geometries drawn in EAMENA can be exported as GeoJSON. For a given HP, this data can be then imported into the EAMENA DB.
@@ -42,7 +42,7 @@ Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Goo
 
 library(dplyr)
 
-# from KMZ to GeoJSON
+# from KMZ to GeoJSON, with the default 'Waypoints.kmz' input file
 library(dplyr)
 geojson_kml(geom.types = "POINT")
 

@@ -1,5 +1,6 @@
 ---
-title: "R: Create a boxplot with paths distances between different\\..."
+title: "R: Create a boxplot or various boxplots of path lengths
+  between\\..."
 viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 ---
 
@@ -8,7 +9,7 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
   geojson_boxplot_path     R Documentation
   ---------------------- -----------------
 
-## Create a boxplot with paths distances between different heritage places
+## Create a boxplot or various boxplots of path lengths between different heritage places
 
 ### Usage
 
@@ -18,30 +19,37 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
         "/extdata/caravanserail.geojson"),
       csv.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail_paths.csv"),
+      by = NA,
       plotly.plot = F,
       export.plot = F,
       dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
       fig.width = 9,
-      fig.height = 5
+      fig.height = 5,
+      verbose = TRUE
     )
 
 ### Arguments
 
-  ---------------- -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ---------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------
   `plot.name`      the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default \"box_path\".
   `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
   `csv.path`       the path to the CSV where the edges between two heritage places are recorded.
-  `plotly.plot`    if TRUE, export the plot, if FALSE will only display it
+  `by`             the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).
+  `plotly.plot`    if TRUE, export the plot, if FALSE will only display it.
   `export.plot`    if TRUE, show the plot in Plotly window.
-  `dirOut`         the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
-  ---------------- -----------------------------------------------------------------------------------------------------------------------------------------------------
+  `dirOut`         the folder where the outputs will be saved. By default: \'/results\'.If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
+  `verbose`        if TRUE (by default), print messages.
+  ---------------- ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Examples
 
 
-    # normal plot
-    geojson_boxplot_path(export.plot = T)
+    # normal plot (show only, one boxplot)
+    geojson_boxplot_path()
+
+    # normal plot (export, a boxplot for each 'route')
+    geojson_boxplot_path(export.plot = T, by = "route")
 
     # Plotly plot
-    geojson_boxplot_path(plotly.plot = T)
+    geojson_boxplot_path(plotly.plot = T, by = "route")
 :::

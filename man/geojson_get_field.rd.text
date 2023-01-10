@@ -16,7 +16,11 @@ Get values of a given field
 
 ### Usage
 
-    geojson_get_field(geojson.path, field = "EAMENA.ID")
+    geojson_get_field(
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      field = "EAMENA ID"
+    )
 
 ### Arguments
 

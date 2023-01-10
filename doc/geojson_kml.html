@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert from/to GeoJSON, KMZ or KML</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert between GeoJSON and KMZ/KML</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for geojson_kml"><tr><td>geojson_kml</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Convert from/to GeoJSON, KMZ or KML</h2>
+<h2>Convert between GeoJSON and KMZ/KML</h2>
 
 <h3>Description</h3>
 
@@ -23,8 +23,8 @@ geojson_kml(
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
   geojson.name = "Waypoints",
-  selectedName = "EAMENA.ID",
-  selectedFields = c("EAMENA.ID", "Resource.Name", "resourceid"),
+  select.name = "EAMENA ID",
+  select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
   verbose = T
 )
 </pre>
@@ -53,13 +53,13 @@ geojson_kml(
 <td>
 <p>the name of the KML/KMZ/GeoJSON that will be created without the extension</p>
 </td></tr>
-<tr valign="top"><td><code>selectedName</code></td>
+<tr valign="top"><td><code>select.name</code></td>
 <td>
-<p>for KML export only. The field selected to be the KML name of the HP, by default &quot;EAMENA.ID&quot;.</p>
+<p>for KML export only. The field selected to be the KML name of the HP, by default &quot;EAMENA ID&quot;.</p>
 </td></tr>
-<tr valign="top"><td><code>selectedFields</code></td>
+<tr valign="top"><td><code>select.fields</code></td>
 <td>
-<p>for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c(&quot;EAMENA.ID&quot;,&quot;Resource.Name&quot;, &quot;resourceid&quot;).</p>
+<p>for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c(&quot;EAMENA ID&quot;,&quot;Resource Name&quot;, &quot;resourceid&quot;).</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
@@ -70,7 +70,7 @@ geojson_kml(
 
 <h3>Value</h3>
 
-<p>a GeoJSON file or a KML file
+<p>a GeoJSON file or a KML file, depending on the input file.
 </p>
 
 
@@ -80,7 +80,7 @@ geojson_kml(
 
 library(dplyr)
 
-# from KMZ to GeoJSON
+# from KMZ to GeoJSON, with the default 'Waypoints.kmz' input file
 library(dplyr)
 geojson_kml(geom.types = "POINT")
 
