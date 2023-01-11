@@ -36,7 +36,7 @@ The functions names refer to their content :
 | plot_*               | creates a map, a graphic, etc.                         | `plot_edtf()`            |
 | ref_*                | direct connection to the EAMENA PostgreSQL database    | `ref_cultural_periods()` |
 
-## Correspondances between labels and UUIDs
+## Correspondances between concept labels and UUIDs
 
 The [`ids.csv` file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-oxford.github.io/eamenaR/doc/ref_ids))
 
