@@ -2,7 +2,7 @@
 #'
 #' @name ref_hps
 #'
-#' @description statistics about EAMENA Heritage places
+#' @description statistics about EAMENA Heritage places.
 #'
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.
 #' @param d a hash() object (a Python-like dictionary).
@@ -43,25 +43,28 @@ ref_hps_1 <- function(db.con = NA,
                     stat.format = ".geojson",
                     plot.map = F,
                     export.map = F,
-                    dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                    dirOut = paste0(system.file(package = "eamenaR"),
+                                    "/results/"),
                     date.after = NA,
                     date.before = Sys.Date(),
                     team.name = NA,
                     verbose = TRUE){
+  db.name <- ref_ids("id")
+  uuid <- ref_ids(db.name, "db.uuid")
   if(verbose){print("*start HPS' distribution")}
   date.before <- as.character(date.before)
   sqll <- "
-SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
-	-- EAMENA ID
-    SELECT * FROM (
-    SELECT
-    resourceinstanceid::TEXT AS ri,
-	tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text as ei
-    FROM tiles
-    ) AS x
-    WHERE ei IS NOT NULL
-) AS ids,
-(
+  SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
+  	-- EAMENA ID
+      SELECT * FROM (
+      SELECT
+      resourceinstanceid::TEXT AS ri,
+  	tiledata ->> '34cfe992-c2c0-11ea-9026-02e7594ce0a0'::text as ei
+      FROM tiles
+      ) AS x
+      WHERE ei IS NOT NULL
+  ) AS ids,
+  (
 	-- team
     SELECT * FROM (
 	SELECT

@@ -1,9 +1,11 @@
-#' Statistics about EAMENA users
+#' Statistics about Arches project users
 #'
 #' @name ref_users
+#'
 #' @description statistics about EAMENA users (total number, activities, etc.)
 #'
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.
+#' @param db.name the name of the Arches database, by default `EAMENA`.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param stat the type of statistic that will be computed. This is also the the hash dictionnary (`d`) field name that will be filled with this statistics, e.g. "total_users", "date_joined", etc., or "all". By default: "all".
 #' @param stat.type the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. By default "all".
@@ -37,12 +39,14 @@
 #' @export
 ref_users <- function(db.con = NA,
                       d = NA,
+                      db.name = "EAMENA",
                       stat = c("all"),
                       stat.type = c("all"),
                       stat.name = "users",
                       plot.g = F,
                       export.plot.g = F,
-                      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                      dirOut = paste0(system.file(package = "eamenaR"),
+                                      "/results/"),
                       date.after = NA,
                       date.before = Sys.Date(),
                       fig.width = 8,
@@ -64,7 +68,7 @@ ref_users <- function(db.con = NA,
     d[["date_joined"]] <- DBI::dbGetQuery(db.con, sqll)
     users.tot <- nrow(d[["date_joined"]])
     if(plot.g){
-      gtit <- "Evolution of the number of users of the EAMENA database"
+      gtit <- paste0("Evolution of the number of users of the", db.name, "database")
       date_joined <- format(d$date_joined, "%Y-%m-%d")
       dates.ymd <- lubridate::ymd(date_joined$date_joined)
       dates.ym <- format(dates.ymd, "%Y-%m") # to character
@@ -100,8 +104,7 @@ ref_users <- function(db.con = NA,
                          axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
       }
       if(FALSE == TRUE){
-        # TODO: non-cumulative
-        # TODO: store ggplot into list()
+        # TODO: non-cumulative ; store ggplot into list()
         dates.date.joined <- ggplot2::ggplot() +
           ggplot2::geom_histogram(ggplot2::aes(x = dates.ym), binwidth = 5) +
           ggplot2::xlab("date joined") +

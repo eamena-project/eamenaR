@@ -6,7 +6,7 @@
 #'
 #' @param stat.name the name of the output file. By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param ids the IDs of the resources, by default "EAMENA.ID" (n.b: R fieldname format, without spaces)
+#' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()` and
 #' @param stat the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.
 #' @param export.stat if TRUE return the stats to be stored in a new variable
 #' @param write.stat if TRUE, export the stats in a new file, if FALSE will only display it
@@ -25,16 +25,17 @@
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
-                         ids = "EAMENA.ID",
+                         ids = eamenaR::ref_ids("id"),
                          stat = c("list_fields"),
-                         export.stat = F,
-                         write.stat = F,
-                         dirOut = paste0(system.file(package = "eamenaR"), "/results/")
-){
-  # geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
-  # stat.name = "stat" ; stat = c("list_ids") ; export.stat = F ;
-  # dirOut = paste0(system.file(package = "eamenaR"), "/results/")
-  ea.geojson <- sf::st_read(geojson.path)
+                         export.stat = FALSE,
+                         write.stat = FALSE,
+                         dirOut = paste0(system.file(package = "eamenaR"),
+                                         "/results/")){
+  # ea.geojson <- sf::st_read(geojson.path)
+  ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  # if(is.na(ids)){
+  #   ids <- eamenaR::ref_ids("id")
+  # }
   if("list_fields" %in% stat){
     field.names <- colnames(ea.geojson)[! colnames(ea.geojson) %in% "geometry"]
     if (export.stat) {
@@ -67,3 +68,5 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
 }
+
+geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
