@@ -38,7 +38,16 @@ The functions names refer to their content :
 
 ## Correspondances between labels and UUIDs
 
-The `ids.csv` file is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-oxford.github.io/eamenaR/doc/ref_ids))
+The [`ids.csv` file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-oxford.github.io/eamenaR/doc/ref_ids))
+
+|r.concept.name            |db.concept.name           |db.concept.uuid                     |
+|--------------------------|--------------------------|------------------------------------|
+|id                        |EAMENA ID                 |34cfe992-c2c0-11ea-9026-02e7594ce0a0|
+|Investigator.Role.Type    |Investigator Role Type    |d2e1ab96-cc05-11ea-a292-02e7594ce0a0|
+|Geometric.Place.Expression|Geometric Place Expression|5348cf67-c2c5-11ea-9026-02e7594ce0a0|
+|Cultural.Period           |Cultural Period           |3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4|
+|Cultural.Sub-Period       |Cultural Sub-Period       |16cb160e-7b31-4872-b2ca-6305ad311011|
+|Disturbance.Extent.Type   |Disturbance Extent Type   |41488800-6c00-30f2-b93f-785e38ab6251|
 
 # Install and load package
 
