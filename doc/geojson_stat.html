@@ -21,10 +21,10 @@ geojson_stat(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = "EAMENA.ID",
+  ids = eamenaR::ref_ids("id"),
   stat = c("list_fields"),
-  export.stat = F,
-  write.stat = F,
+  export.stat = FALSE,
+  write.stat = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/")
 )
 </pre>
@@ -43,7 +43,7 @@ geojson_stat(
 </td></tr>
 <tr valign="top"><td><code>ids</code></td>
 <td>
-<p>the IDs of the resources, by default &quot;EAMENA.ID&quot; (n.b: R fieldname format, without spaces)</p>
+<p>the IDs of the resources, by default the eamenaR correspondence of &quot;id&quot;, see 'ref_ids()' and</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>

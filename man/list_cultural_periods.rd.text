@@ -1,0 +1,63 @@
+---
+title: "R: List the name of all the cultural period of a given HP"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ----------------------- -----------------
+  list_cultural_periods     R Documentation
+  ----------------------- -----------------
+
+## List the name of all the cultural period of a given HP
+
+### Description
+
+With a given concept UUID (v. Reference Data Manager), find all the
+cultural periods, subperiods, etc., of a given HP.
+
+### Usage
+
+    list_cultural_periods(
+      db.con = NA,
+      d = NA,
+      uuid = NA,
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      cultural_periods = paste0(system.file(package = "eamenaR"),
+        "/extdata/cultural_periods.tsv"),
+      verbose = TRUE
+    )
+
+### Arguments
+
+  -------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `db.con`             the parameters for the DB, in a RPostgres::dbConnect() format. If NA (by default), will read a GeoJSON file.
+  `d`                  a hash() object (a Python-like dictionary).
+  `uuid`               the UUIDs of one or several HP, only useful if 'db = 'eamena\''. These UUID can be stored in the \'d\' variable (eg., \'d_sql\[\[\"uuid\"\]\]\'), a vector, or a single UUID (eg., \''12053a2b-9127-47a4-990f-7f5279cd89da\'\').
+  `geojson.path`       the path of the GeoJSON file. Only useful is 'db = 'geojson\''. By default 'caravanserail.geojson\'
+  `cultural_periods`   the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.
+  `verbose`            if TRUE (by default), print messages.
+  -------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+A hash() with listed cultural periods names in the field \'periods\' and
+listed cultural sub-periods names in the field \'subperiods\'
+
+### Examples
+
+
+    # looking into the EAMENA DB
+    d <- hash::hash()
+    d <- uuid_eamenaid(db.con = my_con,
+                       d = d,
+                       id = "EAMENA-0187363")
+    d <- list_cultural_periods("eamena", d, "culturalper", d$uuid)
+
+    # looking into a GeoJSON file
+    d <- list_cultural_periods(db = "geojson",
+                               d = d,
+                               field = "culturalper",
+                               geojson.path)
+    plot_cultural_periods(d = d, field = "period")
+:::

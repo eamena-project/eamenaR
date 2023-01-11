@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_cultural_periods.R
 \name{plot_cultural_periods}
 \alias{plot_cultural_periods}
-\title{Plot the duration of EAMENA HP cultural periods attribution in a chart. The cultural periods
-are recorded by years}
+\title{Plot the duration of HP cultural periods attribution in a chart. The cultural periods are recorded by years}
 \usage{
 plot_cultural_periods(
   d = NA,
@@ -20,30 +19,27 @@ plot_cultural_periods(
 )
 }
 \arguments{
-\item{d}{a hash() object (a Python-like dictionary)}
+\item{d}{a hash() object (a Python-like dictionary).}
 
-\item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object
-to plot it. It should be 'periods' or 'subperiods'}
+\item{field}{the field name where the periods, subperiods, etc. will be read in the a hash() object to plot it. It should be 'periods' or 'subperiods'.}
 
-\item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget}
+\item{plotly.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.}
 
-\item{plot.type}{whether will create the graphic of durations by EAMENA ID ("by.eamenaid") or
-a cumulated histogram ("histogram"). By default, both of them}
+\item{plot.type}{whether will create the graphic of durations by EAMENA ID ("by.eamenaid") or a cumulated histogram ("histogram"). By default, both of them.}
 
-\item{bin.width}{size of the bins, by default, 50 years}
+\item{bin.width}{size of the bins, by default, 50 years.}
 
-\item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
+\item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 
-\item{y.label.size, seg.size, fig.width, fig.height}{parameters for the gglpot output}
+\item{y.label.size, seg.size, fig.width, fig.height}{parameters for the gglpot output.}
 }
 \value{
-A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
+A Plotly chart if 'dynamic', or a ggplot chart if 'static', to display or save.
 }
 \description{
-Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates
+Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates.
 }
 \examples{
 

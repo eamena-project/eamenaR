@@ -10,9 +10,7 @@
 
 <h3>Description</h3>
 
-<p>statistics about EAMENA Heritage places
-</p>
-<p>statistics about EAMENA Heritage places
+<p>statistics about EAMENA Heritage places. For example the HPs created in 2022.
 </p>
 
 
@@ -24,21 +22,8 @@ ref_hps(
   d = NA,
   stat.name = "eamena-hps",
   stat.format = ".geojson",
-  plot.map = F,
-  export.map = F,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-  date.after = NA,
-  date.before = Sys.Date(),
-  verbose = TRUE
-)
-
-ref_hps_1(
-  db.con = NA,
-  d = NA,
-  stat.name = "eamena-hps",
-  stat.format = ".geojson",
-  plot.map = F,
-  export.map = F,
+  plot.map = FALSE,
+  export.map = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   date.after = NA,
   date.before = Sys.Date(),
@@ -87,22 +72,20 @@ ref_hps_1(
 <td>
 <p>the date before which the calculation is made. Useful to limit the analysis. By default, the current date ('Sys.Date()')</p>
 </td></tr>
-<tr valign="top"><td><code>verbose</code></td>
-<td>
-<p>if TRUE (by default), print messages</p>
-</td></tr>
 <tr valign="top"><td><code>team.name</code></td>
 <td>
-<p>only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). The possible values to limit the analysis are: &quot;EAMENA Project Staff&quot;, &quot;MarEA Project Staff&quot;, &quot;Government Authority/Staff&quot;, &quot;Volunteer/Independent Researcher&quot;, &quot;Student/Trainee&quot;, &quot;Academic Researcher&quot;, &quot;Private Sector&quot;, &quot;Non-Governmental Organisation (NGO)&quot;, etc.</p>
+<p>only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). For examples, the possible values to limit the analysis for the EAMENA DB are: &quot;EAMENA Project Staff&quot;, &quot;MarEA Project Staff&quot;, &quot;Government Authority/Staff&quot;, &quot;Volunteer/Independent Researcher&quot;, &quot;Student/Trainee&quot;, &quot;Academic Researcher&quot;, &quot;Private Sector&quot;, &quot;Non-Governmental Organisation (NGO)&quot;, etc.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>a hash() object. If plot.map and export.map are set to TRUE will also create and save maps
-</p>
-<p>a hash() object. If plot.map and export.map are set to TRUE will also create and save maps
+<p>a hash() object. If plot.map and export.map are set to TRUE will also create and save maps (SHP or GeoJSON).
 </p>
 
 
@@ -117,23 +100,8 @@ my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
-d &lt;- ref_hps(db.con = my_con,
-            d = d,
-            date.after = '2021-12-31',
-            date.before = '2023-01-01',
-            stat.name = "eamena-hps-2022",
-            stat.format = ".shp",
-            dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-            export.map = TRUE)
 
-
-d &lt;- hash::hash()
-my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'xxx',
-                               password = 'xxx',
-                               dbname = 'eamena',
-                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-                               port = 5432)
+# Heritage places created during the year 2022 as a SHP file
 d &lt;- ref_hps(db.con = my_con,
             d = d,
             date.after = '2021-12-31',

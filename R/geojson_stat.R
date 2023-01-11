@@ -68,5 +68,3 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
 }
-
-geojson_stat(stat.name = "geojson_fields", stat = "list_ids")

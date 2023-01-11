@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Statistics about EAMENA users</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Statistics about Arches project users</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for ref_users"><tr><td>ref_users</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Statistics about EAMENA users</h2>
+<h2>Statistics about Arches project users</h2>
 
 <h3>Description</h3>
 
@@ -20,6 +20,7 @@
 ref_users(
   db.con = NA,
   d = NA,
+  db.name = "EAMENA",
   stat = c("all"),
   stat.type = c("all"),
   stat.name = "users",
@@ -45,6 +46,10 @@ ref_users(
 <tr valign="top"><td><code>d</code></td>
 <td>
 <p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>db.name</code></td>
+<td>
+<p>the name of the Arches database, by default 'EAMENA'.</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>

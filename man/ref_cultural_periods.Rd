@@ -7,13 +7,13 @@
 ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
 }
 \arguments{
-\item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format}
+\item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.}
 
-\item{d}{a hash() object (a Python-like dictionary)}
+\item{d}{a hash() object (a Python-like dictionary).}
 
-\item{field}{the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods"}
+\item{field}{the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods".}
 
-\item{verbose}{if TRUE (by default), print messages}
+\item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
 NA

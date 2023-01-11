@@ -12,21 +12,19 @@ periodo_cultural_periods(
 )
 }
 \arguments{
-\item{data.name}{the name of the data.table. Only useful if export.plot is TRUE}
+\item{data.name}{the name of the data.table. Only useful if export.plot is TRUE.}
 
 \item{periodo.url}{the URL of the PeriodO CSV.}
 
-\item{export.plot}{if TRUE, export the plot, if FALSE will only display it}
+\item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
 }
 \value{
-A DT data.frame of the Periodo cultural periods
+A DT data.frame of the Periodo cultural periods.
 }
 \description{
-read a release of the periodo cultural periods thesaurus
-and creates an interactive dataframe
+read a release of the periodo cultural periods thesaurus and creates an interactive dataframe.
 }
 \examples{
 

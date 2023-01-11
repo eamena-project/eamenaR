@@ -2,11 +2,12 @@
 % Please edit documentation in R/ref_users.R
 \name{ref_users}
 \alias{ref_users}
-\title{Statistics about EAMENA users}
+\title{Statistics about Arches project users}
 \usage{
 ref_users(
   db.con = NA,
   d = NA,
+  db.name = "EAMENA",
   stat = c("all"),
   stat.type = c("all"),
   stat.name = "users",
@@ -24,6 +25,8 @@ ref_users(
 \item{db.con}{the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.}
 
 \item{d}{a hash() object (a Python-like dictionary).}
+
+\item{db.name}{the name of the Arches database, by default `EAMENA`.}
 
 \item{stat}{the type of statistic that will be computed. This is also the the hash dictionnary (`d`) field name that will be filled with this statistics, e.g. "total_users", "date_joined", etc., or "all". By default: "all".}
 

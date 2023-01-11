@@ -2,16 +2,19 @@
 #'
 #' @name geojson_get_field
 #'
-#' @description Get values of a given field
+#' @description Get all values of a given field.
 #'
-#' @param geojson.path the path to the GeoJSON file, eg: "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"
-#' @param field a field name, in R format, eg: EAMENA.ID
+#' @param geojson.path the path to the GeoJSON file.
+#' @param field a field name, by default "EAMENA ID".
 #'
 #' @return A vector with all values
 #'
 #' @examples
 #'
-#' geojson_get_field(geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
+#' geojson_get_field()
+#' ##  [1] "EAMENA-0192281" "EAMENA-0182033" "EAMENA-0182054" "EAMENA-0182055" "EAMENA-0182056" "EAMENA-0182057" "EAMENA-0182058"
+#' ##  [8] "EAMENA-0164899" "EAMENA-0164904" "EAMENA-0164906" "EAMENA-0164905" "EAMENA-0164943" "EAMENA-0164999" "EAMENA-0207261"
+#' ## ...
 #'
 #' @export
 geojson_get_field <- function(geojson.path = paste0(system.file(package = "eamenaR"),
@@ -19,15 +22,4 @@ geojson_get_field <- function(geojson.path = paste0(system.file(package = "eamen
                               field = "EAMENA ID"){
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   return(ea.geojson[["EAMENA ID"]])
-  # r <- geojsonio::geojson_read(geojson.path)
-  # all.val <- c()
-  # for(i in seq(1, length(r[[2]]))){
-  #   # print(i)
-  #   val <- r[[2]][[i]]$properties[[field]]
-  #   # print(val)
-  #   # print(is.null(val))
-  #   if(is.null(val)){val <- NA}
-  #   all.val <- c(all.val, val)
-  # }
-  # return(all.val)
 }

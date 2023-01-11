@@ -7,9 +7,10 @@
 #' @param db.con a `dbConnect` connection to the database.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param field the field name that will be created in the `d` hash() object.
-#' @param uuid the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..
+#' @param concept.name a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.
+#' @param disconn if TRUE (by defalut), will disconnect from the DB.
 #'
-#' @return A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
+#' @return A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 #'
 #' @examples.
 #'
@@ -17,50 +18,61 @@
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 #'                                user = 'postgres',
-#'                                password = xxx,
+#'                                password = 'postgis',
 #'                                dbname = 'eamena',
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
 #'
 #' # Disturbance Extent Type
-#' d <- list_concepts(db.con = my_con, d = d,
-#'                    field = "Disturbance Extent Type",
-#'                    uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
+#' d <- list_child_concepts(db.con = my_con,
+#'                          d = d,
+#'                          field = "Disturbance Extent Type",
+#'                          concept.name = "Disturbance Extent Type",
+#'                          disconn = F)
 #'
-#' # show the subgraph below
-#' d[["Disturbance Extent Type"]]
-#'## IGRAPH 54d42e5 DN-- 8 7 --
-#'##   + attr: name (v/c)
-#'##   + edges from 54d42e5 (vertex names):
-#'##   [1] Disturbance Extent Type->Unknown   Disturbance Extent Type->1-10%     Disturbance Extent Type->11-30%
-#'##   [4] Disturbance Extent Type->91-100%   Disturbance Extent Type->61-90%    Disturbance Extent Type->No Visible/Known
-#'##   [7] Disturbance Extent Type->31-60%
+#' # Cultural periods & Subcultural periods and disconnect from the DB
+#' d <- list_child_concepts(db.con = my_con,
+#'                          d = d,
+#'                          field = "cultural_periods",
+#'                          concept.name = "Cultural Period",
+#'                          disconn = F)
+#' d <- list_child_concepts(db.con = my_con,
+#'                          d = d,
+#'                          field = "subcultural_periods",
+#'                          concept.name = "Cultural Sub-Period",
+#'                          disconn = T)
 #'
-#' # Cultural periods & Subcultural periods
-#' d <- list_concepts(db.con = my_con,
-#'                    d = d,
-#'                    field = "cultural_periods",
-#'                    uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-#' d <- list_concepts(db.con = my_con,
-#'                    d = d,
-#'                    field = "subcultural_periods",
-#'                    uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
-#'
-#' # disconnect
-#' RPostgres::dbDisconnect(my_con)
+#' # see this latter subgraph
+#' d$subcultural_periods
+#' IGRAPH 9ceb33f DN-- 256 467 --
+#' + attr: name (v/c)
+#' + edges from 9ceb33f (vertex names):
+#'   [1] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+#' [2] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+#' [3] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+#' [4] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+#' [5] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+#' [6] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+#' [7] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
+#' [8] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
+#' + ... omitted several edges
 #'
 #' @export
 list_child_concepts <- function(db.con = NA,
                                 d = NA,
                                 field = NA,
-                                uuid = NA){
+                                concept.name = NA,
+                                disconn = TRUE){
+  concept.uuid <- eamenaR::ref_ids(in.value = concept.name,
+                                   choice = "db.concept.uuid")
   sqll <- "
   SELECT conceptidfrom as from, conceptidto as to FROM relations
   "
   relations <- RPostgres::dbGetQuery(db.con, sqll)
   # subset the Concepts graph on the selected UUID
   g <- igraph::graph_from_data_frame(relations, directed = TRUE)
-  nodes.subgraph <- igraph::subcomponent(g, uuid, mode = "out")
+  # a particular subgraph
+  nodes.subgraph <- igraph::subcomponent(g, concept.uuid, mode = "out")
   subgraph.names <- subgraph.uuid <- igraph::subgraph(g, nodes.subgraph)
   # get the name of the nodes from their UUID
   l.uuids <- igraph::as_ids(igraph::V(subgraph.uuid))
@@ -74,6 +86,9 @@ list_child_concepts <- function(db.con = NA,
     uuid_name <- RPostgres::dbGetQuery(db.con, sqll)
     uuid_name <- as.character(uuid_name)
     igraph::V(subgraph.names)$name[igraph::V(subgraph.names)$name == uuid_] <- uuid_name
+  }
+  if(disconn){
+    DBI::dbDisconnect(db.con)
   }
   d[[field]] <- subgraph.names
   field.uuid <- paste0(field, ".uuid")

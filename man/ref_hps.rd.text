@@ -1,0 +1,75 @@
+---
+title: "R: Statistics about EAMENA Heritage places (spatial\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  --------- -----------------
+  ref_hps     R Documentation
+  --------- -----------------
+
+## Statistics about EAMENA Heritage places (spatial distribution)
+
+### Description
+
+statistics about EAMENA Heritage places. For example the HPs created in
+2022.
+
+### Usage
+
+    ref_hps(
+      db.con = NA,
+      d = NA,
+      stat.name = "eamena-hps",
+      stat.format = ".geojson",
+      plot.map = FALSE,
+      export.map = FALSE,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      date.after = NA,
+      date.before = Sys.Date(),
+      team.name = NA,
+      verbose = TRUE
+    )
+
+### Arguments
+
+  --------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `db.con`        the parameters for the Postgresql EAMENA DB, in a \'RPostgres::dbConnect()\' format.
+  `d`             a hash() object (a Python-like dictionary).
+  `stat.name`     the name of the output file. By default \"eamena-hps\".
+  `stat.format`   the extension of the geographic file (\".geojson\", \".shp\"). GeoJSON by default.
+  `plot.map`      if TRUE will plot a map (FALSE by default).
+  `export.map`    if TRUE will export the map (FALSE by default).
+  `dirOut`        the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export.map is TRUE.
+  `date.after`    the date after which the calculation is made. Useful to limit the analysis. By default, NA.
+  `date.before`   the date before which the calculation is made. Useful to limit the analysis. By default, the current date (\'Sys.Date()\')
+  `team.name`     only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). For examples, the possible values to limit the analysis for the EAMENA DB are: \"EAMENA Project Staff\", \"MarEA Project Staff\", \"Government Authority/Staff\", \"Volunteer/Independent Researcher\", \"Student/Trainee\", \"Academic Researcher\", \"Private Sector\", \"Non-Governmental Organisation (NGO)\", etc.
+  `verbose`       if TRUE (by default), print messages.
+  --------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+a hash() object. If plot.map and export.map are set to TRUE will also
+create and save maps (SHP or GeoJSON).
+
+### Examples
+
+
+    d <- hash::hash()
+    my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                                   user = 'xxx',
+                                   password = 'xxx',
+                                   dbname = 'eamena',
+                                   host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                                   port = 5432)
+
+    # Heritage places created during the year 2022 as a SHP file
+    d <- ref_hps(db.con = my_con,
+                d = d,
+                date.after = '2021-12-31',
+                date.before = '2023-01-01',
+                stat.name = "eamena-hps-2022",
+                stat.format = ".shp",
+                dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
+                export.map = TRUE)
+:::

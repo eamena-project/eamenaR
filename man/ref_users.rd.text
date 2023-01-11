@@ -1,0 +1,75 @@
+---
+title: "R: Statistics about Arches project users"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ----------- -----------------
+  ref_users     R Documentation
+  ----------- -----------------
+
+## Statistics about Arches project users
+
+### Description
+
+statistics about EAMENA users (total number, activities, etc.)
+
+### Usage
+
+    ref_users(
+      db.con = NA,
+      d = NA,
+      db.name = "EAMENA",
+      stat = c("all"),
+      stat.type = c("all"),
+      stat.name = "users",
+      plot.g = F,
+      export.plot.g = F,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      date.after = NA,
+      date.before = Sys.Date(),
+      fig.width = 8,
+      fig.height = 8,
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `db.con`                  the parameters for the Postgresql EAMENA DB, in a \'RPostgres::dbConnect()\' format.
+  `d`                       a hash() object (a Python-like dictionary).
+  `db.name`                 the name of the Arches database, by default \'EAMENA\'.
+  `stat`                    the type of statistic that will be computed. This is also the the hash dictionnary (\'d\') field name that will be filled with this statistics, e.g. \"total_users\", \"date_joined\", etc., or \"all\". By default: \"all\".
+  `stat.type`               the type of stat chart, or diagram that will be plotted. Choice: \"edtf\" for cumulative function, etc. By default \"all\".
+  `stat.name`               the name of the output file. By default \"users\".
+  `plot.g`                  if TRUE will create a plot (FALSE by default).
+  `export.plot.g`           if TRUE will export the plot (FALSE by default).
+  `dirOut`                  the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export.plot.g is TRUE.
+  `date.after`              the date after which the calculation is made. Usefull to limit the analysis. By default, NA.
+  `date.before`             the date before which the calculation is made. Usefull to limit the analysis. By default, the current date (\'Sys.Date()\')
+  `fig.width, fig.height`   dimension of the exported plot in cm.
+  `verbose`                 if TRUE (by default), print messages
+  ------------------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+a hash() object. If plot.g and export.plot.g are set to TRUE will also
+create and save plots
+
+### Examples
+
+
+    d <- hash::hash()
+    my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                                   user = 'xxx',
+                                   password = 'xxx',
+                                   dbname = 'eamena',
+                                   host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                                   port = 5432)
+    d <- ref_users(db.con = my_con,
+                   d = d,
+                   date.after = "2020-08-01",
+                   plot.g = T,
+                   export.plot.g = T,
+                   fig.width = 14)
+:::

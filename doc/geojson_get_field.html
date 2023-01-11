@@ -10,7 +10,7 @@
 
 <h3>Description</h3>
 
-<p>Get values of a given field
+<p>Get all values of a given field.
 </p>
 
 
@@ -30,11 +30,11 @@ geojson_get_field(
 <table summary="R argblock">
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path to the GeoJSON file, eg: &quot;https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson&quot;</p>
+<p>the path to the GeoJSON file.</p>
 </td></tr>
 <tr valign="top"><td><code>field</code></td>
 <td>
-<p>a field name, in R format, eg: EAMENA.ID</p>
+<p>a field name, by default &quot;EAMENA ID&quot;.</p>
 </td></tr>
 </table>
 
@@ -49,7 +49,10 @@ geojson_get_field(
 
 <pre>
 
-geojson_get_field(geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
+geojson_get_field()
+##  [1] "EAMENA-0192281" "EAMENA-0182033" "EAMENA-0182054" "EAMENA-0182055" "EAMENA-0182056" "EAMENA-0182057" "EAMENA-0182058"
+##  [8] "EAMENA-0164899" "EAMENA-0164904" "EAMENA-0164906" "EAMENA-0164905" "EAMENA-0164943" "EAMENA-0164999" "EAMENA-0207261"
+## ...
 
 </pre>
 

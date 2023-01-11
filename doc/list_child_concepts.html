@@ -17,7 +17,13 @@
 <h3>Usage</h3>
 
 <pre>
-list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
+list_child_concepts(
+  db.con = NA,
+  d = NA,
+  field = NA,
+  concept.name = NA,
+  disconn = TRUE
+)
 </pre>
 
 
@@ -36,16 +42,20 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 <td>
 <p>the field name that will be created in the 'd' hash() object.</p>
 </td></tr>
-<tr valign="top"><td><code>uuid</code></td>
+<tr valign="top"><td><code>concept.name</code></td>
 <td>
-<p>the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..</p>
+<p>a concept label name (either 'r.concept.name' or 'db.concept.name'). This 'concept.name' value coming from the 'ids.csv' file (see 'ref_ids()'). By default, NA.</p>
+</td></tr>
+<tr valign="top"><td><code>disconn</code></td>
+<td>
+<p>if TRUE (by defalut), will disconnect from the DB.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
+<p>A &lsquo;igraph' object stored in the input hash() object, under the selected &rsquo;field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 </p>
 
 
@@ -58,37 +68,44 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 d &lt;- hash::hash()
 my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'postgres',
-                               password = xxx,
+                               password = 'postgis',
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
 
 # Disturbance Extent Type
-d &lt;- list_concepts(db.con = my_con, d = d,
-                   field = "Disturbance Extent Type",
-                   uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
+d &lt;- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "Disturbance Extent Type",
+                         concept.name = "Disturbance Extent Type",
+                         disconn = F)
 
-# show the subgraph below
-d[["Disturbance Extent Type"]]
-## IGRAPH 54d42e5 DN-- 8 7 --
-##   + attr: name (v/c)
-##   + edges from 54d42e5 (vertex names):
-##   [1] Disturbance Extent Type-&gt;Unknown   Disturbance Extent Type-&gt;1-10%     Disturbance Extent Type-&gt;11-30%
-##   [4] Disturbance Extent Type-&gt;91-100%   Disturbance Extent Type-&gt;61-90%    Disturbance Extent Type-&gt;No Visible/Known
-##   [7] Disturbance Extent Type-&gt;31-60%
+# Cultural periods &amp; Subcultural periods and disconnect from the DB
+d &lt;- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "cultural_periods",
+                         concept.name = "Cultural Period",
+                         disconn = F)
+d &lt;- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "subcultural_periods",
+                         concept.name = "Cultural Sub-Period",
+                         disconn = T)
 
-# Cultural periods &amp; Subcultural periods
-d &lt;- list_concepts(db.con = my_con,
-                   d = d,
-                   field = "cultural_periods",
-                   uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-d &lt;- list_concepts(db.con = my_con,
-                   d = d,
-                   field = "subcultural_periods",
-                   uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
-
-# disconnect
-RPostgres::dbDisconnect(my_con)
+# see this latter subgraph
+d$subcultural_periods
+IGRAPH 9ceb33f DN-- 256 467 --
++ attr: name (v/c)
++ edges from 9ceb33f (vertex names):
+  [1] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Roman Imperial (North Africa)
+[2] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Roman Imperial (North Africa)
+[3] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Vandal (Maghreb)
+[4] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Vandal (Maghreb)
+[5] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Roman/Late Antique (North Africa)
+[6] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Roman/Late Antique (North Africa)
+[7] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Protohistoric, Late (Mauritania)
+[8] Classical/Protohistoric/Pre-Islamic (North Africa)-&gt;Protohistoric, Late (Mauritania)
++ ... omitted several edges
 
 </pre>
 

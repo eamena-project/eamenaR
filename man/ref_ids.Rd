@@ -2,27 +2,62 @@
 % Please edit documentation in R/ref_ids.R
 \name{ref_ids}
 \alias{ref_ids}
-\title{Find the equivalences between eamenaR concepts and specific Arches instances}
+\title{Find the equivalences between eamenaR concepts and specific Arches instances (called DB) both for concepts and UUIDs}
 \usage{
 ref_ids(
-  r.name = NA,
+  in.value = NA,
+  choice = "db.concept.name",
   ids.path = paste0(system.file(package = "eamenaR"), "/extdata/ids.csv")
 )
 }
 \arguments{
-\item{r.name}{the eamenaR label, by default NA.}
+\item{choice}{the output value, by default the concept label name in the database (`"db.concept.name"`).}
 
-\item{ids.path}{the path to the correspondance table.}
+\item{ids.path}{the path to the correspondence table.}
+
+\item{value}{the eamenaR concept, by default NA.}
 }
 \value{
-A string which is the label used in the DB
+A string which is the concept used in the DB.
 }
 \description{
-This function read a table of correspondences between labels used in this R package, and labels used of a given instance of Arches. For example 'id' in this eamenaR package refers the 'EAMENA ID' in the EAMENA DB. This is useful to generalise the function to Arches instances having different labels. See the table here: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv
+This function read the table of correspondences `ids.csv`. This CSV file list the correspondences between concepts used in this eamenaR package (called `r.concept.name`), and concepts used of a given instance of Arches (called `db.concept.name` or their UUIDs: `db.concept.uuid`). This function is useful to generalise the operability of this R package to other Arches instances than EAMENA. Indeed, each concept or UUID is specific to a project. The only constant is the value of the concept of Heritage Places ID in this package. For example 'id' in this eamenaR package refers the 'EAMENA ID' concept in the EAMENA Arches instance. This latter concept is recorded in the `db.concept.name`. The UUID of this concept is recorded in the `db.concept.uuid` field. See the CSV correspondence table here: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv
 }
 \examples{
 
+# get the name in the database from the eamenaR name
 ref_ids("id")
-# "EAMENA ID"
+## "EAMENA ID"
+
+# the same, with explicit options
+ref_ids(in.value = "id", choice = "db.concept.name")
+## "EAMENA ID"
+
+# get the opposite (name in the eamenaR package from the name in the DB)
+ref_ids(in.value = "EAMENA ID", choice = "r.concept.name")
+## "id"
+
+# get the "EAMENA ID" concept UUID
+ref_ids(in.value = "EAMENA ID", choice = "db.concept.uuid")
+## "34cfe992-c2c0-11ea-9026-02e7594ce0a0"
+
+# the same with implicit options
+ref_ids("EAMENA ID", "db.concept.uuid")
+## "34cfe992-c2c0-11ea-9026-02e7594ce0a0"
+
+# the UUID of 'Cultural Period'
+ref_ids(in.value = "Cultural Period", choice = "db.concept.uuid")
+## "5348cf67-c2c5-11ea-9026-02e7594ce0a0"
+
+# other correspondences stored in variables
+Investigator.Role.Type.uuid <- ref_ids(in.value = "Investigator Role Type",
+                                       choice = "db.concept.uuid")
+Investigator.Role.Type.uuid
+## "d2e1ab96-cc05-11ea-a292-02e7594ce0a0"
+
+Geometric.Place.Expression.uuid <- ref_ids(in.value = "Geometric Place Expression",
+                                           choice = "db.concept.uuid")
+Geometric.Place.Expression.uuid
+## "5348cf67-c2c5-11ea-9026-02e7594ce0a0"
 
 }

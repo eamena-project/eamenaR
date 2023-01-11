@@ -2,18 +2,18 @@
 % Please edit documentation in R/ref_are_duplicates.R
 \name{ref_are_duplicates}
 \alias{ref_are_duplicates}
-\title{Help to identify if two EAMENA HP are real duplicates or not}
+\title{Help to identify if two HPs (pairwise) are real duplicates or not}
 \usage{
 ref_are_duplicates(
   db.con = NA,
   d = NA,
   field = "are_duplicates",
-  resourceid.list = c("563567f7-eef0-4683-9e88-5e4be2452f80",
-    "fb0a2ef4-023f-4d13-b931-132799bb7a6c"),
-  selected.fields = c("Assessment.Investigator...Actor", "Assessment.Activity.Date",
-    "Resource.Name"),
+  hp.list = c("EAMENA-0207209", "EAMENA-0182057"),
+  selected.fields = c("Assessment Investigator - Actor", "Assessment Activity Date",
+    "Resource Name"),
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
+  dist.method = "jw",
   round.dist = 2,
   export.table = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -22,15 +22,17 @@ ref_are_duplicates(
 )
 }
 \arguments{
-\item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format. If null, will use a GeoJSON file.}
+\item{db.con}{the parameters for the DB, in a RPostgres::dbConnect() format. If NA (by default), will read a GeoJSON file.}
 
 \item{d}{a hash() object (a Python-like dictionary).}
 
 \item{field}{the field name that will be created in the a hash() object.}
 
-\item{resourceid.list}{a list with the ResourceID to compare. By default: c("563567f7-eef0-4683-9e88-5e4be2452f80", "fb0a2ef4-023f-4d13-b931-132799bb7a6c")}
+\item{hp.list}{a list with the HP IDs to compare. By default: `c("EAMENA-0207209", "EAMENA-0182057")`}
 
 \item{selected.fields}{the list of fields that will be selected to compare their values between different potential duplicates. By default the GeoJSON geometry is also selected.}
+
+\item{dist.method}{`stringdist` method to calculate the pairwise distance (see the function documentation), by default `"jw"`}
 
 \item{round.dist}{an integer for the number of digit to preserve in the distance computing. By default: 2.}
 
@@ -46,12 +48,20 @@ ref_are_duplicates(
 a matrix stored in hash() object. This matrix has the ResourceID of the compared HP in column.  If export.table is set to TRUE it will also create an CSV or XLSX table with the potential duplicates, and the fuzzy matching value (column 'dist')
 }
 \description{
-values coming from different records will be put one against another to facilitate the comparisons between possible duplicates. A fuzzy matching between these values is computed and stored in the colum 'dist' to resume the information. The higher this value, the closer are the compared values.
+values coming from different records will be put one against another to facilitate the comparisons between possible duplicates. A fuzzy matching between these values is computed and stored in the column 'dist' to resume the information. The distance calculation uses the `stringdist()` function from the `stringdist` package. The lower is this value, the closer are the compared values (probable duplicates).
 }
 \examples{
 
+export as CSV in the default folder
 d <- hash::hash()
 d <- ref_are_duplicates(d = d,
                         export.table = T,
                         fileOut = "duplicates.csv")
+
+export as XLSX in another folder
+d <- ref_are_duplicates(d = d,
+                        export.table = T,
+                        fileOut = "test_duplicates.xlsx",
+                        dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+
 }

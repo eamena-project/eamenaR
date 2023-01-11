@@ -24,7 +24,7 @@ plot_edtf(
 )
 }
 \arguments{
-\item{data_file}{the path to the dataset. By default "disturbances_edtf.xlsx".}
+\item{data_file}{the path to the dataset. By default an XLSX file: "disturbances_edtf.xlsx".}
 
 \item{date_column}{the column of the EDTF data.}
 
@@ -58,12 +58,11 @@ plot_edtf(
 One to several plots
 }
 \description{
-Use an XLSX file where cultural threats are listed and dated with EDTF.
-R doesn't accept spaces in headers, so the spaces are replaced by dots.
+Use an XLSX file where cultural threats are listed and dated with EDTF. R doesn't accept spaces in headers, so the spaces are replaced by dots.
 }
 \examples{
 
-# by category on "Disturbance Type" column (by default), grouped by month
+# plot by category on "Disturbance Type" column (by default), grouped by month
 library(dplyr)
 plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
 

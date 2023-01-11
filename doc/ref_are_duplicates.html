@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Help to identify if two EAMENA HP are real duplicates or not</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Help to identify if two HPs (pairwise) are real duplicates or...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for ref_are_duplicates"><tr><td>ref_are_duplicates</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Help to identify if two EAMENA HP are real duplicates or not</h2>
+<h2>Help to identify if two HPs (pairwise) are real duplicates or not</h2>
 
 <h3>Description</h3>
 
-<p>values coming from different records will be put one against another to facilitate the comparisons between possible duplicates. A fuzzy matching between these values is computed and stored in the colum 'dist' to resume the information. The higher this value, the closer are the compared values.
+<p>values coming from different records will be put one against another to facilitate the comparisons between possible duplicates. A fuzzy matching between these values is computed and stored in the column 'dist' to resume the information. The distance calculation uses the 'stringdist()' function from the 'stringdist' package. The lower is this value, the closer are the compared values (probable duplicates).
 </p>
 
 
@@ -21,12 +21,12 @@ ref_are_duplicates(
   db.con = NA,
   d = NA,
   field = "are_duplicates",
-  resourceid.list = c("563567f7-eef0-4683-9e88-5e4be2452f80",
-    "fb0a2ef4-023f-4d13-b931-132799bb7a6c"),
-  selected.fields = c("Assessment.Investigator...Actor", "Assessment.Activity.Date",
-    "Resource.Name"),
+  hp.list = c("EAMENA-0207209", "EAMENA-0182057"),
+  selected.fields = c("Assessment Investigator - Actor", "Assessment Activity Date",
+    "Resource Name"),
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
+  dist.method = "jw",
   round.dist = 2,
   export.table = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -41,7 +41,7 @@ ref_are_duplicates(
 <table summary="R argblock">
 <tr valign="top"><td><code>db.con</code></td>
 <td>
-<p>the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format. If null, will use a GeoJSON file.</p>
+<p>the parameters for the DB, in a RPostgres::dbConnect() format. If NA (by default), will read a GeoJSON file.</p>
 </td></tr>
 <tr valign="top"><td><code>d</code></td>
 <td>
@@ -51,13 +51,17 @@ ref_are_duplicates(
 <td>
 <p>the field name that will be created in the a hash() object.</p>
 </td></tr>
-<tr valign="top"><td><code>resourceid.list</code></td>
+<tr valign="top"><td><code>hp.list</code></td>
 <td>
-<p>a list with the ResourceID to compare. By default: c(&quot;563567f7-eef0-4683-9e88-5e4be2452f80&quot;, &quot;fb0a2ef4-023f-4d13-b931-132799bb7a6c&quot;)</p>
+<p>a list with the HP IDs to compare. By default: 'c(&quot;EAMENA-0207209&quot;, &quot;EAMENA-0182057&quot;)'</p>
 </td></tr>
 <tr valign="top"><td><code>selected.fields</code></td>
 <td>
 <p>the list of fields that will be selected to compare their values between different potential duplicates. By default the GeoJSON geometry is also selected.</p>
+</td></tr>
+<tr valign="top"><td><code>dist.method</code></td>
+<td>
+<p>'stringdist' method to calculate the pairwise distance (see the function documentation), by default '&quot;jw&quot;'</p>
 </td></tr>
 <tr valign="top"><td><code>round.dist</code></td>
 <td>
@@ -92,10 +96,18 @@ ref_are_duplicates(
 
 <pre>
 
+export as CSV in the default folder
 d &lt;- hash::hash()
 d &lt;- ref_are_duplicates(d = d,
                         export.table = T,
                         fileOut = "duplicates.csv")
+
+export as XLSX in another folder
+d &lt;- ref_are_duplicates(d = d,
+                        export.table = T,
+                        fileOut = "test_duplicates.xlsx",
+                        dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+
 </pre>
 
 

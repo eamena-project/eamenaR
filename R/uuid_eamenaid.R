@@ -22,8 +22,8 @@
 #'
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-#'                                user = 'postgres',
-#'                                password = 'postgis',
+#'                                user = 'xxx',
+#'                                password = 'xxx',
 #'                                dbname = 'eamena',
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
@@ -52,7 +52,7 @@ uuid_eamenaid <- function(db.con = NA,
                           field.uuid = "uuid",
                           disconn = TRUE){
   db.name <- eamenaR::ref_ids("id")
-  uuid <- eamenaR::ref_ids(db.name, "db.uuid")
+  uuid <- eamenaR::ref_ids(db.name, "db.concept.uuid")
   # from project ID (like the "EAMENA ID") to UUID
   if(grepl(id.prj.patt, id)){
     # return the ResourceID

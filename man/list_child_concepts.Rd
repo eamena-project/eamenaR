@@ -4,7 +4,13 @@
 \alias{list_child_concepts}
 \title{List the name of all the child-concepts below a certain Concept node}
 \usage{
-list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
+list_child_concepts(
+  db.con = NA,
+  d = NA,
+  field = NA,
+  concept.name = NA,
+  disconn = TRUE
+)
 }
 \arguments{
 \item{db.con}{a `dbConnect` connection to the database.}
@@ -13,10 +19,12 @@ list_child_concepts(db.con = NA, d = NA, field = NA, uuid = NA)
 
 \item{field}{the field name that will be created in the `d` hash() object.}
 
-\item{uuid}{the UUID of the Concept parent. For example, '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4' is the UUID of ..}
+\item{concept.name}{a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.}
+
+\item{disconn}{if TRUE (by defalut), will disconnect from the DB.}
 }
 \value{
-A igraph object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
+A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 }
 \description{
 With a given concept UUID (v. Reference Data Manager), find all the child nodes. This function has been tested only for Cultural and Subcultural periods.
@@ -28,36 +36,43 @@ With a given concept UUID (v. Reference Data Manager), find all the child nodes.
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'postgres',
-                               password = xxx,
+                               password = 'postgis',
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
 
 # Disturbance Extent Type
-d <- list_concepts(db.con = my_con, d = d,
-                   field = "Disturbance Extent Type",
-                   uuid = '41488800-6c00-30f2-b93f-785e38ab6251')
+d <- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "Disturbance Extent Type",
+                         concept.name = "Disturbance Extent Type",
+                         disconn = F)
 
-# show the subgraph below
-d[["Disturbance Extent Type"]]
-## IGRAPH 54d42e5 DN-- 8 7 --
-##   + attr: name (v/c)
-##   + edges from 54d42e5 (vertex names):
-##   [1] Disturbance Extent Type->Unknown   Disturbance Extent Type->1-10\%     Disturbance Extent Type->11-30\%
-##   [4] Disturbance Extent Type->91-100\%   Disturbance Extent Type->61-90\%    Disturbance Extent Type->No Visible/Known
-##   [7] Disturbance Extent Type->31-60\%
+# Cultural periods & Subcultural periods and disconnect from the DB
+d <- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "cultural_periods",
+                         concept.name = "Cultural Period",
+                         disconn = F)
+d <- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "subcultural_periods",
+                         concept.name = "Cultural Sub-Period",
+                         disconn = T)
 
-# Cultural periods & Subcultural periods
-d <- list_concepts(db.con = my_con,
-                   d = d,
-                   field = "cultural_periods",
-                   uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
-d <- list_concepts(db.con = my_con,
-                   d = d,
-                   field = "subcultural_periods",
-                   uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
-
-# disconnect
-RPostgres::dbDisconnect(my_con)
+# see this latter subgraph
+d$subcultural_periods
+IGRAPH 9ceb33f DN-- 256 467 --
++ attr: name (v/c)
++ edges from 9ceb33f (vertex names):
+  [1] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+[2] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+[3] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+[4] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+[5] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+[6] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+[7] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
+[8] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
++ ... omitted several edges
 
 }

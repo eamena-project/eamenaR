@@ -1,21 +1,19 @@
-#' Plot the duration of EAMENA HP cultural periods attribution in a chart. The cultural periods
-#' are recorded by years
+#' Plot the duration of HP cultural periods attribution in a chart. The cultural periods are recorded by years
+#'
 #' @name plot_cultural_periods
-#' @description Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates
 #'
-#' @param d a hash() object (a Python-like dictionary)
-#' @param field the field name where the periods, subperiods, etc. will be read in the a hash() object
-#' to plot it. It should be 'periods' or 'subperiods'
-#' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget
-#' @param plot.type whether will create the graphic of durations by EAMENA ID ("by.eamenaid") or
-#'  a cumulated histogram ("histogram"). By default, both of them
-#' @param bin.width size of the bins, by default, 50 years
-#' @param export.plot if TRUE, export the plot, if FALSE will only display it
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is export plot is TRUE
-#' @param y.label.size,seg.size,fig.width,fig.height parameters for the gglpot output
+#' @description Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates.
 #'
-#' @return A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
+#' @param d a hash() object (a Python-like dictionary).
+#' @param field the field name where the periods, subperiods, etc. will be read in the a hash() object to plot it. It should be 'periods' or 'subperiods'.
+#' @param plotly.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
+#' @param plot.type whether will create the graphic of durations by EAMENA ID ("by.eamenaid") or a cumulated histogram ("histogram"). By default, both of them.
+#' @param bin.width size of the bins, by default, 50 years.
+#' @param export.plot if TRUE, export the plot, if FALSE will only display it.
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
+#' @param y.label.size,seg.size,fig.width,fig.height parameters for the gglpot output.
+#'
+#' @return A Plotly chart if 'dynamic', or a ggplot chart if 'static', to display or save.
 #'
 #' @examples
 #'
@@ -31,7 +29,8 @@ plot_cultural_periods <- function(d = NA,
                                   plot.type = c("by.eamenaid", "histogram"),
                                   bin.width = 50,
                                   export.plot = F,
-                                  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+                                  dirOut = paste0(system.file(package = "eamenaR"),
+                                                  "/results/"),
                                   y.label.size = 6,
                                   seg.size = 1,
                                   fig.width = 8,
@@ -124,7 +123,8 @@ plot_cultural_periods <- function(d = NA,
                  rep(time.table[i, "ea.duration.tpq"], 2))
         per <- as.numeric(per)
         lbl <- paste0("<b>", time.table[i, "name.periods"], "</b><br>",
-                      time.table[i, "ea.duration.taq"], " to ", time.table[i, "ea.duration.tpq"], " ANE")
+                      time.table[i, "ea.duration.taq"], " to ",
+                      time.table[i, "ea.duration.tpq"], " ANE")
         gplotly <- plotly::gplotly %>%
           plotly::add_polygons(x = per,
                                # x=c(per1,per2,per3,per4),
@@ -142,7 +142,9 @@ plot_cultural_periods <- function(d = NA,
                                   inherit = T)
       }
       # the name of the EAMENA HP
-      centre.eamena.id <- mean(c(time.table$ea.duration.taq, time.table$ea.duration.tpq))
+      centre.eamena.id <- mean(c(time.table$ea.duration.taq,
+                                 time.table$ea.duration.tpq)
+                               )
       gplotly <- plotly::gplotly %>%
         plotly::add_annotations(x = centre.eamena.id,
                                 y = hp-.5,

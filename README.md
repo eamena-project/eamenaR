@@ -22,6 +22,9 @@ flowchart LR
     B --creates--> D[maps<br>charts<br>listings<br>...]
     classDef eamenaRpkg fill:#e3c071;
 ```
+
+## Families of functions
+
    
 The functions names refer to their content :
 
@@ -32,6 +35,10 @@ The functions names refer to their content :
 | list_*               | structure a dataset                                    | `list_mapping_bu()`      |
 | plot_*               | creates a map, a graphic, etc.                         | `plot_edtf()`            |
 | ref_*                | direct connection to the EAMENA PostgreSQL database    | `ref_cultural_periods()` |
+
+## Correspondances between labels and UUIDs
+
+The `ids.csv` file is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-oxford.github.io/eamenaR/doc/ref_ids))
 
 # Install and load package
 
@@ -82,12 +89,13 @@ Creates this kind of table:
   
 | field                           | 563567f7-eef0-4683-9e88-5e4be2452f80 | fb0a2ef4-023f-4d13-b931-132799bb7a6c | dist |
 |---------------------------------|--------------------------------------|--------------------------------------|------|
+| EAMENA ID                       | EAMENA-0207209                       | EAMENA-0182057                       |  -   |
 | Assessment.Investigator...Actor | Hamed Rahnama                        | Hamed Rahnama, Bijan Rouhani         | 0.18 |
 | Assessment.Activity.Date        | 2021-05-25                           | 2022-08-21, 2022-08-30               | 0.32 |
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
 
-Where `563567f7-eef0-4683-9e88-5e4be2452f80` and `fb0a2ef4-023f-4d13-b931-132799bb7a6c` are the default ResourceIDs of the function (respectively the two caravanserails `EAMENA-0207209` and `EAMENA-0182057`). The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
+The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
 
 ## BU
 

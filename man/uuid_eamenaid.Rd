@@ -2,21 +2,28 @@
 % Please edit documentation in R/uuid_eamenaid.R
 \name{uuid_eamenaid}
 \alias{uuid_eamenaid}
-\title{Return the UUID of a HP from EAMENA ID, or the opposite}
+\title{Return the UUID of a specific HP from its ID, or the opposite by connecting the DB.}
 \usage{
 uuid_eamenaid(
   db.con = NA,
   d = NA,
   id = NA,
-  field.eamenaid = "eamenaid",
-  field.resourceid = "resourceid",
+  id.prj.patt = "^EAMENA-",
+  field.id = "id",
+  field.uuid = "uuid",
   disconn = TRUE
 )
 }
 \arguments{
 \item{d}{a hash() object (a Python-like dictionary).}
 
-\item{id}{a EAMENA ID (eg. "EAMENA-0187363") or a ResourceID (eg. "12053a2b-9127-47a4-990f-7f5279cd89da").}
+\item{id}{a project ID (eg. "EAMENA-0187363") or a ResourceID (eg. "12053a2b-9127-47a4-990f-7f5279cd89da").}
+
+\item{id.prj.patt}{a regex matching with the project IDs, by default `"^EAMENA-"`.}
+
+\item{field.id}{the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.}
+
+\item{field.uuid}{the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.}
 
 \item{disconn}{if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).}
 
@@ -29,40 +36,35 @@ uuid_eamenaid(
 \item{db.host}{the name, or the IP, of the database.}
 
 \item{db.port}{the database port number, by default: 5432.}
-
-\item{field.uuid}{the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.}
-
-\item{field.id}{the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.}
 }
 \value{
 a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
 }
 \description{
-Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID
+Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
 }
 \examples{
 
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
+                               user = 'xxx',
                                password = 'xxx',
-                               dbname = 'xxx',
+                               dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
-
-# from the EAMENA ID
+# from the EAMENA ID to the UUID
 d <- uuid_eamenaid(db.con = my_con,
                    d = d,
                    id = "EAMENA-0187363",
                    disconn = FALSE)
-d$resourceid
+d$uuid
 # [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
 
 # from the ResourceID
+d <- hash::hash()
 d <- uuid_eamenaid(db.con = my_con,
                    d = d,
                    id = "12053a2b-9127-47a4-990f-7f5279cd89da")
-d$eamenaid
 # [1] "EAMENA-0187363"
 
 }

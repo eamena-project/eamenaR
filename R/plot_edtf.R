@@ -1,9 +1,10 @@
 #' Create an aoristic analysis of cultural heritage threats from a dataset.
-#' @name plot_edtf
-#' @description Use an XLSX file where cultural threats are listed and dated with EDTF.
-#' R doesn't accept spaces in headers, so the spaces are replaced by dots.
 #'
-#' @param data_file the path to the dataset. By default "disturbances_edtf.xlsx".
+#' @name plot_edtf
+#'
+#' @description Use an XLSX file where cultural threats are listed and dated with EDTF. R doesn't accept spaces in headers, so the spaces are replaced by dots.
+#'
+#' @param data_file the path to the dataset. By default an XLSX file: "disturbances_edtf.xlsx".
 #' @param date_column the column of the EDTF data.
 #' @param site_column the column of the sites' names or sites' IDs.
 #' @param analyse_column the field name of the threat category that will be analysed: "Disturbance.Type" (default), or "Disturbance.Cause".
@@ -23,7 +24,7 @@
 #'
 #' @examples
 #'
-#' # by category on "Disturbance Type" column (by default), grouped by month
+#' # plot by category on "Disturbance Type" column (by default), grouped by month
 #' library(dplyr)
 #' plot_edtf(edtf_unit = "ym", edtf_analyse = "category")
 #'
@@ -31,7 +32,8 @@
 #' plot_edtf(edtf_unit = "ym", edtf_analyse = "category", rm_date = "..", freeze_y = T)
 #'
 #' @export
-plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/extdata/disturbances_edtf.xlsx"),
+plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"),
+                                         "/extdata/disturbances_edtf.xlsx"),
                       date_column = "EDTF",
                       site_column = "S_ID",
                       analyse_column = "Disturbance.Type",
@@ -45,7 +47,8 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"), "/ext
                       freeze_y = FALSE,
                       export.plot = FALSE,
                       file_out = "df_out",
-                      dirOut = paste0(system.file(package = "eamenaR"), "/results/")){
+                      dirOut = paste0(system.file(package = "eamenaR"),
+                                      "/results/")){
   df <- openxlsx::read.xlsx(data_file,
                             sheet = 1)
   if(!is.na(rm_date)){

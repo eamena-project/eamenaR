@@ -1,11 +1,13 @@
 #' Create a list of child-concepts below Cultural Period of all periods with their duration
+#'
 #' @name ref_cultural_periods
+#'
 #' @description create a list concepts below Cultural Period of all periods with their duration. Duration of each period are listed in the 'scopeNote' of this period (see the RDM tab in the EAMENA DB).
 #'
-#' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format
-#' @param d a hash() object (a Python-like dictionary)
-#' @param field the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods"
-#' @param verbose if TRUE (by default), print messages
+#' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.
+#' @param d a hash() object (a Python-like dictionary).
+#' @param field the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods".
+#' @param verbose if TRUE (by default), print messages.
 #'
 #' @return NA
 #'

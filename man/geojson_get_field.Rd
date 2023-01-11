@@ -11,18 +11,21 @@ geojson_get_field(
 )
 }
 \arguments{
-\item{geojson.path}{the path to the GeoJSON file, eg: "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson"}
+\item{geojson.path}{the path to the GeoJSON file.}
 
-\item{field}{a field name, in R format, eg: EAMENA.ID}
+\item{field}{a field name, by default "EAMENA ID".}
 }
 \value{
 A vector with all values
 }
 \description{
-Get values of a given field
+Get all values of a given field.
 }
 \examples{
 
-geojson_get_field(geojson.path = "https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson")
+geojson_get_field()
+##  [1] "EAMENA-0192281" "EAMENA-0182033" "EAMENA-0182054" "EAMENA-0182055" "EAMENA-0182056" "EAMENA-0182057" "EAMENA-0182058"
+##  [8] "EAMENA-0164899" "EAMENA-0164904" "EAMENA-0164906" "EAMENA-0164905" "EAMENA-0164943" "EAMENA-0164999" "EAMENA-0207261"
+## ...
 
 }

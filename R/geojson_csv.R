@@ -41,7 +41,3 @@ geojson_csv <- function(geom.path = paste0(system.file(package = "eamenaR"),
              row.names = FALSE, sep = ",")
   if(verbose){print(paste0("Exported to: ", outCSV))}
 }
-
-# geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
-#                                "/extdata/caravanserail_outGeoJSON.geojson"),
-#             csv.name = "caravanserail_outCSV2")

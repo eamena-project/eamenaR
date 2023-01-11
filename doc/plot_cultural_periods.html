@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot the duration of EAMENA HP cultural periods attribution...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Plot the duration of HP cultural periods attribution in a...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,12 +6,11 @@
 
 <table width="100%" summary="page for plot_cultural_periods"><tr><td>plot_cultural_periods</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Plot the duration of EAMENA HP cultural periods attribution in a chart. The cultural periods
-are recorded by years</h2>
+<h2>Plot the duration of HP cultural periods attribution in a chart. The cultural periods are recorded by years</h2>
 
 <h3>Description</h3>
 
-<p>Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates
+<p>Read the 'cultural_periods.tsv' hosted on GitHub to find the tpq and taq dates.
 </p>
 
 
@@ -39,45 +38,42 @@ plot_cultural_periods(
 <table summary="R argblock">
 <tr valign="top"><td><code>d</code></td>
 <td>
-<p>a hash() object (a Python-like dictionary)</p>
+<p>a hash() object (a Python-like dictionary).</p>
 </td></tr>
 <tr valign="top"><td><code>field</code></td>
 <td>
-<p>the field name where the periods, subperiods, etc. will be read in the a hash() object
-to plot it. It should be 'periods' or 'subperiods'</p>
+<p>the field name where the periods, subperiods, etc. will be read in the a hash() object to plot it. It should be 'periods' or 'subperiods'.</p>
 </td></tr>
 <tr valign="top"><td><code>plotly.plot</code></td>
 <td>
-<p>if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget</p>
+<p>if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.</p>
 </td></tr>
 <tr valign="top"><td><code>plot.type</code></td>
 <td>
-<p>whether will create the graphic of durations by EAMENA ID (&quot;by.eamenaid&quot;) or
-a cumulated histogram (&quot;histogram&quot;). By default, both of them</p>
+<p>whether will create the graphic of durations by EAMENA ID (&quot;by.eamenaid&quot;) or a cumulated histogram (&quot;histogram&quot;). By default, both of them.</p>
 </td></tr>
 <tr valign="top"><td><code>bin.width</code></td>
 <td>
-<p>size of the bins, by default, 50 years</p>
+<p>size of the bins, by default, 50 years.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
-<p>if TRUE, export the plot, if FALSE will only display it</p>
+<p>if TRUE, export the plot, if FALSE will only display it.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'.
-If it doesn't exist, it will be created. Only useful is export plot is TRUE</p>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>y.label.size, seg.size, fig.width, fig.height</code></td>
 <td>
-<p>parameters for the gglpot output</p>
+<p>parameters for the gglpot output.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A plotly chart if 'dynamic', or a gglpot if 'static', to display or save
+<p>A Plotly chart if 'dynamic', or a ggplot chart if 'static', to display or save.
 </p>
 
 
