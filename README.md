@@ -672,7 +672,7 @@ d <- list_child_concepts(db.con = my_con, d = d,
 d <- ref_cultural_periods(db.con = my_con, d = d,
                           field = "cultural_subperiods")
 # export as TSV
-df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
+df.periods <- rbind(d$cultural_periods, d$cultural_subperiods)
 tout <- paste0("C:/Rprojects/eamena-arches-dev/projects/periodo/cultural_periods.tsv")
 write.table(df.periods, tout, sep ="\t", row.names = F)
 ```
