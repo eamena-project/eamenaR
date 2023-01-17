@@ -7,6 +7,7 @@
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param field the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods".
+#' @param disconn if TRUE (by defalut), will disconnect from the DB.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return NA
@@ -41,13 +42,11 @@
 #' write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
 #'             sep ="\t", row.names = F)
 #'
-#' # remember to disconnect from the DB
-#' RPostgres::dbDisconnect(my_con)
-#'
 #' @export
 ref_cultural_periods <- function(db.con = NA,
                                  d = NA,
                                  field = NA,
+                                 disconn = TRUE,
                                  verbose = TRUE){
   g <- d[[field]]
   leaves.names <- igraph::V(g)[igraph::degree(g,
@@ -100,6 +99,9 @@ ref_cultural_periods <- function(db.con = NA,
                               "has no 'scopeNote' (ie, no duration)"))}
     }
     # df.name <- df.name.duration[df.name.duration$valuetype == 'scopeNote', "value"]
+  }
+  if(disconn){
+    DBI::dbDisconnect(db.con)
   }
   d[[field]] <- df
   return(d)

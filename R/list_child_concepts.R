@@ -9,6 +9,7 @@
 #' @param field the field name that will be created in the `d` hash() object.
 #' @param concept.name a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.
 #' @param disconn if TRUE (by defalut), will disconnect from the DB.
+#' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 #'
@@ -62,13 +63,17 @@ list_child_concepts <- function(db.con = NA,
                                 d = NA,
                                 field = NA,
                                 concept.name = NA,
-                                disconn = TRUE){
+                                disconn = TRUE,
+                                verbose = TRUE){
   concept.uuid <- eamenaR::ref_ids(in.value = concept.name,
                                    choice = "db.concept.uuid")
+  if(verbose){print(paste0("*read relations between concepts"))}
   sqll <- "
   SELECT conceptidfrom as from, conceptidto as to FROM relations
   "
   relations <- RPostgres::dbGetQuery(db.con, sqll)
+  if(verbose){print(paste0("   ... done"))}
+  if(verbose){print(paste0("create an `igraph` and get the appropriate subgraph"))}
   # subset the Concepts graph on the selected UUID
   g <- igraph::graph_from_data_frame(relations, directed = TRUE)
   # a particular subgraph
@@ -89,6 +94,7 @@ list_child_concepts <- function(db.con = NA,
   }
   if(disconn){
     DBI::dbDisconnect(db.con)
+    if(verbose){print(paste0("disconnected from the DB"))}
   }
   d[[field]] <- subgraph.names
   field.uuid <- paste0(field, ".uuid")

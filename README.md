@@ -652,28 +652,29 @@ Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/r
 d <- hash::hash()
 # replace 'xxx' with the username and password
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'xxx',
-                               password = 'xxx',
+                               user = 'postgres',
+                               password = 'postgis',
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
 # get cultural periods and subcultural periods
 d <- list_child_concepts(db.con = my_con, d = d, 
                          field = "cultural_periods", 
-                         uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+                         concept.name = 'Cultural Period',
+                         disconn = F)
 d <- ref_cultural_periods(db.con = my_con, d = d,
-                          field = "cultural_periods")
+                          field = "cultural_periods",
+                          disconn = F)
 d <- list_child_concepts(db.con = my_con, d = d, 
-                         field = "subcultural_periods", 
-                         uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+                         field = "cultural_subperiods", 
+                         concept.name = 'Cultural Sub-Period',
+                         disconn = F)
 d <- ref_cultural_periods(db.con = my_con, d = d,
-                          field = "subcultural_periods")
+                          field = "cultural_subperiods")
 # export as TSV
 df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
-tout <- paste0("C:/Rprojects/eamenaR/results/cultural_periods.tsv")
+tout <- paste0("C:/Rprojects/eamena-arches-dev/projects/periodo/cultural_periods.tsv")
 write.table(df.periods, tout, sep ="\t", row.names = F)
-# disconnect from the DB
-RPostgres::dbDisconnect(my_con)
 ```
 
 Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
