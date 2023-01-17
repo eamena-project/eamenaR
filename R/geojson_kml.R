@@ -43,7 +43,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
   ext <- DescTools::SplitPath(geom.path)$extension
   if(verbose){print(paste0("*read: ", geom.path))}
   if(ext == "geojson"){
-    geom <- geojsonsf::geojson_sf(geojson.path)
+    geom <- geojsonsf::geojson_sf(geom.path)
     # geom <- sf::st_read(geom.path, quiet = TRUE)
     toGeom <- ".kml"
   }
@@ -71,7 +71,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                    delete_dsn = TRUE)
     }
     if(ext == "geojson"){
-      geom <- geom[ , selectedFields] # subset of fields for KML
+      geom <- geom[ , select.fields] # subset of fields for KML
       # # tried also this
       # geom.as <- as(geom, "Spatial")
       # maptools::kmlPoints(
@@ -84,7 +84,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       #   icon = "http://www.gstatic.com/mapspro/images/stock/962-wht-diamond-blank.png"
       # )
       # tried that
-      geom$name <- geom[[selectedName]]
+      geom$name <- geom[[select.name]]
       # geom$Description <- geom[[selectedDescription]]
       # geom$Description <- geom$resourceid
       sf::st_write(geom,
