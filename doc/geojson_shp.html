@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Convert between GeoJSON and SHP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_shp"><tr><td>geojson_shp</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Convert between GeoJSON and SHP</h2>
+
+<h3>Description</h3>
+
+<p>Convert from SHP (shapefile) to GeoJSON, or from GeoJSON to SHP.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+geojson_shp(
+  geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
+  geom.types = c("POINT", "LINE", "POLYGON"),
+  export = T,
+  dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+  geojson.name = "Waypoints",
+  select.name = "EAMENA ID",
+  select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
+  verbose = T
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>geom.path</code></td>
+<td>
+<p>the path to the SHP/GeoJSONfile.</p>
+</td></tr>
+<tr valign="top"><td><code>geom.types</code></td>
+<td>
+<p>the types of geometries (&quot;POINT&quot;, &quot;LINE&quot; or &quot;POLYGON&quot;) that will be selected. By default all: 'c(&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;)'.</p>
+</td></tr>
+<tr valign="top"><td><code>export</code></td>
+<td>
+<p>if TRUE, will export the SHP file in a GeoJSON format, or the GeoJSON file as a SHP, if FALSE simple plot.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the path to the folder where the SHP/GeoJSON file will be created.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.name</code></td>
+<td>
+<p>the name of the SHP/GeoJSON that will be created without the extension</p>
+</td></tr>
+<tr valign="top"><td><code>select.name</code></td>
+<td>
+<p>for SHP export only. The field selected to be the SHP name of the HP, by default '&quot;EAMENA ID&quot;'.</p>
+</td></tr>
+<tr valign="top"><td><code>select.fields</code></td>
+<td>
+<p>for SHP export only. SHP conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: 'c(&quot;EAMENA ID&quot;,&quot;Resource Name&quot;, &quot;resourceid&quot;)'.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) then display different messages.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a GeoJSON file or a SHP file, depending on the input file.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+library(dplyr)
+
+# from GeoJSON to SHP
+geojson_shp(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+            geom.types = "POLYGON",
+            dirOut = "C:/Rprojects/eamenaR/results/",
+            export = T,
+            geojson.name = "caravanserailOUT")
+
+</pre>
+
+
+</div></body></html>

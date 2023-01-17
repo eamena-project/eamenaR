@@ -119,7 +119,7 @@ Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). 
 
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
     A --1. GeoJSON<br><b>POINT</b>--> E("geojson_shp()"):::eamenaRfunction;
     C --2. KML/KMZ--> B((Google<br>Earth));
@@ -135,7 +135,8 @@ flowchart TD
 ```
   
 functions: 
-  - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml)   
+  - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) 
+  - [`geojson_shp()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_shp)  
   - [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
 
 For example:
