@@ -115,15 +115,19 @@ The Bulk upload procedure
 
 #### Integrating Google Earth geometries
 
-Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries created in third part app, like Google Earth, and to append them to already existing records in EAMENA.
+Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries, like POLYGONs, created in third part app, like Google Earth or a GIS, and to append them to already existing records in EAMENA.
 
 
 ```mermaid
 flowchart LR
     A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
+    A --1. GeoJSON<br><b>POINT</b>--> E("geojson_shp()"):::eamenaRfunction;
     C --2. KML/KMZ--> B((Google<br>Earth));
+    E --2. SHP--> F((GIS));
     B --3. create<br><b>POLYGON</b>--> B;
+    F --3. create<br><b>POLYGON</b>--> F;
     B --4. KML/KMZ--> C;
+    F --4. SHP--> E;
     C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
     D --6. append<br>new geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
