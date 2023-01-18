@@ -1,10 +1,10 @@
-# ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
+# ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-oxford/eamenaR#typology), [spatial](https://github.com/eamena-oxford/eamenaR#time) and [temporal](https://github.com/eamena-oxford/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-oxford/eamenaR#users), etc.) from the [EAMENA database](https://database.eamena.org/en/).  
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the [EAMENA database](https://database.eamena.org/en/).  
   
 The two main sources of data are: 
-* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/geojson#readme); 
+* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/geojson#readme); 
 * data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access); 
 
 The two main types of output are:
@@ -38,7 +38,7 @@ The functions names refer to their content :
 
 ## Correspondances between concept labels and UUIDs
 
-The [`ids.csv` file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-oxford.github.io/eamenaR/doc/ref_ids))
+The [`ids.csv` file](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-project.github.io/eamenaR/doc/ref_ids))
 
 |r.concept.name            |db.concept.name           |db.concept.uuid                     |
 |--------------------------|--------------------------|------------------------------------|
@@ -55,7 +55,7 @@ The [`ids.csv` file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/ext
 Install the R package
 
 ```
-devtools::install_github("eamena-oxford/eamenaR")
+devtools::install_github("eamena-project/eamenaR")
 ```
 
 And load the package
@@ -76,17 +76,17 @@ The root directory on your local computer will be (*run*): `system.file(package 
 
 GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].
 
-![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-export.png)
+![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
 
 Paste the copied URL into your web browser and create a GeoJSON file, the result is something like :
 
-![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-url.png)
+![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-url.png)
 
-You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
+You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
 
 ## Duplicates
 
-The function [`ref_are_duplicates()`](https://eamena-oxford.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
+The function [`ref_are_duplicates()`](https://eamena-project.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
 
 ```
 d <- hash::hash()
@@ -105,7 +105,7 @@ Creates this kind of table:
 | Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
 | geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
 
-The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-oxford/eamenaR/blob/main/results/duplicates.csv
+The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-project/eamenaR/blob/main/results/duplicates.csv
 
 ## BU
 
@@ -135,17 +135,17 @@ flowchart LR
 ```
   
 functions: 
-  - [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) 
-  - [`geojson_shp()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_shp)  
-  - [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv)  
+  - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
+  - [`geojson_shp()`](https://eamena-project.github.io/eamenaR/doc/geojson_shp)  
+  - [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv)  
 
 For example:
 
-1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-oxford/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
+1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-project/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
 
 <a name="geojson_kml"></a>  
 
-2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
+2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
 
 ```
 library(dplyr)
@@ -162,7 +162,7 @@ geojson_kml(geom.types = c("POINT"),
 ![](results/geojson_kml_toKML_polygon.png)
 
 4. Export as KML ('caravanserail_outKML2.kml')
-5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
+5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
 
 ```
 geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
@@ -171,10 +171,10 @@ geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
             geojson.name = "caravanserail_outGeoJSON")
 ```
 
-The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
+The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-project/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
 
 
-6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_csv) function
+6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv) function
 
 ```
 geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
@@ -182,7 +182,7 @@ geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
             csv.name = "caravanserail_outCSV")
 ```
 
-The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
+The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
 
 <a name="bulk_append_6"></a>
 ```
@@ -191,10 +191,10 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-o
 "b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
 ```
 
-7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_eamenaid()`](https://eamena-oxford.github.io/eamenaR/doc/uuid_eamenaid) function, in a loop to confirm the existence of the ResourceID
+7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_eamenaid()`](https://eamena-project.github.io/eamenaR/doc/uuid_eamenaid) function, in a loop to confirm the existence of the ResourceID
 
 ```
-mycsv <- "https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
+mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
 df <- read.csv(mycsv)
 for(i in seq(1, nrow(df))){
   eamenaid <- df[i, "ResourceID"]
@@ -224,11 +224,11 @@ python manage.py packages -o import_business_data -s "./data/test/caravanserail_
 ```
 
 Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the whole dataset of caravanserails
-[caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
+[caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
 
 ### BU mapping
 
-Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
+Get a BU file (target file, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (source file) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 ```mermaid
 flowchart LR
@@ -241,8 +241,8 @@ flowchart LR
 ```
 
 functions: 
-  - [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu)  
-  - [geom_bbox()](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox)  
+  - [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu)  
+  - [geom_bbox()](https://eamena-project.github.io/eamenaR/doc/geom_bbox)  
 
 For example, the dataset prepared by Mohamed Kenawi (`mk`):
 
@@ -259,10 +259,10 @@ list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
 
 #### Mapping file
 
-To establish the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
+To establish the correspondences between a structured file (the source) and the structure of the EAMENA BU template (the target), the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function uses a mapping file (ie, a correspondance table). This mapping file could be either an XLSX file or a Google Sheet. 
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/bu-mapping-file.png" width="700">
   <br>
     <em>screenshot of the Google sheet mapping file: https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit?usp=sharing</em>
 </p>
@@ -281,7 +281,7 @@ For each 'job', the mapping file has three columns, one for the target ('`EAMENA
       - '`escape`': the value is calculated in another field;
       - etc.;
 
-The [list_mapping_bu()](https://eamena-oxford.github.io/eamenaR/doc/list_mapping_bu) function uses the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamenaR/main/inst/extdata/grid_squares.geojson))
+The [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function uses the [`geom_within_gs()`](https://eamena-project.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/grid_squares.geojson))
 
 ```
 library(dplyr)
@@ -293,7 +293,7 @@ Will return `"E00N35-44"`
 
 #### Collect the grid squares
 
-Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [geom_bbox()](https://eamena-oxford.github.io/eamenaR/doc/geom_bbox) function. 
+Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [geom_bbox()](https://eamena-project.github.io/eamenaR/doc/geom_bbox) function. 
 
 ```
 dataDir <- "C:/Users/Thomas Huet/Downloads/2022-12-08-20221208T154207Z-001/2022-12-08/"
@@ -353,12 +353,12 @@ This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box, or MBR)
 Copy/paste this `mbr.geojson` into the EAMENA DB map filter, to select and export the GeoJSON file of grid squares. In EAMENA DB, select `Filter` > `Map Search` >` Edit GeoJSON` and copy/paste the content of the new exported **GeoJSON file** into the EAMENA `Edit GeoJSON` field. Under the `Search` bar, filter by resources (`Resource Type`) and select `Grid Square`. Once the filters `Map Filtered Enabled` and `Grid Square` are on, only the needed Grid squares appear in the results. 
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-mbr.png" width="600">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-mbr.png" width="600">
   <br>
   <em>screenshot of the grid squares selection, export them as a new GeoJSON file </em>
 </p>
 
-Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file[^5] and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-oxford.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
+Export these grid squares as a `geojson url`, paste this URL into a web browser, copy the content of the output into a new GeoJSON file[^5] and save this file. This last GeoJSON file will be used in the [`geom_within_gs()`](https://eamena-project.github.io/eamenaR/doc/geom_within_gs) function to retrieve the correct Grid square ID for each heritage place in the BU.
 
 #### Source file
 
@@ -369,15 +369,15 @@ The source file, or original dataset, is assumed to be an XLSX file but it is po
 Export a new BU worksheet. 
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out.png" width="600">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/bu-mapping-out.png" width="600">
   <br>
   <em>screenshot of the output BU</em>
 </p>
 
-The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-oxford/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-lines headers. Once done, the BU can be sent to EAMENA.
+The data from this new worksheet can be copied/pasted into a [BU template](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk/templates) to retrieve the drop down menus and 3-lines headers. Once done, the BU can be sent to EAMENA.
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/bu-mapping-out-templated.png" width="800">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/bu-mapping-out-templated.png" width="800">
   <br>
   <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
@@ -392,11 +392,11 @@ Distribution maps for Heritages places and Geoarchaeology.
 
 ---
 
-The [`ref_hps()`](https://eamena-oxford.github.io/eamenaR/doc/ref_hps) function allows a back-end connection.
+The [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) function allows a back-end connection.
 
 ## Heritages places
 
-Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file
+Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file
 
 ```
 geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
@@ -406,7 +406,7 @@ geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
   <img alt="img-name" src="./results/caravanserail.png" width="700">
 </p>
 
-Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function options.
+Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function options.
 
 ```
 geojson_map(map.name = "caravanserail",
@@ -419,10 +419,10 @@ geojson_map(map.name = "caravanserail",
   <img alt="img-name" src="./results/caravanserail_Damage Extent Type.png" width="700">
 </p>
 
-The color of the value (optional) is recorded in the [`symbology.xlsx`](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/symbology.xlsx) file  
+The color of the value (optional) is recorded in the [`symbology.xlsx`](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/symbology.xlsx) file  
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/symbology-map.png" width="600">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/symbology-map.png" width="600">
   <br>
     <em>screenshot of the `symbology.xlsx` file registering the different colors of the values (only the columns `list`, `values` and `colors` are used)</em>
 </p>
@@ -450,17 +450,17 @@ geojson_map(map.name = "caravanserail",
             export.plot = F)
 ```
 
-Will plot [this map](https://eamena-oxford.github.io/eamena-arches-dev/data/geojson/maps/caravanserail)
+Will plot [this map](https://eamena-project.github.io/eamena-arches-dev/data/geojson/maps/caravanserail)
 
 ### Heritages places IDs ➡️ EAMENA ID 
 
-Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running the [`geojson_stat()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_stat) function:
+Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running the [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) function:
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
-This will give the data frame [caravanserail_list_ids.tsv](https://github.com/eamena-oxford/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the maps' IDs listed (e.g. for a figure caption), run :
+This will give the data frame [caravanserail_list_ids.tsv](https://github.com/eamena-project/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the maps' IDs listed (e.g. for a figure caption), run :
 
 ```
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
@@ -473,7 +473,7 @@ Will give:
 ```
 ### Paths
 
-Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.). Map them using the [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) function
+Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.). Map them using the [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) function
 
 ```
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
@@ -492,7 +492,7 @@ geojson_map_path(routes = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = F)
 ```
-Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-oxford.github.io/eamenaR/results/paths_map_route_1)
+Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-project.github.io/eamenaR/results/paths_map_route_1)
 
 <p align="center">
   <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
@@ -500,7 +500,7 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [V
 
 #### Profiles
 
-Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
+Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-project.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
 
 ```
 df <- geojson_addZ()
@@ -516,7 +516,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
   <img alt="img-name" src="./results/paths_profile.png" width="700">
 </p>
 
-The numbers of the HP are the same as the [previous map](https://github.com/eamena-oxford/eamenaR#heritages-places-ids-%EF%B8%8F-eamena-id)
+The numbers of the HP are the same as the [previous map](https://github.com/eamena-project/eamenaR#heritages-places-ids-%EF%B8%8F-eamena-id)
 
 #### Boxplots
 
@@ -533,7 +533,7 @@ geojson_boxplot_path(export.plot = T)
 
 ### Measurements
 
-Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right) with the [`geojson_measurements()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_measurements) function:
+Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right) with the [`geojson_measurements()`](https://eamena-project.github.io/eamenaR/doc/geojson_measurements) function:
 
 ```
 require(gridExtra)
@@ -549,7 +549,7 @@ grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
 
 ### Shape analysis
 
-The use of POLYGONES (or even LINES), such as [caravanserail_polygon.geojson](https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For the latter, we use the Momocs functions integrated in the [iconr](https://github.com/zoometh/iconr) package.
+The use of POLYGONES (or even LINES), such as [caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For the latter, we use the Momocs functions integrated in the [iconr](https://github.com/zoometh/iconr) package.
 ```
 library(Momocs)
 library(iconr)
@@ -619,11 +619,11 @@ It gives a Kmeans plot with 2 centers:
   <br>Kmeans with 2 centers
 </p>
 
-The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
+The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
 
 ## Geoarchaeology
 
-For MaREA geoarchaeological data, with the [`geojson_map()`](https://eamena-oxford.github.io/eamenaR/doc/geojson_map) function:
+For MaREA geoarchaeological data, with the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function:
 
 ```
 geojson_map(map.name = "geoarch",
@@ -639,13 +639,13 @@ geojson_map(map.name = "geoarch",
 
 # Time
 
-Either for [cultural periods](https://github.com/eamena-oxford/eamenaR#cultural-periods) or [EDTF](https://github.com/eamena-oxford/eamenaR#edtf) formats
+Either for [cultural periods](https://github.com/eamena-project/eamenaR#cultural-periods) or [EDTF](https://github.com/eamena-project/eamenaR#edtf) formats
 
 ## Cultural Periods
 
 ### Cultural and Subcultural periods references
 
-Use the [`ref_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/ref_cultural_periods) and [`list_child_concepts()`](https://eamena-oxford.github.io/eamenaR/doc/list_child_concepts) to retrieve the list of cultural periods and subperiods directly from the EAMENA DB. 
+Use the [`ref_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/ref_cultural_periods) and [`list_child_concepts()`](https://eamena-project.github.io/eamenaR/doc/list_child_concepts) to retrieve the list of cultural periods and subperiods directly from the EAMENA DB. 
 
 ```
 # create an hash dictionnary to store the cultural ans subcultural periods
@@ -677,10 +677,10 @@ tout <- paste0("C:/Rprojects/eamena-arches-dev/projects/periodo/cultural_periods
 write.table(df.periods, tout, sep ="\t", row.names = F)
 ```
 
-Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
+Gives [this TSV dataframe](https://github.com/eamena-project/eamenaR/blob/main/results/cultural_periods.tsv) with (sub)cultural periods names, *tpq* and *taq*
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods.png" width="550">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/time-cultural-periods.png" width="550">
     <br>
   <em>screenshot of the</em> `cultural_periods.tsv` <em>dataframe</em>
 </p>
@@ -692,7 +692,7 @@ Gives [this TSV dataframe](https://github.com/eamena-oxford/eamenaR/blob/main/re
 These two functions connects the EAMENA DB to parse the arborescence of periods (parents) and superiods (childs) concepts (a tree-like structure) to retrieve their names, their start date (*tpq*) and end date (*taq*).
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="550">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/time-cultural-periods-rdm.png" width="550">
   <br>
   <em>screenshot of the Reference Data Manager, parent node Cultural Period</em>
 </p>
@@ -700,7 +700,7 @@ These two functions connects the EAMENA DB to parse the arborescence of periods 
 These latters (start date and end date) are stored in the `scopeNote` of each cultural periods and subperiods
 
 <p align="center">
-  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="550">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/time-cultural-periods-rdm-1.png" width="550">
   <br>
   <em>screenshot of the Reference Data Manager, child node Palaeolithic (Levant/Mesopotamia/Arabia)</em>
 </p>
@@ -717,7 +717,7 @@ library(hash)
 d <- hash()
 ```
 
-Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID using the [`list_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/list_cultural_periods) function
+Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID using the [`list_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/list_cultural_periods) function
 
 ```
 d <- list_cultural_periods(db = "geojson", 
@@ -733,7 +733,7 @@ and superiods
   <img alt="img-name" src="./results/cultural_subperiods_byeamenaid.png" width="700">
 </p>
 
-Here, the [`plot_cultural_periods()`](https://eamena-oxford.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** ([rendered](https://github.com/eamena-oxford/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
+Here, the [`plot_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
 ```
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)
@@ -746,7 +746,7 @@ plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", expo
 
 Performs an aoristic analysis. By default, the function reads the sample data `disturbances_edtf.xlsx` and performs the analysis by days (year-month-day: ``ymd``). Two graphs are created, one adding up all the threats, and the other where each category of threat is individualised.
 
-Run the [`plot_edtf()`](https://eamena-oxford.github.io/eamenaR/doc/plot_edtf) function with the default parameters.
+Run the [`plot_edtf()`](https://eamena-project.github.io/eamenaR/doc/plot_edtf) function with the default parameters.
 
 ```
 library(dplyr)
@@ -768,11 +768,11 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
   <img alt="img-name" src="./results/edtf_plotly_category_ym.png" width="700">
 </p>
 
-The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-oxford.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
+The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-project.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
 
 # Users
 
-The function [`ref_users()`](https://eamena-oxford.github.io/eamenaR/doc/ref_users) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
+The function [`ref_users()`](https://eamena-project.github.io/eamenaR/doc/ref_users) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
 
 ```
 d <- hash::hash()
@@ -828,7 +828,7 @@ The other statistic calculated is the total number of users (minus those who hav
 
 Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
 
-![](https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/www/geojson-io.png)
+![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-io.png)
 
 
 The format of a rectangle selection is 4 different points[^2], starting from the geographical origin (`xmin, ymin`), e.g.: `"POINT(0 0)"`
