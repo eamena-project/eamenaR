@@ -8,7 +8,7 @@
 #' @param d a hash() object (a Python-like dictionary).
 #' @param uuid the UUIDs of one or several HP, only useful if `db = 'eamena'`. These UUID can be stored in the `d` variable (eg., `d_sql[["uuid"]]`), a vector, or a single UUID (eg., `'12053a2b-9127-47a4-990f-7f5279cd89da'`).
 #' @param geojson.path the path of the GeoJSON file. Only useful is `db = 'geojson'`. By default 'caravanserail.geojson'
-#' @param cultural_periods the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.
+#' @param cultural_periods the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A hash() with listed cultural periods names in the field 'periods' and listed cultural sub-periods names in the field 'subperiods'
@@ -41,7 +41,7 @@ list_cultural_periods <- function(db.con = NA,
   # TODO: field is useful?
   # d <- d_sql ; uuid <- '12053a2b-9127-47a4-990f-7f5279cd89da'; field <- "culturalper"
   # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper"
-  # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper" ; db = 'geojson' ; geojson.path = 'https://raw.githubusercontent.com/eamena-oxford/eamena-arches-dev/main/data/geojson/caravanserail.geojson'
+  # d <- d_sql ; uuid <- d_sql[["uuid"]]; field <- "culturalper" ; db = 'geojson' ; geojson.path = 'https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson'
   df.periods.template <- data.frame(eamenaid = character(0),
                                     periods = character(0),
                                     periods.certain = character(0),
