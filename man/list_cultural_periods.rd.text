@@ -35,7 +35,7 @@ cultural periods, subperiods, etc., of a given HP.
   `d`                  a hash() object (a Python-like dictionary).
   `uuid`               the UUIDs of one or several HP, only useful if 'db = 'eamena\''. These UUID can be stored in the \'d\' variable (eg., \'d_sql\[\[\"uuid\"\]\]\'), a vector, or a single UUID (eg., \''12053a2b-9127-47a4-990f-7f5279cd89da\'\').
   `geojson.path`       the path of the GeoJSON file. Only useful is 'db = 'geojson\''. By default 'caravanserail.geojson\'
-  `cultural_periods`   the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.
+  `cultural_periods`   the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.
   `verbose`            if TRUE (by default), print messages.
   -------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

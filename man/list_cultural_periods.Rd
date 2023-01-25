@@ -24,7 +24,7 @@ list_cultural_periods(
 
 \item{geojson.path}{the path of the GeoJSON file. Only useful is `db = 'geojson'`. By default 'caravanserail.geojson'}
 
-\item{cultural_periods}{the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-oxford/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.}
+\item{cultural_periods}{the reference table where all the periods and subperiods are listed. By defaut: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/cultural_periods.tsv.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }

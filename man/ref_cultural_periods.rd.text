@@ -19,7 +19,13 @@ this period (see the RDM tab in the EAMENA DB).
 
 ### Usage
 
-    ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
+    ref_cultural_periods(
+      db.con = NA,
+      d = NA,
+      field = NA,
+      disconn = TRUE,
+      verbose = TRUE
+    )
 
 ### Arguments
 
@@ -27,6 +33,7 @@ this period (see the RDM tab in the EAMENA DB).
   `db.con`    the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.
   `d`         a hash() object (a Python-like dictionary).
   `field`     the field of the hash dictionnary (\'d\') that will be filled with (sub)cultural periods values, eg. \"cultural_periods\" or \"subcultural_periods\".
+  `disconn`   if TRUE (by defalut), will disconnect from the DB.
   `verbose`   if TRUE (by default), print messages.
   ----------- -------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +71,4 @@ NA
     dir.create(tout, showWarnings = FALSE)
     write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
                 sep ="\t", row.names = F)
-
-    # remember to disconnect from the DB
-    RPostgres::dbDisconnect(my_con)
 :::

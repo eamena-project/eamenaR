@@ -17,7 +17,13 @@
 <h3>Usage</h3>
 
 <pre>
-ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
+ref_cultural_periods(
+  db.con = NA,
+  d = NA,
+  field = NA,
+  disconn = TRUE,
+  verbose = TRUE
+)
 </pre>
 
 
@@ -35,6 +41,10 @@ ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
 <tr valign="top"><td><code>field</code></td>
 <td>
 <p>the field of the hash dictionnary ('d') that will be filled with (sub)cultural periods values, eg. &quot;cultural_periods&quot; or &quot;subcultural_periods&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>disconn</code></td>
+<td>
+<p>if TRUE (by defalut), will disconnect from the DB.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
@@ -80,9 +90,6 @@ tout &lt;- paste0(paste0(system.file(package = "eamenaR"), "/results/"))
 dir.create(tout, showWarnings = FALSE)
 write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
             sep ="\t", row.names = F)
-
-# remember to disconnect from the DB
-RPostgres::dbDisconnect(my_con)
 
 </pre>
 

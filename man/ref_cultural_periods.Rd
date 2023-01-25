@@ -4,7 +4,13 @@
 \alias{ref_cultural_periods}
 \title{Create a list of child-concepts below Cultural Period of all periods with their duration}
 \usage{
-ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
+ref_cultural_periods(
+  db.con = NA,
+  d = NA,
+  field = NA,
+  disconn = TRUE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{db.con}{the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.}
@@ -12,6 +18,8 @@ ref_cultural_periods(db.con = NA, d = NA, field = NA, verbose = TRUE)
 \item{d}{a hash() object (a Python-like dictionary).}
 
 \item{field}{the field of the hash dictionnary (`d`) that will be filled with (sub)cultural periods values, eg. "cultural_periods" or "subcultural_periods".}
+
+\item{disconn}{if TRUE (by defalut), will disconnect from the DB.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }
@@ -50,8 +58,5 @@ tout <- paste0(paste0(system.file(package = "eamenaR"), "/results/"))
 dir.create(tout, showWarnings = FALSE)
 write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
             sep ="\t", row.names = F)
-
-# remember to disconnect from the DB
-RPostgres::dbDisconnect(my_con)
 
 }

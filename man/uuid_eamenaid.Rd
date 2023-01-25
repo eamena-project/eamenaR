@@ -2,46 +2,44 @@
 % Please edit documentation in R/uuid_eamenaid.R
 \name{uuid_eamenaid}
 \alias{uuid_eamenaid}
-\title{Return the UUID of a specific HP from its ID, or the opposite by connecting the DB.}
+\title{Return the UUID of a specific Heritage Place, or Connected Component, from its ID, or the opposite by connecting the DB.}
 \usage{
 uuid_eamenaid(
   db.con = NA,
   d = NA,
   id = NA,
-  id.prj.patt = "^EAMENA-",
   field.id = "id",
   field.uuid = "uuid",
-  disconn = TRUE
+  id.prj.patt = "^EAMENA-",
+  rm = "hp",
+  disconn = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
+\item{db.con}{a `dbConnect` connection to the database.}
+
 \item{d}{a hash() object (a Python-like dictionary).}
 
 \item{id}{a project ID (eg. "EAMENA-0187363") or a ResourceID (eg. "12053a2b-9127-47a4-990f-7f5279cd89da").}
-
-\item{id.prj.patt}{a regex matching with the project IDs, by default `"^EAMENA-"`.}
 
 \item{field.id}{the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.}
 
 \item{field.uuid}{the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.}
 
+\item{id.prj.patt}{a regex matching with the project IDs, by default `"^EAMENA-"`.}
+
+\item{rm}{the Resource Model (ex: HP, connected components). The available values are: "hp" for Heritage places, "cc" for connected compobents (ex: Built component). By default "hp".}
+
 \item{disconn}{if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).}
 
-\item{db.name}{the name of the database, by default 'eamena'.}
-
-\item{db.user}{the name of the user, by default 'postgres'.}
-
-\item{db.password}{the user database password.}
-
-\item{db.host}{the name, or the IP, of the database.}
-
-\item{db.port}{the database port number, by default: 5432.}
+\item{verbose}{if TRUE (by default) verbose.}
 }
 \value{
 a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
 }
 \description{
-Return the ResourceID of a HP from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
+Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Connected Component) from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
 }
 \examples{
 
@@ -52,6 +50,8 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
+
+## Heritage places
 # from the EAMENA ID to the UUID
 d <- uuid_eamenaid(db.con = my_con,
                    d = d,
@@ -60,11 +60,36 @@ d <- uuid_eamenaid(db.con = my_con,
 d$uuid
 # [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
 
-# from the ResourceID
+# from the UUID to the EAMENA ID
 d <- hash::hash()
 d <- uuid_eamenaid(db.con = my_con,
                    d = d,
-                   id = "12053a2b-9127-47a4-990f-7f5279cd89da")
+                   id = "12053a2b-9127-47a4-990f-7f5279cd89da",
+                   disconn = FALSE)
 # [1] "EAMENA-0187363"
+
+## Built Components
+
+d <- hash::hash()
+
+# from the COMPONENT ID to the UUID
+d <- uuid_eamenaid(db.con = my_con,
+                   d = d,
+                   id = "COMPONENT-0000141",
+                   id.prj.patt = "^COMPONENT-",
+                   rm = "cc",
+                   disconn = FALSE)
+d$uuid
+# [1] "90400bb6-ff54-4afd-8183-65c67fa97448"
+
+# from the UUID to the COMPONENT ID
+d <- hash::hash()
+d <- uuid_eamenaid(db.con = my_con,
+                   d = d,
+                   id = "90400bb6-ff54-4afd-8183-65c67fa97448",
+                   rm = "cc",
+                   disconn = TRUE)
+d$id
+# [1] "COMPONENT-0000141"
 
 }

@@ -2,7 +2,7 @@
 #'
 #' @name ref_ids
 #'
-#' @description This function read the table of correspondences `ids.csv`. This CSV file list the correspondences between concepts used in this eamenaR package (called `r.concept.name`), and concepts used of a given instance of Arches (called `db.concept.name` or their UUIDs: `db.concept.uuid`). This function is useful to generalise the operability of this R package to other Arches instances than EAMENA. Indeed, each concept or UUID is specific to a project. The only constant is the value of the concept of Heritage Places ID in this package. For example 'id' in this eamenaR package refers the 'EAMENA ID' concept in the EAMENA Arches instance. This latter concept is recorded in the `db.concept.name`. The UUID of this concept is recorded in the `db.concept.uuid` field. See the CSV correspondence table here: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv
+#' @description This function read the table of correspondences `ids.csv`. This CSV file list the correspondences between concepts used in this eamenaR package (called `r.concept.name`), and concepts used of a given instance of Arches (called `db.concept.name` or their UUIDs: `db.concept.uuid`). This function is close to the CLI command `python manage.py whatisthis`, for example `python manage.py whatisthis 5b3489c0-cb8f-11ea-a292-02e7594ce0a0` returns `Measurement Number` This function is useful to generalise the operability of this R package to other Arches instances than EAMENA. Indeed, each concept or UUID is specific to a project. The only constant is the value of the concept of Heritage Places ID in this package. For example 'id' in this eamenaR package refers the 'EAMENA ID' concept in the EAMENA Arches instance. This latter concept is recorded in the `db.concept.name`. The UUID of this concept is recorded in the `db.concept.uuid` field. See the CSV correspondence table here: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv
 #'
 #' @param value the eamenaR concept, by default NA.
 #' @param choice the output value, by default the concept label name in the database (`"db.concept.name"`).
@@ -61,6 +61,11 @@ ref_ids <- function(in.value = NA,
   }
   if(in.value %in% ids$db.concept.uuid){
     out.value <- ids[ids$db.concept.uuid == in.value, choice]
+  }
+  if(!exists("out.value")){
+    stop(paste0("The value '", in.value, "' doesn't exists in the table of correspondences '",
+                DescTools::SplitPath(ids.path)$fullfilename, "' \n",
+                "Check '", ids.path,"')"))
   }
   return(out.value)
 }

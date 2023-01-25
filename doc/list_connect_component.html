@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: List the connected components of an HP</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for list_connect_component"><tr><td>list_connect_component</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>List the connected components of an HP</h2>
+
+<h3>Description</h3>
+
+<p>With a given HP, find all the connected components.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+list_connect_component(
+  db.con = NA,
+  d = NA,
+  field = NA,
+  id = NA,
+  relationshiptype = "PX_is_related_to",
+  disconn = TRUE,
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>db.con</code></td>
+<td>
+<p>a 'dbConnect' connection to the database.</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>field</code></td>
+<td>
+<p>the field name that will be created in the 'd' hash() object.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>the ID of an HP, either an UUID or an EAMENA ID. By default, NA.</p>
+</td></tr>
+<tr valign="top"><td><code>relationshiptype</code></td>
+<td>
+<p>the type of relation existing betwen an HP and a BC. By default, the CIDOC-CRM 'PX_is_related_to'.</p>
+</td></tr>
+<tr valign="top"><td><code>disconn</code></td>
+<td>
+<p>if TRUE (by defalut), will disconnect from the DB.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A dataframe with the IDs and UUIDs of HP and CC
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+d &lt;- hash::hash()
+my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+
+df &lt;- list_connect_component(db.con = my_con,
+                             d = d,
+                             id = "EAMENA-0164943")
+df
+##            hp.id                              hp.uuid             cc.id                              cc.uuid
+## 1 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000141 90400bb6-ff54-4afd-8183-65c67fa97448
+## 2 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000143 0dab164a-6d3a-443c-954a-50d93efbff35
+
+</pre>
+
+
+</div></body></html>

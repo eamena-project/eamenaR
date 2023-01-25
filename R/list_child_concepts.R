@@ -45,18 +45,40 @@
 #'
 #' # see this latter subgraph
 #' d$subcultural_periods
-#' IGRAPH 9ceb33f DN-- 256 467 --
-#' + attr: name (v/c)
-#' + edges from 9ceb33f (vertex names):
-#'   [1] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
-#' [2] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
-#' [3] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
-#' [4] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
-#' [5] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
-#' [6] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
-#' [7] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
-#' [8] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
-#' + ... omitted several edges
+#' ## IGRAPH 9ceb33f DN-- 256 467 --
+#' ## + attr: name (v/c)
+#' ## + edges from 9ceb33f (vertex names):
+#' ## [1] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+#' ## [2] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman Imperial (North Africa)
+#' ## [3] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+#' ## [4] Classical/Protohistoric/Pre-Islamic (North Africa)->Vandal (Maghreb)
+#' ## [5] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+#' ## [6] Classical/Protohistoric/Pre-Islamic (North Africa)->Roman/Late Antique (North Africa)
+#' ## [7] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
+#' ## [8] Classical/Protohistoric/Pre-Islamic (North Africa)->Protohistoric, Late (Mauritania)
+#' ## + ... omitted several edges
+#'
+#'
+#' # Structural Component
+#' d <- list_child_concepts(db.con = my_con,
+#'                          d = d,
+#'                          field = "Structural.Component",
+#'                          concept.name = "Structural Component",
+#'                          disconn = F)
+#' df <- unique(igraph::as_edgelist(d$Structural.Component, names = TRUE))
+#' df[order(df[ , 2], decreasing = F), ]
+#' ## [,1]                   [,2]
+#' ## [1,] "Structural Component" "Arch"
+#' ## [2,] "Structural Component" "Balcony"
+#' ## [3,] "Structural Component" "Ceiling"
+#' ## [4,] "Structural Component" "character(0)"
+#' ## [5,] "Structural Component" "Column"
+#' ## [6,] "Structural Component" "Cornice"
+#' ## [7,] "Structural Component" "Dome"
+#' ## [8,] "Structural Component" "Floor"
+#' ## [9,] "Structural Component" "Foundation"
+#' ## [10,] "Structural Component" "Gate"
+#' ## ...
 #'
 #' @export
 list_child_concepts <- function(db.con = NA,
