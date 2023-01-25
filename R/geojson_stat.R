@@ -25,7 +25,7 @@
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
-                         ids = eamenaR::ref_ids("id"),
+                         ids = eamenaR::ref_ids("hp.id"),
                          stat = c("list_fields"),
                          export.stat = FALSE,
                          write.stat = FALSE,
