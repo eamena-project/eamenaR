@@ -82,6 +82,10 @@ list_related_resources <- function(db.con = NA,
                    hp.uuid = rep(d.id$uuid, nb.cc),
                    cc.id = cc.ids,
                    cc.uuid = connected.components$resourceinstanceidfrom)
+  if(disconn){
+    DBI::dbDisconnect(db.con)
+    if(verbose){print(paste0("disconnected from the DB"))}
+  }
   return(df)
 }
 

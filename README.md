@@ -629,7 +629,7 @@ Part of the information of the Heritage Places can be recorded in the Built Comp
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/relat-resource-ex1.png" width="450">
 </p>
 
-By default, in EAMENA, relationships between Heritage Places and Buil Component are of the type `PX_is_related_to`, unlike relationships between Heritage Places and Persons (`L33_has_maker`) or between Heritage Places and Grid Squares (`P89_falls_within`).  
+By default, in EAMENA, relationships between Heritage Places and Built Component are of the type `PX_is_related_to`, unlike relationships between Heritage Places and Persons (`L33_has_maker`) or between Heritage Places and Grid Squares (`P89_falls_within`).  
 
 Functions [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources) allows to retrieve this data for a given Heritage Place
 
@@ -650,7 +650,7 @@ df <- list_related_resources(db.con = my_con,
 df
 ```
 
-Will give this `df` dataframe:
+Will give this `df` dataframe, with the keys (`id` and `uuid`) of the connected components:
 
 |          hp.id|                              hp.uuid|             cc.id|                              cc.uuid|
 |---------------|-------------------------------------|------------------|-------------------------------------|
@@ -658,19 +658,59 @@ Will give this `df` dataframe:
 | EAMENA-0164943| d4feb830-10c7-4d80-a19e-e608f424be4c| COMPONENT-0000143| 0dab164a-6d3a-443c-954a-50d93efbff35|
 | EAMENA-0164943| d4feb830-10c7-4d80-a19e-e608f424be4c| COMPONENT-0000144| 28af281c-e4b9-44ac-aa98-2608581b7540|
 
-Where `hp` is the Heritage place, and `cc` the connected component(s). The function [`select_related_resources()`](https://eamena-project.github.io/eamenaR/doc/select_related_resources) allows to retrieve the values of a given variable. For example, to retrieve the total number of Rooms, use the already calculated `df` (see [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources)) and modify the parameter `having`. By default the value will be read in the field `"Measurement Number"` (function parameter `measure`).
+Where `hp` is the Heritage place, and `cc` the connected component(s). The function [`select_related_resources()`](https://eamena-project.github.io/eamenaR/doc/select_related_resources) allows to retrieve the values of a given variable. For example, to retrieve the total number of Rooms, use the calculated dataframe `df` listing the keys (see [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources)) and modify the parameter `having`. By default the value will be read in the field `"Measurement Number"` (function parameter `measure`).
 
 ```
 df.measures <- select_related_resources(db.con = my_con,
                                         having = "Room",
                                         df = df)
+df.measures
 ```
 
-Will give this dataframe:
+Will give this `df.measures` dataframe:
 
 |hp.id          |hp.uuid                              |cc.id             |cc.uuid                              |cc.type | cc.measure|
 |:--------------|:------------------------------------|:-----------------|:------------------------------------|:-------|----------:|
 |EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000144 |28af281c-e4b9-44ac-aa98-2608581b7540 |Room    |         28|
+
+To retrieve the Heritage places' information about Rooms and Stables create a dataframe to store this data, and run a loop stament over Heritage Places and types of Built components:
+
+```
+hps <- c("EAMENA-0164943", "EAMENA-0164937", "EAMENA-0164905")
+bcs <- c("Room", "Stable")
+
+df.measures.all <- data.frame(hp.id = character(),
+                              hp.uuid = character(),
+                              cc.id = character(),
+                              cc.uuid = character(),
+                              cc.type = character(),
+                              cc.measure = numeric())
+
+for(ea in hps){
+  df <- list_related_resources(db.con = my_con,
+                               d = d,
+                               id = ea,
+                               disconn = F)
+  for(have in bcs){
+    df.measures <- select_related_resources(db.con = my_con,
+                                            df = df,
+                                            having = have,
+                                            disconn = F)
+    df.measures.all <- rbind(df.measures.all, df.measures)
+  }
+}
+```
+
+Will give;
+
+|hp.id          |hp.uuid                              |cc.id             |cc.uuid                              |cc.type | cc.measure|
+|:--------------|:------------------------------------|:-----------------|:------------------------------------|:-------|----------:|
+|EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000144 |28af281c-e4b9-44ac-aa98-2608581b7540 |Room    |         28|
+|EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000141 |90400bb6-ff54-4afd-8183-65c67fa97448 |Stable  |         30|
+|EAMENA-0164937 |19b00f56-f6ea-4042-b9b5-21bedce4020f |COMPONENT-0000148 |171ded99-fec5-4d44-8093-ae6dc5d49c8f |Room    |         37|
+|EAMENA-0164937 |19b00f56-f6ea-4042-b9b5-21bedce4020f |COMPONENT-0000149 |0a9bd6d5-d8f7-490f-a446-0d2862b70fb2 |Stable  |         60|
+|EAMENA-0164905 |c7852111-1744-4171-89bb-07c66b9ac2be |COMPONENT-0000145 |afebeea9-62c7-47bf-851e-5ad0dbbee95f |Room    |         24|
+|EAMENA-0164905 |c7852111-1744-4171-89bb-07c66b9ac2be |COMPONENT-0000146 |4c6bf83a-3ac9-40e9-91d6-501e372a5d57 |Stable  |         30|
 
 ## Geoarchaeology
 

@@ -131,5 +131,9 @@ select_related_resources <- function(db.con = NA,
                             cc.measure = as.numeric(measurements[[1]]))
     cc.havings <- rbind(cc.havings, cc.having)
   }
+  if(disconn){
+    DBI::dbDisconnect(db.con)
+    if(verbose){print(paste0("disconnected from the DB"))}
+  }
   return(cc.havings)
 }
