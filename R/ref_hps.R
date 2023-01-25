@@ -52,7 +52,7 @@ ref_hps <- function(db.con = NA,
                     team.name = NA,
                     verbose = TRUE){
   # find EAMENA ID UUID
-  db.name <- eamenaR::ref_ids("id")
+  db.name <- eamenaR::ref_ids("hp.id")
   uuid <- eamenaR::ref_ids(db.name, "db.uuid")
   # find other UUIDs
   Investigator.Role.Type.uuid <- eamenaR::ref_ids(in.value = "Investigator Role Type", choice = "db.uuid")

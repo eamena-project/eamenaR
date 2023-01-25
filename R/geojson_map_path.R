@@ -72,7 +72,7 @@ geojson_map_path <- function(map.name = "map_path",
                              fig.width = 8,
                              fig.height = 8,
                              verbose = TRUE){
-  r.id <- eamenaR::ref_ids("id")
+  r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
   paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
   paths.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")

@@ -18,7 +18,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
                                 csv.path = paste0(system.file(package = "eamenaR"),
                                                   "/extdata/caravanserail_paths.csv"),
                                 verbose = TRUE){
-  r.id <- eamenaR::ref_ids("id")
+  r.id <- eamenaR::ref_ids("hp.id")
   df <- eamenaR::geojson_stat(stat = c("list_ids"),
                               geojson.path = geojson.path,
                               export.stat = T)

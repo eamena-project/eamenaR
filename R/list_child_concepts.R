@@ -8,7 +8,7 @@
 #' @param d a hash() object (a Python-like dictionary).
 #' @param field the field name that will be created in the `d` hash() object.
 #' @param concept.name a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.
-#' @param disconn if TRUE (by defalut), will disconnect from the DB.
+#' @param disconn if TRUE (by default), will disconnect from the DB.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
