@@ -699,18 +699,19 @@ for(ea in hps){
     df.measures.all <- rbind(df.measures.all, df.measures)
   }
 }
+df.measures.all[ , c("hp.id", "cc.id", "cc.type", "cc.measure")]
 ```
 
-Will give;
+Will give:
 
-|hp.id          |hp.uuid                              |cc.id             |cc.uuid                              |cc.type | cc.measure|
-|:--------------|:------------------------------------|:-----------------|:------------------------------------|:-------|----------:|
-|EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000144 |28af281c-e4b9-44ac-aa98-2608581b7540 |Room    |         28|
-|EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000141 |90400bb6-ff54-4afd-8183-65c67fa97448 |Stable  |         30|
-|EAMENA-0164937 |19b00f56-f6ea-4042-b9b5-21bedce4020f |COMPONENT-0000148 |171ded99-fec5-4d44-8093-ae6dc5d49c8f |Room    |         37|
-|EAMENA-0164937 |19b00f56-f6ea-4042-b9b5-21bedce4020f |COMPONENT-0000149 |0a9bd6d5-d8f7-490f-a446-0d2862b70fb2 |Stable  |         60|
-|EAMENA-0164905 |c7852111-1744-4171-89bb-07c66b9ac2be |COMPONENT-0000145 |afebeea9-62c7-47bf-851e-5ad0dbbee95f |Room    |         24|
-|EAMENA-0164905 |c7852111-1744-4171-89bb-07c66b9ac2be |COMPONENT-0000146 |4c6bf83a-3ac9-40e9-91d6-501e372a5d57 |Stable  |         30|
+|hp.id          |cc.id             |cc.type | cc.measure|
+|:--------------|:-----------------|:-------|----------:|
+|EAMENA-0164943 |COMPONENT-0000144 |Room    |         28|
+|EAMENA-0164943 |COMPONENT-0000141 |Stable  |         30|
+|EAMENA-0164937 |COMPONENT-0000148 |Room    |         37|
+|EAMENA-0164937 |COMPONENT-0000149 |Stable  |         60|
+|EAMENA-0164905 |COMPONENT-0000145 |Room    |         24|
+|EAMENA-0164905 |COMPONENT-0000146 |Stable  |         30|
 
 ## Geoarchaeology
 
