@@ -3,6 +3,15 @@
 
 The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the [EAMENA database](https://database.eamena.org/en/).  
   
+```mermaid
+flowchart LR
+    A <--data<br>exchange--> B{{"eamenaR"}}:::eamenaRpkg;
+    B --data<br>management--> B;
+    B <--data<br>exchange--> C((third part<br>app));
+    B --output--> D[maps<br>charts<br>listings<br>...]
+    classDef eamenaRpkg fill:#e3c071;
+```
+
 The two main sources of data are: 
 * GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/geojson#readme); 
 * data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access); 
@@ -12,16 +21,6 @@ The two main types of output are:
 * interactive graphs and maps for publication on the web (with Plotly and Leaflet);
 
 Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA.
-
-```mermaid
-flowchart LR
-    A[(EAMENA<br>DB)] --export<br>GeoJSON--> B{{"eamenaR"}}:::eamenaRpkg;
-    B --data<br>management--> B;
-    B <--data<br>exchange--> C((third part<br>app));
-    B --import--> A;
-    B --creates--> D[maps<br>charts<br>listings<br>...]
-    classDef eamenaRpkg fill:#e3c071;
-```
 
 ## Families of functions
 
@@ -712,6 +711,7 @@ Will give:
 |EAMENA-0164937 |COMPONENT-0000149 |Stable  |         60|
 |EAMENA-0164905 |COMPONENT-0000145 |Room    |         24|
 |EAMENA-0164905 |COMPONENT-0000146 |Stable  |         30|
+
 
 ## Geoarchaeology
 
