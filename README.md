@@ -5,7 +5,7 @@ The ***eamenaR*** package allows to analyse the [typological](https://github.com
   
 ```mermaid
 flowchart LR
-    A <--data<br>exchange--> B{{"eamenaR"}}:::eamenaRpkg;
+    A[(EAMENA<br>DB)] <--data<br>exchange--> B{{"eamenaR"}}:::eamenaRpkg;
     B --data<br>management--> B;
     B <--data<br>exchange--> C((third part<br>app));
     B --output--> D[maps<br>charts<br>listings<br>...]
