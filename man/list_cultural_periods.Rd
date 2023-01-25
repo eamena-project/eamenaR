@@ -38,7 +38,7 @@ With a given concept UUID (v. Reference Data Manager), find all the cultural per
 
 # looking into the EAMENA DB
 d <- hash::hash()
-d <- uuid_eamenaid(db.con = my_con,
+d <- uuid_id(db.con = my_con,
                    d = d,
                    id = "EAMENA-0187363")
 d <- list_cultural_periods("eamena", d, "culturalper", d$uuid)

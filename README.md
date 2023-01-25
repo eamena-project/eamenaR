@@ -191,14 +191,14 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-p
 "b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
 ```
 
-7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_eamenaid()`](https://eamena-project.github.io/eamenaR/doc/uuid_eamenaid) function, in a loop to confirm the existence of the ResourceID
+7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
 
 ```
 mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
 df <- read.csv(mycsv)
 for(i in seq(1, nrow(df))){
   eamenaid <- df[i, "ResourceID"]
-  d <- uuid_eamenaid(db.con = my_con,
+  d <- uuid_id(db.con = my_con,
                      d = d,
                      id = eamenaid,
                      disconn = FALSE)
@@ -620,6 +620,12 @@ It gives a Kmeans plot with 2 centers:
 </p>
 
 The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
+
+## Connected Components
+
+Part of the information of the Heritage Places can be recorded in the Built Components. For example
+
+relat-resource-ex1.png
 
 ## Geoarchaeology
 

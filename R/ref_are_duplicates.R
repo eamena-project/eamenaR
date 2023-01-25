@@ -117,7 +117,7 @@ ref_are_duplicates <- function(db.con = NA,
     resourceid.list <- c()
     d <- hash::hash()
     for(hp in hp.list){
-      d <- uuid_eamenaid(db.con = my_con,
+      d <- uuid_id(db.con = my_con,
                          d = d,
                          id = hp,
                          disconn = F)

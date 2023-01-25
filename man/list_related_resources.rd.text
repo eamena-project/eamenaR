@@ -5,7 +5,7 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 
 ::: container
   ------------------------ -----------------
-  list_connect_component     R Documentation
+  list_related_resources     R Documentation
   ------------------------ -----------------
 
 ## List the connected components of an HP
@@ -16,7 +16,7 @@ With a given HP, find all the connected components.
 
 ### Usage
 
-    list_connect_component(
+    list_related_resources(
       db.con = NA,
       d = NA,
       field = NA,
@@ -53,7 +53,7 @@ A dataframe with the IDs and UUIDs of HP and CC
                                    host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                    port = 5432)
 
-    df <- list_connect_component(db.con = my_con,
+    df <- list_related_resources(db.con = my_con,
                                  d = d,
                                  id = "EAMENA-0164943")
     df

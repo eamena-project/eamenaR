@@ -72,7 +72,7 @@ list_cultural_periods(
 
 # looking into the EAMENA DB
 d &lt;- hash::hash()
-d &lt;- uuid_eamenaid(db.con = my_con,
+d &lt;- uuid_id(db.con = my_con,
                    d = d,
                    id = "EAMENA-0187363")
 d &lt;- list_cultural_periods("eamena", d, "culturalper", d$uuid)

@@ -6,7 +6,7 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 
 ::: container
   -------------------------- -----------------
-  select_connect_component     R Documentation
+  select_related_resources     R Documentation
   -------------------------- -----------------
 
 ## For a given Heritage Place, find all Connected Components, select the components have a given value in a certain field
@@ -16,11 +16,11 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
 For a given Heritage Place, find all Connected Components (ex: a Built
 Component) having a a given value (ex: \"Stable\") in a certain field
 (ex: \"Measurement Number\"). This function is run after
-\'list_connect_component()\'.
+\'list_related_resources()\'.
 
 ### Usage
 
-    select_connect_component(
+    select_related_resources(
       db.con = NA,
       df = NA,
       having = "Stable",
@@ -33,7 +33,7 @@ Component) having a a given value (ex: \"Stable\") in a certain field
 
   ----------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   `db.con`    a \'dbConnect\' connection to the database.
-  `df`        a dataframe resultion from the \'list_connect_component()\' function, having the UUID of Connected Component
+  `df`        a dataframe resultion from the \'list_related_resources()\' function, having the UUID of Connected Component
   `having`    a vector of values to only keep CC having these values. By default c(\"Stable\"). These values must appear in the \'ids.csv\' file with their \'valueid\' (see \'python manage.py whatisthis\').
   `measure`   the name of the field where the value of \'having\' is recorded. By default \"Measurement Number\".
   `disconn`   if TRUE (by defalut), will disconnect from the DB.
@@ -56,13 +56,13 @@ Connected Components with, for the latter, the selected fields
                                    host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                    port = 5432)
 
-    df <- list_connect_component(db.con = my_con,
+    df <- list_related_resources(db.con = my_con,
                                  d = d,
                                  id = "EAMENA-0164943",
                                  disconn = F)
 
     # get the number of 'Stable' (by default)
-    df.measures <- select_connect_component(db.con = my_con,
+    df.measures <- select_related_resources(db.con = my_con,
                                             df = df)
     df.measures
     ##            hp.id                              hp.uuid             cc.id                              cc.uuid cc.type
@@ -71,7 +71,7 @@ Connected Components with, for the latter, the selected fields
     ## 1                 30
 
     # get the number of 'Rooms'
-    df.measures <- select_connect_component(db.con = my_con,
+    df.measures <- select_related_resources(db.con = my_con,
                                             having = c("Room"),
                                             df = df)
     df.measures

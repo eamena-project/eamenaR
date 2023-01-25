@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Return the UUID of a specific Heritage Place, or Connected...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for uuid_id"><tr><td>uuid_id</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Return the UUID of a specific Heritage Place, or Connected Component, from its ID, or the opposite by connecting the DB.</h2>
+
+<h3>Description</h3>
+
+<p>Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Connected Component) from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the 'ref_ids()' one for interoperability purposes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+uuid_id(
+  db.con = NA,
+  d = NA,
+  id = NA,
+  field.id = "id",
+  field.uuid = "uuid",
+  id.prj.patt = "^EAMENA-",
+  rm = "hp",
+  disconn = TRUE,
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>db.con</code></td>
+<td>
+<p>a 'dbConnect' connection to the database.</p>
+</td></tr>
+<tr valign="top"><td><code>d</code></td>
+<td>
+<p>a hash() object (a Python-like dictionary).</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>a project ID (eg. &quot;EAMENA-0187363&quot;) or a ResourceID (eg. &quot;12053a2b-9127-47a4-990f-7f5279cd89da&quot;).</p>
+</td></tr>
+<tr valign="top"><td><code>field.id</code></td>
+<td>
+<p>the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.</p>
+</td></tr>
+<tr valign="top"><td><code>field.uuid</code></td>
+<td>
+<p>the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.</p>
+</td></tr>
+<tr valign="top"><td><code>id.prj.patt</code></td>
+<td>
+<p>a regex matching with the project IDs, by default '&quot;^EAMENA-&quot;'.</p>
+</td></tr>
+<tr valign="top"><td><code>rm</code></td>
+<td>
+<p>the Resource Model (ex: HP, connected components). The available values are: &quot;hp&quot; for Heritage places, &quot;cc&quot; for connected compobents (ex: Built component). By default &quot;hp&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>disconn</code></td>
+<td>
+<p>if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default) verbose.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+d &lt;- hash::hash()
+my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+
+## Heritage places
+# from the EAMENA ID to the UUID
+d &lt;- uuid_id(db.con = my_con,
+                   d = d,
+                   id = "EAMENA-0187363",
+                   disconn = FALSE)
+d$uuid
+# [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
+
+# from the UUID to the EAMENA ID
+d &lt;- hash::hash()
+d &lt;- uuid_id(db.con = my_con,
+                   d = d,
+                   id = "12053a2b-9127-47a4-990f-7f5279cd89da",
+                   disconn = FALSE)
+# [1] "EAMENA-0187363"
+
+## Built Components
+
+d &lt;- hash::hash()
+
+# from the COMPONENT ID to the UUID
+d &lt;- uuid_id(db.con = my_con,
+                   d = d,
+                   id = "COMPONENT-0000141",
+                   id.prj.patt = "^COMPONENT-",
+                   rm = "cc",
+                   disconn = FALSE)
+d$uuid
+# [1] "90400bb6-ff54-4afd-8183-65c67fa97448"
+
+# from the UUID to the COMPONENT ID
+d &lt;- hash::hash()
+d &lt;- uuid_id(db.con = my_con,
+                   d = d,
+                   id = "90400bb6-ff54-4afd-8183-65c67fa97448",
+                   rm = "cc",
+                   disconn = TRUE)
+d$id
+# [1] "COMPONENT-0000141"
+
+</pre>
+
+
+</div></body></html>

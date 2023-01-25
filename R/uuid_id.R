@@ -1,6 +1,6 @@
 #' Return the UUID of a specific Heritage Place, or Connected Component, from its ID, or the opposite by connecting the DB.
 #'
-#' @name uuid_eamenaid
+#' @name uuid_id
 #'
 #' @description Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Connected Component) from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
 #'
@@ -28,7 +28,7 @@
 #'
 #' ## Heritage places
 #' # from the EAMENA ID to the UUID
-#' d <- uuid_eamenaid(db.con = my_con,
+#' d <- uuid_id(db.con = my_con,
 #'                    d = d,
 #'                    id = "EAMENA-0187363",
 #'                    disconn = FALSE)
@@ -37,7 +37,7 @@
 #'
 #' # from the UUID to the EAMENA ID
 #' d <- hash::hash()
-#' d <- uuid_eamenaid(db.con = my_con,
+#' d <- uuid_id(db.con = my_con,
 #'                    d = d,
 #'                    id = "12053a2b-9127-47a4-990f-7f5279cd89da",
 #'                    disconn = FALSE)
@@ -49,7 +49,7 @@
 #' d <- hash::hash()
 #'
 #' # from the COMPONENT ID to the UUID
-#' d <- uuid_eamenaid(db.con = my_con,
+#' d <- uuid_id(db.con = my_con,
 #'                    d = d,
 #'                    id = "COMPONENT-0000141",
 #'                    id.prj.patt = "^COMPONENT-",
@@ -60,7 +60,7 @@
 #'
 #' # from the UUID to the COMPONENT ID
 #' d <- hash::hash()
-#' d <- uuid_eamenaid(db.con = my_con,
+#' d <- uuid_id(db.con = my_con,
 #'                    d = d,
 #'                    id = "90400bb6-ff54-4afd-8183-65c67fa97448",
 #'                    rm = "cc",
@@ -70,7 +70,7 @@
 #'
 #' @export
 # TODO: rename to `uuid_id()`
-uuid_eamenaid <- function(db.con = NA,
+uuid_id <- function(db.con = NA,
                           d = NA,
                           id = NA,
                           field.id = "id",

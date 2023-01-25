@@ -1,11 +1,11 @@
 #' For a given Heritage Place, find all Connected Components, select the components have a given value in a certain field
 #'
-#' @name select_connect_component
+#' @name select_related_resources
 #'
-#' @description For a given Heritage Place, find all Connected Components (ex: a Built Component) having a a given value (ex: "Stable") in a certain field (ex: "Measurement Number"). This function is run after `list_connect_component()`.
+#' @description For a given Heritage Place, find all Connected Components (ex: a Built Component) having a a given value (ex: "Stable") in a certain field (ex: "Measurement Number"). This function is run after `list_related_resources()`.
 #'
 #' @param db.con a `dbConnect` connection to the database.
-#' @param df a dataframe resultion from the `list_connect_component()` function, having the UUID of Connected Component
+#' @param df a dataframe resultion from the `list_related_resources()` function, having the UUID of Connected Component
 #' @param having a vector of values to only keep CC having these values. By default c("Stable"). These values must appear in the `ids.csv` file with their `valueid` (see `python manage.py whatisthis`).
 #' @param measure the name of the field where the value of `having` is recorded. By default "Measurement Number".
 #' @param disconn if TRUE (by defalut), will disconnect from the DB.
@@ -23,13 +23,13 @@
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
 #'
-#' df <- list_connect_component(db.con = my_con,
+#' df <- list_related_resources(db.con = my_con,
 #'                              d = d,
 #'                              id = "EAMENA-0164943",
 #'                              disconn = F)
 #'
 #' # get the number of 'Stable' (by default)
-#' df.measures <- select_connect_component(db.con = my_con,
+#' df.measures <- select_related_resources(db.con = my_con,
 #'                                         df = df)
 #' df.measures
 #' ##            hp.id                              hp.uuid             cc.id                              cc.uuid cc.type
@@ -38,7 +38,7 @@
 #' ## 1                 30
 #'
 #' # get the number of 'Rooms'
-#' df.measures <- select_connect_component(db.con = my_con,
+#' df.measures <- select_related_resources(db.con = my_con,
 #'                                         having = c("Room"),
 #'                                         df = df)
 #' df.measures
@@ -46,7 +46,7 @@
 #' ## 1 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000144 28af281c-e4b9-44ac-aa98-2608581b7540    Room         28
 #'
 #' @export
-select_connect_component <- function(db.con = NA,
+select_related_resources <- function(db.con = NA,
                                      df = NA,
                                      having = "Stable",
                                      measure = "Measurement Number",

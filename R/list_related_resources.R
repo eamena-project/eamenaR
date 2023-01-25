@@ -1,6 +1,6 @@
 #' List the connected components of an HP
 #'
-#' @name list_connect_component
+#' @name list_related_resources
 #'
 #' @description With a given HP, find all the connected components.
 #'
@@ -24,7 +24,7 @@
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
 #'
-#' df <- list_connect_component(db.con = my_con,
+#' df <- list_related_resources(db.con = my_con,
 #'                              d = d,
 #'                              id = "EAMENA-0164943")
 #' df
@@ -33,7 +33,7 @@
 #' ## 2 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000143 0dab164a-6d3a-443c-954a-50d93efbff35
 #'
 #' @export
-list_connect_component <- function(db.con = NA,
+list_related_resources <- function(db.con = NA,
                                    d = NA,
                                    field = NA,
                                    id = NA,
@@ -44,7 +44,7 @@ list_connect_component <- function(db.con = NA,
 
   # get the UUID of the HP
   d.id <- hash::hash()
-  d.id <- uuid_eamenaid(db.con = my_con,
+  d.id <- uuid_id(db.con = my_con,
                         d = d.id,
                         id = id,
                         disconn = F)
@@ -71,7 +71,7 @@ list_connect_component <- function(db.con = NA,
   for(cc in connected.components$resourceinstanceidfrom){
     # cc <- '90400bb6-ff54-4afd-8183-65c67fa97448'
     dcc.id <- hash::hash()
-    dcc.id <- uuid_eamenaid(db.con = my_con,
+    dcc.id <- uuid_id(db.con = my_con,
                             d = dcc.id,
                             id = cc,
                             rm = "cc",
