@@ -621,11 +621,56 @@ It gives a Kmeans plot with 2 centers:
 
 The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
 
-## Connected Components
+## Related resources
 
-Part of the information of the Heritage Places can be recorded in the Built Components. For example
+Part of the information of the Heritage Places can be recorded in the Built Components (`COMPONENT-`), which are connected components of Heritage Places. For example, `COMPONENT-0000141`, `COMPONENT-0000143` and `COMPONENT-0000144` record respectively 30 Stables, 1 Courtyard and 28 Rooms for the caravanserail Maranjab (`EAMENA-164943`).
 
-relat-resource-ex1.png
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/relat-resource-ex1.png" width="450">
+</p>
+
+By default, in EAMENA, relationships between Heritage Places and Buil Component are of the type `PX_is_related_to`, unlike relationships between Heritage Places and Persons (`L33_has_maker`) or between Heritage Places and Grid Squares (`P89_falls_within`).  
+
+Functions [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources) allows to retrieve this data for a given Heritage Place
+
+```
+d <- hash::hash()
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'xxx',
+                               password = 'xxx',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+
+df <- list_related_resources(db.con = my_con,
+                             d = d,
+                             relationshiptype = "PX_is_related_to",
+                             id = "EAMENA-0164943",
+                             disconn = FALSE)
+df
+```
+
+Will give this `df` dataframe:
+
+|          hp.id|                              hp.uuid|             cc.id|                              cc.uuid|
+|---------------|-------------------------------------|------------------|-------------------------------------|
+| EAMENA-0164943| d4feb830-10c7-4d80-a19e-e608f424be4c| COMPONENT-0000141| 90400bb6-ff54-4afd-8183-65c67fa97448|
+| EAMENA-0164943| d4feb830-10c7-4d80-a19e-e608f424be4c| COMPONENT-0000143| 0dab164a-6d3a-443c-954a-50d93efbff35|
+| EAMENA-0164943| d4feb830-10c7-4d80-a19e-e608f424be4c| COMPONENT-0000144| 28af281c-e4b9-44ac-aa98-2608581b7540|
+
+Where `hp` is the Heritage place, and `cc` the connected component(s). The function [`select_related_resources()`](https://eamena-project.github.io/eamenaR/doc/select_related_resources) allows to retrieve the values of a given variable. For example, to retrieve the total number of Rooms, use the already calculated `df` (see [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources)) and modify the parameter `having`. By default the value will be read in the field `"Measurement Number"` (function parameter `measure`).
+
+```
+df.measures <- select_related_resources(db.con = my_con,
+                                        having = "Room",
+                                        df = df)
+```
+
+Will give this dataframe:
+
+|hp.id          |hp.uuid                              |cc.id             |cc.uuid                              |cc.type | cc.measure|
+|:--------------|:------------------------------------|:-----------------|:------------------------------------|:-------|----------:|
+|EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000144 |28af281c-e4b9-44ac-aa98-2608581b7540 |Room    |         28|
 
 ## Geoarchaeology
 

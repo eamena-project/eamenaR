@@ -45,9 +45,9 @@ list_related_resources <- function(db.con = NA,
   # get the UUID of the HP
   d.id <- hash::hash()
   d.id <- uuid_id(db.con = my_con,
-                        d = d.id,
-                        id = id,
-                        disconn = F)
+                  d = d.id,
+                  id = id,
+                  disconn = F)
   # concept.uuid <- eamenaR::ref_ids(in.value = concept.name,
   #                                  choice = "db.concept.uuid")
   # get the UUID of the connected components of a given HP
@@ -65,17 +65,17 @@ list_related_resources <- function(db.con = NA,
   nb.cc <- length(connected.components$resourceinstanceidfrom)
   if(verbose){
     print(paste0(d.id$id, " has ", nb.cc,
-                 " Connected Component(s)"))
+                 " Related Resource(s)"))
   }
   cc.ids <- c()
   for(cc in connected.components$resourceinstanceidfrom){
     # cc <- '90400bb6-ff54-4afd-8183-65c67fa97448'
     dcc.id <- hash::hash()
     dcc.id <- uuid_id(db.con = my_con,
-                            d = dcc.id,
-                            id = cc,
-                            rm = "cc",
-                            disconn = F)
+                      d = dcc.id,
+                      id = cc,
+                      rm = "cc",
+                      disconn = F)
     cc.ids <- c(cc.ids, dcc.id$id)
   }
   df <- data.frame(hp.id = rep(d.id$id, nb.cc),
@@ -84,3 +84,17 @@ list_related_resources <- function(db.con = NA,
                    cc.uuid = connected.components$resourceinstanceidfrom)
   return(df)
 }
+
+# d <- hash::hash()
+# my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+#                                user = 'postgres',
+#                                password = 'postgis',
+#                                dbname = 'eamena',
+#                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+#                                port = 5432)
+#
+# df <- list_related_resources(db.con = my_con,
+#                              d = d,
+#                              relationshiptype = 'L33_has_maker',
+#                              id = "EAMENA-0164943")
+# df
