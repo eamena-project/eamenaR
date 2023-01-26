@@ -42,7 +42,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       #try to do this
       {
         # paths[i, "from.id"] <- df[df$ea.ids == from[["EAMENA ID"]], "id"]
-        paths[i, "from.id"] <- df[df$ea.ids == from[[r.id]], "id"]
+        paths[i, "from.id"] <- df[df$ea.ids == from[[r.id]], "hp.id"]
       },
       #if an error occurs, tell me the error
       error = function(e) {
