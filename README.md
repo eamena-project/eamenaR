@@ -1,7 +1,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the [EAMENA database](https://database.eamena.org/en/).  
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8].  
   
 ```mermaid
 flowchart LR
@@ -13,12 +13,12 @@ flowchart LR
 ```
 
 The two main sources of data are: 
-* GeoJSON files exported by [EAMEANA searches](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/geojson#readme); 
-* data exported *via* a direct connection to the EAMENA PostgreSQL database (restricted access); 
+* GeoJSON files exported by [EAMENA searches](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/geojson#readme); 
+* data exported *via* a direct connection to the EAMENA PostgreSQL database (*restricted access*); 
 
 The two main types of output are:
 * static graphs and maps, for publication on paper;
-* interactive graphs and maps for publication on the web (with Plotly and Leaflet);
+* interactive graphs and maps for publication on the web (with Plotly[^6] and Leaflet[^7]);
 
 Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA.
 
@@ -953,3 +953,6 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 [^3]: Sometimes, a search in EAMENA returns different types of geometries. This is the case for the caravanserails where geometries can be both POINTs and POLYGONs.
 [^4]: EAMENA-0192281 ResourceID = `8db560d5-d17d-40ff-8046-0157b1b698ab` 
 [^5]: You can 'beautify' it using https://codebeautify.org/jsonviewer
+[^6]: Plotly: https://plotly.com
+[^7]: Leaflet: https://leafletjs.com/
+[^8]: Arches: https://www.archesproject.org/

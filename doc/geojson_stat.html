@@ -10,7 +10,7 @@
 
 <h3>Description</h3>
 
-<p>Basic descriptive statistics on a GeoJSON file
+<p>Basic descriptive statistics on a GeoJSON file. This function is used by 'geojson_format_path()'.
 </p>
 
 
@@ -21,7 +21,8 @@ geojson_stat(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = eamenaR::ref_ids("id"),
+  ids = eamenaR::ref_ids("hp.id"),
+  concept.name = "hp.id",
   stat = c("list_fields"),
   export.stat = FALSE,
   write.stat = FALSE,
@@ -43,7 +44,11 @@ geojson_stat(
 </td></tr>
 <tr valign="top"><td><code>ids</code></td>
 <td>
-<p>the IDs of the resources, by default the eamenaR correspondence of &quot;id&quot;, see 'ref_ids()' and</p>
+<p>the IDs of the resources, by default the eamenaR correspondence of &quot;id&quot;, see 'ref_ids()'.</p>
+</td></tr>
+<tr valign="top"><td><code>concept.name</code></td>
+<td>
+<p>the name of the field used to store the IDs. By default 'hp.id'.</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>

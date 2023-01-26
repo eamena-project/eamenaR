@@ -8,7 +8,8 @@ geojson_stat(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = eamenaR::ref_ids("id"),
+  ids = eamenaR::ref_ids("hp.id"),
+  concept.name = "hp.id",
   stat = c("list_fields"),
   export.stat = FALSE,
   write.stat = FALSE,
@@ -20,7 +21,9 @@ geojson_stat(
 
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'}
 
-\item{ids}{the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()` and}
+\item{ids}{the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()`.}
+
+\item{concept.name}{the name of the field used to store the IDs. By default `hp.id`.}
 
 \item{stat}{the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.}
 
@@ -34,7 +37,7 @@ geojson_stat(
 Show or export basic statistics on the GeoJSON file
 }
 \description{
-Basic descriptive statistics on a GeoJSON file
+Basic descriptive statistics on a GeoJSON file. This function is used by `geojson_format_path()`.
 }
 \examples{
 

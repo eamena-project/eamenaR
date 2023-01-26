@@ -22,7 +22,7 @@ list_child_concepts(
 
 \item{concept.name}{a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.}
 
-\item{disconn}{if TRUE (by defalut), will disconnect from the DB.}
+\item{disconn}{if TRUE (by default), will disconnect from the DB.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }

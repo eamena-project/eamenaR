@@ -22,6 +22,9 @@
 #' library(dplyr)
 #'
 #' # plot a general map of heritage places
+#' geojson_map_path(map.name = "caravanserail_paths", export.plot = F)
+#'
+#' # plot and export
 #' geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 #'
 #' # create an interactive map of each route
@@ -74,11 +77,29 @@ geojson_map_path <- function(map.name = "map_path",
                              verbose = TRUE){
   r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
-  paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
+  paths <- eamenaR::geojson_format_path(geojson.path,
+                                        csv.path,
+                                        verbose = verbose)
+  nb.all.path <- nrow(paths)
+  # remove where NA
+  paths <- paths[!is.na(paths$path.wkt), ]
+  nb.clear.path <- nrow(paths)
+  if(verbose){
+    print(paste0(" there are ", nb.all.path - nb.clear.path,
+                 " missing matches between HP and paths (",
+                 nb.all.path - nb.clear.path, " will be missing)"))
+  }
   paths.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
   sf::st_crs(paths.geom.sf) <- 4326
   hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
   sf::st_crs(hp.geom.sf) <- 4326
+  # route colors
+  routes.ids <- unique(paths.geom.sf$route)
+  routes.colors <- RColorBrewer::brewer.pal(length(routes.ids), "Set1")
+  df.colors <- data.frame(route = routes.ids,
+                          color = routes.colors
+  )
+  paths.geom.sf <- merge(paths.geom.sf, df.colors, by = "route")
   if("profile" %in% export.type & interactive == FALSE){
     if(verbose){print(" - creates a static 'profile' of the paths")}
     # TO COMPLETE ...
@@ -140,10 +161,11 @@ geojson_map_path <- function(map.name = "map_path",
     hp.geojson.point <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POINT", ]
     hp.geojson.line <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "LINESTRING", ]
     hp.geojson.polygon <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POLYGON", ]
-
+    xxxv <- setNames(routes.colors, routes.ids)
     mapOut <- ggmap::ggmap(stamenbck) +
       ggplot2::geom_sf(data = paths.geom.sf,
-                       ggplot2::aes(colour = route),
+                       # ggplot2::aes(colour = color),
+                       ggplot2::aes(colour = factor(route)),
                        inherit.aes = FALSE) +
       ggplot2::geom_sf(data = hp.geojson.point,
                        colour = "black",
@@ -183,7 +205,11 @@ geojson_map_path <- function(map.name = "map_path",
       ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
                                                         hjust = 0.5),
                      plot.subtitle = ggplot2::element_text(size = 12,
-                                                           hjust = 0.5))
+                                                           hjust = 0.5)) +
+      ggplot2::labs(color = 'routes') +
+      # ggplot2::scale_discrete_manual(values = setNames(routes.colors, routes.ids)) +
+      ggplot2::scale_colour_manual(values = routes.colors)
+    # ggplot2::scale_fill_discrete(labels = routes.ids)
     if (export.plot) {
       if(verbose){print(paste0("    - export 'map'"))}
       dir.create(dirOut, showWarnings = FALSE)
@@ -194,7 +220,8 @@ geojson_map_path <- function(map.name = "map_path",
                       width = fig.width)
       if(verbose){print(paste0("    - the routes' map '", gout,"' is exported into: '", dirOut,"'"))}
     } else {
-      mapOut
+      if(verbose){print(paste0("    - the routes' map '", map.name,"' is plotted"))}
+      plot(mapOut)
     }
   }
   if("profile" %in% export.type){

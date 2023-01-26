@@ -2,11 +2,12 @@
 #'
 #' @name geojson_stat
 #'
-#' @description Basic descriptive statistics on a GeoJSON file
+#' @description Basic descriptive statistics on a GeoJSON file. This function is used by `geojson_format_path()`.
 #'
 #' @param stat.name the name of the output file. By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()` and
+#' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()`.
+#' @param concept.name the name of the field used to store the IDs. By default `hp.id`.
 #' @param stat the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.
 #' @param export.stat if TRUE return the stats to be stored in a new variable
 #' @param write.stat if TRUE, export the stats in a new file, if FALSE will only display it
@@ -26,6 +27,7 @@ geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
                          ids = eamenaR::ref_ids("hp.id"),
+                         concept.name = "hp.id",
                          stat = c("list_fields"),
                          export.stat = FALSE,
                          write.stat = FALSE,
@@ -52,6 +54,8 @@ geojson_stat <- function(stat.name = "stat",
   if("list_ids" %in% stat){
     df <- data.frame(id = row.names(ea.geojson),
                      ea.ids = ea.geojson[[ids]])
+    # rename column
+    colnames(df)[2] = concept.name
     if (write.stat) {
       dir.create(dirOut, showWarnings = FALSE)
       tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
@@ -64,7 +68,7 @@ geojson_stat <- function(stat.name = "stat",
       return(df)
     }
     if (!export.stat & !write.stat){
-      cat(paste0(df$id,": ",df$ea.ids), sep =", ")
+      cat(paste0(df$id, ": ", df[ , concept.name]), sep =", ")
     }
   }
 }

@@ -53,6 +53,9 @@ Create a distribution map and an elevation profile of heritage places linked tog
 library(dplyr)
 
 # plot a general map of heritage places
+geojson_map_path(map.name = "caravanserail_paths", export.plot = F)
+
+# plot and export
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 
 # create an interactive map of each route

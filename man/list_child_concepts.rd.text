@@ -34,7 +34,7 @@ Subcultural periods.
   `d`              a hash() object (a Python-like dictionary).
   `field`          the field name that will be created in the \'d\' hash() object.
   `concept.name`   a concept label name (either \'r.concept.name\' or \'db.concept.name\'). This \'concept.name\' value coming from the \'ids.csv\' file (see \'ref_ids()\'). By default, NA.
-  `disconn`        if TRUE (by defalut), will disconnect from the DB.
+  `disconn`        if TRUE (by default), will disconnect from the DB.
   `verbose`        if TRUE (by default), print messages.
   ---------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

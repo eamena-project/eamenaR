@@ -9,6 +9,7 @@ geojson_format_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  concept.name = "hp.id",
   verbose = TRUE
 )
 }
