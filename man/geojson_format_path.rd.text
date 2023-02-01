@@ -28,6 +28,7 @@ with network analysis.
         "/extdata/caravanserail.geojson"),
       csv.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail_paths.csv"),
+      by.category = "route",
       concept.name = "hp.id",
       verbose = TRUE
     )
@@ -37,6 +38,7 @@ with network analysis.
   ---------------- -----------------------------------------------------------------------------------------------------------------------
   `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
   `csv.path`       the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
+  `by.category`    the name of the category. By default \"route\" for caravanserais.
   `verbose`        if TRUE (by default), print messages.
   ---------------- -----------------------------------------------------------------------------------------------------------------------
 

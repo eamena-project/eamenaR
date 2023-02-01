@@ -76,7 +76,7 @@ geojson_boxplot_path <- function(plot.name = "box_path",
                    strip.text = ggplot2::element_text(size = 8),
                    strip.background = ggplot2::element_rect(colour = "black", size = 0.2)) +
     ggplot2::ylab("distance (m)") +
-    ggplot2::ggtitle("Distribution of distances between two caravanserails by routes")
+    ggplot2::ggtitle("Distribution of distances between two caravanserails by.category")
   if(!is.na(by)){
     # print(colnames(paths))
     if(verbose){print(paste0("the boxplots will be filtered on the column: '", by,"'"))}
@@ -100,7 +100,7 @@ geojson_boxplot_path <- function(plot.name = "box_path",
     # ggplot2::theme(panel.spacing = unit(2, "mm")) +
     # ggplot2::theme(strip.text = ggplot2::element_text(size = 8),
     #                strip.background = ggplot2::element_rect(colour = "black", size = 0.2)) +
-    # ggtitle("Distribution of distances between two caravanserails by routes")
+    # ggtitle("Distribution of distances between two caravanserails by.category")
   if (export.plot) {
     dir.create(dirOut, showWarnings = FALSE)
     gout <- paste0(dirOut, plot.name, ".png")

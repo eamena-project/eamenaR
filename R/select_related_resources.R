@@ -52,13 +52,13 @@ select_related_resources <- function(db.con = NA,
                                      measure = "Measurement Number",
                                      disconn = TRUE,
                                      verbose = TRUE){
-  # id = "EAMENA-0164943" ; db.con = my_con ; having = c("Stable") ; relationshiptype = 'PX_is_related_to'
+  # id = "EAMENA-0164943" ; db.con = my_con ; having = "Stable" ; relationshiptype = 'PX_is_related_to'
   # df = df[1, "hp.id"]
   # get the UUID of the having values
   hp <- df[1, "hp.id"]
   vals.uuid <- c()
   for(val in having){
-    val.uuid <- ref_ids(in.value = val,
+    val.uuid <- ref_ids(concept.name = val,
                         choice = "db.concept.uuid")
     vals.uuid <- c(vals.uuid, val.uuid)
   }
@@ -74,6 +74,7 @@ select_related_resources <- function(db.con = NA,
   # get the values of these components
   for(cc in uuid.cc){
     # cc <- "90400bb6-ff54-4afd-8183-65c67fa97448"
+    # cc <- "34cfe992-c2c0-11ea-9026-02e7594ce0a0"
     # looping through having uuid (ex: 'Stable' = "17fe354b-7df5-4f21-b21f-182612e73c8d")
     for (hav in length(having.df[["uuid"]])){
       # hav <- 1
@@ -95,8 +96,8 @@ select_related_resources <- function(db.con = NA,
     )
   }
 
-  measure.uuid <- ref_ids(in.value = measure,
-                                     choice = "db.concept.uuid")
+  measure.uuid <- ref_ids(concept.name = measure,
+                          choice = "db.concept.uuid")
   # get the number of having
   cc.havings <- data.frame(hp.id = character(),
                            hp.uuid = character(),

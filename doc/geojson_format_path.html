@@ -22,6 +22,7 @@ geojson_format_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  by.category = "route",
   concept.name = "hp.id",
   verbose = TRUE
 )
@@ -38,6 +39,10 @@ geojson_format_path(
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
 <p>the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.</p>
+</td></tr>
+<tr valign="top"><td><code>by.category</code></td>
+<td>
+<p>the name of the category. By default &quot;route&quot; for caravanserais.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>

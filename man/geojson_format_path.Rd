@@ -9,6 +9,7 @@ geojson_format_path(
     "/extdata/caravanserail.geojson"),
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
+  by.category = "route",
   concept.name = "hp.id",
   verbose = TRUE
 )
@@ -17,6 +18,8 @@ geojson_format_path(
 \item{geojson.path}{the path of the GeoJSON file. By default 'caravanserail.geojson'.}
 
 \item{csv.path}{the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.}
+
+\item{by.category}{the name of the category. By default "route" for caravanserais.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }

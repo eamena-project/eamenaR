@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Basic statistics on a GeoJSON file</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Basic statistics on a GeoJSON file like lists or charts</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for geojson_stat"><tr><td>geojson_stat</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Basic statistics on a GeoJSON file</h2>
+<h2>Basic statistics on a GeoJSON file like lists or charts</h2>
 
 <h3>Description</h3>
 
@@ -24,9 +24,15 @@ geojson_stat(
   ids = eamenaR::ref_ids("hp.id"),
   concept.name = "hp.id",
   stat = c("list_fields"),
+  chart.type = c("pie"),
+  field.names = NA,
+  fig.width = 6,
+  fig.height = 6,
+  fig.dev = "png",
   export.stat = FALSE,
   write.stat = FALSE,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  verbose = TRUE
 )
 </pre>
 
@@ -52,7 +58,23 @@ geojson_stat(
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>
-<p>the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: &quot;list_ids&quot; list EAMENA IDs ; etc.</p>
+<p>the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: &quot;list_ids&quot; list EAMENA IDs ; &quot;stat&quot; to diplay charts like pie chart or histograms, etc.</p>
+</td></tr>
+<tr valign="top"><td><code>chart.type</code></td>
+<td>
+<p>either &quot;pie&quot; for pie chart, or &quot;hist&quot; for histogram. Only useful if the option 'stat' is set to 'stats' ('stat = &quot;stats&quot;').</p>
+</td></tr>
+<tr valign="top"><td><code>field.names</code></td>
+<td>
+<p>the field name on which the statistic will be performed. Only useful if the option 'stat' is set to 'stats' ('stat = &quot;stats&quot;').</p>
+</td></tr>
+<tr valign="top"><td><code>fig.width, fig.height</code></td>
+<td>
+<p>size of the output chart.</p>
+</td></tr>
+<tr valign="top"><td><code>fig.dev</code></td>
+<td>
+<p>the format of the image: &quot;png&quot; (by default), &quot;jpg&quot;, &quot;svg&quot;, etc.</p>
 </td></tr>
 <tr valign="top"><td><code>export.stat</code></td>
 <td>
@@ -65,6 +87,10 @@ geojson_stat(
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
 <p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages.</p>
 </td></tr>
 </table>
 
@@ -83,6 +109,28 @@ geojson_stat(stat.name = "geojson_fields", export.stat = T)
 
 # list HP names
 geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
+
+# Pie chart on 'Overall Condition Assessment"
+geojson_stat(stat.name = "overall_cond",
+             stat = "stats",
+             field.names = c("Overall Condition State Type"),
+             write.stat = T)
+
+# Do the same, but export in SVG
+geojson_stat(stat.name = "overall_cond",
+             stat = "stats",
+             field.names = c("Overall Condition State Type"),
+             fig.dev = "svg",
+             write.stat = T)
+
+# Histogram on 'Disturbance Cause Type'
+geojson_stat(stat.name = "distrub",
+            stat = "stats",
+            chart.type = "hist",
+            field.names = c("Disturbance Cause Type"),
+            fig.width = 10,
+            fig.height = 9,
+            write.stat = T)
 
 </pre>
 

@@ -6,6 +6,7 @@
 #'
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.
+#' @param by.category the name of the category. By default "route" for caravanserais.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A dataframe with the appropriate columns: "from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route"
@@ -17,6 +18,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
                                                       "/extdata/caravanserail.geojson"),
                                 csv.path = paste0(system.file(package = "eamenaR"),
                                                   "/extdata/caravanserail_paths.csv"),
+                                by.category = "route",
                                 concept.name = "hp.id",
                                 verbose = TRUE){
   r.id <- eamenaR::ref_ids(concept.name)
@@ -99,6 +101,8 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       paths[i, "path.wkt"] <- sf::st_as_text(sf::st_cast(sf::st_union(from$geometry, to$geometry), "LINESTRING"))
     }
   }
-  paths <- paths[ , c("from.id", "from", "to.id", "to", "from.geom", "to.geom", "path.wkt", "dist.m", "route")]
+  paths <- paths[ , c("from.id", "from", "to.id", "to",
+                      "from.geom", "to.geom", "path.wkt", "dist.m",
+                      by.category)]
   return(paths)
 }

@@ -27,7 +27,7 @@ geojson_map(
   symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
   stamen.zoom = NA,
   fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
-    "Administrative Division ", "Country Type "),
+    "Administrative Division ", "Country Type ", "Overall Condition State Type"),
   leaflet.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -79,6 +79,10 @@ geojson_map(
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
 <p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>fig.width, fig.height</code></td>
+<td>
+<p>size of the output map.</p>
 </td></tr>
 </table>
 

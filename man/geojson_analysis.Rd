@@ -8,7 +8,7 @@ geojson_analysis(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = "EAMENA.ID",
+  ids = ref_ids("hp.id"),
   export.stat = F,
   write.stat = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/")
@@ -25,7 +25,7 @@ geojson_analysis(
 
 \item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it.}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.}
 
 \item{stat}{the statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/geojson_stat.R
 \name{geojson_stat}
 \alias{geojson_stat}
-\title{Basic statistics on a GeoJSON file}
+\title{Basic statistics on a GeoJSON file like lists or charts}
 \usage{
 geojson_stat(
   stat.name = "stat",
@@ -11,9 +11,15 @@ geojson_stat(
   ids = eamenaR::ref_ids("hp.id"),
   concept.name = "hp.id",
   stat = c("list_fields"),
+  chart.type = c("pie"),
+  field.names = NA,
+  fig.width = 6,
+  fig.height = 6,
+  fig.dev = "png",
   export.stat = FALSE,
   write.stat = FALSE,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/")
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  verbose = TRUE
 )
 }
 \arguments{
@@ -25,13 +31,23 @@ geojson_stat(
 
 \item{concept.name}{the name of the field used to store the IDs. By default `hp.id`.}
 
-\item{stat}{the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; etc.}
+\item{stat}{the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; "stat" to diplay charts like pie chart or histograms, etc.}
+
+\item{chart.type}{either "pie" for pie chart, or "hist" for histogram. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).}
+
+\item{field.names}{the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).}
+
+\item{fig.width, fig.height}{size of the output chart.}
+
+\item{fig.dev}{the format of the image: "png" (by default), "jpg", "svg", etc.}
 
 \item{export.stat}{if TRUE return the stats to be stored in a new variable}
 
 \item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.}
+
+\item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
 Show or export basic statistics on the GeoJSON file
@@ -45,5 +61,27 @@ geojson_stat(stat.name = "geojson_fields", export.stat = T)
 
 # list HP names
 geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
+
+# Pie chart on 'Overall Condition Assessment"
+geojson_stat(stat.name = "overall_cond",
+             stat = "stats",
+             field.names = c("Overall Condition State Type"),
+             write.stat = T)
+
+# Do the same, but export in SVG
+geojson_stat(stat.name = "overall_cond",
+             stat = "stats",
+             field.names = c("Overall Condition State Type"),
+             fig.dev = "svg",
+             write.stat = T)
+
+# Histogram on 'Disturbance Cause Type'
+geojson_stat(stat.name = "distrub",
+            stat = "stats",
+            chart.type = "hist",
+            field.names = c("Disturbance Cause Type"),
+            fig.width = 10,
+            fig.height = 9,
+            write.stat = T)
 
 }

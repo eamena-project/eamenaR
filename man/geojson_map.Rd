@@ -14,7 +14,7 @@ geojson_map(
   symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
   stamen.zoom = NA,
   fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
-    "Administrative Division ", "Country Type "),
+    "Administrative Division ", "Country Type ", "Overall Condition State Type"),
   leaflet.plot = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -42,6 +42,8 @@ geojson_map(
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
+
+\item{fig.width, fig.height}{size of the output map.}
 }
 \value{
 A map interactive (leaflet) or not

@@ -11,7 +11,8 @@ geojson_map_path(
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
   export.type = c("map"),
-  routes = NA,
+  by.category = "route",
+  selected.category = NA,
   interactive = FALSE,
   stamen.zoom = NA,
   export.plot = F,
@@ -30,7 +31,9 @@ geojson_map_path(
 
 \item{export.type}{the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.}
 
-\item{routes}{limit the study to some routes. By default NA, no limitation.}
+\item{by.category}{the name of the category column. By default "route" for caravanserais.}
+
+\item{selected.category}{limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.}
 
 \item{interactive}{if TRUE will plot a VisNetwork. By default FALSE.}
 
@@ -61,13 +64,13 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 # create an interactive map of each route
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                 routes = c(0, 1, 2, 3, 4),
+                 selected.category = c(0, 1, 2, 3, 4),
                  interactive = T)
 
 # create an interactive map of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                 routes = c(0, 1, 2, 3, 4),
+                 selected.category = c(0, 1, 2, 3, 4),
                  interactive = T,
                  export.plot = T,
                  dirOut = "C:/Rprojects/eamenaR/results/")
@@ -77,13 +80,13 @@ df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravansera
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                 routes = c(0, 1, 2, 3, 4),
+                 selected.category = c(0, 1, 2, 3, 4),
                  export.type = "profile")
 
 # create the profile of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                 routes = c(0, 1, 2, 3, 4),
+                 selected.category = c(0, 1, 2, 3, 4),
                  export.type = "profile",
                  export.plot = T,
                  fig.height = 11,

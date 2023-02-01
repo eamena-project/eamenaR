@@ -21,7 +21,7 @@ geojson_analysis(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  ids = "EAMENA.ID",
+  ids = ref_ids("hp.id"),
   export.stat = F,
   write.stat = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/")
@@ -54,7 +54,7 @@ geojson_analysis(
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE</p>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>

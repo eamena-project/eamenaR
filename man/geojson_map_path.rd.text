@@ -24,7 +24,8 @@ linked together by paths, for example for caravanserails.
       csv.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail_paths.csv"),
       export.type = c("map"),
-      routes = NA,
+      by.category = "route",
+      selected.category = NA,
       interactive = FALSE,
       stamen.zoom = NA,
       export.plot = F,
@@ -36,18 +37,19 @@ linked together by paths, for example for caravanserails.
 
 ### Arguments
 
-  ---------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
-  `map.name`       the name of the output map and the name of the saved file (if export.plot is TRUE). By default \"map_path\".
-  `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
-  `csv.path`       the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
-  `export.type`    the type of output: a map (\'map\') or a profile (\'profile\'). For this latter the Z should be calculated with the \'geojson_addZ()\' function.
-  `routes`         limit the study to some routes. By default NA, no limitation.
-  `interactive`    if TRUE will plot a VisNetwork. By default FALSE.
-  `stamen.zoom`    the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
-  `export.plot`    if TRUE, export the plot, if FALSE will only display it.
-  `dirOut`         the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
-  `verbose`        if TRUE (by default), print messages.
-  ---------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+  --------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `map.name`            the name of the output map and the name of the saved file (if export.plot is TRUE). By default \"map_path\".
+  `geojson.path`        the path of the GeoJSON file. By default \'caravanserail.geojson\'.
+  `csv.path`            the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
+  `export.type`         the type of output: a map (\'map\') or a profile (\'profile\'). For this latter the Z should be calculated with the \'geojson_addZ()\' function.
+  `by.category`         the name of the category column. By default \"route\" for caravanserais.
+  `selected.category`   limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.
+  `interactive`         if TRUE will plot a VisNetwork. By default FALSE.
+  `stamen.zoom`         the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
+  `export.plot`         if TRUE, export the plot, if FALSE will only display it.
+  `dirOut`              the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
+  `verbose`             if TRUE (by default), print messages.
+  --------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Value
 
@@ -67,13 +69,13 @@ A PNG map and an HMTL map of heritage places linked together by paths
     # create an interactive map of each route
     geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                      csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                     routes = c(0, 1, 2, 3, 4),
+                     selected.category = c(0, 1, 2, 3, 4),
                      interactive = T)
 
     # create an interactive map of each route and export
     geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                      csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                     routes = c(0, 1, 2, 3, 4),
+                     selected.category = c(0, 1, 2, 3, 4),
                      interactive = T,
                      export.plot = T,
                      dirOut = "C:/Rprojects/eamenaR/results/")
@@ -83,13 +85,13 @@ A PNG map and an HMTL map of heritage places linked together by paths
                        dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
     geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                      csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                     routes = c(0, 1, 2, 3, 4),
+                     selected.category = c(0, 1, 2, 3, 4),
                      export.type = "profile")
 
     # create the profile of each route and export
     geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                      csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
-                     routes = c(0, 1, 2, 3, 4),
+                     selected.category = c(0, 1, 2, 3, 4),
                      export.type = "profile",
                      export.plot = T,
                      fig.height = 11,

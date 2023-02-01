@@ -14,6 +14,7 @@
 #' @param leaflet.plot if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
+#' @param fig.width,fig.height size of the output map.
 #'
 #' @return A map interactive (leaflet) or not
 #'
@@ -52,14 +53,15 @@ geojson_map <- function(map.name = "map",
                         fields.for.labels = c("Site Feature Interpretation Type",
                                               "Cultural Period Type",
                                               "Administrative Division ",
-                                              "Country Type "),
+                                              "Country Type ",
+                                              "Overall Condition State Type"),
                         leaflet.plot = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/results/"),
                         fig.width = 8,
                         fig.height = 8){
-
+  # field.names <- "Overall Condition State Type"
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   symbology <- openxlsx::read.xlsx(symbology)
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
@@ -109,6 +111,7 @@ geojson_map <- function(map.name = "map",
       for(field.name in field.names){
         # field.name <- "Damage Extent Type"
         # field.name <- "Disturbance Cause Type "
+        # field.name <- "Overall Condition State Type"
         # cpt.field.value <- 0
         # cpt.field.name <- cpt.field.name + 1
         # print(paste0(" ", cpt.field.name, "/",length(field.names),")    read '", field.name,"' field name"))
