@@ -87,7 +87,7 @@ geojson_stat(stat.name = "overall_cond",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/overall_cond_pie.png" width="700">
+  <img alt="img-name" src="./results/overall_cond_pie.png" width="400">
 </p>
 
 or an histogram on on 'Disturbance Cause Type'
@@ -103,7 +103,7 @@ geojson_stat(stat.name = "distrub",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/distrub_hist.png" width="700">
+  <img alt="img-name" src="./results/distrub_hist.png" width="600">
 </p>
 
 # Spatial
