@@ -194,12 +194,3 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
 }
-
-geojson_stat(stat.name = "distrub",
-            stat = "stats",
-            chart.type = "hist",
-            field.names = c("Disturbance Cause Type"),
-            fig.width = 10,
-            fig.height = 9,
-            write.stat = T)
-

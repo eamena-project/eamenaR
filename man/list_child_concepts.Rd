@@ -30,7 +30,7 @@ list_child_concepts(
 A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
 }
 \description{
-With a given concept UUID (v. Reference Data Manager), find all the child nodes. This function has been tested only for Cultural and Subcultural periods.
+With a given concept UUID (v. Reference Data Manager), find all the child nodes.
 }
 \examples{
 .
@@ -38,8 +38,8 @@ With a given concept UUID (v. Reference Data Manager), find all the child nodes.
 # create a Postgres connection (replace 'xxx' by the password)
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
-                               password = 'postgis',
+                               user = 'xxx',
+                               password = 'xxx',
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)

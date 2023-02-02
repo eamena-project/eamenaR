@@ -2,7 +2,7 @@
 #'
 #' @name list_child_concepts
 #'
-#' @description With a given concept UUID (v. Reference Data Manager), find all the child nodes. This function has been tested only for Cultural and Subcultural periods.
+#' @description With a given concept UUID (v. Reference Data Manager), find all the child nodes.
 #'
 #' @param db.con a `dbConnect` connection to the database.
 #' @param d a hash() object (a Python-like dictionary).
@@ -18,8 +18,8 @@
 #' # create a Postgres connection (replace 'xxx' by the password)
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-#'                                user = 'postgres',
-#'                                password = 'postgis',
+#'                                user = 'xxx',
+#'                                password = 'xxx',
 #'                                dbname = 'eamena',
 #'                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
 #'                                port = 5432)
