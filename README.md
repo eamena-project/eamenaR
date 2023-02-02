@@ -20,7 +20,19 @@ The two main types of output are:
 * static graphs and maps, for publication on paper;
 * interactive graphs and maps for publication on the web (with Plotly[^6] and Leaflet[^7]);
 
-Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA.
+Together with analysis functions, the package offers different methods to manage inputs and outputs from/to EAMENA. The ***eamenaR*** package makes the EAMENA DB data FAIR (*Findable, Accessible, Interoperable, Reusable*)
+
+```mermaid
+flowchart LR
+    subgraph ide1 [<b>F</b>indable, <b>A</b>ccessible]
+    A[(EAMENA<br>DB)];
+    end
+    A[(EAMENA<br>DB)] <---> B{{"eamenaR"}}:::eamenaRpkg;
+    subgraph ide2 [<b>I</b>nteroperable, <b>R</b>eusable]
+    B;
+    end
+    classDef eamenaRpkg fill:#e3c071;
+```
 
 ## Families of functions
 
