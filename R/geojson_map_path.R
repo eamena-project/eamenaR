@@ -205,6 +205,7 @@ geojson_map_path <- function(map.name = "map_path",
                                max.time = 1.5,
                                max.overlaps = Inf,
                                inherit.aes = FALSE) +
+      ggplot2::labs(title = map.name) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
                                                         hjust = 0.5),
                      plot.subtitle = ggplot2::element_text(size = 12,
