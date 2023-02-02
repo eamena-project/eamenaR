@@ -79,7 +79,7 @@ geojson_map_path <- function(map.name = "map_path",
                              verbose = TRUE){
   r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
-  paths <- eamenaR::geojson_format_path(geojson.path,
+  paths <- geojson_format_path(geojson.path,
                                         csv.path,
                                         by.category = by.category,
                                         verbose = verbose)
@@ -217,7 +217,7 @@ geojson_map_path <- function(map.name = "map_path",
     if (export.plot) {
       if(verbose){print(paste0("    - export 'map'"))}
       dir.create(dirOut, showWarnings = FALSE)
-      gout <- paste0(map.name, "_map", ".png")
+      gout <- paste0(map.name, ".png")
       ggplot2::ggsave(filename = paste0(dirOut, gout),
                       plot = mapOut,
                       height = fig.height,

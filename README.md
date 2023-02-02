@@ -200,7 +200,7 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserail_paths_map.png" width="700">
+  <img alt="img-name" src="./results/caravanserail_paths.png" width="700">
 </p>
 
 #### Interactive
