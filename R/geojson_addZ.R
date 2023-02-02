@@ -2,10 +2,12 @@
 #'
 #' @name geojson_addZ
 #'
-#' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
+#' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file. The geoserver API can lead to a Timeout.
 #'
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param geojson.out the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
+#' @param elevation.api the geoserver API that will be used to collect the elevation, by default 'open-elevation' (https://api.open-elevation.com/). Another option is 'gmrt' (https://www.gmrt.org).
+#' @param timeout the threshold below which the expectation of a response is accepted, in seconds. By default, 30.
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #' @param verbose if TRUE (by default): verbose.
@@ -23,6 +25,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
                          geojson.out = NA,
                          elevation.api = "open-elevation",
+                         timeout = 30,
                          sleep = .3,
                          dirOut = paste0(system.file(package = "eamenaR"),
                                          "/results/"),
@@ -32,10 +35,10 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   # ea.geojson <- sf::st_read(geojson.path)
   # ea.geojson.src <- jsonlite::fromJSON(geojson.path)
   # ea.geojson.src[[1]][2]$properties$Z <- NA
+  my.geom <- ea.geojson
   my.geom$Z <- NA
   n.row <- nrow(my.geom)
   if(verbose){print(paste0("    read ", n.row, " geometries"))}
-  my.geom <- ea.geojson
   df.profile <- data.frame(x = double(),
                            y = double(),
                            z = double())
@@ -72,7 +75,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
       http.req <- paste0(#"https://api.open-elevation.com/api/v1/lookup?locations=41.161758,-8.583933",
         "https://api.open-elevation.com/api/v1/lookup?locations=", X, ",", Y)
     }
-    r <- httr::GET(http.req)
+    r <- httr::GET(http.req, httr::timeout(timeout))
     rr <- httr::content(r)
     if (elevation.api == 'gmrt'){
       rrr <- xml2::as_list(rr)
@@ -98,7 +101,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   if(verbose){
     print(paste0("  A total of '", length(Zs), "' Z have been calculated:"))
     print(head(Zs))
-    }
+  }
   # print(Zs)
   my.geom$Z <- Zs
   if(is.na(geojson.out)){
@@ -113,4 +116,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   return(df.profile)
 }
 
+geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+             elevation.api = "gmrt",
+             dirOut = "C:/Rprojects/")
 

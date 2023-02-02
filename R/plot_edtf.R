@@ -2,7 +2,7 @@
 #'
 #' @name plot_edtf
 #'
-#' @description Use an XLSX file where cultural threats are listed and dated with EDTF. R doesn't accept spaces in headers, so the spaces are replaced by dots.
+#' @description Use an XLSX file where cultural threats are listed and dated with EDTF. Create a flat chart or a Plotly one.
 #'
 #' @param data_file the path to the dataset. By default an XLSX file: "disturbances_edtf.xlsx".
 #' @param date_column the column of the EDTF data.
