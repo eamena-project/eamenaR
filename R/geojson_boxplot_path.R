@@ -7,7 +7,7 @@
 #' @param plot.name the name of the output boxplot and the name of the saved file (if export.plot is TRUE). By default "box_path".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
-#' @param by the name of the field on which the paths will be grouped. Will create as many boxplots as there is different categories. By default NA (no categories).
+#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many boxplots as there is different categories. By default NA (no categories).
 #' @param plotly.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param export.plot if TRUE, show the plot in Plotly window.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.

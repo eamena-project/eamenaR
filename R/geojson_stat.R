@@ -8,9 +8,9 @@
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
 #' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()`.
 #' @param concept.name the name of the field used to store the IDs. By default `hp.id`.
-#' @param stat the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; "stat" to diplay charts like pie chart or histograms, etc.
+#' @param stat the type of statistic that will be computed. By default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see the option `chart.type`
 #' @param field.names the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
-#' @param chart.type either "pie" for pie chart, or "hist" for histogram. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
+#' @param chart.type either "`pie`" for pie chart, or "`hist`" for histogram, "`radar`" for radar diagrams. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
 #' @param fig.width,fig.height size of the output chart.
 #' @param fig.dev the format of the image: "png" (by default), "jpg", "svg", etc.
 #' @param export.stat if TRUE return the stats to be stored in a new variable
@@ -48,7 +48,6 @@
 #'             fig.width = 10,
 #'             fig.height = 9,
 #'             write.stat = T)
-#'
 #' @export
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
@@ -72,7 +71,7 @@ geojson_stat <- function(stat.name = "stat",
   # chart.type <- c("pie")
   # field.names <- c("Overall Condition State Type")
 
-# Histogram
+  # Histogram
 
 
 
@@ -131,10 +130,72 @@ geojson_stat <- function(stat.name = "stat",
         axis.ticks = ggplot2::element_blank(),
         plot.title = ggplot2::element_text(size=14, face="bold")
       )
-
+    # loop over the values
     for(chart in chart.type){
-      # chart <- "pie"
       if(verbose){print(paste0("Chart '", chart,"'"))}
+      if(chart == "radar"){
+        # chart <- "radar"
+        orientations <- c("North", "Northeast", "East",
+                          "Southeast", "South",
+                          "Southwest", "West",
+                          "Northwest"
+        )
+        hp.orient <- ea.geojson[ , c(ids, field.names)]
+        hp.orient[["Direction"]] <- NA
+        for(i in seq(1, nrow(hp.orient))){
+          hp.orient[i, "Direction"] <- unlist(stringr::str_split(hp.orient[i, "Resource Orientation"], "-"))[1]
+        }
+        directions <- hp.orient$Direction
+        directions.t <- as.data.frame(table(hp.orient$Direction))
+        names(directions.t) <- c("direction", "n")
+        df <- data.frame(direction = orientations)
+        # join on direction
+        df <- plyr::join(df, directions.t)
+        df[is.na(df)] <- 0
+        max.sum <- max(df$n)
+        df$direction <- factor(df$direction, levels = df$direction, ordered = T)
+        # reorder on levels
+        vvv <- reorder(stringr::str_wrap(df$direction, 5), df$n)
+        levels(vvv) <- df$direction
+        gg <- ggplot2::ggplot(df) +
+          ggplot2::geom_hline(
+            ggplot2::aes(yintercept = y),
+            data.frame(y = seq(0, max.sum, by = 10)),
+            color = "lightgrey"
+          ) +
+          ggplot2::geom_col(
+            ggplot2::aes(
+              x = vvv,
+              # x = reorder(str_wrap(direction, 5), n),
+              y = n,
+              fill = n
+            ),
+            position = "dodge2",
+            show.legend = TRUE,
+            alpha = .9
+          ) +
+          # Lollipop shaft for mean gain per region
+          ggplot2::geom_segment(
+            ggplot2::aes(
+              x = vvv,
+              # x = reorder(str_wrap(direction, 5), n),
+              y = 0,
+              xend = vvv,
+              # xend = reorder(str_wrap(direction, 5), n),
+              yend = max.sum
+            ),
+            linetype = "dashed",
+            color = "gray12"
+          ) +
+          # to align North up
+          ggplot2::coord_polar(start = -.4) +
+          ggplot2::theme_bw() +
+          ggplot2::xlab(stat.name)
+        if(verbose){print(paste("radar", "created"))}
+      }
+
+
+      # chart <- "pie"
       if(chart == "pie"){
         for(field.name in field.names){
           df <- as.data.frame(table(ea.geojson[[field.name]]))
@@ -194,3 +255,15 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
 }
+
+geojson_stat(stat.name = "orientations",
+             geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+             ids = ref_ids("hp.id", ids.path = "C:/Rprojects/eamenaR/inst/extdata/ids.csv"),
+             dirOut = "C:/Rprojects/eamenaR/results/",
+             stat = "stats",
+             chart.type = "radar",
+             field.names = c("Resource Orientation"),
+             fig.width = 10,
+             fig.height = 9,
+             write.stat = F)
+

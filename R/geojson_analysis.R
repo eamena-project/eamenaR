@@ -18,7 +18,7 @@
 #'
 #' geojson_analysis(stat.name = "factorial analyis", export.stat = T)
 #'
-#' @export
+#'
 geojson_analysis <- function(stat.name = "stat",
                              geojson.path = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail.geojson"),
