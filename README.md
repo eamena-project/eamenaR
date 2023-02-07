@@ -131,7 +131,7 @@ geojson_stat(stat.name = "orientations",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/orientations_radar.png" width="600">
+  <img alt="img-name" src="./results/orientations_radar.png" width="500">
 </p>
 
 # Spatial
