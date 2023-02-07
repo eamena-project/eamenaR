@@ -115,8 +115,3 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   if(verbose){print(paste0("* '", fileOutName, "'has been exported to '", dirOut, "'"))}
   return(df.profile)
 }
-
-geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-             elevation.api = "gmrt",
-             dirOut = "C:/Rprojects/")
-
