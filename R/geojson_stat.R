@@ -41,13 +41,23 @@
 #'              write.stat = T)
 #'
 #'# Histogram on 'Disturbance Cause Type'
-#'geojson_stat(stat.name = "distrub",
-#'             stat = "stats",
-#'             chart.type = "hist",
-#'             field.names = c("Disturbance Cause Type"),
-#'             fig.width = 10,
-#'             fig.height = 9,
-#'             write.stat = T)
+#' geojson_stat(stat.name = "distrub",
+#'              stat = "stats",
+#'              chart.type = "hist",
+#'              field.names = c("Disturbance Cause Type"),
+#'              fig.width = 10,
+#'              fig.height = 9,
+#'              write.stat = T)
+#'
+#' Radar chart on 'Resource Orientation'
+#' geojson_stat(stat.name = "orientations",
+#'              stat = "stats",
+#'              chart.type = "radar",
+#'              field.names = c("Resource Orientation"),
+#'              fig.width = 9,
+#'              fig.height = 8,
+#'              write.stat = T)
+#'
 #' @export
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
@@ -256,14 +266,5 @@ geojson_stat <- function(stat.name = "stat",
   }
 }
 
-geojson_stat(stat.name = "orientations",
-             geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-             ids = ref_ids("hp.id", ids.path = "C:/Rprojects/eamenaR/inst/extdata/ids.csv"),
-             dirOut = "C:/Rprojects/eamenaR/results/",
-             stat = "stats",
-             chart.type = "radar",
-             field.names = c("Resource Orientation"),
-             fig.width = 10,
-             fig.height = 9,
-             write.stat = F)
+
 

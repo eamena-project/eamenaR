@@ -102,7 +102,7 @@ geojson_stat(stat.name = "overall_cond",
   <img alt="img-name" src="./results/overall_cond_pie.png" width="400">
 </p>
 
-or an histogram on on 'Disturbance Cause Type'
+or an histogram on 'Disturbance Cause Type'
 
 ```
 geojson_stat(stat.name = "distrub",
@@ -116,6 +116,22 @@ geojson_stat(stat.name = "distrub",
 
 <p align="center">
   <img alt="img-name" src="./results/distrub_hist.png" width="600">
+</p>
+
+or a radar chart on 'Resource Orientation'
+
+```
+geojson_stat(stat.name = "orientations",
+             stat = "stats",
+             chart.type = "radar",
+             field.names = c("Resource Orientation"),
+             fig.width = 9,
+             fig.height = 8,
+             write.stat = T)
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/orientations_radar.png" width="600">
 </p>
 
 # Spatial
