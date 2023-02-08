@@ -7,8 +7,8 @@
 #' @param stat.name the name of the output file. By default "stat".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param stat the statistic that will be computed. By default 'area'.
-#' @param by.category the name of the field that will be used to stratified the values. For example "route" for the caravanserais. By default NA (no stratification).
-#' @param csv.path if the parameter by.category is TRUE, will use this CSV file to recover the route of the heritage places
+#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.
+#' @param csv.path if the parameter by is TRUE, will use this CSV file to recover the route of the heritage places
 #' @param plot.stat if TRUE (by default) will plot the stat as a graphic.
 #' @param export.stat if TRUE return the stats to be stored in a new variable.
 #' @param export.plot if TRUE, export the stats in a new file.
@@ -24,14 +24,14 @@
 #' geojson_measurements(stat.name = "areas")
 #'
 #' # by route and export
-#' geojson_measurements(stat.name = "areas", by.category = "route", export.stat = T)
+#' geojson_measurements(stat.name = "areas", by = "route", export.stat = T)
 #'
 #' @export
 geojson_measurements <- function(stat.name = "stat",
                                  geojson.path = paste0(system.file(package = "eamenaR"),
                                                        "/extdata/caravanserail.geojson"),
                                  stat = c("area"),
-                                 by.category = NA,
+                                 by = NA,
                                  csv.path = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail_paths.csv"),
                                  plot.stat = TRUE,
@@ -45,11 +45,11 @@ geojson_measurements <- function(stat.name = "stat",
   # geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail.geojson") ;
   # stat.name = "stat" ; stat = c("list_ids") ; export.stat = F ;
   # dirOut = paste0(system.file(package = "eamenaR"), "/results/")
-  if(!is.na(by.category)){
+  if(!is.na(by)){
     paths <- eamenaR::geojson_format_path(geojson.path, csv.path)
-    route.from.id <- paths[ , c("from.id", by.category)]
-    route.to.id <- paths[ , c("to.id", by.category)]
-    names(route.from.id) <- names(route.to.id) <- c("idf", by.category)
+    route.from.id <- paths[ , c("from.id", by)]
+    route.to.id <- paths[ , c("to.id", by)]
+    names(route.from.id) <- names(route.to.id) <- c("idf", by)
     route.id <- rbind(route.from.id, route.to.id)
     route.id <- route.id[!duplicated(route.id), ]
     route.id <- route.id[with(route.id, order(idf)), ]
@@ -71,7 +71,7 @@ geojson_measurements <- function(stat.name = "stat",
       df.measure.type <- df.measurements[df.measurements$type == measurements.type, ]
       df.measure.type$idf <- rownames(df.measure.type)
       lmeasurements.scale <- unique(df.measurements$scale)
-      if(!is.na(by.category)){
+      if(!is.na(by)){
         df.measure.type <- merge(df.measure.type, route.id, by = "idf", all.x = T)
       }
       if(measurements.type == "Area"){
@@ -100,7 +100,7 @@ geojson_measurements <- function(stat.name = "stat",
                          strip.background = ggplot2::element_rect(colour="black", size = 0.2)) +
           ggplot2::ylab(paste0(measurements.type, " in ", lmeasurements.scale)) +
           ggplot2::ggtitle(paste0("Distribution of ", measurements.type))
-        if(!is.na(by.category)){
+        if(!is.na(by)){
           gout <- gout +
             ggplot2::geom_jitter(ggplot2::aes(color = route),
                                  position = ggplot2::position_jitter(w = 0.3),

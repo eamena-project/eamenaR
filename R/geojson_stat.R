@@ -9,8 +9,9 @@
 #' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()`.
 #' @param concept.name the name of the field used to store the IDs. By default `hp.id`.
 #' @param stat the type of statistic that will be computed. By default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see the option `chart.type`
-#' @param field.names the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
 #' @param chart.type either "`pie`" for pie chart, or "`hist`" for histogram, "`radar`" for radar diagrams. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
+#' @param field.names the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
+#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.
 #' @param fig.width,fig.height size of the output chart.
 #' @param fig.dev the format of the image: "png" (by default), "jpg", "svg", etc.
 #' @param export.stat if TRUE return the stats to be stored in a new variable
@@ -62,11 +63,14 @@
 geojson_stat <- function(stat.name = "stat",
                          geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
+                         csv.path = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/caravanserail_paths.csv"),
                          ids = eamenaR::ref_ids("hp.id"),
                          concept.name = "hp.id",
                          stat = c("list_fields"),
                          chart.type = c("pie"),
                          field.names = NA,
+                         by = NA,
                          fig.width = 6,
                          fig.height = 6,
                          fig.dev = "png",
@@ -148,9 +152,14 @@ geojson_stat <- function(stat.name = "stat",
         orientations <- c("North", "Northeast", "East",
                           "Southeast", "South",
                           "Southwest", "West",
-                          "Northwest"
-        )
-        hp.orient <- ea.geojson[ , c(ids, field.names)]
+                          "Northwest")
+        if(is.na(by)){
+          hp.orient <- ea.geojson[ , c(ids, field.names)]
+        } else {
+          # TODO
+          paths <- eamenaR::geojson_format_path(geojson.path, csv.path, by = by)
+          hp.orient <- ea.geojson[ , c(ids, field.names, by)]
+          }
         hp.orient[["Direction"]] <- NA
         for(i in seq(1, nrow(hp.orient))){
           hp.orient[i, "Direction"] <- unlist(stringr::str_split(hp.orient[i, "Resource Orientation"], "-"))[1]

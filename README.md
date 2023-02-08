@@ -271,7 +271,7 @@ The numbers of the HP are the same as the [previous map](https://github.com/eame
 Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
 
 ```
-geojson_boxplot_path(export.plot = T)
+geojson_boxplot(export.plot = T)
 ```
 
 <p align="center">
