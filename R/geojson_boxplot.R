@@ -124,22 +124,46 @@ geojson_boxplot <- function(stat.name = "boxplot",
         if(plotly.plot){
           gpout <- gout +
             ggplot2::geom_point(position = ggplot2::position_jitter(w = 0.3, seed = 1),
-                                 ggplot2::aes(color = df.measure.type[["by"]],
-                                              size = .5,
-                                              stroke = 0,
-                                              alpha = 0.7)) +
+                                size = 1,
+                                ggplot2::aes(color = df.measure.type[["by"]],
+                                             stroke = 0,
+                                             alpha = 0.7)) +
+
             # ggplot2::geom_jitter(position = ggplot2::position_jitter(w = 0.3, seed = 1),
             #                      ggplot2::aes(color = df.measure.type[["by"]],
             #                                   size = 1,
             #                                   stroke = 0,
             #                                   alpha = 0.7)) +
-            ggplot2::geom_text(position = ggplot2::position_jitter(seed = 1),
-                               ggplot2::aes(label = id, size = 0)) +
+
             # ggplot2::geom_text(position = ggplot2::position_jitter(seed = 1),
-            #                    ggplot2::aes(label = id)) +
+            #                    ggplot2::aes(label = id, size = 0)) +
+
+            ggplot2::geom_text(position = ggplot2::position_jitter(seed = 1),
+                               ggplot2::aes(label = id)) +
+
             ggplot2::facet_grid(. ~ df.measure.type[["by"]], scales = "free")
           gp <- plotly::ggplotly(gpout, tooltip = "id")
           gp
+
+          library(plotly)
+
+          df.measure.type$lbl.by <- paste(by, df.measure.type$by)
+          df.measure.type$lbl.by <- as.factor(df.measure.type$lbl.by)
+
+          df.measure.type %>%
+            group_by(by) %>%
+            # do(p = plot_ly(., x = ~Sepal.Length, y = ~Sepal.Width, color = ~Species, type = "scatter")) %>%
+            do(p = plotly::plot_ly(.,
+                                   y = ~value,
+                                   type = "box",
+                                   boxpoints = "all",
+                                   color = ~lbl.by,
+                                   jitter = 0.5,
+                                   pointpos = -1.8,
+                                   hoverinfo = 'text',
+                                   hovertext = ~id)
+            ) %>%
+            plotly::subplot(nrows = 1, shareX = TRUE, shareY = TRUE)
         }
         if(plotly.plot & export.plot){
           htmlwidgets::saveWidget(gp, paste0(dirOut, stat.name, ".html"))
