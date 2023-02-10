@@ -276,8 +276,8 @@ geojson_boxplot(stat = "dist")
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/caravanserais_area.png" width="500">
-  <img alt="img-name" src="./results/caravanserais_dist.png" width="500">
+  <img alt="img-name" src="./results/caravanserais_area.png" width="400">
+  <img alt="img-name" src="./results/caravanserais_dist.png" width="400">
 </p>
 
 Startified by routes and exported:
@@ -302,7 +302,7 @@ geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
                 export.plot = T)
 ```
 
-See these files, here and there
+See these HTML files, [areas](https://eamena-project.github.io/eamenaR/results/caravanserais_areas) and [distances](https://eamena-project.github.io/eamenaR/results/caravanserais_dist)
 
 ### Measurements
 
