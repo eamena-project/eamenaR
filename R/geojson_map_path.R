@@ -8,12 +8,14 @@
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.
 #' @param export.type the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.
-#' @param by.category the name of the category column. By default "route" for caravanserais.
+#' @param by the name of the category column. By default "route" for caravanserais.
 #' @param selected.category limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param interactive if TRUE will plot a VisNetwork. By default FALSE.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
+#' @param fig.width,fig.height size of the output map.
+#' @param color.set the RBrewer color set. By default "Set1".
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return A PNG map and an HMTL map of heritage places linked together by paths
@@ -67,7 +69,7 @@ geojson_map_path <- function(map.name = "map_path",
                              csv.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail_paths.csv"),
                              export.type = c("map"),
-                             by.category = "route",
+                             by = "route",
                              selected.category = NA,
                              interactive = FALSE,
                              stamen.zoom = NA,
@@ -76,12 +78,13 @@ geojson_map_path <- function(map.name = "map_path",
                                              "/results/"),
                              fig.width = 8,
                              fig.height = 8,
+                             color.set = "Set1",
                              verbose = TRUE){
   r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
   paths <- geojson_format_path(geojson.path,
                                         csv.path,
-                                        by.category = by.category,
+                                        by = by,
                                         verbose = verbose)
   nb.all.path <- nrow(paths)
   # remove where NA
@@ -97,12 +100,12 @@ geojson_map_path <- function(map.name = "map_path",
   hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
   sf::st_crs(hp.geom.sf) <- 4326
   # categories colors
-  by.category.ids <- unique(paths.geom.sf[[by.category]])
-  by.category.colors <- RColorBrewer::brewer.pal(length(by.category.ids), "Set1")
-  df.colors <- data.frame(route = by.category.ids,
-                          color = by.category.colors
+  by.ids <- unique(paths.geom.sf[[by]])
+  by.colors <- RColorBrewer::brewer.pal(length(by.ids), color.set)
+  df.colors <- data.frame(route = by.ids,
+                          color = by.colors
   )
-  paths.geom.sf <- merge(paths.geom.sf, df.colors, by = by.category)
+  paths.geom.sf <- merge(paths.geom.sf, df.colors, by = by)
   # if("profile" %in% export.type & interactive == FALSE){
   #   if(verbose){print(" - creates a static 'profile' of the paths")}
   #   # TO COMPLETE ...
@@ -111,7 +114,7 @@ geojson_map_path <- function(map.name = "map_path",
     if(verbose){print(" - creates an interactive 'map' of the paths")}
     for(route in routes){
       if(verbose){print(paste0("   selected route is '", route, "'"))}
-      paths.route1 <- paths[paths[[by.category]] == route, ]
+      paths.route1 <- paths[paths[[by]] == route, ]
       paths.route1.df.from <- paths.route1[ , c("from", "from.id")]
       paths.route1.df.to <- paths.route1[ , c("to", "to.id")]
       names(paths.route1.df.from) <- names(paths.route1.df.to) <- c("title", "label")
@@ -164,7 +167,7 @@ geojson_map_path <- function(map.name = "map_path",
     hp.geojson.point <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POINT", ]
     hp.geojson.line <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "LINESTRING", ]
     hp.geojson.polygon <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POLYGON", ]
-    xxxv <- setNames(by.category.colors, by.category.ids)
+    xxxv <- setNames(by.colors, by.ids)
     mapOut <- ggmap::ggmap(stamenbck) +
       ggplot2::geom_sf(data = paths.geom.sf,
                        # ggplot2::aes(colour = color),
@@ -211,9 +214,9 @@ geojson_map_path <- function(map.name = "map_path",
                      plot.subtitle = ggplot2::element_text(size = 12,
                                                            hjust = 0.5)) +
       ggplot2::labs(color = 'routes') +
-      # ggplot2::scale_discrete_manual(values = setNames(by.category.colors, by.category.ids)) +
-      ggplot2::scale_colour_manual(values = by.category.colors)
-    # ggplot2::scale_fill_discrete(labels = by.category.ids)
+      # ggplot2::scale_discrete_manual(values = setNames(by.colors, by.ids)) +
+      ggplot2::scale_colour_manual(values = by.colors)
+    # ggplot2::scale_fill_discrete(labels = by.ids)
     if (export.plot) {
       if(verbose){print(paste0("    - export 'map'"))}
       dir.create(dirOut, showWarnings = FALSE)
@@ -222,9 +225,9 @@ geojson_map_path <- function(map.name = "map_path",
                       plot = mapOut,
                       height = fig.height,
                       width = fig.width)
-      if(verbose){print(paste0("    - the '", by.category, "' map '", gout,"' is exported into: '", dirOut,"'"))}
+      if(verbose){print(paste0("    - the '", by, "' map '", gout,"' is exported into: '", dirOut,"'"))}
     } else {
-      if(verbose){print(paste0("    - the '", by.category, "' map '", map.name,"' is plotted"))}
+      if(verbose){print(paste0("    - the '", by, "' map '", map.name,"' is plotted"))}
       plot(mapOut)
     }
   }
@@ -235,11 +238,11 @@ geojson_map_path <- function(map.name = "map_path",
                              Zs = numeric(),
                              route = character())
     for(route in routes){
-      # paths by.category
-      if(verbose){print(paste0("\n", "* read '", by.category, "'"))}
+      # paths by
+      if(verbose){print(paste0("\n", "* read '", by, "'"))}
       # route <- 1
       # subset
-      paths.route <- paths.geom.sf[paths.geom.sf[[by.category]] == route, ]
+      paths.route <- paths.geom.sf[paths.geom.sf[[by]] == route, ]
       # paths.route <- paths.geom.sf
       paths.route.df <- data.frame(from = paths.route$from,
                                    to = paths.route$to,

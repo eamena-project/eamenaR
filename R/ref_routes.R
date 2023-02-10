@@ -1,4 +1,4 @@
-#' Join the GeoJSON file of heritage places with the CSV file of routes
+#' Join the GeoJSON file of heritage places (nodes) with the CSV file of routes (edges)
 #'
 #' @name ref_routes
 #'

@@ -268,16 +268,41 @@ The numbers of the HP are the same as the [previous map](https://github.com/eame
 
 #### Boxplots
 
-Path lengths can be visualized in a boxplot, by routes. Each dot represent a segment length between two neighbouring caravanserails
+Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
 
 ```
-geojson_boxplot(export.plot = T)
+geojson_boxplot(stat = "area")
+geojson_boxplot(stat = "dist")
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/box_path.png" width="700">
+  <img alt="img-name" src="./results/caravanserais_area.png" width="500">
+  <img alt="img-name" src="./results/caravanserais_dist.png" width="500">
 </p>
 
+Startified by routes and exported:
+
+```
+geojson_boxplot(stat = "area", by = "route", export.plot = T)
+geojson_boxplot(stat = "dist", by = "route", export.plot = T)
+```
+<p align="center">
+  <img alt="img-name" src="./results/caravanserais_areas_routes.png" width="700">
+  <img alt="img-name" src="./results/caravanserais_dists_routes.png" width="700">
+</p>
+
+In the same way, these boxplot can be made interactive using Plotly, and exported as HTML files
+
+```
+geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                interactive = T,
+                export.plot = T)
+geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                interactive = T,
+                export.plot = T)
+```
+
+See these files, here and there
 
 ### Measurements
 

@@ -78,7 +78,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
     flag <- T
     df.ids <- unique(df[, concept.name])
     if(from[[r.id]] %in% df.ids){
-      paths[i, "from.id"] <- from[[r.id]]
+      paths[i, "from.id"] <- rownames(from)
     } else {
       warning(paste0("An Error Occurred: the HP '", path.from,
                      "' listed in the paths doesn't exist in the HPs GeoJSON (maybe)")
@@ -86,7 +86,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       flag <- F
     }
     if(to[[r.id]] %in% df.ids){
-      paths[i, "to.id"] <- from[[r.id]]
+      paths[i, "to.id"] <- rownames(to)
     } else {
       warning(paste0("An Error Occurred: the HP '", path.to,
                      "' listed in the paths doesn't exist in the HPs GeoJSON (maybe)")
@@ -102,8 +102,26 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       paths[i, "path.wkt"] <- sf::st_as_text(sf::st_cast(sf::st_union(from$geometry, to$geometry), "LINESTRING"))
     }
   }
-  paths <- paths[ , c("from.id", "from", "to.id", "to",
-                      "from.geom", "to.geom", "path.wkt", "dist.m",
-                      by)]
+  if(verbose){print(paste0(".. done"))}
+  print(colnames(paths))
+  if(by != "by"){
+    if(verbose){print(paste0("will stratify on the 'by' column values"))}
+    # a reminder: by is the column to stratify data. If the users doesn't have a column by, the latter is instancied to by = 1 for facest. So if the column by as the same valeu as the by variable, value by ...
+    paths <- paths[ , c("from.id", "from", "to.id", "to",
+                        "from.geom", "to.geom", "path.wkt", "dist.m",
+                        by)]
+    if(verbose){
+      print(paste0("the count of heritage places by '", by, "' is:"))
+      print(table(paths[[by]]))
+    }
+  } else {
+    if(verbose){print(paste0("will NOT stratify on the 'by' column values"))}
+    paths <- paths[ , c("from.id", "from", "to.id", "to",
+                        "from.geom", "to.geom", "path.wkt", "dist.m")]
+    if(verbose){
+      print(paste0("the count of heritage places is:"))
+      print(nrow(paths))
+    }
+  }
   return(paths)
 }
