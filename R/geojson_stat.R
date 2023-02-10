@@ -242,7 +242,9 @@ geojson_stat <- function(stat.name = "stat",
       if(chart == "hist"){
         for(field.name in field.names){
           # field.name <- "Disturbance Cause Type"
+          # field.name <- "Disturbance Cause Category Type"
           df <- as.data.frame(table(ea.geojson[[field.name]]))
+          df$Var1 <- stringr::str_wrap(df$Var1, width = 20)
           # there might have different values for a single field
           aggregated.unique.values <- unique(ea.geojson[[field.name]])
           splitted.values <- stringr::str_split(aggregated.unique.values, ", ")
@@ -254,9 +256,14 @@ geojson_stat <- function(stat.name = "stat",
           df[['type']] <- factor(df[['type']], levels = df[['type']])
           names(df)[names(df) == 'type'] <- field.name
           gg <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[field.name]], y = Freq)) +
-            ggplot2::geom_bar(stat="identity") +
+            ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
             blank_theme +
+            ggplot2::labs(title = paste0(field.name),
+                          # subtitle = my_subtitle,
+                          caption = paste0("Data source:", DescTools::SplitPath(geojson.path)$fullfilename)) +
+            ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 10)) +
             ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1))
+          gg
           if(verbose){print(paste("histogram", "created"))}
         }
       }
@@ -283,5 +290,12 @@ geojson_stat <- function(stat.name = "stat",
   }
 }
 
-
+# geojson_stat(stat.name = "distrub_cause_category_type",
+#              stat = "stats",
+#              chart.type = "hist",
+#              field.names = c("Disturbance Cause Category Type"),
+#              fig.width = 10,
+#              fig.height = 9,
+#              export.plot = T,
+#              dirOut = "C:/Rprojects/eamenaR/results/")
 
