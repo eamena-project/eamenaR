@@ -100,9 +100,6 @@ geojson_stat(stat.name = "overall_cond",
              write.stat = T)
 ```
 
-<p align="center">
-  <img alt="img-name" src="./results/overall_cond_pie.png" width="400">
-</p>
 
 ## Histograms
 
