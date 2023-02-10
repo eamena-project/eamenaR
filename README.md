@@ -99,7 +99,9 @@ geojson_stat(stat.name = "overall_cond",
              field.names = c("Overall Condition State Type"),
              write.stat = T)
 ```
-
+<p align="center">
+  <img alt="img-name" src="./results/overall_cond_pie.png" width="400">
+</p>
 
 ## Histograms
 
