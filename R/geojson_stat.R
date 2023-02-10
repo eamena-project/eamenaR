@@ -159,7 +159,7 @@ geojson_stat <- function(stat.name = "stat",
           # TODO
           paths <- eamenaR::geojson_format_path(geojson.path, csv.path, by = by)
           hp.orient <- ea.geojson[ , c(ids, field.names, by)]
-          }
+        }
         hp.orient[["Direction"]] <- NA
         for(i in seq(1, nrow(hp.orient))){
           hp.orient[i, "Direction"] <- unlist(stringr::str_split(hp.orient[i, "Resource Orientation"], "-"))[1]
@@ -241,10 +241,11 @@ geojson_stat <- function(stat.name = "stat",
       }
       if(chart == "hist"){
         for(field.name in field.names){
+          warp.at <- 40
           # field.name <- "Disturbance Cause Type"
           # field.name <- "Disturbance Cause Category Type"
           df <- as.data.frame(table(ea.geojson[[field.name]]))
-          df$Var1 <- stringr::str_wrap(df$Var1, width = 20)
+          df$Var1 <- stringr::str_wrap(df$Var1, width = warp.at)
           # there might have different values for a single field
           aggregated.unique.values <- unique(ea.geojson[[field.name]])
           splitted.values <- stringr::str_split(aggregated.unique.values, ", ")
@@ -261,8 +262,14 @@ geojson_stat <- function(stat.name = "stat",
             ggplot2::labs(title = paste0(field.name),
                           # subtitle = my_subtitle,
                           caption = paste0("Data source:", DescTools::SplitPath(geojson.path)$fullfilename)) +
-            ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = 10)) +
-            ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1))
+            # ggplot2::ylab(paste0(field.name, " %")) +
+            ggplot2::ylab(paste0(field.name, " %")) +
+            ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
+            ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1),
+                           axis.title.y = ggplot2::element_text(angle = 90),
+                           plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"))
+          #   ggplot2::theme(plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"))
+          # axis.title.y = ggplot2::element_blank()
           gg
           if(verbose){print(paste("histogram", "created"))}
         }
@@ -290,10 +297,10 @@ geojson_stat <- function(stat.name = "stat",
   }
 }
 
-# geojson_stat(stat.name = "distrub_cause_category_type",
+# geojson_stat(stat.name = "distrub_cause_category",
 #              stat = "stats",
 #              chart.type = "hist",
-#              field.names = c("Disturbance Cause Category Type"),
+#              field.names = c("Disturbance Cause Type"),
 #              fig.width = 10,
 #              fig.height = 9,
 #              export.plot = T,

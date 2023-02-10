@@ -11,7 +11,7 @@
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.
 #' @param symbology the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
-#' @param leaflet.plot if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.
+#' @param interactive if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #' @param fig.width,fig.height size of the output map.
@@ -21,7 +21,7 @@
 #' @examples
 #'
 #' # plot a general map of heritage places
-#'  geojson_map(map.name = "caravanserail")
+#' geojson_map(map.name = "caravanserail")
 #'
 #' # save a thematic map
 #' geojson_map(map.name = "caravanserail",
@@ -55,7 +55,7 @@ geojson_map <- function(map.name = "map",
                                               "Administrative Division ",
                                               "Country Type ",
                                               "Overall Condition State Type"),
-                        leaflet.plot = F,
+                        interactive = F,
                         export.plot = F,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/results/"),
@@ -88,7 +88,7 @@ geojson_map <- function(map.name = "map",
   }
 
   # non plolty
-  if(!leaflet.plot){
+  if(!interactive){
     left <- as.numeric(sf::st_bbox(ea.geojson.point)$xmin)
     bottom <- as.numeric(sf::st_bbox(ea.geojson.point)$ymin)
     right <- as.numeric(sf::st_bbox(ea.geojson.point)$xmax)
@@ -274,7 +274,7 @@ geojson_map <- function(map.name = "map",
   }
 
   # yes plotly
-  if(leaflet.plot){
+  if(interactive){
     # labels
     labels.pt <-"paste0('<b>', ea.geojson.point[[ids]][a.pt],'</b>'"
     labels.ln <-"paste0('<b>', ea.geojson.line[[ids]][a.pt],'</b>'"
@@ -407,3 +407,5 @@ geojson_map <- function(map.name = "map",
     }
   }
 }
+
+geojson_map(map.name = "caravanserail", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", export.plot = T, fig.width = 11, dirOut = "C:/Rprojects/eamenaR/results/")
