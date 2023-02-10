@@ -29,7 +29,7 @@
 #' geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
 #'
 #' # Pie chart on 'Overall Condition Assessment"
-#' geojson_stat(stat.name = "overall_cond",
+#' geojson_stat(stat.name = "overall_condition",
 #'              stat = "stats",
 #'              field.names = c("Overall Condition State Type"),
 #'              export.plot = T)
