@@ -142,7 +142,7 @@ geojson_stat(stat.name = "orientations",
 
 ## Boxplots
 
-The The [`geojson_boxplot()`](https://eamena-project.github.io/eamenaR/doc/geojson_boxplot) function creates boxplots. Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
+The [`geojson_boxplot()`](https://eamena-project.github.io/eamenaR/doc/geojson_boxplot) function creates boxplots. Path lengths, or areas, can be visualized in a boxplot, stratified by a variable (like "route") or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
 
 ```
 geojson_boxplot(stat = "area")
