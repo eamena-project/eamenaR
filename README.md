@@ -91,7 +91,7 @@ Whether the data is Heritage Places, Built Components, etc.
 
 ## Pie charts
 
-The [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) allows to display basic statistics. For example, a pie chart on 'Overall Condition Assessment':
+The [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) function allows to display basic statistics. For example, a pie chart on 'Overall Condition Assessment':
 
 ```
 geojson_stat(stat.name = "overall_cond",
@@ -142,7 +142,7 @@ geojson_stat(stat.name = "orientations",
 
 ## Boxplots
 
-Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
+The The [`geojson_boxplot()`](https://eamena-project.github.io/eamenaR/doc/geojson_boxplot) function creates boxplots. Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
 
 ```
 geojson_boxplot(stat = "area")
