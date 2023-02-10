@@ -193,6 +193,10 @@ Using the default **caravanserail.geojson** ([rendered](https://github.com/eamen
 geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
 ```
 
+<p align="center">
+  <img alt="img-name" src="./results/caravanserail.png" width="700">
+</p>
+
 Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function options.
 
 ```
