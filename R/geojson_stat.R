@@ -15,8 +15,8 @@
 #' @param fig.width,fig.height size of the output chart.
 #' @param fig.dev the format of the image: "png" (by default), "jpg", "svg", etc.
 #' @param export.stat if TRUE return the stats to be stored in a new variable
-#' @param write.stat if TRUE, export the stats in a new file, if FALSE will only display it
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.
+#' @param export.plot if TRUE, export the stats in a new file, if FALSE will only display it
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot is TRUE.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return Show or export basic statistics on the GeoJSON file
@@ -32,14 +32,14 @@
 #' geojson_stat(stat.name = "overall_cond",
 #'              stat = "stats",
 #'              field.names = c("Overall Condition State Type"),
-#'              write.stat = T)
+#'              export.plot = T)
 #'
 #' # Do the same, but export in SVG
 #' geojson_stat(stat.name = "overall_cond",
 #'              stat = "stats",
 #'              field.names = c("Overall Condition State Type"),
 #'              fig.dev = "svg",
-#'              write.stat = T)
+#'              export.plot = T)
 #'
 #'# Histogram on 'Disturbance Cause Type'
 #' geojson_stat(stat.name = "distrub",
@@ -48,7 +48,7 @@
 #'              field.names = c("Disturbance Cause Type"),
 #'              fig.width = 10,
 #'              fig.height = 9,
-#'              write.stat = T)
+#'              export.plot = T)
 #'
 #' Radar chart on 'Resource Orientation'
 #' geojson_stat(stat.name = "orientations",
@@ -57,7 +57,7 @@
 #'              field.names = c("Resource Orientation"),
 #'              fig.width = 9,
 #'              fig.height = 8,
-#'              write.stat = T)
+#'              export.plot = T)
 #'
 #' @export
 geojson_stat <- function(stat.name = "stat",
@@ -75,7 +75,7 @@ geojson_stat <- function(stat.name = "stat",
                          fig.height = 6,
                          fig.dev = "png",
                          export.stat = FALSE,
-                         write.stat = FALSE,
+                         export.plot = FALSE,
                          dirOut = paste0(system.file(package = "eamenaR"),
                                          "/results/"),
                          verbose = TRUE){
@@ -114,7 +114,7 @@ geojson_stat <- function(stat.name = "stat",
                      ea.ids = ea.geojson[[ids]])
     # rename column
     colnames(df)[2] = concept.name
-    if (write.stat) {
+    if (export.plot) {
       dir.create(dirOut, showWarnings = FALSE)
       tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
       write.table(df, tout, sep = "\t", row.names = F)
@@ -125,7 +125,7 @@ geojson_stat <- function(stat.name = "stat",
       df$id <- NULL
       return(df)
     }
-    if (!export.stat & !write.stat){
+    if (!export.stat & !export.plot){
       if(verbose){print(paste("Ids list:", "\n"))}
       cat(paste0(df$id, ": ", df[ , concept.name]), sep =", ")
     }
@@ -213,13 +213,21 @@ geojson_stat <- function(stat.name = "stat",
         if(verbose){print(paste("radar", "created"))}
       }
 
-
       # chart <- "pie"
       if(chart == "pie"){
         for(field.name in field.names){
+          field.name <- "Overall Condition State Type"
+          # c("Good", "Fair", "Poor", "Very Bad", "Destroyed")
+
           df <- as.data.frame(table(ea.geojson[[field.name]]))
           df$Freq.perc <- round((df$Freq/sum(df$Freq))*100, 0)
           names(df)[names(df) == 'Var1'] <- field.name
+          if(field.name == "Overall Condition State Type"){
+            # reorder
+            # df <- df[match(c("Good", "Fair", "Poor", "Very Bad", "Destroyed"), df[[field.name]]),]
+            # rownames(df) <- seq(1, nrow(df))
+            df[[field.name]] <- factor(df[[field.name]], levels = c("Good", "Fair", "Poor", "Very Bad", "Destroyed"))
+          }
           gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
                                                  y = Freq.perc,
                                                  fill = .data[[field.name]])) +
@@ -255,7 +263,7 @@ geojson_stat <- function(stat.name = "stat",
     }
     # rename column | what for ??
     colnames(df)[2] = concept.name
-    if (write.stat) {
+    if (export.plot) {
       dir.create(dirOut, showWarnings = FALSE)
       gout <- paste0(dirOut, stat.name, "_", chart, ".", fig.dev)
       ggplot2::ggsave(gout, gg,
@@ -268,7 +276,7 @@ geojson_stat <- function(stat.name = "stat",
       # df$id <- NULL
       # return(df)
     }
-    if (!export.stat & !write.stat){
+    if (!export.stat & !export.plot){
       if(verbose){print(paste("Chart:"))}
       gg
     }
