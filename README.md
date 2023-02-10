@@ -119,7 +119,7 @@ geojson_stat(stat.name = "distrub",
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/distrub_cause_category_type_hist" width="600">
+  <img alt="img-name" src="./results/distrub_cause_category_type_hist.png" width="600">
 </p>
 
 ## Radar chart
