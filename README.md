@@ -89,6 +89,8 @@ Whether the data is Heritage Places, Built Components, etc.
 
 # Basic statistics
 
+## Pie charts
+
 The [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) allows to display basic statistics. For example, a pie chart on 'Overall Condition Assessment':
 
 ```
@@ -101,6 +103,8 @@ geojson_stat(stat.name = "overall_cond",
 <p align="center">
   <img alt="img-name" src="./results/overall_cond_pie.png" width="400">
 </p>
+
+## Histograms
 
 or an histogram on 'Disturbance Cause Type'
 
@@ -118,6 +122,8 @@ geojson_stat(stat.name = "distrub",
   <img alt="img-name" src="./results/distrub_hist.png" width="600">
 </p>
 
+## Radar chart
+
 or a radar chart on 'Resource Orientation'
 
 ```
@@ -133,6 +139,44 @@ geojson_stat(stat.name = "orientations",
 <p align="center">
   <img alt="img-name" src="./results/orientations_radar.png" width="500">
 </p>
+
+## Boxplots
+
+Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
+
+```
+geojson_boxplot(stat = "area")
+geojson_boxplot(stat = "dist")
+```
+
+<p align="center">
+  <img alt="img-name" src="./results/caravanserais_area.png" width="400">
+  <img alt="img-name" src="./results/caravanserais_dist.png" width="400">
+</p>
+
+Startified by routes and exported:
+
+```
+geojson_boxplot(stat = "area", by = "route", export.plot = T)
+geojson_boxplot(stat = "dist", by = "route", export.plot = T)
+```
+<p align="center">
+  <img alt="img-name" src="./results/caravanserais_areas_routes.png" width="700">
+  <img alt="img-name" src="./results/caravanserais_dists_routes.png" width="700">
+</p>
+
+In the same way, these boxplot can be made interactive using Plotly, and exported as HTML files
+
+```
+geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                interactive = T,
+                export.plot = T)
+geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                interactive = T,
+                export.plot = T)
+```
+
+See these HTML files, [areas](https://eamena-project.github.io/eamenaR/results/caravanserais_areas) and [distances](https://eamena-project.github.io/eamenaR/results/caravanserais_dist)
 
 # Spatial
 
@@ -265,60 +309,6 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
 </p>
 
 The numbers of the HP are the same as the [previous map](https://github.com/eamena-project/eamenaR#heritages-places-ids-%EF%B8%8F-eamena-id)
-
-#### Boxplots
-
-Path lengths, or areas, can be visualized in a boxplot, stratified by routes or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
-
-```
-geojson_boxplot(stat = "area")
-geojson_boxplot(stat = "dist")
-```
-
-<p align="center">
-  <img alt="img-name" src="./results/caravanserais_area.png" width="400">
-  <img alt="img-name" src="./results/caravanserais_dist.png" width="400">
-</p>
-
-Startified by routes and exported:
-
-```
-geojson_boxplot(stat = "area", by = "route", export.plot = T)
-geojson_boxplot(stat = "dist", by = "route", export.plot = T)
-```
-<p align="center">
-  <img alt="img-name" src="./results/caravanserais_areas_routes.png" width="700">
-  <img alt="img-name" src="./results/caravanserais_dists_routes.png" width="700">
-</p>
-
-In the same way, these boxplot can be made interactive using Plotly, and exported as HTML files
-
-```
-geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
-                interactive = T,
-                export.plot = T)
-geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
-                interactive = T,
-                export.plot = T)
-```
-
-See these HTML files, [areas](https://eamena-project.github.io/eamenaR/results/caravanserais_areas) and [distances](https://eamena-project.github.io/eamenaR/results/caravanserais_dist)
-
-### Measurements
-
-Plot some measurements, here the areas, both for the whole heritage places (left) or for the heritages places discrimined by routes (right) with the [`geojson_measurements()`](https://eamena-project.github.io/eamenaR/doc/geojson_measurements) function:
-
-```
-require(gridExtra)
-p1 <- geojson_measurements(stat.name = "areas")
-p2 <- geojson_measurements(stat.name = "areas_by_routes", by.routes = T)
-
-grid.arrange(p1, p2, ncol = 2, widths = c(1, 2))
-```
-
-<p align="center">
-  <img alt="img-name" src="./results/areas_sbs.png" width="700">
-</p>
 
 ### Shape analysis
 
