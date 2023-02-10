@@ -21,16 +21,6 @@
 #'
 #' @examples
 #'
-#' # normal plot (show only, one boxplot)
-#' geojson_boxplot(stat = "dist")
-#'
-#' # normal plot (export, a boxplot for each 'route')
-#' geojson_boxplot(export.plot = T, by = "route")
-#'
-#' # Plotly plot
-#' geojson_boxplot(interactive = T, by = "route")
-#'
-#'
 #' # boxplot on areas (by default)
 #' geojson_boxplot(stat = "area")
 #'
@@ -248,5 +238,5 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
     gp
   }
 }
-
-# geojson_boxplot(stat.name = "caravanserais_area", stat = "area", export.plot = T, dirOut = "C:/Rprojects/eamenaR/results/", fig.width = 5)
+#
+# geojson_boxplot(stat.name = "caravanserais_area", stat = "area", export.plot = F, dirOut = "C:/Rprojects/eamenaR/results/", fig.width = 5)

@@ -408,4 +408,4 @@ geojson_map <- function(map.name = "map",
   }
 }
 
-geojson_map(map.name = "caravanserail", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", export.plot = T, fig.width = 15, dirOut = "C:/Rprojects/eamenaR/results/")
+# geojson_map(map.name = "caravanserail", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", export.plot = T, fig.width = 15, fig.height = 10, dirOut = "C:/Rprojects/eamenaR/results/")

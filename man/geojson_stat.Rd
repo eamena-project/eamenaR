@@ -8,16 +8,19 @@ geojson_stat(
   stat.name = "stat",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
+  csv.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_paths.csv"),
   ids = eamenaR::ref_ids("hp.id"),
   concept.name = "hp.id",
   stat = c("list_fields"),
   chart.type = c("pie"),
   field.names = NA,
+  by = NA,
   fig.width = 6,
   fig.height = 6,
   fig.dev = "png",
   export.stat = FALSE,
-  write.stat = FALSE,
+  export.plot = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   verbose = TRUE
 )
@@ -31,11 +34,13 @@ geojson_stat(
 
 \item{concept.name}{the name of the field used to store the IDs. By default `hp.id`.}
 
-\item{stat}{the type of statistic that will be computed. By default 'list_fields' (list the fields). The other options are: "list_ids" list EAMENA IDs ; "stat" to diplay charts like pie chart or histograms, etc.}
+\item{stat}{the type of statistic that will be computed. By default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see the option `chart.type`}
 
-\item{chart.type}{either "pie" for pie chart, or "hist" for histogram. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).}
+\item{chart.type}{either "`pie`" for pie chart, or "`hist`" for histogram, "`radar`" for radar diagrams. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).}
 
 \item{field.names}{the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).}
+
+\item{by}{the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.}
 
 \item{fig.width, fig.height}{size of the output chart.}
 
@@ -43,9 +48,9 @@ geojson_stat(
 
 \item{export.stat}{if TRUE return the stats to be stored in a new variable}
 
-\item{write.stat}{if TRUE, export the stats in a new file, if FALSE will only display it}
+\item{export.plot}{if TRUE, export the stats in a new file, if FALSE will only display it}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is write.stat is TRUE.}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot is TRUE.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }
@@ -63,25 +68,34 @@ geojson_stat(stat.name = "geojson_fields", export.stat = T)
 geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
 
 # Pie chart on 'Overall Condition Assessment"
-geojson_stat(stat.name = "overall_cond",
+geojson_stat(stat.name = "overall_condition",
              stat = "stats",
              field.names = c("Overall Condition State Type"),
-             write.stat = T)
+             export.plot = T)
 
 # Do the same, but export in SVG
 geojson_stat(stat.name = "overall_cond",
              stat = "stats",
              field.names = c("Overall Condition State Type"),
              fig.dev = "svg",
-             write.stat = T)
+             export.plot = T)
 
 # Histogram on 'Disturbance Cause Type'
 geojson_stat(stat.name = "distrub",
-            stat = "stats",
-            chart.type = "hist",
-            field.names = c("Disturbance Cause Type"),
-            fig.width = 10,
-            fig.height = 9,
-            write.stat = T)
+             stat = "stats",
+             chart.type = "hist",
+             field.names = c("Disturbance Cause Type"),
+             fig.width = 10,
+             fig.height = 9,
+             export.plot = T)
+
+Radar chart on 'Resource Orientation'
+geojson_stat(stat.name = "orientations",
+             stat = "stats",
+             chart.type = "radar",
+             field.names = c("Resource Orientation"),
+             fig.width = 9,
+             fig.height = 8,
+             export.plot = T)
 
 }

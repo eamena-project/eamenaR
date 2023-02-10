@@ -106,15 +106,16 @@ geojson_map_path <- function(map.name = "map_path",
                           color = by.colors
   )
   paths.geom.sf <- merge(paths.geom.sf, df.colors, by = by)
+  by.unique <- unique(paths.geom.sf[[by]])
   # if("profile" %in% export.type & interactive == FALSE){
   #   if(verbose){print(" - creates a static 'profile' of the paths")}
   #   # TO COMPLETE ...
   # }
-  if("map" %in% export.type & interactive == TRUE){
+  if("map" %in% export.type & interactive){
     if(verbose){print(" - creates an interactive 'map' of the paths")}
-    for(route in routes){
-      if(verbose){print(paste0("   selected route is '", route, "'"))}
-      paths.route1 <- paths[paths[[by]] == route, ]
+    for(a.by in by.unique){
+      if(verbose){print(paste0("   selected", by, " is '", a.by, "'"))}
+      paths.route1 <- paths[paths[[by]] == a.by, ]
       paths.route1.df.from <- paths.route1[ , c("from", "from.id")]
       paths.route1.df.to <- paths.route1[ , c("to", "to.id")]
       names(paths.route1.df.from) <- names(paths.route1.df.to) <- c("title", "label")
@@ -126,14 +127,14 @@ geojson_map_path <- function(map.name = "map_path",
       edges$title <- paste(round(edges$value/1000, 0), "km") # to km
       colnames(nodes)[which(names(nodes) == "dist.m")] <- "value"
       visRoute <- visNetwork::visNetwork(nodes, edges,
-                                         main = paste0("route ", route),
+                                         main = paste0(by, " ", a.by),
                                          width = "90%", height = "90vh") %>%
         visNetwork::visEdges(arrows = "to") %>%
         visNetwork::visOptions(highlightNearest = T)
       if(!export.plot){print(visRoute)}
       if(export.plot){
         if(verbose){print(paste0("  - export an interactive network"))}
-        fileOut <- paste0(map.name, "_map_route_", route, ".html")
+        fileOut <- paste0(map.name, "_map_", by, "_", a.by, ".html")
         visNetwork::visSave(visRoute,
                             paste0(dirOut, fileOut),
                             # selfcontained = TRUE,
@@ -142,7 +143,7 @@ geojson_map_path <- function(map.name = "map_path",
       }
     }
   }
-  if("map" %in% export.type & interactive == FALSE){
+  if("map" %in% export.type & !interactive){
     if(verbose){print(" - creates a static 'map' of the paths")}
     left <- as.numeric(sf::st_bbox(hp.geom.sf)$xmin)
     bottom <- as.numeric(sf::st_bbox(hp.geom.sf)$ymin)
@@ -164,7 +165,10 @@ geojson_map_path <- function(map.name = "map_path",
     stamenbck <- ggmap::get_stamenmap(bbox,
                                       zoom = stamen.zoom,
                                       maptype = "terrain-background")
+    if(verbose){print(paste0("      ... retrieved"))}
+    # terr = sf::st_read("C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson")
     hp.geojson.point <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POINT", ]
+    hp.geojson.point <- sf::st_zm(hp.geojson.point)
     hp.geojson.line <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "LINESTRING", ]
     hp.geojson.polygon <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POLYGON", ]
     xxxv <- setNames(by.colors, by.ids)
@@ -172,6 +176,7 @@ geojson_map_path <- function(map.name = "map_path",
       ggplot2::geom_sf(data = paths.geom.sf,
                        # ggplot2::aes(colour = color),
                        ggplot2::aes(colour = factor(route)),
+                       size = 1,
                        inherit.aes = FALSE) +
       ggplot2::geom_sf(data = hp.geojson.point,
                        colour = "black",
@@ -195,25 +200,12 @@ geojson_map_path <- function(map.name = "map_path",
                                max.time = 1.5,
                                max.overlaps = Inf,
                                inherit.aes = FALSE) +
-      ggrepel::geom_text_repel(data = hp.geojson.polygon,
-                               ggplot2::aes(x = sf::st_coordinates(sf::st_centroid(hp.geojson.polygon))[, "X"],
-                                            y = sf::st_coordinates(sf::st_centroid(hp.geojson.polygon))[, "Y"],
-                                            label = rownames(hp.geojson.polygon)),
-                               size = 2,
-                               segment.color = "black",
-                               segment.size = .1,
-                               segment.alpha = .5,
-                               min.segment.length = .3,
-                               force = .5,
-                               max.time = 1.5,
-                               max.overlaps = Inf,
-                               inherit.aes = FALSE) +
       ggplot2::labs(title = map.name) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
                                                         hjust = 0.5),
                      plot.subtitle = ggplot2::element_text(size = 12,
                                                            hjust = 0.5)) +
-      ggplot2::labs(color = 'routes') +
+      ggplot2::labs(color = by) +
       # ggplot2::scale_discrete_manual(values = setNames(by.colors, by.ids)) +
       ggplot2::scale_colour_manual(values = by.colors)
     # ggplot2::scale_fill_discrete(labels = by.ids)
@@ -394,3 +386,8 @@ geojson_map_path <- function(map.name = "map_path",
     }
   }
 }
+
+# geojson_stat(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", stat.name = "geojson_fields", stat = "list_ids")
+#
+# geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15, fig.height = 10, dirOut = "C:/Rprojects/eamenaR/results/", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv")
+# # geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)

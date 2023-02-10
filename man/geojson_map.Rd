@@ -15,7 +15,7 @@ geojson_map(
   stamen.zoom = NA,
   fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
     "Administrative Division ", "Country Type ", "Overall Condition State Type"),
-  leaflet.plot = F,
+  interactive = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
@@ -37,7 +37,7 @@ geojson_map(
 
 \item{stamen.zoom}{the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.}
 
-\item{leaflet.plot}{if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.}
+\item{interactive}{if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.}
 
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
@@ -54,7 +54,7 @@ Create a distribution map
 \examples{
 
 # plot a general map of heritage places
- geojson_map(map.name = "caravanserail")
+geojson_map(map.name = "caravanserail")
 
 # save a thematic map
 geojson_map(map.name = "caravanserail",

@@ -11,7 +11,7 @@ geojson_map_path(
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
   export.type = c("map"),
-  by.category = "route",
+  by = "route",
   selected.category = NA,
   interactive = FALSE,
   stamen.zoom = NA,
@@ -19,6 +19,7 @@ geojson_map_path(
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
   fig.height = 8,
+  color.set = "Set1",
   verbose = TRUE
 )
 }
@@ -31,7 +32,7 @@ geojson_map_path(
 
 \item{export.type}{the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.}
 
-\item{by.category}{the name of the category column. By default "route" for caravanserais.}
+\item{by}{the name of the category column. By default "route" for caravanserais.}
 
 \item{selected.category}{limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.}
 
@@ -42,6 +43,10 @@ geojson_map_path(
 \item{export.plot}{if TRUE, export the plot, if FALSE will only display it.}
 
 \item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.}
+
+\item{fig.width, fig.height}{size of the output map.}
+
+\item{color.set}{the RBrewer color set. By default "Set1".}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }

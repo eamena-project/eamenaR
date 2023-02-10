@@ -22,7 +22,7 @@ geojson_measurements(
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
   stat = c("area"),
-  by.category = NA,
+  by = NA,
   csv.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail_paths.csv"),
   plot.stat = TRUE,
@@ -51,13 +51,13 @@ geojson_measurements(
 <td>
 <p>the statistic that will be computed. By default 'area'.</p>
 </td></tr>
-<tr valign="top"><td><code>by.category</code></td>
+<tr valign="top"><td><code>by</code></td>
 <td>
-<p>the name of the field that will be used to stratified the values. For example &quot;route&quot; for the caravanserais. By default NA (no stratification).</p>
+<p>the name of the field on which the paths will be grouped. For example &quot;route&quot;. Will create as many plots as there is different categories. By default NA.</p>
 </td></tr>
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
-<p>if the parameter by.category is TRUE, will use this CSV file to recover the route of the heritage places</p>
+<p>if the parameter by is TRUE, will use this CSV file to recover the route of the heritage places</p>
 </td></tr>
 <tr valign="top"><td><code>plot.stat</code></td>
 <td>
@@ -97,7 +97,7 @@ If it doesn't exist, it will be created. Only useful is export.plot is TRUE.</p>
 geojson_measurements(stat.name = "areas")
 
 # by route and export
-geojson_measurements(stat.name = "areas", by.category = "route", export.stat = T)
+geojson_measurements(stat.name = "areas", by = "route", export.stat = T)
 
 </pre>
 

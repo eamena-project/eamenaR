@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a boxplot or various boxplots of path lengths between...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+
+<table width="100%" summary="page for geojson_boxplot"><tr><td>geojson_boxplot</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Create a boxplot or various boxplots of path lengths between different heritage places</h2>
+
+<h3>Usage</h3>
+
+<pre>
+geojson_boxplot(
+  stat.name = "caravanserais_areas",
+  concept.name = "hp.id",
+  geojson.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail.geojson"),
+  csv.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/caravanserail_paths.csv"),
+  stat = c("area"),
+  chart.type = c("boxplot"),
+  by = NA,
+  interactive = F,
+  export.plot = F,
+  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  fig.width = 9,
+  fig.height = 5,
+  color.set = "Set1",
+  verbose = TRUE
+)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>stat.name</code></td>
+<td>
+<p>the name of the output file and of the plot. By default &quot;caravanserais_areas&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>geojson.path</code></td>
+<td>
+<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+</td></tr>
+<tr valign="top"><td><code>csv.path</code></td>
+<td>
+<p>the path to the CSV where the edges between two heritage places are recorded.</p>
+</td></tr>
+<tr valign="top"><td><code>stat</code></td>
+<td>
+<p>the statistic that will be computed. The different values can be &quot;area&quot; for areas, or &quot;dist&quot; for distances between heritage places. By default 'area'.</p>
+</td></tr>
+<tr valign="top"><td><code>chart.type</code></td>
+<td>
+<p>the type of chart that will be plot. By default, &quot;boxplot&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>by</code></td>
+<td>
+<p>the name of the field on which the paths will be grouped. For example &quot;route&quot;. Will create as many plots as there is different categories. By default NA.</p>
+</td></tr>
+<tr valign="top"><td><code>interactive</code></td>
+<td>
+<p>if TRUE, create a Plotly chart. By default, FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>export.plot</code></td>
+<td>
+<p>if TRUE, will save the plot. By default, FALSE.</p>
+</td></tr>
+<tr valign="top"><td><code>dirOut</code></td>
+<td>
+<p>the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+</td></tr>
+<tr valign="top"><td><code>fig.width, fig.height</code></td>
+<td>
+<p>size of the output chart.</p>
+</td></tr>
+<tr valign="top"><td><code>color.set</code></td>
+<td>
+<p>the RBrewer color set. By default &quot;Set1&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>verbose</code></td>
+<td>
+<p>if TRUE (by default), print messages.</p>
+</td></tr>
+</table>
+
+
+<h3>Examples</h3>
+
+<pre>
+
+# boxplot on areas (by default)
+geojson_boxplot(stat = "area")
+
+# boxplot on distances
+geojson_boxplot(stat = "dist")
+
+# Same as before, but stratified by routes, and saved
+geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                export.plot = T)
+geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                export.plot = T)
+
+# Same as before, but stratified by routes, interactive, and saved
+geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                interactive = T,
+                export.plot = T)
+geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                interactive = T,
+                export.plot = T)
+
+</pre>
+
+
+</div></body></html>

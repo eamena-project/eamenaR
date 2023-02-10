@@ -24,7 +24,7 @@ linked together by paths, for example for caravanserails.
       csv.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail_paths.csv"),
       export.type = c("map"),
-      by.category = "route",
+      by = "route",
       selected.category = NA,
       interactive = FALSE,
       stamen.zoom = NA,
@@ -32,24 +32,27 @@ linked together by paths, for example for caravanserails.
       dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
       fig.width = 8,
       fig.height = 8,
+      color.set = "Set1",
       verbose = TRUE
     )
 
 ### Arguments
 
-  --------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
-  `map.name`            the name of the output map and the name of the saved file (if export.plot is TRUE). By default \"map_path\".
-  `geojson.path`        the path of the GeoJSON file. By default \'caravanserail.geojson\'.
-  `csv.path`            the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
-  `export.type`         the type of output: a map (\'map\') or a profile (\'profile\'). For this latter the Z should be calculated with the \'geojson_addZ()\' function.
-  `by.category`         the name of the category column. By default \"route\" for caravanserais.
-  `selected.category`   limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.
-  `interactive`         if TRUE will plot a VisNetwork. By default FALSE.
-  `stamen.zoom`         the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
-  `export.plot`         if TRUE, export the plot, if FALSE will only display it.
-  `dirOut`              the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
-  `verbose`             if TRUE (by default), print messages.
-  --------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+  ------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `map.name`                the name of the output map and the name of the saved file (if export.plot is TRUE). By default \"map_path\".
+  `geojson.path`            the path of the GeoJSON file. By default \'caravanserail.geojson\'.
+  `csv.path`                the path to the CSV where the edges between two heritage places are recorded. By default \'caravanserail_paths.csv\'.
+  `export.type`             the type of output: a map (\'map\') or a profile (\'profile\'). For this latter the Z should be calculated with the \'geojson_addZ()\' function.
+  `by`                      the name of the category column. By default \"route\" for caravanserais.
+  `selected.category`       limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.
+  `interactive`             if TRUE will plot a VisNetwork. By default FALSE.
+  `stamen.zoom`             the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
+  `export.plot`             if TRUE, export the plot, if FALSE will only display it.
+  `dirOut`                  the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
+  `fig.width, fig.height`   size of the output map.
+  `color.set`               the RBrewer color set. By default \"Set1\".
+  `verbose`                 if TRUE (by default), print messages.
+  ------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Value
 

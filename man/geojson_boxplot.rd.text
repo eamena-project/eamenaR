@@ -1,0 +1,74 @@
+---
+title: "R: Create a boxplot or various boxplots of path lengths
+  between\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ----------------- -----------------
+  geojson_boxplot     R Documentation
+  ----------------- -----------------
+
+## Create a boxplot or various boxplots of path lengths between different heritage places
+
+### Usage
+
+    geojson_boxplot(
+      stat.name = "caravanserais_areas",
+      concept.name = "hp.id",
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      csv.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail_paths.csv"),
+      stat = c("area"),
+      chart.type = c("boxplot"),
+      by = NA,
+      interactive = F,
+      export.plot = F,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      fig.width = 9,
+      fig.height = 5,
+      color.set = "Set1",
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `stat.name`               the name of the output file and of the plot. By default \"caravanserais_areas\".
+  `geojson.path`            the path of the GeoJSON file. By default \'caravanserail.geojson\'.
+  `csv.path`                the path to the CSV where the edges between two heritage places are recorded.
+  `stat`                    the statistic that will be computed. The different values can be \"area\" for areas, or \"dist\" for distances between heritage places. By default \'area\'.
+  `chart.type`              the type of chart that will be plot. By default, \"boxplot\".
+  `by`                      the name of the field on which the paths will be grouped. For example \"route\". Will create as many plots as there is different categories. By default NA.
+  `interactive`             if TRUE, create a Plotly chart. By default, FALSE.
+  `export.plot`             if TRUE, will save the plot. By default, FALSE.
+  `dirOut`                  the folder where the outputs will be saved. By default: \'/results\'.If it doesn\'t exist, it will be created. Only useful is export plot is TRUE.
+  `fig.width, fig.height`   size of the output chart.
+  `color.set`               the RBrewer color set. By default \"Set1\".
+  `verbose`                 if TRUE (by default), print messages.
+  ------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Examples
+
+
+    # boxplot on areas (by default)
+    geojson_boxplot(stat = "area")
+
+    # boxplot on distances
+    geojson_boxplot(stat = "dist")
+
+    # Same as before, but stratified by routes, and saved
+    geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                    export.plot = T)
+    geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                    export.plot = T)
+
+    # Same as before, but stratified by routes, interactive, and saved
+    geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
+                    interactive = T,
+                    export.plot = T)
+    geojson_boxplot(stat.name = "caravanserais_dist", stat = "dist", by = "route",
+                    interactive = T,
+                    export.plot = T)
+:::

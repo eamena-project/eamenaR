@@ -22,7 +22,7 @@ boxplot
       geojson.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail.geojson"),
       stat = c("area"),
-      by.category = NA,
+      by = NA,
       csv.path = paste0(system.file(package = "eamenaR"),
         "/extdata/caravanserail_paths.csv"),
       plot.stat = TRUE,
@@ -36,18 +36,18 @@ boxplot
 
 ### Arguments
 
-  ---------------- -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------
   `stat.name`      the name of the output file. By default \"stat\".
   `geojson.path`   the path of the GeoJSON file. By default \'caravanserail.geojson\'.
   `stat`           the statistic that will be computed. By default \'area\'.
-  `by.category`    the name of the field that will be used to stratified the values. For example \"route\" for the caravanserais. By default NA (no stratification).
-  `csv.path`       if the parameter by.category is TRUE, will use this CSV file to recover the route of the heritage places
+  `by`             the name of the field on which the paths will be grouped. For example \"route\". Will create as many plots as there is different categories. By default NA.
+  `csv.path`       if the parameter by is TRUE, will use this CSV file to recover the route of the heritage places
   `plot.stat`      if TRUE (by default) will plot the stat as a graphic.
   `export.stat`    if TRUE return the stats to be stored in a new variable.
   `export.plot`    if TRUE, export the stats in a new file.
   `dirOut`         the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export.plot is TRUE.
   `verbose`        if TRUE (by default) verbose.
-  ---------------- -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ---------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### Value
 
@@ -60,5 +60,5 @@ Show or export measurements statistics on the GeoJSON file
     geojson_measurements(stat.name = "areas")
 
     # by route and export
-    geojson_measurements(stat.name = "areas", by.category = "route", export.stat = T)
+    geojson_measurements(stat.name = "areas", by = "route", export.stat = T)
 :::

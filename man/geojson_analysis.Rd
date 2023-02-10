@@ -39,4 +39,5 @@ Complex interactive statistics on a GeoJSON file with the Shiny package
 
 geojson_analysis(stat.name = "factorial analyis", export.stat = T)
 
+
 }

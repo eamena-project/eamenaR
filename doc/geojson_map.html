@@ -28,7 +28,7 @@ geojson_map(
   stamen.zoom = NA,
   fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
     "Administrative Division ", "Country Type ", "Overall Condition State Type"),
-  leaflet.plot = F,
+  interactive = F,
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
@@ -68,9 +68,9 @@ geojson_map(
 <td>
 <p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
 </td></tr>
-<tr valign="top"><td><code>leaflet.plot</code></td>
+<tr valign="top"><td><code>interactive</code></td>
 <td>
-<p>if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.</p>
+<p>if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
@@ -98,7 +98,7 @@ geojson_map(
 <pre>
 
 # plot a general map of heritage places
- geojson_map(map.name = "caravanserail")
+geojson_map(map.name = "caravanserail")
 
 # save a thematic map
 geojson_map(map.name = "caravanserail",

@@ -10,7 +10,7 @@
 
 <h3>Description</h3>
 
-<p>Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file
+<p>Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file. The geoserver API can lead to a Timeout.
 </p>
 
 
@@ -22,16 +22,7 @@ geojson_addZ(
     "/extdata/caravanserail.geojson"),
   geojson.out = NA,
   elevation.api = "open-elevation",
-  sleep = 0.3,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-  verbose = T
-)
-
-geojson_addZ(
-  geojson.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail.geojson"),
-  geojson.out = NA,
-  elevation.api = "open-elevation",
+  timeout = 30,
   sleep = 0.3,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   verbose = T
@@ -50,6 +41,14 @@ geojson_addZ(
 <td>
 <p>the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable 'geojson.path').</p>
 </td></tr>
+<tr valign="top"><td><code>elevation.api</code></td>
+<td>
+<p>the geoserver API that will be used to collect the elevation, by default 'open-elevation' (https://api.open-elevation.com/). Another option is 'gmrt' (https://www.gmrt.org).</p>
+</td></tr>
+<tr valign="top"><td><code>timeout</code></td>
+<td>
+<p>the threshold below which the expectation of a response is accepted, in seconds. By default, 30.</p>
+</td></tr>
 <tr valign="top"><td><code>sleep</code></td>
 <td>
 <p>the time delay between two API request in seconds. By default 0.3.</p>
@@ -62,46 +61,12 @@ geojson_addZ(
 <td>
 <p>if TRUE (by default): verbose.</p>
 </td></tr>
-<tr valign="top"><td><code>map.name</code></td>
-<td>
-<p>the name of the output map and the name of the saved file (if export.plot is TRUE). By default &quot;map&quot;.</p>
-</td></tr>
-<tr valign="top"><td><code>ids</code></td>
-<td>
-<p>the IDs of the resources, by default &quot;EAMENA.ID&quot; (R fieldname format, without spaces).</p>
-</td></tr>
-<tr valign="top"><td><code>field.names</code></td>
-<td>
-<p>a vector one or many field names for thematic cartography. If NA (by default), will create a general map</p>
-</td></tr>
-<tr valign="top"><td><code>highlights.ids</code></td>
-<td>
-<p>EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.</p>
-</td></tr>
-<tr valign="top"><td><code>symbology</code></td>
-<td>
-<p>the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.</p>
-</td></tr>
-<tr valign="top"><td><code>stamen.zoom</code></td>
-<td>
-<p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
-</td></tr>
-<tr valign="top"><td><code>plotly.plot</code></td>
-<td>
-<p>if FALSE create a static PNG, if TRUE create a plotly plot as a HTML widget.</p>
-</td></tr>
-<tr valign="top"><td><code>export.plot</code></td>
-<td>
-<p>if TRUE, export the plot, if FALSE will only display it.</p>
-</td></tr>
 </table>
 
 
 <h3>Examples</h3>
 
 <pre>
-
-
 
 df &lt;- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")

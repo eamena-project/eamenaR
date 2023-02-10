@@ -58,7 +58,7 @@ plot_edtf(
 One to several plots
 }
 \description{
-Use an XLSX file where cultural threats are listed and dated with EDTF. R doesn't accept spaces in headers, so the spaces are replaced by dots.
+Use an XLSX file where cultural threats are listed and dated with EDTF. Create a flat chart or a Plotly one.
 }
 \examples{
 
