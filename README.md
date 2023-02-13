@@ -739,6 +739,18 @@ flowchart LR
     D --6. append<br>new geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
+
+```mermaid
+flowchart LR
+    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> E("geojson_shp()"):::eamenaRfunction;
+    E --2. SHP--> F((GIS));
+    F --3. create<br><b>POLYGON</b>--> F;
+    F --4. SHP--> E;
+    E --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    D --6. append<br>new geometries--> A;
+    classDef eamenaRfunction fill:#e7deca;
+```
+
   
 functions: 
   - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
