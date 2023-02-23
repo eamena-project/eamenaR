@@ -4,8 +4,8 @@
 #'
 #' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file. The geoserver API can lead to a Timeout.
 #'
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param geojson.out the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
+#' @param geojson.path path of the GeoJSON file. By default 'caravanserail.geojson'.
+#' @param geojson.out name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
 #' @param elevation.api the geoserver API that will be used to collect the elevation, by default 'open-elevation' (https://api.open-elevation.com/). Another option is 'gmrt' (https://www.gmrt.org).
 #' @param timeout the threshold below which the expectation of a response is accepted, in seconds. By default, 30.
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
