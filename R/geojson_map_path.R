@@ -229,7 +229,7 @@ geojson_map_path <- function(map.name = "map_path",
                              hp = character(),
                              Zs = numeric(),
                              route = character())
-    for(route in routes){
+    for(route in selected.category){
       # paths by
       if(verbose){print(paste0("\n", "* read '", by, "'"))}
       # route <- 1

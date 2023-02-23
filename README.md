@@ -750,6 +750,7 @@ flowchart LR
 
 <center> workflow for GIS </center>
   
+  
 functions: 
   - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
   - [`geojson_shp()`](https://eamena-project.github.io/eamenaR/doc/geojson_shp)  
