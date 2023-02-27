@@ -67,13 +67,16 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     Y <- coordinates[2]
     # elevation API
     if (elevation.api == 'gmrt'){
-      http.req <- paste0("https://www.gmrt.org/services/ProfileServer?boundspath=",
-                         coordinates,
-                         "&format=json")
+      http.req <- paste0(
+        "https://www.gmrt.org/services/ProfileServer?boundspath=",
+        coordinates,
+        "&format=json"
+      )
     }
     if (elevation.api == 'open-elevation'){
-      http.req <- paste0(#"https://api.open-elevation.com/api/v1/lookup?locations=41.161758,-8.583933",
-        "https://api.open-elevation.com/api/v1/lookup?locations=", X, ",", Y)
+      http.req <- paste0(
+        "https://api.open-elevation.com/api/v1/lookup?locations=", X, ",", Y
+      )
     }
     r <- httr::GET(http.req, httr::timeout(timeout))
     rr <- httr::content(r)
