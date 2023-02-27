@@ -16,9 +16,12 @@
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
 #' @param fig.width,fig.height size of the output map.
 #'
-#' @return A map interactive (leaflet) or not
+#' @return An interactive map (leaflet) or not
 #'
 #' @examples
+#'
+#' # load {dplyr}
+#' library(dplyr)
 #'
 #' # plot a general map of heritage places
 #' geojson_map(map.name = "caravanserail")
@@ -32,6 +35,11 @@
 #' geojson_map(map.name = "caravanserail",
 #'            field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
 #'            export.plot = T)
+#'
+#' # save an interactive map
+#' geojson_map(map.name = "caravanserail_plotly",
+#'             interactive = T,
+#'             export.plot = T)
 #'
 #' # plot a general map of geoarchaeological data
 #' geojson_map(map.name = "geoarch",
@@ -407,5 +415,3 @@ geojson_map <- function(map.name = "map",
     }
   }
 }
-
-# geojson_map(map.name = "caravanserail", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", export.plot = T, fig.width = 15, fig.height = 10, dirOut = "C:/Rprojects/eamenaR/results/")
