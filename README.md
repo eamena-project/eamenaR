@@ -678,7 +678,7 @@ d$total_users
 The other statistic calculated is the total number of users (minus those who have an account but have never logged in)
 
 
-# Data
+# Data management
 
 GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].
 
