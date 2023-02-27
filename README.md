@@ -83,6 +83,18 @@ The root directory on your local computer will be (*run*): `system.file(package 
 
 ---
 
+# Data
+
+GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson** URL (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].  
+
+![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
+
+Paste the copied URL into your web browser and create a GeoJSON file, the result is something like :
+
+![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-url.png)
+
+You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
+
 # Typology
 
 Whether the data is Heritage Places, Built Components, etc.
@@ -680,16 +692,6 @@ The other statistic calculated is the total number of users (minus those who hav
 
 # Data management
 
-GeoJSON is the privilegied format to work with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].
-
-![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
-
-Paste the copied URL into your web browser and create a GeoJSON file, the result is something like :
-
-![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-url.png)
-
-You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
-
 ## Duplicates
 
 The function [`ref_are_duplicates()`](https://eamena-project.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
@@ -735,7 +737,7 @@ flowchart LR
     classDef eamenaRfunction fill:#e7deca;
 ```
 
-<center> workflow for Google Earth </center>
+<p align="center"> workflow to work with Google Earth </p>
 
 ```mermaid
 flowchart LR
@@ -748,7 +750,7 @@ flowchart LR
     classDef eamenaRfunction fill:#e7deca;
 ```
 
-<center> workflow for GIS </center>
+<p align="center"> workflow to work with a GIS </p>
   
   
 functions: 
