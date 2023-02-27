@@ -57,11 +57,9 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     if(sf::st_geometry_type(a.geom$geometry) %in% c("MULTIPOINT", "POLYGON", "MULTIPOLYGON")){
       # centroids
       coordinates <- sf::st_coordinates(sf::st_centroid(a.geom))
-      # coordinates <- jsonlite::toJSON(sf::st_coordinates(sf::st_centroid(a.geom)))
     }
     if(sf::st_geometry_type(a.geom$geometry) == "POINT"){
       coordinates <- sf::st_coordinates(a.geom)
-      # coordinates <- jsonlite::toJSON(sf::st_coordinates(a.geom))
     }
     X <- coordinates[1]
     Y <- coordinates[2]
