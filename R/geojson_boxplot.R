@@ -5,6 +5,7 @@
 #' @description
 #'
 #' @param stat.name the name of the output file and of the plot. By default "caravanserais_areas".
+#' @param concept.name the key that will be used to identify heritage places. By default "hp.id".
 #' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
 #' @param stat the statistic that will be computed. The different values can be "area" for areas, or "dist" for distances between heritage places. By default 'area'.
@@ -63,7 +64,8 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
   if(!is.na(by)){
     hp.geojson <- eamenaR::ref_routes(geojson.path = geojson.path,
                                       csv.path = csv.path,
-                                      by = by)
+                                      by = by,
+                                      verbose = verbose)
     by.unique <- unique(hp.geojson[[by]])
     df.colors <- data.frame(by = by.unique,
                             color = RColorBrewer::brewer.pal(length(by.unique), color.set))
