@@ -20,8 +20,6 @@
 #'
 #' @examples
 #'
-#' # load {dplyr}
-#' library(dplyr)
 #'
 #' # plot a general map of heritage places
 #' geojson_map(map.name = "caravanserail")
@@ -71,6 +69,7 @@ geojson_map <- function(map.name = "map",
                         fig.height = 8){
   # field.names <- "Overall Condition State Type"
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
+  `%>%` <- dplyr::`%>%` # used to not load dplyr
   symbology <- openxlsx::read.xlsx(symbology)
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
@@ -150,7 +149,9 @@ geojson_map <- function(map.name = "map",
                          length(splitted.unique.values),")    read '",
                          field.value,"' field value"))
             ea.geojson.point.sub <- ea.geojson.point[grep(field.value, ea.geojson.point[[field.name]]), ]
-            ea.geojson.point.sub <- merge(ea.geojson.point.sub, symbology.field, by = field.name, all.x = T)
+            ea.geojson.point.sub <- merge(ea.geojson.point.sub,
+                                          symbology.field, by = field.name,
+                                          all.x = T)
             ea.geojson.point.sub$colors[is.na(ea.geojson.point.sub$colors)] <- "#808080"
             if(nrow(ea.geojson.point.sub) > 0){
               gmap <- ggmap::ggmap(stamenbck) +
@@ -187,7 +188,8 @@ geojson_map <- function(map.name = "map",
                 field.value.norm <- gsub("/", "_", field.value)
                 field.value.norm <- gsub(" ", "_", field.value.norm)
                 field.value.norm <- gsub("%", "perc", field.value.norm)
-                gout <- paste0(dirOut, map.name, "_", field.name, "_", field.value.norm, ".png")
+                gout <- paste0(dirOut, map.name, "_", field.name, "_",
+                               field.value.norm, ".png")
                 ggplot2::ggsave(gout, gmap,
                                 width = fig.width,
                                 height = fig.height)
@@ -288,9 +290,12 @@ geojson_map <- function(map.name = "map",
     labels.ln <-"paste0('<b>', ea.geojson.line[[ids]][a.pt],'</b>'"
     labels.pl <-"paste0('<b>', ea.geojson.polygon[[ids]][a.pt],'</b>'"
     for(ffl in fields.for.labels){
-      labels.pt <- paste0(labels.pt, paste0(", '<br>', ea.geojson.point[['", ffl, "']][a.pt]"))
-      labels.ln <- paste0(labels.ln, paste0(", '<br>', ea.geojson.line[['", ffl, "']][a.pt]"))
-      labels.pl <- paste0(labels.pl, paste0(", '<br>', ea.geojson.polygon[['", ffl, "']][a.pt]"))
+      labels.pt <- paste0(labels.pt,
+                          paste0(", '<br>', ea.geojson.point[['", ffl, "']][a.pt]"))
+      labels.ln <- paste0(labels.ln,
+                          paste0(", '<br>', ea.geojson.line[['", ffl, "']][a.pt]"))
+      labels.pl <- paste0(labels.pl,
+                          paste0(", '<br>', ea.geojson.polygon[['", ffl, "']][a.pt]"))
     }
     labels.pt <- paste0(labels.pt, ")")
     labels.ln <- paste0(labels.ln, ")")
@@ -330,8 +335,10 @@ geojson_map <- function(map.name = "map",
       }
     }
     ea.map <- leaflet::leaflet() %>%
-      leaflet::addProviderTiles(leaflet::providers$"Esri.WorldImagery", group = "Ortho") %>%
-      leaflet::addProviderTiles(leaflet::providers$"OpenStreetMap", group = "OSM")
+      leaflet::addProviderTiles(leaflet::providers$"Esri.WorldImagery",
+                                group = "Ortho") %>%
+      leaflet::addProviderTiles(leaflet::providers$"OpenStreetMap",
+                                group = "OSM")
     if(nrow(ea.geojson.point) > 0){
       ea.map <- ea.map %>%
         leaflet::addCircleMarkers(data = ea.geojson.point,

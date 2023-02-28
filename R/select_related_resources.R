@@ -58,8 +58,8 @@ select_related_resources <- function(db.con = NA,
   hp <- df[1, "hp.id"]
   vals.uuid <- c()
   for(val in having){
-    val.uuid <- ref_ids(concept.name = val,
-                        choice = "db.concept.uuid")
+    val.uuid <- eamenaR::ref_ids(concept.name = val,
+                                 choice = "db.concept.uuid")
     vals.uuid <- c(vals.uuid, val.uuid)
   }
   having.df <- hash::hash()
@@ -68,10 +68,13 @@ select_related_resources <- function(db.con = NA,
   if(verbose){
     print(paste0("The value '", having, "' has this UUID: '", vals.uuid,"'"))
   }
-  # loop to find the UUID of the connected component having the selected value
   uuid.cc <- df$cc.uuid
   uuids.having <- data.frame(resourceinstanceid = character())
+  # UUID of BC
+  bc.uuid <- eamenaR::ref_ids(concept.name = "Built Component Observation",
+                              choice = "db.concept.uuid")
   # get the values of these components
+  # loop to find the UUID of the connected component having the selected value
   for(cc in uuid.cc){
     # cc <- "90400bb6-ff54-4afd-8183-65c67fa97448"
     # cc <- "34cfe992-c2c0-11ea-9026-02e7594ce0a0"
@@ -83,7 +86,7 @@ select_related_resources <- function(db.con = NA,
       SELECT resourceinstanceid
       FROM tiles
       WHERE resourceinstanceid::text LIKE '${cc}'
-      AND tiledata ->> '8fc30f35-cb7e-11ea-a292-02e7594ce0a0' = '${having.uuid}'
+      AND tiledata ->> '${bc.uuid}' = '${having.uuid}'
                        ")
       uuid.having <- RPostgres::dbGetQuery(db.con, sqll)
       uuids.having <- rbind(uuids.having, uuid.having)
