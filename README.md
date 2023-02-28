@@ -85,6 +85,10 @@ The root directory on your local computer will be (*run*): `system.file(package 
 
 # Data
 
+Data will come from two sources: exported files, and SQL queries.
+
+## Exported files
+
 GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson** URL (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].  
 
 ![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
@@ -95,6 +99,9 @@ Paste the copied URL into your web browser and create a GeoJSON file, the result
 
 You can reformat the (Geo)JSON layout to make it more readable using https://codebeautify.org/jsonviewer. Copy the text content and save it in a new GeoJSON file, for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)).
 
+## SQL queries
+
+The PostgreSQL database is queried directly with SQL command passed through a DBI connection (`RPostgres::Postgres` driver).
 # Typology
 
 Whether the data is Heritage Places, Built Components, etc.
