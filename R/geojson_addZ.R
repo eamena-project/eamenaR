@@ -7,7 +7,7 @@
 #' @param geojson.path path of the GeoJSON file. By default 'caravanserail.geojson'.
 #' @param geojson.out name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
 #' @param ids field having the unique keys, to remove duplicated geometries. By default "EAMENA ID".
-#' @param elevation.api the geoserver API that will be used to collect the elevation, by default 'open-elevation' (https://api.open-elevation.com/). Another option is 'gmrt' (https://www.gmrt.org).
+#' @param elevation.api the geoserver API that will be used to collect the elevation, by default 'gmrt_point' (https://www.gmrt.org). Another option is 'gmrt_profile', and 'open-elevation' (https://api.open-elevation.com/).
 #' @param timeout the threshold below which the expectation of a response is accepted, in seconds. By default, 30.
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
 #' @param dirOut the folder where the outputs will be saved. By default: '/results'. If the folder doesn't exist, it will be created.
@@ -19,8 +19,8 @@
 #'
 #' df <- geojson_addZ()
 #'
-#' # using 'gmrt' as API
-#' df <- geojson_addZ(elevation.api = 'gmrt')
+#' # using 'open-elevation' as API
+#' df <- geojson_addZ(elevation.api = 'open-elevation')
 #'
 #'
 #' @export
@@ -28,7 +28,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail.geojson"),
                          geojson.out = NA,
                          ids = "EAMENA ID",
-                         elevation.api = "open-elevation",
+                         elevation.api = "gmrt_point",
                          timeout = 30,
                          sleep = .3,
                          dirOut = paste0(system.file(package = "eamenaR"),
@@ -73,7 +73,16 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
       geom <- a.geom
     }
     # elevation API
-    if (elevation.api == 'gmrt'){
+    if (elevation.api == 'gmrt_point'){
+      coordinates <- sf::st_coordinates(a.geom)
+      X <- coordinates[1]
+      Y <- coordinates[2]
+      http.req <- paste0(
+        "https://www.gmrt.org:443/services/PointServer?longitude=",
+        X, "&latitude=", Y, "&format=text%2Fplain"
+      )
+    }
+    if (elevation.api == 'gmrt_profile'){
       coordinates.json <- jsonlite::toJSON(sf::st_coordinates(geom))
       http.req <- paste0(
         "https://www.gmrt.org/services/ProfileServer?boundspath=",
@@ -91,7 +100,13 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     }
     r <- httr::GET(http.req, httr::timeout(timeout))
     rr <- httr::content(r)
-    if (elevation.api == 'gmrt'){
+    if (elevation.api == 'gmrt_point'){
+      rrr <- xml2::as_list(rr)
+      val <- rrr$html$body$p[[1]]
+      df.profile[nrow(df.profile) + 1, ] <- val
+      Zs <- c(Zs, val)
+    }
+    if (elevation.api == 'gmrt_profile'){
       rrr <- xml2::as_list(rr)
       rrrr <- rrr$html$body$p[[1]]
       rrrrr <- unlist(stringr::str_split(string = rrrr, pattern = "\\],\\["))
@@ -125,6 +140,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   } else {
     fileOutName <- geojson.out
   }
+  dir.create(dirOut, showWarnings = FALSE)
   fileOut <- paste0(dirOut, fileOutName)
   sf::st_write(my.geom, fileOut, delete_dsn = TRUE)
   if(verbose){print(paste0("* '", fileOutName, "'has been exported to '", dirOut, "'"))}

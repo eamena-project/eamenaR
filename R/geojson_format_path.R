@@ -1,4 +1,4 @@
-#' Format data on paths
+#' Alignment of HP data and HP paths data
 #'
 #' @name geojson_format_path
 #'
@@ -31,7 +31,8 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
   paths <- read.table(csv.path, sep = ",", header = T)
   hp.in.paths <- unique(unique(paths$from),
                         unique(paths$to))
-  in.paths.only <- setdiff(df$id, hp.in.paths)
+  in.paths.only <- setdiff(hp.in.paths, df$hp.id)
+  # clean df with existing HP having Zs and existing in path
   paths <- paths[!(paths$from %in% in.paths.only | paths$to %in% in.paths.only), ]
   hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
   paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
@@ -45,7 +46,6 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
     # to <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.to, ]
     from <- hp.geom.sf[hp.geom.sf[[r.id]] == path.from, ]
     to <- hp.geom.sf[hp.geom.sf[[r.id]] == path.to, ]
-
     # an HP could have more than one geometry, we select the first one having a POINT format if exists. If not, no point geometry exist, we create it (st_centroid)
     point.geometry <- c("POINT", "MULTIPOINT")
     for (a.hp in c("from", "to")){
@@ -104,9 +104,9 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
   }
   if(verbose){print(paste0(".. done"))}
   print(colnames(paths))
-  if(by != "by"){
+  if(!is.na(by)){
     if(verbose){print(paste0("will stratify on the 'by' column values"))}
-    # a reminder: by is the column to stratify data. If the users doesn't have a column by, the latter is instancied to by = 1 for facest. So if the column by as the same valeu as the by variable, value by ...
+    # a reminder: by is the column to stratify data. If the users doesn't have a column by, the latter is instancied to by = 1 for facets. So if the column by as the same valeu as the by variable, value by ...
     paths <- paths[ , c("from.id", "from", "to.id", "to",
                         "from.geom", "to.geom", "path.wkt", "dist.m",
                         by)]
@@ -115,13 +115,20 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       print(table(paths[[by]]))
     }
   } else {
-    if(verbose){print(paste0("will NOT stratify on the 'by' column values"))}
+    if(verbose){print(paste0("will NOT be stratify on the 'by' column values"))}
     paths <- paths[ , c("from.id", "from", "to.id", "to",
                         "from.geom", "to.geom", "path.wkt", "dist.m")]
     if(verbose){
       print(paste0("the count of heritage places is:"))
       print(nrow(paths))
     }
+  }
+  n.before.na.rm <- nrow(paths)
+  # rm rows having NA values
+  paths <- paths[complete.cases(paths), ]
+  n.after.na.rm <- nrow(paths)
+  if(verbose){
+    print(paste0(n.before.na.rm - n.after.na.rm, " row(s) having NA value have been removed"))
   }
   return(paths)
 }

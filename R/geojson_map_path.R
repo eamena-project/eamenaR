@@ -10,6 +10,7 @@
 #' @param export.type the type of output: a map (`map`) or a profile (`profile`). For this latter the Z should be calculated with the `geojson_addZ()` function.
 #' @param by the name of the category column. By default "route" for caravanserais.
 #' @param selected.category limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.
+#' @param symbology the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.
 #' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
 #' @param interactive if TRUE will plot a VisNetwork. By default FALSE.
 #' @param export.plot if TRUE, export the plot, if FALSE will only display it.
@@ -71,6 +72,8 @@ geojson_map_path <- function(map.name = "map_path",
                              export.type = c("map"),
                              by = "route",
                              selected.category = NA,
+                             symbology = paste0(system.file(package = "eamenaR"),
+                                                "/extdata/symbology.xlsx"),
                              interactive = FALSE,
                              stamen.zoom = NA,
                              export.plot = F,
@@ -80,12 +83,13 @@ geojson_map_path <- function(map.name = "map_path",
                              fig.height = 8,
                              color.set = "Set1",
                              verbose = TRUE){
+  symbology <- openxlsx::read.xlsx(symbology)
   r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
   paths <- geojson_format_path(geojson.path,
-                                        csv.path,
-                                        by = by,
-                                        verbose = verbose)
+                               csv.path,
+                               by = by,
+                               verbose = verbose)
   nb.all.path <- nrow(paths)
   # remove where NA
   paths <- paths[!is.na(paths$path.wkt), ]
@@ -225,44 +229,28 @@ geojson_map_path <- function(map.name = "map_path",
   }
   if("profile" %in% export.type){
     # to store values
-    df.dist.Zs <- data.frame(dist = numeric(),
-                             hp = character(),
+    df.dist.Zs <- data.frame(hp.1 = character(),
+                             dist = numeric(),
+                             hp.2 = character(),
                              Zs = numeric(),
                              route = character())
+    if(is.na(selected.category)){
+      selected.category <- sort(unique(paths.geom.sf[[by]]))
+    }
     for(route in selected.category){
-      # paths by
-      if(verbose){print(paste0("\n", "* read '", by, "'"))}
       # route <- 1
+      # paths by
+      if(verbose){print(paste0("\n",
+                               "* read '", by, "' = ", route))}
       # subset
       paths.route <- paths.geom.sf[paths.geom.sf[[by]] == route, ]
-      # paths.route <- paths.geom.sf
       paths.route.df <- data.frame(from = paths.route$from,
                                    to = paths.route$to,
                                    dist.m = paths.route$dist.m)
-
-      # "EAMENA-0207260" %in% paths.route.df$to
-      # "EAMENA-0207260" %in% df1
-
       # unique values
       paths.route.df.hp.names <- unique(as.vector(as.matrix(paths.route.df[ , c("from", "to")])))
-
-      # paths.route.df.hp.names <- unique(paths.route.df[ , c("from", "to")])
-      #
-      # paths.route.df.hp.names <- unique(unique(paths.route.df$from),
-      #                                   unique(paths.route.df$to))
-      # hps
-
       hps.route <- hp.geom.sf[hp.geom.sf[[r.id]] %in% paths.route.df.hp.names, ]
-      # hps.route <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] %in% paths.route.df.hp.names, ]
-
-
-      # "EAMENA-0207260" %in% paths.route.df.hp.names
-
       hps.route$name <- hps.route[[r.id]]
-      # hps.route$name <- hps.route[["EAMENA ID"]]
-
-      # "EAMENA-0207260" %in%  hps.route$name
-
       # check
       if(verbose){print("  - check if all HPs are in the paths, and vice versa")}
       if(length(hps.route$name) != length(paths.route.df.hp.names)){
@@ -279,20 +267,11 @@ geojson_map_path <- function(map.name = "map_path",
       } else {
         if(verbose){print("    - check done")}
       }
-
       hps.route.df <- as.data.frame(hps.route)
       # reorder columns
       idx.name <- ncol(hps.route.df)
       hps.route.df <- hps.route.df[ , c(idx.name, 2:idx.name - 1)]
-
-      # hps.route.df[hps.route.df$name == start.node, "Z"]
-
-      #colnames(hps.route.df)
-
-      # g <- igraph::graph_from_data_frame(paths.route.df,
-      #                                    directed = TRUE,
-      #                                    vertices = hps.route.df)
-      # unique(paths.route.df$from, paths.route.df$to)
+      # use igraph to find the first HP and to cumulated distances
       g <- igraph::graph_from_data_frame(paths.route.df,
                                          directed = TRUE)
       if(verbose){print("  - set the weight of the edges")}
@@ -333,44 +312,52 @@ geojson_map_path <- function(map.name = "map_path",
         if(verbose){print(paste0("    - HP '", c, " altitude: ", Z, " m"))}
         Zs <- c(Zs, Z)
       }
-      # df.Zs <- t(data.frame(hp = colnames(df.dist),
-      #                       Z = Zs))
-
-      # c <- "EAMENA-0207505"))
       df.dist.Z <- rbind(df.dist, Zs)
       df.dist.Z <- as.data.frame(t(df.dist.Z))
-      colnames(df.dist.Z)[which(names(df.dist.Z) == "V2")] <- "hp"
+      df.dist.Z$hp.1 <- rownames(df.dist.Z)
+      colnames(df.dist.Z)[which(names(df.dist.Z) == "V2")] <- "hp.2"
       colnames(df.dist.Z)[which(names(df.dist.Z) == "V3")] <- "route"
+      df.dist.Z <- df.dist.Z[ , c("hp.1", "dist", "hp.2", "route", "Zs")]
       # add the HP origin
-      df.dist.Z <- rbind(df.dist.Z, data.frame(dist = 0,
-                                               hp = start.node,
-                                               Zs = start.node.z,
+      df.dist.Z <- rbind(df.dist.Z, data.frame(hp.1 = start.node,
+                                               dist = 0,
+                                               hp.2 = start.node,
                                                route = route,
+                                               Zs = start.node.z,
                                                row.names = start.node))
-      rownames(df.dist.Z) <- paste0(rownames(df.dist.Z), ".", route)
+      # to avoid duplicated in rownames ?
+      # rownames(df.dist.Z) <- paste0(rownames(df.dist.Z), ".", route)
       # aggregate the route to a bigger df
       df.dist.Zs <- rbind(df.dist.Zs, df.dist.Z)
     }
-    # type conversion
-    df.dist.Zs$Zs <- as.numeric(as.character(df.dist.Zs$Zs))
-    df.dist.Zs$dist <- as.numeric(as.character(df.dist.Zs$dist))
-    # df.dist.Z[ , c("Zs", "dist")] <-
-    df.dist.Zs$dist <- df.dist.Zs$dist/1000
-    # recovers ids (short names for plotting)
+    # rownames(df.dist.Zs) <- seq(1, )
+
+    # # recovers ids (short names for plotting)
     df.ids <- eamenaR::geojson_stat(stat = c("list_ids"),
                                     geojson.path = geojson.path,
                                     export.stat = T)
     df.ids <- data.frame(id = rownames(df.ids),
-                         hp = df.ids$ea.ids)
-    df.complete <- merge(df.dist.Zs, df.ids, by = "hp", all.x = T)
+                         hp.1 = df.ids[["hp.id"]])
+    df.complete <- merge(df.dist.Zs, df.ids, by = "hp.1", all.x = T)
+    df.complete <- df.complete[df.complete$dist != Inf, ]
+    # type conversion
+    df.complete$Zs <- as.numeric(as.character(df.complete$Zs))
+    df.complete$dist <- as.numeric(as.character(df.complete$dist))
+    # df.dist.Z[ , c("Zs", "dist")] <-
+    df.complete$dist <- df.complete$dist/1000
+    # replace the category column with the generic "by" for the plot
+    names(df.complete)[names(df.complete) == by] <- 'by'
     # create profile
     gout <- ggplot2::ggplot(df.complete, ggplot2::aes(x = dist, y = Zs, label = id)) +
-      ggplot2::facet_grid(route ~ .) +
+      ggplot2::facet_grid(by ~ .) +
+      ggplot2::geom_line(ggplot2::aes(colour = factor(by)),
+                         size = 1) +
       ggplot2::geom_point() +
-      ggplot2::geom_line() +
       ggrepel::geom_text_repel(max.overlaps = Inf) +
       ggplot2::xlab("distance (km)") +
       ggplot2::ylab("elevation (m)") +
+      ggplot2::labs(color = factor(by)) +
+      ggplot2::scale_colour_manual(values = by.colors) +
       ggplot2::theme_bw()
     if (export.plot) {
       if(verbose){print(paste0("    - export 'profile'"))}
@@ -387,7 +374,8 @@ geojson_map_path <- function(map.name = "map_path",
   }
 }
 
-# geojson_stat(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", stat.name = "geojson_fields", stat = "list_ids")
-#
-# geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15, fig.height = 10, dirOut = "C:/Rprojects/eamenaR/results/", geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson", csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv")
-# # geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
+# geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
+#                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
+#                  # selected.category = c(0, 1, 2, 3, 4),
+#                  export.type = "profile",
+#                  export.plot = T)
