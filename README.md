@@ -301,7 +301,7 @@ A good way to control the paths, avoiding double edges, etc. is to run an intera
 geojson_map_path(interactive = T,
                  export.plot = F)
 ```
-Will plot these five routes into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-project.github.io/eamenaR/results/paths_map_route_1)
+Will plot these five routes (from `0` to `4`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-project.github.io/eamenaR/results/paths_map_route_1)
 
 <p align="center">
   <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
