@@ -1,9 +1,4 @@
 
-https://www.gmrt.org/services/ProfileServer?boundspath=[[-120,43]]&format=json
-
-
-
-
 stat.name = "orientations_path"
 stat.name = "boxplot_by_routes"
 geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson"
