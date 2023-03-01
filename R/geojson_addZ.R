@@ -17,13 +17,10 @@
 #'
 #' @examples
 #'
-#' df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+#' df <- geojson_addZ()
 #'
 #' # using 'gmrt' as API
-#' df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-#'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
-#'                    elevation.api = 'gmrt')
+#' df <- geojson_addZ(elevation.api = 'gmrt')
 #'
 #'
 #' @export
@@ -133,6 +130,3 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   if(verbose){print(paste0("* '", fileOutName, "'has been exported to '", dirOut, "'"))}
   return(df.profile)
 }
-
-df <- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-                   elevation.api = 'gmrt')

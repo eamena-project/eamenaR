@@ -55,7 +55,7 @@ ref_are_duplicates <- function(db.con = NA,
     if(verbose){print(paste0("  - read the GeoJSON file: ",
                              DescTools::SplitPath(geojson.path)$fullfilename))}
     # collect also the DB ids and resourceid
-    ids <- eamenaR::ref_ids(in.value = "hp.id")
+    ids <- eamenaR::ref_ids(concept.name = "hp.id")
     selected.fields <- c(ids, selected.fields, "resourceid")
     ea.geojson <- geojsonsf::geojson_sf(geojson.path)
     ea.geojson <- ea.geojson[ea.geojson[[ids]] %in% hp.list, selected.fields]

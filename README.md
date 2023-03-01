@@ -862,7 +862,9 @@ flowchart LR
     A -. a. get MBR .-> D("geom_bbox()"):::eamenaRfunction;
     B --1. mapping file--> B;
     B --2. export--> C[BU file<br><em>target</em>];
+    subgraph ide1 [Geometries];
     D -. b. creates .-> E[mbr.geojson];
+    end;
     classDef eamenaRfunction fill:#e7deca;
 ```
 
