@@ -380,5 +380,5 @@ geojson_map_path <- function(map.name = "map_path",
 #                  export.type = "profile",
 #                  export.plot = T)
 
-geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15)
+# geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15)
 
