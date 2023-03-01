@@ -298,11 +298,10 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 A good way to control the paths, avoiding double edges, etc. is to run an interactive plot of these paths:
 
 ```
-geojson_map_path(routes = c(0, 1, 2, 3, 4),
-                 interactive = T,
+geojson_map_path(interactive = T,
                  export.plot = F)
 ```
-Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-project.github.io/eamenaR/results/paths_map_route_1)
+Will plot these five routes into an interactive [VisNetwork](https://datastorm-open.github.io/visNetwork/) HTML widget, for example [route 1](https://eamena-project.github.io/eamenaR/results/paths_map_route_1)
 
 <p align="center">
   <img alt="img-name" src="./results/paths_map_route_1.png" width="500">
@@ -310,12 +309,11 @@ Will plot these five routes (`routes = c(0, 1, 2, 3, 4)`) into an interactive [V
 
 #### Profiles
 
-Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-project.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API (by default [open-elevation](https://www.open-elevation.com/)) and the function [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
+Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-project.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API and the function [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
 
 ```
 df <- geojson_addZ()
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
-                 routes = c(0, 1, 2, 3, 4),
                  export.type = "profile",
                  export.plot = T,
                  fig.height = 11,

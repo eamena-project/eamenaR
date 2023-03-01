@@ -379,3 +379,6 @@ geojson_map_path <- function(map.name = "map_path",
 #                  # selected.category = c(0, 1, 2, 3, 4),
 #                  export.type = "profile",
 #                  export.plot = T)
+
+geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15)
+
