@@ -452,7 +452,7 @@ Will give this `df.measures` dataframe:
 |:--------------|:------------------------------------|:-----------------|:------------------------------------|:-------|----------:|
 |EAMENA-0164943 |d4feb830-10c7-4d80-a19e-e608f424be4c |COMPONENT-0000144 |28af281c-e4b9-44ac-aa98-2608581b7540 |Room    |         28|
 
-To retrieve the Heritage places' information about Rooms and Stables create a dataframe to store this data, and run a loop stament over Heritage Places and types of Built components:
+To retrieve the Heritage places' information about Rooms and Stables, create a dataframe to store this data, and run a loop stament over Heritage Places and types of Built components:
 
 ```
 hps <- c("EAMENA-0164943", "EAMENA-0164937", "EAMENA-0164905")
