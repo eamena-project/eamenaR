@@ -1,7 +1,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8].  
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
   
 ```mermaid
 flowchart LR
@@ -1068,3 +1068,4 @@ The format of a rectangle selection is 4 different points[^2], starting from the
 [^6]: Plotly: https://plotly.com
 [^7]: Leaflet: https://leafletjs.com/
 [^8]: Arches: https://www.archesproject.org/
+[^9]: https://github.com/eamena-project/eamenaR/blob/main/.github/CONTRIBUTING.md
