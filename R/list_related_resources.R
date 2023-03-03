@@ -47,7 +47,8 @@ list_related_resources <- function(db.con = NA,
   d.id <- uuid_id(db.con = my_con,
                   d = d.id,
                   id = id,
-                  disconn = F)
+                  disconn = F,
+                  verbose = verbose)
   # concept.uuid <- eamenaR::ref_ids(in.value = concept.name,
   #                                  choice = "db.concept.uuid")
   # get the UUID of the connected components of a given HP

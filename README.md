@@ -863,7 +863,7 @@ flowchart LR
     subgraph ide1 [Geometries];
     D -. b. creates .-> E[mbr.geojson];
     end;
-    E -- + GRID ID --> B; 
+    E -. + GRID ID .-> B; 
     classDef eamenaRfunction fill:#e7deca;
 ```
 
