@@ -1,3 +1,17 @@
+d <- hash::hash()
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'postgres',
+                               password = 'postgis',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+ref_users(db.con = my_con,
+          d = d,
+          date.after = "2022-01-01",
+          date.before = "2022-12-01",
+          plot.g = T)
+
+
 
 stat.name = "orientations_path"
 stat.name = "boxplot_by_routes"
