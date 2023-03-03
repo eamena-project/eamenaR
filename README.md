@@ -737,6 +737,7 @@ flowchart LR
     B --3. create<br><b>POLYGON</b>--> B;
     B --4. KML/KMZ--> C;
     C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    F --5. GeoJSON<br><b>POLYGON</b>--> D:::eamenaRfunction;
     D --6. append<br>new geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
