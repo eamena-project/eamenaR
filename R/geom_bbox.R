@@ -1,17 +1,17 @@
-#' Create the bounding box of BUs' geometries and save it as a GeoJSON file
+#' Create bounding box of BUs' geometries and save it as GeoJSON file
 #'
 #' @name geom_bbox
 #'
-#' @description Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the minimum bounding box (MBR), that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
+#' @description Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 #'
-#' @param dataDir the path to the folder where the XLSXs are.
-#' @param x_column,y_column the column of the X and Y coordinates, if NA the function will look the field 'wkt'.
-#' @param wkt_column the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.
-#' @param dirOut the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.
-#' @param geojson.name the name of the GeoJSON that will be created, by default 'mbr' (minimum bound rectangle)
-#' @param verbose if TRUE (by default) then display different messages.
+#' @param dataDir path to folder where XLSXs are.
+#' @param x_column,y_column column of X and Y coordinates, if NA function will look the field 'wkt'.
+#' @param wkt_column column of WKT coordinates, if NA (default) function will look the field 'x_column' and 'y_column'.
+#' @param dirOut folder where GeoJSON will be saved. Default: '/results'. If it doesn't exist, will be created.
+#' @param geojson.name name of the GeoJSON that will be created, Default 'mbr' (minimum bound rectangle)
+#' @param verbose if TRUE (default) then display different messages.
 #'
-#' @return the bounding box of the dataset as a GeoJSON file
+#' @return bounding box of the dataset as a GeoJSON file
 #'
 #' @examples
 #'
