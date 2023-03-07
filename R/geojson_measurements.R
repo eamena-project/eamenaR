@@ -1,26 +1,26 @@
-#' Measurements on a GeoJSON file
+#' Measurements on GeoJSON file
 #'
 #' @name geojson_measurements
 #'
-#' @description Compute measurements (areas, L x l, etc.) on a GeoJSON file and output a boxplot
+#' @description Compute measurements (areas, L x l, etc.) on GeoJSON file and output boxplot
 #'
-#' @param stat.name the name of the output file. By default "stat".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param stat the statistic that will be computed. By default 'area'.
-#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.
-#' @param csv.path if the parameter by is TRUE, will use this CSV file to recover the route of the heritage places
-#' @param plot.stat if TRUE (by default) will plot the stat as a graphic.
-#' @param export.stat if TRUE return the stats to be stored in a new variable.
-#' @param export.plot if TRUE, export the stats in a new file.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'.
-#' If it doesn't exist, it will be created. Only useful is export.plot is TRUE.
-#' @param verbose if TRUE (by default) verbose.
+#' @param stat.name name of output file. Default "stat".
+#' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
+#' @param stat statistic that will be computed. Default 'area'.
+#' @param name of field on which paths will be grouped. Example "route". Will create as many plots as there are different categories. Default NA.
+#' @param csv.path if parameter is TRUE, will use this CSV file to recover route of the heritage places (HP).
+#' @param plot.stat if TRUE (default) will plot stat as a graphic.
+#' @param export.stat if TRUE return stats to be stored in new variable.
+#' @param export.plot if TRUE, export stats in a new file.
+#' @param dirOut folder where outputs will be saved. Default: '/results'.
+#' If it doesn't exist, will be created. Only useful is export.plot is TRUE.
+#' @param verbose if TRUE (default) verbose.
 #'
-#' @return Show or export measurements statistics on the GeoJSON file
+#' @return Show or export measurements statistics on GeoJSON file
 #'
 #' @examples
 #'
-#' # boxplot for all heritage places
+#' # boxplot for all HPs
 #' geojson_measurements(stat.name = "areas")
 #'
 #' # by route and export
