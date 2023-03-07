@@ -1,3 +1,12 @@
+# work with GET() + cookies
+
+http.req <- "https://database.eamena.org/en/api/search/export_results?paging-filter=1&tiles=true&format=geojson&precision=6&total=223&term-filter=%5B%7B%22context%22%3A%22%22%2C%22context_label%22%3A%22Heritage%20Place%20-%20Resource%20Name%22%2C%22id%22%3A1%2C%22text%22%3A%22CVNS-IR%22%2C%22type%22%3A%22term%22%2C%22value%22%3A%22CVNS-IR%22%2C%22inverted%22%3Afalse%7D%5D"
+r <- httr::GET(http.req,
+               config = list(csrftoken="tzkEIDM1WP1yxoqzIT6ozXZmlJlvQfrhFwT0LrzXEYn25klUpS5iuyN5AsDser2L"))
+rr <- httr::content(r)
+
+
+############################
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'postgres',

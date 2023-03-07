@@ -75,6 +75,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     # elevation API
     if (elevation.api == 'gmrt_point'){
       coordinates <- sf::st_coordinates(a.geom)
+      # X <- 30 ; Y <- 40
       X <- coordinates[1]
       Y <- coordinates[2]
       http.req <- paste0(
