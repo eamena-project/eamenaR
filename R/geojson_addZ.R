@@ -1,16 +1,16 @@
-#' Add a Z value to geometries and export in a new file
+#' Add Z value to geometries and export in a new file
 #'
 #' @name geojson_addZ
 #'
-#' @description Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file. The geoserver API can lead to a Timeout.
+#' @description Use geoserver API to recover the Z for given set of points stored in GeoJSON file. Geoserver API can lead to Timeout.
 #'
-#' @param geojson.path path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param geojson.out name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable `geojson.path`).
+#' @param geojson.path path of GeoJSON file. By default 'caravanserail.geojson'.
+#' @param geojson.out name of output file. By default NA, will add suffix 'Z' to name of GeoJSON file (variable `geojson.path`).
 #' @param ids field having the unique keys, to remove duplicated geometries. By default "EAMENA ID".
-#' @param elevation.api the geoserver API that will be used to collect the elevation, by default 'gmrt_point' (https://www.gmrt.org). Another option is 'gmrt_profile', and 'open-elevation' (https://api.open-elevation.com/).
+#' @param elevation.api the geoserver API used to collect the elevation, by default 'gmrt_point' (https://www.gmrt.org). Another option is 'gmrt_profile', and 'open-elevation' (https://api.open-elevation.com/).
 #' @param timeout the threshold below which the expectation of a response is accepted, in seconds. By default, 30.
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If the folder doesn't exist, it will be created.
+#' @param dirOut the folder where outputs will be saved. By default: '/results'. If folder doesn't exist, it will be created.
 #' @param verbose if TRUE (by default): verbose.
 #'
 #' @return
