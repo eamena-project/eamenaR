@@ -1,13 +1,13 @@
-#' Get values of a given field in a GeoJSON file.
+#' Get values of given field in GeoJSON file.
 #'
 #' @name geojson_get_field
 #'
-#' @description Get all values of a given field.
+#' @description Get all values of given field.
 #'
-#' @param geojson.path the path to the GeoJSON file.
-#' @param field a field name, by default "EAMENA ID".
+#' @param geojson.path path to GeoJSON file.
+#' @param field field name, Default "EAMENA ID".
 #'
-#' @return A vector with all values
+#' @return Vector with all values
 #'
 #' @examples
 #'
