@@ -2,13 +2,13 @@
 #'
 #' @name geojson_csv
 #'
-#' @description This function allows file format conversion from GeoJSON to CSV. The output CSV file then can be imported into the EAMENA DB with a bulk upload append procedure.
+#' @description Function allows file format conversion from GeoJSON to CSV. Output CSV file can be imported into EAMENA DB with bulk upload append procedure.
 #'
-#' @param geom.path the path to the GeoJSON file. This file comes from the `geojson_kml()` function.
-#' @param export if TRUE (by default), will export the GeoJSON to a CSV file.
-#' @param dirOut the path to the folder where the CSV file will be created.
-#' @param csv.name the name of the CSV that will be created without the extension
-#' @param verbose if TRUE (by default) then display different messages.
+#' @param geom.path path to GeoJSON file. File comes from the `geojson_kml()` function.
+#' @param export if TRUE (default), will export GeoJSON to CSV file.
+#' @param dirOut path to folder where CSV file will be created.
+#' @param csv.name name of CSV that will be created without the extension
+#' @param verbose if TRUE (default) then display different messages.
 #'
 #' @return a CSV file
 #'
