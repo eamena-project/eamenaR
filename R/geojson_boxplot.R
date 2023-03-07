@@ -1,22 +1,22 @@
-#' Create a boxplot or various boxplots of path lengths between different heritage places
+#' Create boxplot or various boxplots of path lengths between different heritage places
 #'
 #' @name geojson_boxplot
 #'
 #' @description
 #'
-#' @param stat.name the name of the output file and of the plot. By default "caravanserais_areas".
-#' @param concept.name the key that will be used to identify heritage places. By default "hp.id".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param csv.path the path to the CSV where the edges between two heritage places are recorded.
-#' @param stat the statistic that will be computed. The different values can be "area" for areas, or "dist" for distances between heritage places. By default 'area'.
-#' @param chart.type the type of chart that will be plot. By default, "boxplot".
-#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.
-#' @param interactive if TRUE, create a Plotly chart. By default, FALSE.
-#' @param export.plot if TRUE, will save the plot. By default, FALSE.
-#' @param fig.width,fig.height size of the output chart.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.
-#' @param color.set the RBrewer color set. By default "Set1".
-#' @param verbose if TRUE (by default), print messages.
+#' @param stat.name name of output file and plot. Default "caravanserais_areas".
+#' @param concept.name key used to identify heritage places. Default "hp.id".
+#' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
+#' @param csv.path path to CSV where edges between two heritage places are recorded.
+#' @param stat statistic that will be computed. Different values can be "area" for areas, or "dist" for distances between heritage places. Default 'area'.
+#' @param chart.type type of chart that will be plot. Default, "boxplot".
+#' @param name of field on which paths will be grouped. Example "route". Will create as many plots as there are different categories. By default NA.
+#' @param interactive if TRUE, create a Plotly chart. Default, FALSE.
+#' @param export.plot if TRUE, will save the plot. Default, FALSE.
+#' @param fig.width,fig.height size of output chart.
+#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export plot is TRUE.
+#' @param color.set the RBrewer color set. Default "Set1".
+#' @param verbose if TRUE (Default), print messages.
 #'
 #' @return
 #'
