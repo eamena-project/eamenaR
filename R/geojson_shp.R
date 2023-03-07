@@ -4,16 +4,16 @@
 #'
 #' @description Convert from SHP (shapefile) to GeoJSON, or from GeoJSON to SHP.
 #'
-#' @param geom.path the path to the SHP/GeoJSONfile.
-#' @param geom.types the types of geometries ("POINT", "LINE" or "POLYGON") that will be selected. By default all: `c("POINT", "LINE", "POLYGON")`.
-#' @param export if TRUE, will export the SHP file in a GeoJSON format, or the GeoJSON file as a SHP, if FALSE simple plot.
-#' @param dirOut the path to the folder where the SHP/GeoJSON file will be created. By default, 'results/'.
-#' @param geojson.name the name of the SHP/GeoJSON that will be created without the extension
-#' @param select.name for SHP export only. The field selected to be the SHP name of the HP, by default `"EAMENA ID"`.
-#' @param select.fields for SHP export only. SHP conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: `c("EAMENA ID","Resource Name", "resourceid")`.
-#' @param verbose if TRUE (by default) then display different messages.
+#' @param geom.path path to the SHP/GeoJSONfile.
+#' @param geom.types types of geometries ("POINT", "LINE", "POLYGON") that will be selected. Default all: `c("POINT", "LINE", "POLYGON")`.
+#' @param export if TRUE, will export SHP file in GeoJSON format, or GeoJSON file as SHP, if FALSE simple plot.
+#' @param dirOut path to folder where SHP/GeoJSON file will be created. Default, 'results/'.
+#' @param geojson.name name of SHP/GeoJSON that will be created without extension
+#' @param select.name for SHP export only. Field selected to be SHP name of the heritage place, default `"EAMENA ID"`.
+#' @param select.fields for SHP export only. SHP conversion remove large number of GeoJSON fields. This variable is used to select fields to preserve. Default: `c("EAMENA ID","Resource Name", "resourceid")`.
+#' @param verbose if TRUE (default) then display different messages.
 #'
-#' @return a GeoJSON file or a SHP file, depending on the input file.
+#' @return GeoJSON file or SHP file, depending on input file.
 #'
 #' @examples
 #'
