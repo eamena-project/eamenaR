@@ -3,8 +3,7 @@ Type: Package
 Title: Statistical analysis of the EAMENA database
 Description: Statistical analysis of the EAMENA database
 Version: 0.1.1
-Authors@R: c(person("Thomas", "Huet", email = "thomas.huet@arch.ox.ac.uk", role = c("aut", "cre"), comment=c(ORCID="0000-0002-1112-6122")),
-person("Michael", "Fradley", email = "michael.fradley@arch.ox.ac.uk", role = c("ctb")))
+Authors@R: c(person("Thomas", "Huet", email = "thomas.huet@arch.ox.ac.uk", role = c("aut", "cre"), comment=c(ORCID="0000-0002-1112-6122")), person("Michael", "Fradley", email = "michael.fradley@arch.ox.ac.uk", role = c("ctb")))
 Depends:
     R (>= 3.0.1)
 License: MIT

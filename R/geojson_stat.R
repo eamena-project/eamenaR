@@ -86,9 +86,7 @@ geojson_stat <- function(stat.name = "stat",
   # field.names <- c("Overall Condition State Type")
 
   # Histogram
-
-
-
+  `%>%` <- dplyr::`%>%` # used to not load dplyr
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   # remove leading/trailing spaces
   names(ea.geojson) <- trimws(colnames(ea.geojson))
@@ -146,9 +144,14 @@ geojson_stat <- function(stat.name = "stat",
       )
     # loop over the values
     for(chart in chart.type){
-      if(verbose){print(paste0("Chart '", chart,"'"))}
+      if(chart == "boxplot"){
+        # chart <- "boxplot"
+        if(verbose){print(paste0("Chart '", chart,"'"))}
+      }
+
       if(chart == "radar"){
         # chart <- "radar"
+        if(verbose){print(paste0("Chart '", chart,"'"))}
         orientations <- c("North", "Northeast", "East",
                           "Southeast", "South",
                           "Southwest", "West",
@@ -162,7 +165,8 @@ geojson_stat <- function(stat.name = "stat",
         }
         hp.orient[["Direction"]] <- NA
         for(i in seq(1, nrow(hp.orient))){
-          hp.orient[i, "Direction"] <- unlist(stringr::str_split(hp.orient[i, "Resource Orientation"], "-"))[1]
+          hp.orient[i, "Direction"] <- unlist(stringr::str_split(hp.orient[i, "Resource Orientation"],
+                                                                 "-"))[1]
         }
         directions <- hp.orient$Direction
         directions.t <- as.data.frame(table(hp.orient$Direction))
@@ -226,7 +230,8 @@ geojson_stat <- function(stat.name = "stat",
             # reorder
             # df <- df[match(c("Good", "Fair", "Poor", "Very Bad", "Destroyed"), df[[field.name]]),]
             # rownames(df) <- seq(1, nrow(df))
-            df[[field.name]] <- factor(df[[field.name]], levels = c("Good", "Fair", "Poor", "Very Bad", "Destroyed"))
+            df[[field.name]] <- factor(df[[field.name]],
+                                       levels = c("Good", "Fair", "Poor", "Very Bad", "Destroyed"))
           }
           gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
                                                  y = Freq.perc,
@@ -261,7 +266,8 @@ geojson_stat <- function(stat.name = "stat",
             blank_theme +
             ggplot2::labs(title = paste0(field.name),
                           # subtitle = my_subtitle,
-                          caption = paste0("Data source:", DescTools::SplitPath(geojson.path)$fullfilename)) +
+                          caption = paste0("Data source:",
+                                           DescTools::SplitPath(geojson.path)$fullfilename)) +
             # ggplot2::ylab(paste0(field.name, " %")) +
             ggplot2::ylab(paste0(field.name, " %")) +
             ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
