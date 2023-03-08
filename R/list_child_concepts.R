@@ -149,26 +149,3 @@ list_child_concepts <- function(db.con = NA,
   d[[field.uuid]] <- subgraph.uuid
   return(d)
 }
-
-# create a Postgres connection (replace 'xxx' by password)
-d <- hash::hash()
-my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
-                               password = 'postgis',
-                               dbname = 'eamena',
-                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-                               port = 5432)
-
-# Disturbance Extent Type
-d <- list_child_concepts(db.con = my_con,
-                         d = d,
-                         field = "Disturbance Extent Type",
-                         concept.name = "Disturbance Extent Type",
-                         disconn = F)
-
-d <- list_child_concepts(db.con = my_con,
-                         d = d,
-                         field = "subcultural_periods",
-                         concept.name = "Cultural Sub-Period",
-                         disconn = T)
-

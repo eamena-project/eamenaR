@@ -1,6 +1,12 @@
 
+library(devtools)
 
+use_testthat()
+use_test("geojson_addZ")
+use_coverage(type = c("codecov"))
 
+library(covr)
+codecov()
 
 ######################################
 
