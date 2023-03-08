@@ -1,3 +1,5 @@
+Then add the scaffolding for the code coverage
+[![Codecov test coverage](https://codecov.io/gh/eamena-project/eamenar/branch/main/graph/badge.svg)](https://app.codecov.io/gh/eamena-project/eamenar?branch=main)
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 

@@ -32,7 +32,9 @@ Imports:
     googlesheets4,
     htmlwidgets
 Suggests:
+    covr,
     knitr,
     microbenchmark,
-    testthat
+    testthat (>= 3.0.0)
 RoxygenNote: 7.1.2
+Config/testthat/edition: 3

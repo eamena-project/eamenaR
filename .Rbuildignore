@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 results/
 docs/
+^codecov\.yml$
