@@ -1,21 +1,21 @@
-#' List the name of all the child-concepts below a certain Concept node
+#' List name of all child-concepts below certain Concept node
 #'
 #' @name list_child_concepts
 #'
-#' @description With a given concept UUID (v. Reference Data Manager), find all the child nodes.
+#' @description With given concept UUID (v. Reference Data Manager), find all child nodes.
 #'
-#' @param db.con a `dbConnect` connection to the database.
-#' @param d a hash() object (a Python-like dictionary).
-#' @param field the field name that will be created in the `d` hash() object.
-#' @param concept.name a concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from the `ids.csv` file (see `ref_ids()`). By default, NA.
-#' @param disconn if TRUE (by default), will disconnect from the DB.
-#' @param verbose if TRUE (by default), print messages.
+#' @param db.con `dbConnect` connection to database.
+#' @param d hash() object (Python-like dictionary).
+#' @param field field name that will be created in `d` hash() object.
+#' @param concept.name concept label name (either `r.concept.name` or `db.concept.name`). This `concept.name` value coming from `ids.csv` file (see `ref_ids()`). Default, NA.
+#' @param disconn if TRUE (Default), will disconnect from DB.
+#' @param verbose if TRUE (Default), print messages.
 #'
-#' @return A `igraph` object stored in the input hash() object, under the selected 'field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
+#' @return `igraph` object stored in input hash() object, under selected 'field' name. This dataframe will with listed child-concepts in the provided field name. UUID of each sub-concept will be stored into 'field.uuid' column of dataframe
 #'
 #' @examples.
 #'
-#' # create a Postgres connection (replace 'xxx' by the password)
+#' # create a Postgres connection (replace 'xxx' by password)
 #' d <- hash::hash()
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 #'                                user = 'xxx',
@@ -31,7 +31,7 @@
 #'                          concept.name = "Disturbance Extent Type",
 #'                          disconn = F)
 #'
-#' # Cultural periods & Subcultural periods and disconnect from the DB
+#' # Cultural periods & Subcultural periods and disconnect from DB
 #' d <- list_child_concepts(db.con = my_con,
 #'                          d = d,
 #'                          field = "cultural_periods",
