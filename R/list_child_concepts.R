@@ -11,9 +11,13 @@
 #' @param disconn if TRUE (Default), will disconnect from DB.
 #' @param verbose if TRUE (Default), print messages.
 #'
-#' @return `igraph` object stored in input hash() object, under selected 'field' name. This dataframe will with listed child-concepts in the provided field name. UUID of each sub-concept will be stored into 'field.uuid' column of dataframe
+#' @return return two `igraph` objects listing the child-concepts below certain Concept node.
 #'
-#' @examples.
+#'
+#' @details results are `igraph` objects. The first `igraph` object is stored under the name of the selected `field` argument of the `d` hash() object (`d` argument), for example `Disturbance Extent Type`. The `igraph` object stores the names of the parent (`field` argument) and children (e.g. `Disturbance Extent Type->Unknown`). The second `igraph` object is the same except that the names are replaced by their UUID (e.g. `41488800-6c00-30f2-b93f-785e38ab6251->f7261287-f889-31ff-b198-49733fd000f6`). The latter `igraph` will be stored in `d`, in a field formed by the concatenation of the `field` argument and `.uuid`, e.g. `Disturbance Extent Type.uuid`.
+#'
+#'
+#' @examples
 #'
 #' # create a Postgres connection (replace 'xxx' by password)
 #' d <- hash::hash()
@@ -31,6 +35,28 @@
 #'                          concept.name = "Disturbance Extent Type",
 #'                          disconn = F)
 #'
+#' d$`Disturbance Extent Type`
+#' # IGRAPH 050aea5 DN-- 8 7 --
+#' # + attr: name (v/c)
+#' # + edges from 050aea5 (vertex names):
+#' # [1] Disturbance Extent Type->Unknown          Disturbance Extent Type->1-10%
+#' # [3] Disturbance Extent Type->11-30%           Disturbance Extent Type->91-100%
+#' # [5] Disturbance Extent Type->61-90%           Disturbance Extent Type->No Visible/Known
+#' # [7] Disturbance Extent Type->31-60%
+#'
+#' d$`Disturbance Extent Type.uuid`
+#' # IGRAPH 050aea5 DN-- 8 7 --
+#' # + attr: name (v/c)
+#' # + edges from 050aea5 (vertex names):
+#' # [1] 41488800-6c00-30f2-b93f-785e38ab6251->f7261287-f889-31ff-b198-49733fd000f6
+#' # [2] 41488800-6c00-30f2-b93f-785e38ab6251->361c4af7-3b3f-3b4a-903d-b8a48e3cd0d6
+#' # [3] 41488800-6c00-30f2-b93f-785e38ab6251->a685650c-a31a-3d88-9d5f-00c38eac8e02
+#' # [4] 41488800-6c00-30f2-b93f-785e38ab6251->3d205ade-e20a-389b-9714-5f593667d0f6
+#' # [5] 41488800-6c00-30f2-b93f-785e38ab6251->118ebd31-979b-3524-af9c-3ef1aa7db9f0
+#' # [6] 41488800-6c00-30f2-b93f-785e38ab6251->e13a6594-a72e-31da-aa57-2f07cf0f6afc
+#' # [7] 41488800-6c00-30f2-b93f-785e38ab6251->ad5b2225-f785-37c2-89b0-405d853974b8
+#'
+#'
 #' # Cultural periods & Subcultural periods and disconnect from DB
 #' d <- list_child_concepts(db.con = my_con,
 #'                          d = d,
@@ -43,7 +69,7 @@
 #'                          concept.name = "Cultural Sub-Period",
 #'                          disconn = T)
 #'
-#' # see this latter subgraph
+#' # see the latter subgraph
 #' d$subcultural_periods
 #' ## IGRAPH 9ceb33f DN-- 256 467 --
 #' ## + attr: name (v/c)
@@ -87,7 +113,7 @@ list_child_concepts <- function(db.con = NA,
                                 concept.name = NA,
                                 disconn = TRUE,
                                 verbose = TRUE){
-  concept.uuid <- eamenaR::ref_ids(in.value = concept.name,
+  concept.uuid <- eamenaR::ref_ids(concept.name = concept.name,
                                    choice = "db.concept.uuid")
   if(verbose){print(paste0("*read relations between concepts"))}
   sqll <- "
@@ -123,3 +149,26 @@ list_child_concepts <- function(db.con = NA,
   d[[field.uuid]] <- subgraph.uuid
   return(d)
 }
+
+# create a Postgres connection (replace 'xxx' by password)
+d <- hash::hash()
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'postgres',
+                               password = 'postgis',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+
+# Disturbance Extent Type
+d <- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "Disturbance Extent Type",
+                         concept.name = "Disturbance Extent Type",
+                         disconn = F)
+
+d <- list_child_concepts(db.con = my_con,
+                         d = d,
+                         field = "subcultural_periods",
+                         concept.name = "Cultural Sub-Period",
+                         disconn = T)
+

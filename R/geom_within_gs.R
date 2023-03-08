@@ -7,7 +7,7 @@
 #' @param gs.path path to GeoJSON file, default to the example 'grid_squares.geojson' This GeoJSON is an EAMENA output of Grids as a GeoJSON URL. Name of grids can be calculated with \link[eamenaR]{geom_bbox} function. GeoJSON is read and convert to `sf` object.
 #' @param verbose if TRUE (default): verbose.
 #'
-#' @details when this function is called for a dataframe, it has to be nested into a loop.
+#' @details This function must be nested in a loop when called for a database.
 #'
 #' @return the ID of Grid Square for each WKT geometries.
 #'

@@ -1,12 +1,12 @@
-#' Create bounding box of BUs' geometries and save it as GeoJSON file
+#' Create bounding box of bulk uploads (BU) geometries and save it as GeoJSON file
 #'
 #' @name geom_bbox
 #'
 #' @description Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 #'
 #' @param dataDir path to folder where XLSXs are.
-#' @param x_column,y_column column of X and Y coordinates, if NA function will look the field 'wkt'.
-#' @param wkt_column column of WKT coordinates, if NA (default) function will look the field 'x_column' and 'y_column'.
+#' @param x_column,y_column column of X and Y coordinates, if these arguments are set to 'NA', the function will read the field 'wkt'.
+#' @param wkt_column column of WKT coordinates, if NA (default) function will read the field 'x_column' and 'y_column'.
 #' @param dirOut folder where GeoJSON will be saved. Default: '/results'. If it doesn't exist, will be created.
 #' @param geojson.name name of the GeoJSON that will be created, Default 'mbr' (minimum bound rectangle)
 #' @param verbose if TRUE (default) then display different messages.

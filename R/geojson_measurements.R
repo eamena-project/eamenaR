@@ -12,8 +12,7 @@
 #' @param plot.stat if TRUE (default) will plot stat as a graphic.
 #' @param export.stat if TRUE return stats to be stored in new variable.
 #' @param export.plot if TRUE, export stats in a new file.
-#' @param dirOut folder where outputs will be saved. Default: '/results'.
-#' If it doesn't exist, will be created. Only useful is export.plot is TRUE.
+#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export.plot is TRUE.
 #' @param verbose if TRUE (default) verbose.
 #'
 #' @return Show or export measurements statistics on GeoJSON file

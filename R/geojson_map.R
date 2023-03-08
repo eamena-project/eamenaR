@@ -7,7 +7,7 @@
 #' @param map.name name of output map and name of saved file (if export.plot is TRUE). Default "map".
 #' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
 #' @param ids IDs of resources, default "EAMENA.ID" (R fieldname format, without spaces).
-#' @param field.names a vector one or many field names for thematic cartography. If NA (default), will create a general map
+#' @param field.names a vector of one or many field names for thematic cartography. If NA (default), will create a general map
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in map. If NA (default), no highlights.
 #' @param symbology path to XLSX recording symbology for different values, default 'symbology.xlsx'.
 #' @param stamen.zoom zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). Default NA, zoom level will be calculated automatically.
