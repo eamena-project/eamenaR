@@ -4,22 +4,22 @@
 #'
 #' @description Convert from KML/KMZ to GeoJSON, or from GeoJSON to KML. Geometries drawn in Google Earth or Google Earth pro can be exported as KML or KMZ (ie, compressed KML). At the same time, geometries drawn in EAMENA can be exported as GeoJSON. For a given HP, this data can be then imported into the EAMENA DB.
 #'
-#' @param geom.path the path to the KML, KMZ or GeoJSON file.
-#' @param geom.types the types of geometries ("POINT", "LINE" or "POLYGON") that will be selected. By default all: `c("POINT", "LINE", "POLYGON")`.
-#' @param export if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.
-#' @param dirOut the path to the folder where the KML/KMZ/GeoJSON file will be created.
-#' @param geojson.name the name of the KML/KMZ/GeoJSON that will be created without the extension
-#' @param select.name for KML export only. The field selected to be the KML name of the HP, by default "EAMENA ID".
-#' @param select.fields for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c("EAMENA ID","Resource Name", "resourceid").
+#' @param geom.path path to KML, KMZ or GeoJSON file.
+#' @param geom.types types of geometries ("POINT", "LINE", "POLYGON") that will be selected. Default all: `c("POINT", "LINE", "POLYGON")`.
+#' @param export if TRUE, will export KML/KMZ file in GeoJSON format, or GeoJSON file as a KML, if FALSE simple plot.
+#' @param dirOut path to folder where KML/KMZ/GeoJSON file will be created.
+#' @param geojson.name name of KML/KMZ/GeoJSON that will be created without extension.
+#' @param select.name for KML export only. Field selected to be KML name of heritage place, default "EAMENA ID".
+#' @param select.fields for KML export only. KML conversion remove large number of GeoJSON fields. This variable is used to select fields to preserve. Default: c("EAMENA ID","Resource Name", "resourceid").
 #' @param verbose if TRUE (by default) then display different messages.
 #'
-#' @return a GeoJSON file or a KML file, depending on the input file.
+#' @return GeoJSON file or KML file, depending on input file.
 #'
 #' @examples
 #'
 #' library(dplyr)
 #'
-#' # from KMZ to GeoJSON, with the default 'Waypoints.kmz' input file
+#' # from KMZ to GeoJSON, with default 'Waypoints.kmz' input file
 #' library(dplyr)
 #' geojson_kml(geom.types = "POINT")
 #'
