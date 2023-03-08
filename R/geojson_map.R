@@ -1,20 +1,20 @@
-#' Create a map, whether static or interactive leaflet, from a GeoJSON file
+#' Create map, whether static or interactive leaflet, from GeoJSON file
 #'
 #' @name geojson_map
 #'
-#' @description Create a distribution map
+#' @description Create distribution map
 #'
-#' @param map.name the name of the output map and the name of the saved file (if export.plot is TRUE). By default "map".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'.
-#' @param ids the IDs of the resources, by default "EAMENA.ID" (R fieldname format, without spaces).
-#' @param field.names a vector one or many field names for thematic cartography. If NA (by default), will create a general map
-#' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.
-#' @param symbology the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.
-#' @param stamen.zoom the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.
-#' @param interactive if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.
-#' @param export.plot if TRUE, export the plot, if FALSE will only display it.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.
-#' @param fig.width,fig.height size of the output map.
+#' @param map.name name of output map and name of saved file (if export.plot is TRUE). Default "map".
+#' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
+#' @param ids IDs of resources, default "EAMENA.ID" (R fieldname format, without spaces).
+#' @param field.names a vector one or many field names for thematic cartography. If NA (default), will create a general map
+#' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in map. If NA (default), no highlights.
+#' @param symbology path to XLSX recording symbology for different values, default 'symbology.xlsx'.
+#' @param stamen.zoom zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). Default NA, zoom level will be calculated automatically.
+#' @param interactive if FALSE create static PNG (by  default), if TRUE create a plotly plot as HTML widget.
+#' @param export.plot if TRUE, export plot, if FALSE will only display it.
+#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.
+#' @param fig.width,fig.height size of output map.
 #'
 #' @return An interactive map (leaflet) or not
 #'
