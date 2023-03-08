@@ -1,25 +1,25 @@
-#' Basic statistics on a GeoJSON file like lists or charts
+#' Basic statistics on GeoJSON file like lists or charts
 #'
 #' @name geojson_stat
 #'
-#' @description Basic descriptive statistics on a GeoJSON file. This function is used by `geojson_format_path()`.
+#' @description Basic descriptive statistics on GeoJSON file. This function is used by `geojson_format_path()`.
 #'
-#' @param stat.name the name of the output file. By default "stat".
-#' @param geojson.path the path of the GeoJSON file. By default 'caravanserail.geojson'
-#' @param ids the IDs of the resources, by default the eamenaR correspondence of "id", see `ref_ids()`.
-#' @param concept.name the name of the field used to store the IDs. By default `hp.id`.
-#' @param stat the type of statistic that will be computed. By default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see the option `chart.type`
+#' @param stat.name name of output file. Default "stat".
+#' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'
+#' @param ids IDs of resources, default eamenaR correspondence of "id", see `ref_ids()`.
+#' @param concept.name name of field used to store IDs. Default `hp.id`.
+#' @param stat type of statistic that will be computed. Default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see option `chart.type`
 #' @param chart.type either "`pie`" for pie chart, or "`hist`" for histogram, "`radar`" for radar diagrams. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
-#' @param field.names the field name on which the statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
-#' @param by the name of the field on which the paths will be grouped. For example "route". Will create as many plots as there is different categories. By default NA.
-#' @param fig.width,fig.height size of the output chart.
-#' @param fig.dev the format of the image: "png" (by default), "jpg", "svg", etc.
-#' @param export.stat if TRUE return the stats to be stored in a new variable
-#' @param export.plot if TRUE, export the stats in a new file, if FALSE will only display it
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot is TRUE.
+#' @param field.names field name on which statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
+#' @param name of field on which paths will be grouped. For example "route". Will create as many plots as there are different categories. Default NA.
+#' @param fig.width,fig.height size of output chart.
+#' @param fig.dev format of image: "png" (default), "jpg", "svg", etc.
+#' @param export.stat if TRUE return stats to be stored in new variable
+#' @param export.plot if TRUE, export tats in new file, if FALSE will only display it
+#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export.plot is TRUE.
 #' @param verbose if TRUE (by default), print messages.
 #'
-#' @return Show or export basic statistics on the GeoJSON file
+#' @return Show or export basic statistics on GeoJSON file
 #'
 #' @examples
 #'
