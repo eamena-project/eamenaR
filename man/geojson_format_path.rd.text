@@ -1,0 +1,50 @@
+---
+title: "R: Alignment of heritage place data and heritage place
+  paths\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  --------------------- -----------------
+  geojson_format_path     R Documentation
+  --------------------- -----------------
+
+## Alignment of heritage place data and heritage place paths data
+
+### Description
+
+Use dataframe of heritage places (ie, places, vertices), and file of
+paths (as edges) between these heritage places, to format new dataframe.
+Heritage places (HP) are stored in GeoJSON file. Paths between HP are
+stored in CSV file. Function cleans the datasets, removing existing
+paths linking two heritage places that don\'t not exist in the GeoJSON.
+New dataframe is used by functions \'geojson_map_path()\',
+\'geojson_boxplot_path()\' to model dataset with network analysis.
+
+### Usage
+
+    geojson_format_path(
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      csv.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail_paths.csv"),
+      by = NA,
+      concept.name = "hp.id",
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ---------------- --------------------------------------------------------------------------------------------------------------------------------------
+  `geojson.path`   path of GeoJSON file. Default \'caravanserail.geojson\'.
+  `csv.path`       path to CSV where edges between two heritage places are recorded. Default \'caravanserail_paths.csv\'.
+  `concept.name`   concept that will be retrieve from the \'ids.csv\' file. Default \"hp.id\".
+  `verbose`        if TRUE (default), print messages.
+  `name`           of field on which paths will be grouped. Example \"route\". Will create as many plots as there are different categories. Default NA.
+  ---------------- --------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+Dataframe with appropriate columns: \"from.id\", \"from\", \"to.id\",
+\"to\", \"from.geom\", \"to.geom\", \"path.wkt\", \"dist.m\", \"route\"
+:::

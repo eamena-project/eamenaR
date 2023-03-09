@@ -1,0 +1,68 @@
+---
+title: "R: Convert between GeoJSON and SHP"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ------------- -----------------
+  geojson_shp     R Documentation
+  ------------- -----------------
+
+## Convert between GeoJSON and SHP
+
+### Description
+
+Convert from SHP (shapefile) to GeoJSON, or from GeoJSON to SHP.
+
+### Usage
+
+    geojson_shp(
+      geom.path = paste0(system.file(package = "eamenaR"), "/extdata/Waypoints.kmz"),
+      geom.types = c("POINT", "LINE", "POLYGON"),
+      export = TRUE,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      geojson.name = "Waypoints",
+      select.name = "EAMENA ID",
+      select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ----------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `geom.path`       path to the SHP/GeoJSONfile.
+  `geom.types`      types of geometries (\"POINT\", \"LINE\", \"POLYGON\") that will be selected. Default all: \'c(\"POINT\", \"LINE\", \"POLYGON\")\'.
+  `export`          if TRUE, will export SHP file in GeoJSON format, or GeoJSON file as SHP, if FALSE simple plot.
+  `dirOut`          path to folder where SHP/GeoJSON file will be created. Default, \'results/\'.
+  `geojson.name`    name of SHP/GeoJSON that will be created without extension
+  `select.name`     for SHP export only. Field selected to be SHP name of the heritage place, default \'\"EAMENA ID\"\'.
+  `select.fields`   for SHP export only. SHP conversion remove large number of GeoJSON fields. This variable is used to select fields to preserve. Default: \'c(\"EAMENA ID\",\"Resource Name\", \"resourceid\")\'.
+  `verbose`         if TRUE (default) then display different messages.
+  ----------------- -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+GeoJSON file or SHP file, depending on input file.
+
+### Examples
+
+
+    library(dplyr)
+
+    # GeoJSON to SHP, only POINTS
+    geojson_shp(geom.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
+                geom.types = "POINT",
+                dirOut = "C:/Rprojects/eamenaR/results/",
+                export = T,
+                geojson.name = "caravanserailOUT")
+
+
+    # GeoJSON to SHP, only POLYGONS
+    library(dplyr)
+
+    geojson_shp(geom.types = "POLYGON",
+               geojson.name = "cvns-polygons",
+               geom.path = paste0(system.file(package = "eamenaR"),
+                                  "/extdata/caravanserail.geojson"),
+               dirOut = "C:/Rprojects/eamena-gee/data/")
+:::

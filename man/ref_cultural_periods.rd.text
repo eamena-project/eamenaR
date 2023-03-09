@@ -1,0 +1,74 @@
+---
+title: "R: Create a list of child-concepts below Cultural Period of
+  all\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ---------------------- -----------------
+  ref_cultural_periods     R Documentation
+  ---------------------- -----------------
+
+## Create a list of child-concepts below Cultural Period of all periods with their duration
+
+### Description
+
+create a list concepts below Cultural Period of all periods with their
+duration. Duration of each period are listed in the \'scopeNote\' of
+this period (see the RDM tab in the EAMENA DB).
+
+### Usage
+
+    ref_cultural_periods(
+      db.con = NA,
+      d = NA,
+      field = NA,
+      disconn = TRUE,
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ----------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+  `db.con`    the parameters for the Postgresql EAMENA DB, in a RPostgres::dbConnect() format.
+  `d`         a hash() object (a Python-like dictionary).
+  `field`     the field of the hash dictionnary (\'d\') that will be filled with (sub)cultural periods values, eg. \"cultural_periods\" or \"subcultural_periods\".
+  `disconn`   if TRUE (by defalut), will disconnect from the DB.
+  `verbose`   if TRUE (by default), print messages.
+  ----------- -------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+NA
+
+### Examples
+
+
+    d <- hash::hash()
+    my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                        user = 'xxx',
+                        password = 'xxx',
+                        dbname = 'eamena',
+                        host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                        port = 5432)
+
+    # get cultural periods
+    d <- list_child_concepts(db.con = my_con, d = d,
+                            field = "cultural_periods",
+                            uuid = '3b5c9ac7-5615-3de6-9e2d-4cd7ef7460e4')
+    d <- ref_cultural_periods(db.con = my_con, d = d,
+                             field = "cultural_periods")
+    # get subcultural periods
+    d <- list_child_concepts(db.con = my_con, d = d,
+                            field = "subcultural_periods",
+                            uuid = '16cb160e-7b31-4872-b2ca-6305ad311011')
+    d <- ref_cultural_periods(db.con = my_con, d = d,
+                             field = "subcultural_periods")
+
+    # export as TSV
+    df.periods <- rbind(d$cultural_periods, d$subcultural_periods)
+    tout <- paste0(paste0(system.file(package = "eamenaR"), "/results/"))
+    dir.create(tout, showWarnings = FALSE)
+    write.table(df.periods, paste0(tout,  "cultural_periods.tsv"),
+                sep ="\t", row.names = F)
+:::

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a map and a profile with paths between different...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create map and profile with paths between different heritage...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_map_path"><tr><td>geojson_map_path</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create a map and a profile with paths between different heritage places</h2>
+<h2>Create map and profile with paths between different heritage places (HP)</h2>
 
 <h3>Description</h3>
 
-<p>Create a distribution map and an elevation profile of heritage places linked together by paths, for example for caravanserails.
+<p>Create distribution map and elevation profile of HP linked together by paths, for example, caravanserails.
 </p>
 
 
@@ -26,6 +26,7 @@ geojson_map_path(
   export.type = c("map"),
   by = "route",
   selected.category = NA,
+  symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
   interactive = FALSE,
   stamen.zoom = NA,
   export.plot = F,
@@ -43,62 +44,66 @@ geojson_map_path(
 <table summary="R argblock">
 <tr valign="top"><td><code>map.name</code></td>
 <td>
-<p>the name of the output map and the name of the saved file (if export.plot is TRUE). By default &quot;map_path&quot;.</p>
+<p>name of output map and name of saved file (if export.plot is TRUE). Default &quot;map_path&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+<p>path of GeoJSON file. Default 'caravanserail.geojson'.</p>
 </td></tr>
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
-<p>the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.</p>
+<p>path to CSV where edges between two HPs are recorded. Default 'caravanserail_paths.csv'.</p>
 </td></tr>
 <tr valign="top"><td><code>export.type</code></td>
 <td>
-<p>the type of output: a map ('map') or a profile ('profile'). For this latter the Z should be calculated with the 'geojson_addZ()' function.</p>
-</td></tr>
-<tr valign="top"><td><code>by</code></td>
-<td>
-<p>the name of the category column. By default &quot;route&quot; for caravanserais.</p>
+<p>type of output: map ('map') or profile ('profile'). For latter Z should be calculated with the 'geojson_addZ()' function.</p>
 </td></tr>
 <tr valign="top"><td><code>selected.category</code></td>
 <td>
-<p>limit the study to some categories. For example to some particular routes for caravanserais. By default NA, no limitation.</p>
+<p>limit study to some categories. For example to some particular routes for caravanserais. Default NA, no limitation.</p>
+</td></tr>
+<tr valign="top"><td><code>symbology</code></td>
+<td>
+<p>path to XLSX recording symbology for different values, default 'symbology.xlsx'.</p>
 </td></tr>
 <tr valign="top"><td><code>interactive</code></td>
 <td>
-<p>if TRUE will plot a VisNetwork. By default FALSE.</p>
+<p>if TRUE will plot VisNetwork. Default FALSE.</p>
 </td></tr>
 <tr valign="top"><td><code>stamen.zoom</code></td>
 <td>
-<p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
+<p>zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, zoom level will be calculated automatically.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
-<p>if TRUE, export the plot, if FALSE will only display it.</p>
+<p>if TRUE, export plot, if FALSE will only display it.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>fig.width, fig.height</code></td>
 <td>
-<p>size of the output map.</p>
+<p>size of output map.</p>
 </td></tr>
 <tr valign="top"><td><code>color.set</code></td>
 <td>
-<p>the RBrewer color set. By default &quot;Set1&quot;.</p>
+<p>RBrewer color set. Default &quot;Set1&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
 <p>if TRUE (by default), print messages.</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>of category column. Default &quot;route&quot; for caravanserais.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A PNG map and an HMTL map of heritage places linked together by paths
+<p>PNG map and HMTL map of HPs linked together by paths
 </p>
 
 
@@ -108,7 +113,7 @@ geojson_map_path(
 
 library(dplyr)
 
-# plot a general map of heritage places
+# plot general map of HPs
 geojson_map_path(map.name = "caravanserail_paths", export.plot = F)
 
 # plot and export
@@ -120,7 +125,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
                  selected.category = c(0, 1, 2, 3, 4),
                  interactive = T)
 
-# create an interactive map of each route and export
+# create interactive map of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
                  selected.category = c(0, 1, 2, 3, 4),
@@ -128,7 +133,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
                  export.plot = T,
                  dirOut = "C:/Rprojects/eamenaR/results/")
 
-# create the profile of each route
+# create profile of each route
 df &lt;- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
@@ -136,7 +141,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
                  selected.category = c(0, 1, 2, 3, 4),
                  export.type = "profile")
 
-# create the profile of each route and export
+# create profile of each route and export
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
                  selected.category = c(0, 1, 2, 3, 4),

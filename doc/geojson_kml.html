@@ -35,31 +35,31 @@ geojson_kml(
 <table summary="R argblock">
 <tr valign="top"><td><code>geom.path</code></td>
 <td>
-<p>the path to the KML, KMZ or GeoJSON file.</p>
+<p>path to KML, KMZ or GeoJSON file.</p>
 </td></tr>
 <tr valign="top"><td><code>geom.types</code></td>
 <td>
-<p>the types of geometries (&quot;POINT&quot;, &quot;LINE&quot; or &quot;POLYGON&quot;) that will be selected. By default all: 'c(&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;)'.</p>
+<p>types of geometries (&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;) that will be selected. Default all: 'c(&quot;POINT&quot;, &quot;LINE&quot;, &quot;POLYGON&quot;)'.</p>
 </td></tr>
 <tr valign="top"><td><code>export</code></td>
 <td>
-<p>if TRUE, will export the KML/KMZ file in a GeoJSON format, or the GeoJSON file as a KML, if FALSE simple plot.</p>
+<p>if TRUE, will export KML/KMZ file in GeoJSON format, or GeoJSON file as a KML, if FALSE simple plot.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the path to the folder where the KML/KMZ/GeoJSON file will be created.</p>
+<p>path to folder where KML/KMZ/GeoJSON file will be created.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.name</code></td>
 <td>
-<p>the name of the KML/KMZ/GeoJSON that will be created without the extension</p>
+<p>name of KML/KMZ/GeoJSON that will be created without extension.</p>
 </td></tr>
 <tr valign="top"><td><code>select.name</code></td>
 <td>
-<p>for KML export only. The field selected to be the KML name of the HP, by default &quot;EAMENA ID&quot;.</p>
+<p>for KML export only. Field selected to be KML name of heritage place, default &quot;EAMENA ID&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>select.fields</code></td>
 <td>
-<p>for KML export only. KML conversion remove a large number of GeoJSON fields. This variable is used to select the fields we want to preserve. By default: c(&quot;EAMENA ID&quot;,&quot;Resource Name&quot;, &quot;resourceid&quot;).</p>
+<p>for KML export only. KML conversion remove large number of GeoJSON fields. This variable is used to select fields to preserve. Default: c(&quot;EAMENA ID&quot;,&quot;Resource Name&quot;, &quot;resourceid&quot;).</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
@@ -70,7 +70,7 @@ geojson_kml(
 
 <h3>Value</h3>
 
-<p>a GeoJSON file or a KML file, depending on the input file.
+<p>GeoJSON file or KML file, depending on input file.
 </p>
 
 
@@ -80,7 +80,7 @@ geojson_kml(
 
 library(dplyr)
 
-# from KMZ to GeoJSON, with the default 'Waypoints.kmz' input file
+# from KMZ to GeoJSON, with default 'Waypoints.kmz' input file
 library(dplyr)
 geojson_kml(geom.types = "POINT")
 

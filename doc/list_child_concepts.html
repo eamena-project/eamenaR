@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: List the name of all the child-concepts below a certain...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: List name of all child-concepts below certain Concept node</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for list_child_concepts"><tr><td>list_child_concepts</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>List the name of all the child-concepts below a certain Concept node</h2>
+<h2>List name of all child-concepts below certain Concept node</h2>
 
 <h3>Description</h3>
 
-<p>With a given concept UUID (v. Reference Data Manager), find all the child nodes.
+<p>With given concept UUID (v. Reference Data Manager), find all child nodes.
 </p>
 
 
@@ -33,43 +33,48 @@ list_child_concepts(
 <table summary="R argblock">
 <tr valign="top"><td><code>db.con</code></td>
 <td>
-<p>a 'dbConnect' connection to the database.</p>
+<p>'dbConnect' connection to database.</p>
 </td></tr>
 <tr valign="top"><td><code>d</code></td>
 <td>
-<p>a hash() object (a Python-like dictionary).</p>
+<p>hash() object (Python-like dictionary).</p>
 </td></tr>
 <tr valign="top"><td><code>field</code></td>
 <td>
-<p>the field name that will be created in the 'd' hash() object.</p>
+<p>field name that will be created in 'd' hash() object.</p>
 </td></tr>
 <tr valign="top"><td><code>concept.name</code></td>
 <td>
-<p>a concept label name (either 'r.concept.name' or 'db.concept.name'). This 'concept.name' value coming from the 'ids.csv' file (see 'ref_ids()'). By default, NA.</p>
+<p>concept label name (either 'r.concept.name' or 'db.concept.name'). This 'concept.name' value coming from 'ids.csv' file (see 'ref_ids()'). Default, NA.</p>
 </td></tr>
 <tr valign="top"><td><code>disconn</code></td>
 <td>
-<p>if TRUE (by default), will disconnect from the DB.</p>
+<p>if TRUE (Default), will disconnect from DB.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-<p>if TRUE (by default), print messages.</p>
+<p>if TRUE (Default), print messages.</p>
 </td></tr>
 </table>
 
 
+<h3>Details</h3>
+
+<p>results are 'igraph' objects. The first 'igraph' object is stored under the name of the selected 'field' argument of the 'd' hash() object ('d' argument), for example 'Disturbance Extent Type'. The 'igraph' object stores the names of the parent ('field' argument) and children (e.g. 'Disturbance Extent Type-&gt;Unknown'). The second 'igraph' object is the same except that the names are replaced by their UUID (e.g. '41488800-6c00-30f2-b93f-785e38ab6251-&gt;f7261287-f889-31ff-b198-49733fd000f6'). The latter 'igraph' will be stored in 'd', in a field formed by the concatenation of the 'field' argument and '.uuid', e.g. 'Disturbance Extent Type.uuid'.
+</p>
+
+
 <h3>Value</h3>
 
-<p>A &lsquo;igraph' object stored in the input hash() object, under the selected &rsquo;field' name. This dataframe will with listed child-concepts in the provided field name. The UUID of each sub-concept will be stored into the 'field.uuid' column of the dataframe
+<p>return two 'igraph' objects listing the child-concepts below certain Concept node.
 </p>
 
 
 <h3>Examples</h3>
 
 <pre>
-.
 
-# create a Postgres connection (replace 'xxx' by the password)
+# create a Postgres connection (replace 'xxx' by password)
 d &lt;- hash::hash()
 my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
@@ -85,7 +90,29 @@ d &lt;- list_child_concepts(db.con = my_con,
                          concept.name = "Disturbance Extent Type",
                          disconn = F)
 
-# Cultural periods &amp; Subcultural periods and disconnect from the DB
+d$`Disturbance Extent Type`
+# IGRAPH 050aea5 DN-- 8 7 --
+# + attr: name (v/c)
+# + edges from 050aea5 (vertex names):
+# [1] Disturbance Extent Type-&gt;Unknown          Disturbance Extent Type-&gt;1-10%
+# [3] Disturbance Extent Type-&gt;11-30%           Disturbance Extent Type-&gt;91-100%
+# [5] Disturbance Extent Type-&gt;61-90%           Disturbance Extent Type-&gt;No Visible/Known
+# [7] Disturbance Extent Type-&gt;31-60%
+
+d$`Disturbance Extent Type.uuid`
+# IGRAPH 050aea5 DN-- 8 7 --
+# + attr: name (v/c)
+# + edges from 050aea5 (vertex names):
+# [1] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;f7261287-f889-31ff-b198-49733fd000f6
+# [2] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;361c4af7-3b3f-3b4a-903d-b8a48e3cd0d6
+# [3] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;a685650c-a31a-3d88-9d5f-00c38eac8e02
+# [4] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;3d205ade-e20a-389b-9714-5f593667d0f6
+# [5] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;118ebd31-979b-3524-af9c-3ef1aa7db9f0
+# [6] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;e13a6594-a72e-31da-aa57-2f07cf0f6afc
+# [7] 41488800-6c00-30f2-b93f-785e38ab6251-&gt;ad5b2225-f785-37c2-89b0-405d853974b8
+
+
+# Cultural periods &amp; Subcultural periods and disconnect from DB
 d &lt;- list_child_concepts(db.con = my_con,
                          d = d,
                          field = "cultural_periods",
@@ -97,7 +124,7 @@ d &lt;- list_child_concepts(db.con = my_con,
                          concept.name = "Cultural Sub-Period",
                          disconn = T)
 
-# see this latter subgraph
+# see the latter subgraph
 d$subcultural_periods
 ## IGRAPH 9ceb33f DN-- 256 467 --
 ## + attr: name (v/c)

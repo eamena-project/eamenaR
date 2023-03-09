@@ -1,0 +1,85 @@
+---
+title: "R: Create map, whether static or interactive leaflet, from\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ------------- -----------------
+  geojson_map     R Documentation
+  ------------- -----------------
+
+## Create map, whether static or interactive leaflet, from GeoJSON file
+
+### Description
+
+Create distribution map
+
+### Usage
+
+    geojson_map(
+      map.name = "map",
+      geojson.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail.geojson"),
+      ids = "EAMENA ID",
+      field.names = NA,
+      highlights.ids = NA,
+      symbology = paste0(system.file(package = "eamenaR"), "/extdata/symbology.xlsx"),
+      stamen.zoom = NA,
+      fields.for.labels = c("Site Feature Interpretation Type", "Cultural Period Type",
+        "Administrative Division ", "Country Type ", "Overall Condition State Type"),
+      interactive = F,
+      export.plot = F,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      fig.width = 8,
+      fig.height = 8
+    )
+
+### Arguments
+
+  ------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------
+  `map.name`                name of output map and name of saved file (if export.plot is TRUE). Default \"map\".
+  `geojson.path`            path of GeoJSON file. Default \'caravanserail.geojson\'.
+  `ids`                     IDs of resources, default \"EAMENA.ID\" (R fieldname format, without spaces).
+  `field.names`             a vector of one or many field names for thematic cartography. If NA (default), will create a general map
+  `highlights.ids`          EAMENA IDs (ex: \'EAMENA-0205783\') that will be highlighted in map. If NA (default), no highlights.
+  `symbology`               path to XLSX recording symbology for different values, default \'symbology.xlsx\'.
+  `stamen.zoom`             zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). Default NA, zoom level will be calculated automatically.
+  `interactive`             if FALSE create static PNG (by default), if TRUE create a plotly plot as HTML widget.
+  `export.plot`             if TRUE, export plot, if FALSE will only display it.
+  `dirOut`                  folder where outputs will be saved. Default: \'/results\'. If it doesn\'t exist, will be created. Only useful if export plot is TRUE.
+  `fig.width, fig.height`   size of output map.
+  ------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------
+
+### Value
+
+An interactive map (leaflet) or not
+
+### Examples
+
+
+
+    # plot a general map of heritage places
+    geojson_map(map.name = "caravanserail")
+
+    # save a thematic map
+    geojson_map(map.name = "caravanserail",
+               field.names = c("Damage Extent Type"),
+               export.plot = T)
+
+    # save different thematic maps
+    geojson_map(map.name = "caravanserail",
+               field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
+               export.plot = T)
+
+    # save an interactive map
+    geojson_map(map.name = "caravanserail_plotly",
+                interactive = T,
+                export.plot = T)
+
+    # plot a general map of geoarchaeological data
+    geojson_map(map.name = "geoarch",
+                ids = "GEOARCH.ID",
+                stamen.zoom = 6,
+                geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
+                export.plot = F)
+:::

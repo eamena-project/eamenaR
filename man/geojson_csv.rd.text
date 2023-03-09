@@ -1,0 +1,47 @@
+---
+title: "R: Convert from GeoJSON to CSV"
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ------------- -----------------
+  geojson_csv     R Documentation
+  ------------- -----------------
+
+## Convert from GeoJSON to CSV
+
+### Description
+
+Function allows file format conversion from GeoJSON to CSV. Output CSV
+file can be imported into EAMENA DB with bulk upload append procedure.
+
+### Usage
+
+    geojson_csv(
+      geom.path = paste0(system.file(package = "eamenaR"),
+        "/extdata/caravanserail_outGeoJSON.geojson"),
+      export = T,
+      dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
+      csv.name = "caravanserail_outCSV",
+      verbose = T
+    )
+
+### Arguments
+
+  ------------- -----------------------------------------------------------------------
+  `geom.path`   path to GeoJSON file. File comes from the \'geojson_kml()\' function.
+  `export`      if TRUE (default), will export GeoJSON to CSV file.
+  `dirOut`      path to folder where CSV file will be created.
+  `csv.name`    name of CSV that will be created without the extension
+  `verbose`     if TRUE (default) then display different messages.
+  ------------- -----------------------------------------------------------------------
+
+### Value
+
+a CSV file
+
+### Examples
+
+
+    geojson_csv()
+:::

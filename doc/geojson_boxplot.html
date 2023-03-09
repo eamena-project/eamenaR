@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a boxplot or various boxplots of path lengths between...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create boxplot or various boxplots of path lengths between...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,7 +6,7 @@
 
 <table width="100%" summary="page for geojson_boxplot"><tr><td>geojson_boxplot</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create a boxplot or various boxplots of path lengths between different heritage places</h2>
+<h2>Create boxplot or various boxplots of path lengths between different heritage places</h2>
 
 <h3>Usage</h3>
 
@@ -37,51 +37,55 @@ geojson_boxplot(
 <table summary="R argblock">
 <tr valign="top"><td><code>stat.name</code></td>
 <td>
-<p>the name of the output file and of the plot. By default &quot;caravanserais_areas&quot;.</p>
+<p>name of output file and plot. Default &quot;caravanserais_areas&quot;.</p>
+</td></tr>
+<tr valign="top"><td><code>concept.name</code></td>
+<td>
+<p>key used to identify heritage places. Default &quot;hp.id&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+<p>path of GeoJSON file. Default 'caravanserail.geojson'.</p>
 </td></tr>
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
-<p>the path to the CSV where the edges between two heritage places are recorded.</p>
+<p>path to CSV where edges between two heritage places are recorded.</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>
-<p>the statistic that will be computed. The different values can be &quot;area&quot; for areas, or &quot;dist&quot; for distances between heritage places. By default 'area'.</p>
+<p>statistic that will be computed. Different values can be &quot;area&quot; for areas, or &quot;dist&quot; for distances between heritage places. Default 'area'.</p>
 </td></tr>
 <tr valign="top"><td><code>chart.type</code></td>
 <td>
-<p>the type of chart that will be plot. By default, &quot;boxplot&quot;.</p>
-</td></tr>
-<tr valign="top"><td><code>by</code></td>
-<td>
-<p>the name of the field on which the paths will be grouped. For example &quot;route&quot;. Will create as many plots as there is different categories. By default NA.</p>
+<p>type of chart that will be plot. Default, &quot;boxplot&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>interactive</code></td>
 <td>
-<p>if TRUE, create a Plotly chart. By default, FALSE.</p>
+<p>if TRUE, create a Plotly chart. Default, FALSE.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
-<p>if TRUE, will save the plot. By default, FALSE.</p>
+<p>if TRUE, will save the plot. Default, FALSE.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'.If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export plot is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>fig.width, fig.height</code></td>
 <td>
-<p>size of the output chart.</p>
+<p>size of output chart.</p>
 </td></tr>
 <tr valign="top"><td><code>color.set</code></td>
 <td>
-<p>the RBrewer color set. By default &quot;Set1&quot;.</p>
+<p>the RBrewer color set. Default &quot;Set1&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-<p>if TRUE (by default), print messages.</p>
+<p>if TRUE (Default), print messages.</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>of field on which paths will be grouped. Example &quot;route&quot;. Will create as many plots as there are different categories. By default NA.</p>
 </td></tr>
 </table>
 

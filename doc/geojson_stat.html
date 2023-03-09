@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Basic statistics on a GeoJSON file like lists or charts</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Basic statistics on GeoJSON file like lists or charts</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_stat"><tr><td>geojson_stat</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Basic statistics on a GeoJSON file like lists or charts</h2>
+<h2>Basic statistics on GeoJSON file like lists or charts</h2>
 
 <h3>Description</h3>
 
-<p>Basic descriptive statistics on a GeoJSON file. This function is used by 'geojson_format_path()'.
+<p>Basic descriptive statistics on GeoJSON file. This function is used by 'geojson_format_path()'.
 </p>
 
 
@@ -45,23 +45,23 @@ geojson_stat(
 <table summary="R argblock">
 <tr valign="top"><td><code>stat.name</code></td>
 <td>
-<p>the name of the output file. By default &quot;stat&quot;.</p>
+<p>name of output file. Default &quot;stat&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'</p>
+<p>path of GeoJSON file. Default 'caravanserail.geojson'</p>
 </td></tr>
 <tr valign="top"><td><code>ids</code></td>
 <td>
-<p>the IDs of the resources, by default the eamenaR correspondence of &quot;id&quot;, see 'ref_ids()'.</p>
+<p>IDs of resources, default eamenaR correspondence of &quot;id&quot;, see 'ref_ids()'.</p>
 </td></tr>
 <tr valign="top"><td><code>concept.name</code></td>
 <td>
-<p>the name of the field used to store the IDs. By default 'hp.id'.</p>
+<p>name of field used to store IDs. Default 'hp.id'.</p>
 </td></tr>
 <tr valign="top"><td><code>stat</code></td>
 <td>
-<p>the type of statistic that will be computed. By default 'list_fields' (list the fields). Other options are: 'list_ids' list EAMENA IDs. Use 'stat' to diplay charts like pie chart or histograms, etc., see the option 'chart.type'</p>
+<p>type of statistic that will be computed. Default 'list_fields' (list the fields). Other options are: 'list_ids' list EAMENA IDs. Use 'stat' to diplay charts like pie chart or histograms, etc., see option 'chart.type'</p>
 </td></tr>
 <tr valign="top"><td><code>chart.type</code></td>
 <td>
@@ -69,42 +69,42 @@ geojson_stat(
 </td></tr>
 <tr valign="top"><td><code>field.names</code></td>
 <td>
-<p>the field name on which the statistic will be performed. Only useful if the option 'stat' is set to 'stats' ('stat = &quot;stats&quot;').</p>
-</td></tr>
-<tr valign="top"><td><code>by</code></td>
-<td>
-<p>the name of the field on which the paths will be grouped. For example &quot;route&quot;. Will create as many plots as there is different categories. By default NA.</p>
+<p>field name on which statistic will be performed. Only useful if the option 'stat' is set to 'stats' ('stat = &quot;stats&quot;').</p>
 </td></tr>
 <tr valign="top"><td><code>fig.width, fig.height</code></td>
 <td>
-<p>size of the output chart.</p>
+<p>size of output chart.</p>
 </td></tr>
 <tr valign="top"><td><code>fig.dev</code></td>
 <td>
-<p>the format of the image: &quot;png&quot; (by default), &quot;jpg&quot;, &quot;svg&quot;, etc.</p>
+<p>format of image: &quot;png&quot; (default), &quot;jpg&quot;, &quot;svg&quot;, etc.</p>
 </td></tr>
 <tr valign="top"><td><code>export.stat</code></td>
 <td>
-<p>if TRUE return the stats to be stored in a new variable</p>
+<p>if TRUE return stats to be stored in new variable</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
-<p>if TRUE, export the stats in a new file, if FALSE will only display it</p>
+<p>if TRUE, export tats in new file, if FALSE will only display it</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot is TRUE.</p>
+<p>folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export.plot is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
 <p>if TRUE (by default), print messages.</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>of field on which paths will be grouped. For example &quot;route&quot;. Will create as many plots as there are different categories. Default NA.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>Show or export basic statistics on the GeoJSON file
+<p>Show or export basic statistics on GeoJSON file
 </p>
 
 

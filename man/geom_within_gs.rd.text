@@ -1,0 +1,48 @@
+---
+title: "R: Test if resource geometry is within a Grid Square (gs)."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ---------------- -----------------
+  geom_within_gs     R Documentation
+  ---------------- -----------------
+
+## Test if resource geometry is within a Grid Square (gs).
+
+### Description
+
+Test if geometry of a resource, example heritage place (HP) is within a
+Grid Square (gs). If so, return ID of Grid Square.
+
+### Usage
+
+    geom_within_gs(
+      resource.wkt = NA,
+      gs.path = paste0(system.file(package = "eamenaR"), "/extdata/grid_squares.geojson"),
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ---------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `resource.wkt`   WKT geometry of resource, as character format. This WKT geometry can come from a bulk upload sheet (ex: \"POINT(0.9 35.8)\").
+  `gs.path`        path to GeoJSON file, default to the example \'grid_squares.geojson\' This GeoJSON is an EAMENA output of Grids as a GeoJSON URL. Name of grids can be calculated with geom_bbox function. GeoJSON is read and convert to \'sf\' object.
+  `verbose`        if TRUE (default): verbose.
+  ---------------- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### Details
+
+This function must be nested in a loop when called for a database.
+
+### Value
+
+the ID of Grid Square for each WKT geometries.
+
+### Examples
+
+
+    library(dplyr)
+
+    geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
+:::

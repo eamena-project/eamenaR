@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Format data on paths</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Alignment of heritage place data and heritage place paths...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_format_path"><tr><td>geojson_format_path</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Format data on paths</h2>
+<h2>Alignment of heritage place data and heritage place paths data</h2>
 
 <h3>Description</h3>
 
-<p>Use a dataframe of heritage places (ie, places, vertices), and a file of paths (as edges) between these heritage places, to format a new dataframe. The heritage places (HP) are stored in a GeoJSON file. The paths between these HP are stored in a CSV file. The function cleans the datasets removing existing paths linking two heritage places that don't not exist in the GeoJSON. This new dataframe is used by the functions 'geojson_map_path()', 'geojson_boxplot_path()' to model the dataset with network analysis.
+<p>Use dataframe of heritage places (ie, places, vertices), and file of paths (as edges) between these heritage places, to format new dataframe. Heritage places (HP) are stored in GeoJSON file. Paths between HP are stored in CSV file. Function cleans the datasets, removing existing paths linking two heritage places that don't not exist in the GeoJSON. New dataframe is used by functions 'geojson_map_path()', 'geojson_boxplot_path()' to model dataset with network analysis.
 </p>
 
 
@@ -34,30 +34,30 @@ geojson_format_path(
 <table summary="R argblock">
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+<p>path of GeoJSON file. Default 'caravanserail.geojson'.</p>
 </td></tr>
 <tr valign="top"><td><code>csv.path</code></td>
 <td>
-<p>the path to the CSV where the edges between two heritage places are recorded. By default 'caravanserail_paths.csv'.</p>
-</td></tr>
-<tr valign="top"><td><code>by</code></td>
-<td>
-<p>the name of the field on which the paths will be grouped. For example &quot;route&quot;. Will create as many plots as there is different categories. By default NA.</p>
+<p>path to CSV where edges between two heritage places are recorded. Default 'caravanserail_paths.csv'.</p>
 </td></tr>
 <tr valign="top"><td><code>concept.name</code></td>
 <td>
-<p>the concept that will be retrieve from the 'ids.csv' file. By default &quot;hp.id&quot;.</p>
+<p>concept that will be retrieve from the 'ids.csv' file. Default &quot;hp.id&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-<p>if TRUE (by default), print messages.</p>
+<p>if TRUE (default), print messages.</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>of field on which paths will be grouped. Example &quot;route&quot;. Will create as many plots as there are different categories. Default NA.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A dataframe with the appropriate columns: &quot;from.id&quot;, &quot;from&quot;, &quot;to.id&quot;, &quot;to&quot;, &quot;from.geom&quot;, &quot;to.geom&quot;, &quot;path.wkt&quot;, &quot;dist.m&quot;, &quot;route&quot;
+<p>Dataframe with appropriate columns: &quot;from.id&quot;, &quot;from&quot;, &quot;to.id&quot;, &quot;to&quot;, &quot;from.geom&quot;, &quot;to.geom&quot;, &quot;path.wkt&quot;, &quot;dist.m&quot;, &quot;route&quot;
 </p>
 
 

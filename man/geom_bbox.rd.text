@@ -1,0 +1,59 @@
+---
+title: "R: Create bounding box of bulk uploads (BU) geometries and
+  save\\..."
+viewport: width=device-width, initial-scale=1.0, user-scalable=yes
+---
+
+::: container
+  ----------- -----------------
+  geom_bbox     R Documentation
+  ----------- -----------------
+
+## Create bounding box of bulk uploads (BU) geometries and save it as GeoJSON file
+
+### Description
+
+Read one or various XLSX worksheets within folder. Collect the xmin,
+xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR),
+that is, extent of geometries. Export is GeoJSON file that can be
+copy/paste in the Map filter of EAMENA database to recover selected grid
+cells(list_mapping_bu.R). Can also be used to get precise Stamen basemap
+extent (ggmap), etc.
+
+### Usage
+
+    geom_bbox(
+      dataDir = NA,
+      x_column = NA,
+      y_column = NA,
+      wkt_column = NA,
+      dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+      geojson.name = "mbr.geojson",
+      verbose = TRUE
+    )
+
+### Arguments
+
+  ---------------------- ----------------------------------------------------------------------------------------------------------------
+  `dataDir`              path to folder where XLSXs are.
+  `x_column, y_column`   column of X and Y coordinates, if these arguments are set to \'NA\', the function will read the field \'wkt\'.
+  `wkt_column`           column of WKT coordinates, if NA (default) function will read the field \'x_column\' and \'y_column\'.
+  `dirOut`               folder where GeoJSON will be saved. Default: \'/results\'. If it doesn\'t exist, will be created.
+  `geojson.name`         name of the GeoJSON that will be created, Default \'mbr\' (minimum bound rectangle)
+  `verbose`              if TRUE (default) then display different messages.
+  ---------------------- ----------------------------------------------------------------------------------------------------------------
+
+### Value
+
+bounding box of the dataset as a GeoJSON file
+
+### Examples
+
+
+    geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2")
+
+    geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
+              x_column = "Longitude.",
+              y_column = "Latitude",
+              geojson.name = "grids_bbox_mk2.geojson")
+:::

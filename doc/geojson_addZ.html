@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add a Z value to geometries</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Add Z value to geometries and export in a new file</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_addZ"><tr><td>geojson_addZ</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Add a Z value to geometries</h2>
+<h2>Add Z value to geometries and export in a new file</h2>
 
 <h3>Description</h3>
 
-<p>Use a geoserver API to recover the Z for a given set of points stored in a GeoJSON file. The geoserver API can lead to a Timeout.
+<p>Use geoserver API to recover the Z for given set of points stored in GeoJSON file. Geoserver API can lead to Timeout.
 </p>
 
 
@@ -21,11 +21,12 @@ geojson_addZ(
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
   geojson.out = NA,
-  elevation.api = "open-elevation",
+  ids = "EAMENA ID",
+  elevation.api = "gmrt_point",
   timeout = 30,
   sleep = 0.3,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
-  verbose = T
+  verbose = TRUE
 )
 </pre>
 
@@ -35,15 +36,19 @@ geojson_addZ(
 <table summary="R argblock">
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+<p>path of GeoJSON file. By default 'caravanserail.geojson'.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.out</code></td>
 <td>
-<p>the name of the output file. By default NA, will add the suffix 'Z' to the the name of the GeoJSON file (variable 'geojson.path').</p>
+<p>name of output file. By default NA, will add suffix 'Z' to name of GeoJSON file (variable 'geojson.path').</p>
+</td></tr>
+<tr valign="top"><td><code>ids</code></td>
+<td>
+<p>field having the unique keys, to remove duplicated geometries. By default &quot;EAMENA ID&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>elevation.api</code></td>
 <td>
-<p>the geoserver API that will be used to collect the elevation, by default 'open-elevation' (https://api.open-elevation.com/). Another option is 'gmrt' (https://www.gmrt.org).</p>
+<p>the geoserver API used to collect the elevation, by default 'gmrt_point' (https://www.gmrt.org). Another option is 'gmrt_profile', and 'open-elevation' (https://api.open-elevation.com/).</p>
 </td></tr>
 <tr valign="top"><td><code>timeout</code></td>
 <td>
@@ -55,7 +60,7 @@ geojson_addZ(
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>the folder where outputs will be saved. By default: '/results'. If folder doesn't exist, it will be created.</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
@@ -68,8 +73,10 @@ geojson_addZ(
 
 <pre>
 
-df &lt;- geojson_addZ(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail.geojson",
-                   dirOut = "C:/Rprojects/eamenaR/inst/extdata/")
+df &lt;- geojson_addZ()
+
+# using 'open-elevation' as API
+df &lt;- geojson_addZ(elevation.api = 'open-elevation')
 
 
 </pre>

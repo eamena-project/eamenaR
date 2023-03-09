@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create a map, whether static or interactive leaflet, from a...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create map, whether static or interactive leaflet, from...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geojson_map"><tr><td>geojson_map</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create a map, whether static or interactive leaflet, from a GeoJSON file</h2>
+<h2>Create map, whether static or interactive leaflet, from GeoJSON file</h2>
 
 <h3>Description</h3>
 
-<p>Create a distribution map
+<p>Create distribution map
 </p>
 
 
@@ -42,60 +42,61 @@ geojson_map(
 <table summary="R argblock">
 <tr valign="top"><td><code>map.name</code></td>
 <td>
-<p>the name of the output map and the name of the saved file (if export.plot is TRUE). By default &quot;map&quot;.</p>
+<p>name of output map and name of saved file (if export.plot is TRUE). Default &quot;map&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.path</code></td>
 <td>
-<p>the path of the GeoJSON file. By default 'caravanserail.geojson'.</p>
+<p>path of GeoJSON file. Default 'caravanserail.geojson'.</p>
 </td></tr>
 <tr valign="top"><td><code>ids</code></td>
 <td>
-<p>the IDs of the resources, by default &quot;EAMENA.ID&quot; (R fieldname format, without spaces).</p>
+<p>IDs of resources, default &quot;EAMENA.ID&quot; (R fieldname format, without spaces).</p>
 </td></tr>
 <tr valign="top"><td><code>field.names</code></td>
 <td>
-<p>a vector one or many field names for thematic cartography. If NA (by default), will create a general map</p>
+<p>a vector of one or many field names for thematic cartography. If NA (default), will create a general map</p>
 </td></tr>
 <tr valign="top"><td><code>highlights.ids</code></td>
 <td>
-<p>EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in the map. If NA (by default), no highlights.</p>
+<p>EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in map. If NA (default), no highlights.</p>
 </td></tr>
 <tr valign="top"><td><code>symbology</code></td>
 <td>
-<p>the path to the XLSX recording the symbology for the different values, by default 'symbology.xlsx'.</p>
+<p>path to XLSX recording symbology for different values, default 'symbology.xlsx'.</p>
 </td></tr>
 <tr valign="top"><td><code>stamen.zoom</code></td>
 <td>
-<p>the zoom of the Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, the zoom level will be calculated automatically.</p>
+<p>zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). Default NA, zoom level will be calculated automatically.</p>
 </td></tr>
 <tr valign="top"><td><code>interactive</code></td>
 <td>
-<p>if FALSE create a static PNG (by  default), if TRUE create a plotly plot as a HTML widget.</p>
+<p>if FALSE create static PNG (by  default), if TRUE create a plotly plot as HTML widget.</p>
 </td></tr>
 <tr valign="top"><td><code>export.plot</code></td>
 <td>
-<p>if TRUE, export the plot, if FALSE will only display it.</p>
+<p>if TRUE, export plot, if FALSE will only display it.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export plot is TRUE.</p>
+<p>folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>fig.width, fig.height</code></td>
 <td>
-<p>size of the output map.</p>
+<p>size of output map.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A map interactive (leaflet) or not
+<p>An interactive map (leaflet) or not
 </p>
 
 
 <h3>Examples</h3>
 
 <pre>
+
 
 # plot a general map of heritage places
 geojson_map(map.name = "caravanserail")
@@ -109,6 +110,11 @@ geojson_map(map.name = "caravanserail",
 geojson_map(map.name = "caravanserail",
            field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
            export.plot = T)
+
+# save an interactive map
+geojson_map(map.name = "caravanserail_plotly",
+            interactive = T,
+            export.plot = T)
 
 # plot a general map of geoarchaeological data
 geojson_map(map.name = "geoarch",

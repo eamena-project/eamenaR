@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create the bounding box of BUs' geometries and save it as a...</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Create bounding box of bulk uploads (BU) geometries and save...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="R.css" />
@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for geom_bbox"><tr><td>geom_bbox</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Create the bounding box of BUs' geometries and save it as a GeoJSON file</h2>
+<h2>Create bounding box of bulk uploads (BU) geometries and save it as GeoJSON file</h2>
 
 <h3>Description</h3>
 
-<p>Read one or various XLSX worksheets within a folder. Collect the xmin, xmax, ymin, xmax in the coordinates and creates the minimum bounding box (MBR), that is to say, the extent of the geometries. The export is a GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover the selected grid cells(list_mapping_bu.R). Can also be used to get the precise Stamen basemap extent (ggmap), etc.
+<p>Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(list_mapping_bu.R). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 </p>
 
 
@@ -34,34 +34,34 @@ geom_bbox(
 <table summary="R argblock">
 <tr valign="top"><td><code>dataDir</code></td>
 <td>
-<p>the path to the folder where the XLSXs are.</p>
+<p>path to folder where XLSXs are.</p>
 </td></tr>
 <tr valign="top"><td><code>x_column, y_column</code></td>
 <td>
-<p>the column of the X and Y coordinates, if NA the function will look the field 'wkt'.</p>
+<p>column of X and Y coordinates, if these arguments are set to 'NA', the function will read the field 'wkt'.</p>
 </td></tr>
 <tr valign="top"><td><code>wkt_column</code></td>
 <td>
-<p>the column of the WKT coordinates, if NA (by default) the function will look the field 'x_column' and 'y_column'.</p>
+<p>column of WKT coordinates, if NA (default) function will read the field 'x_column' and 'y_column'.</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the GeoJSON will be saved. By default: '/results'. If it doesn't exist, it will be created.</p>
+<p>folder where GeoJSON will be saved. Default: '/results'. If it doesn't exist, will be created.</p>
 </td></tr>
 <tr valign="top"><td><code>geojson.name</code></td>
 <td>
-<p>the name of the GeoJSON that will be created, by default 'mbr' (minimum bound rectangle)</p>
+<p>name of the GeoJSON that will be created, Default 'mbr' (minimum bound rectangle)</p>
 </td></tr>
 <tr valign="top"><td><code>verbose</code></td>
 <td>
-<p>if TRUE (by default) then display different messages.</p>
+<p>if TRUE (default) then display different messages.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>the bounding box of the dataset as a GeoJSON file
+<p>bounding box of the dataset as a GeoJSON file
 </p>
 
 
