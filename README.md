@@ -322,7 +322,7 @@ geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail
 ```
 
 <p align="center">
-  <img alt="img-name" src="./results/map_paths_profile.png" width="700">
+  <img alt="img-name" src="./results/map_path_profile.png" width="700">
 </p>
 
 The numbers of the HP are the same as the [previous map](https://github.com/eamena-project/eamenaR#heritages-places-ids-%EF%B8%8F-eamena-id)
