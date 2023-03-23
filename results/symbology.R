@@ -13,7 +13,7 @@ dt <- datatable(symbology,
                                lengthChange = FALSE,
                                paging = FALSE,
                                scrollX = F,
-                               initComplete = JS("function(settings, json) {$(this.api().table().header()).css({'font-size' : '20px'});}"),
+                               initComplete = JS("function(settings, json) {$(this.api().table().header()).css({'font-size' : '26px'});}"),
                                info = FALSE,
                                filter = "none")) %>%
   formatStyle("colors",
