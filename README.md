@@ -643,9 +643,11 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-project.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
 
-# Users
+# General statistics
 
-The function [`ref_users()`](https://eamena-project.github.io/eamenaR/doc/ref_users) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
+## Users
+
+The function [`ref_db()`](https://eamena-project.github.io/eamenaR/doc/ref_db) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
 
 ```
 d <- hash::hash()
@@ -655,11 +657,11 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
-d <- ref_users(db.con = my_con,
-               d = d,
-               date.after = "2020-08-01",
-               plot.g = T,
-               fig.width = 14)
+d <- ref_db(db.con = my_con,
+            d = d,
+            date.after = "2020-08-01",
+            plot.g = T,
+            fig.width = 14)
 ```
 
 Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The option `plot.g = T` gives this plot:
@@ -671,7 +673,7 @@ Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The o
 The total number of users can also be restricted to an interval (options `date.after` and `date.before`), for example limiting the count to the year 2022: 
 
 ```
-d <- ref_users(db.con = my_con,
+d <- ref_db(db.con = my_con,
                stat.name = "users_date_joined_2",
                d = d,
                date.after = "2022-01-01",
@@ -724,149 +726,6 @@ The `dist` shows that the geometries are exactly the same, and that there are sl
 ## BU
 
 The Bulk upload procedure
-
-### BU append
-
-```mermaid
-flowchart LR
-    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
-    A --1. GeoJSON<br><b>POINT</b>--> F("geojson_shp()"):::eamenaRfunction;
-    F --2. SHP--> G((GIS));
-    G --3. create<br><b>POLYGON</b>--> G;
-    G --4. SHP--> F;
-    C --2. KML/KMZ--> B((Google<br>Earth));
-    B --3. create<br><b>POLYGON</b>--> B;
-    B --4. KML/KMZ--> C;
-    C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
-    F --5. GeoJSON<br><b>POLYGON</b>--> D:::eamenaRfunction;
-    D --6. append<br>new geometries--> A;
-    classDef eamenaRfunction fill:#e7deca;
-```
-
-#### Integrating Google Earth geometries
-
-Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries, like POLYGONs, created in third part app, like Google Earth or a GIS, and to append them to already existing records in EAMENA.
-
-
-```mermaid
-flowchart LR
-    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
-    C --2. KML/KMZ--> B((Google<br>Earth));
-    B --3. create<br><b>POLYGON</b>--> B;
-    B --4. KML/KMZ--> C;
-    C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
-    D --6. append<br>new geometries--> A;
-    classDef eamenaRfunction fill:#e7deca;
-```
-
-<p align="center"> workflow to work with Google Earth </p>
-
-```mermaid
-flowchart LR
-    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> E("geojson_shp()"):::eamenaRfunction;
-    E --2. SHP--> F((GIS));
-    F --3. create<br><b>POLYGON</b>--> F;
-    F --4. SHP--> E;
-    E --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
-    D --6. append<br>new geometries--> A;
-    classDef eamenaRfunction fill:#e7deca;
-```
-
-<p align="center"> workflow to work with a GIS </p>
-  
-  
-functions: 
-  - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
-  - [`geojson_shp()`](https://eamena-project.github.io/eamenaR/doc/geojson_shp)  
-  - [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv)  
-
-For example:
-
-1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-project/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
-
-<a name="geojson_kml"></a>  
-
-2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
-
-```
-library(dplyr)
-geojson_kml(geom.types = c("POINT"),
-            geojson.name = "caravanserail_outKML")
-```
-
-![](results/geojson_kml_toKML.png)
-
-<a name="bulk_append_3"></a>
-
-3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the newly created POLYGONS with the ResourceID of a given HP.
-
-![](results/geojson_kml_toKML_polygon.png)
-
-4. Export as KML ('caravanserail_outKML2.kml')
-5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
-
-```
-geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
-                                           "/extdata/caravanserail_outKML2.kml")
-            geom.types = c("POLYGON"),
-            geojson.name = "caravanserail_outGeoJSON")
-```
-
-The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-project/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
-
-
-6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv) function
-
-```
-geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
-                               "/extdata/caravanserail_outGeoJSON.geojson"),
-            csv.name = "caravanserail_outCSV")
-```
-
-The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
-
-<a name="bulk_append_6"></a>
-```
-"resourceid","Geometric Place Expression","Location Certainty","Geometry Extent Certainty"
-"8db560d5-d17d-40ff-8046-0157b1b698ab","MULTIPOLYGON (((61.4023 30.77373, 61.4019 30.77371, 61.40194 30.77344, 61.40235 30.77345, 61.4023 30.77373)))","High","High"
-"b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
-```
-
-7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
-
-```
-mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
-df <- read.csv(mycsv)
-for(i in seq(1, nrow(df))){
-  eamenaid <- df[i, "ResourceID"]
-  d <- uuid_id(db.con = my_con,
-                     d = d,
-                     id = eamenaid,
-                     disconn = FALSE)
-  print(paste0(as.character(i), ") ", eamenaid, " <-> ", d$eamenaid))
-}
-DBI::dbDisconnect(my_con)
-```
-
-Will give:
-
-```
-[1] "1) 8db560d5-d17d-40ff-8046-0157b1b698ab <-> EAMENA-0192281"
-[1] "2) b8305141-789e-4aaa-976a-c85859e0870f <-> EAMENA-0182054"
-```
-
-As there are no `NA` in front of the ResourceID, the HP listed in the CSV file exist in the DB.
-
-8. To append these geometries to the DB, use the `-ow append` option in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
-
-<a name="bu_append_8"></a>
-```
-python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
-```
-
-Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the whole dataset of caravanserails
-[caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
-
 ### BU mapping
 
 Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (*source*) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
@@ -1025,6 +884,133 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
   <br>
   <em>screenshot of the output BU once copied/pasted into the template</em>
 </p>
+
+
+### BU append
+
+#### Integrating Google Earth geometries
+
+Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries, like POLYGONs, created in third part app, like Google Earth or a GIS, and to append them to already existing records in EAMENA.
+
+
+```mermaid
+flowchart LR
+    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> C("geojson_kml()"):::eamenaRfunction;
+    C --2. KML/KMZ--> B((Google<br>Earth));
+    B --3. create<br><b>POLYGON</b>--> B;
+    B --4. KML/KMZ--> C;
+    C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    D --6. append<br>new geometries--> A;
+    classDef eamenaRfunction fill:#e7deca;
+```
+
+<p align="center"> workflow to work with Google Earth </p>
+
+```mermaid
+flowchart LR
+    A[(EAMENA<br>DB)] --1. GeoJSON<br><b>POINT</b>--> E("geojson_shp()"):::eamenaRfunction;
+    E --2. SHP--> F((GIS));
+    F --3. create<br><b>POLYGON</b>--> F;
+    F --4. SHP--> E;
+    E --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    D --6. append<br>new geometries--> A;
+    classDef eamenaRfunction fill:#e7deca;
+```
+
+<p align="center"> workflow to work with a GIS </p>
+  
+  
+functions: 
+  - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
+  - [`geojson_shp()`](https://eamena-project.github.io/eamenaR/doc/geojson_shp)  
+  - [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv)  
+
+For example:
+
+1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-project/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
+
+<a name="geojson_kml"></a>  
+
+2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
+
+```
+library(dplyr)
+geojson_kml(geom.types = c("POINT"),
+            geojson.name = "caravanserail_outKML")
+```
+
+![](results/geojson_kml_toKML.png)
+
+<a name="bulk_append_3"></a>
+
+3. Open 'caravanserail_outKML' in Google Earth and draw POLYGONS. Name the newly created POLYGONS with the ResourceID of a given HP.
+
+![](results/geojson_kml_toKML_polygon.png)
+
+4. Export as KML ('caravanserail_outKML2.kml')
+5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
+
+```
+geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/caravanserail_outKML2.kml")
+            geom.types = c("POLYGON"),
+            geojson.name = "caravanserail_outGeoJSON")
+```
+
+The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-project/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
+
+
+6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv) function
+
+```
+geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
+                               "/extdata/caravanserail_outGeoJSON.geojson"),
+            csv.name = "caravanserail_outCSV")
+```
+
+The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_outCSV.csv), with the ResourceID and the geometry of each HP. The fields "Location Certainty" and "Geometry Extent Certainty" are filled with default values.
+
+<a name="bulk_append_6"></a>
+```
+"resourceid","Geometric Place Expression","Location Certainty","Geometry Extent Certainty"
+"8db560d5-d17d-40ff-8046-0157b1b698ab","MULTIPOLYGON (((61.4023 30.77373, 61.4019 30.77371, 61.40194 30.77344, 61.40235 30.77345, 61.4023 30.77373)))","High","High"
+"b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
+```
+
+7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
+
+```
+mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
+df <- read.csv(mycsv)
+for(i in seq(1, nrow(df))){
+  eamenaid <- df[i, "ResourceID"]
+  d <- uuid_id(db.con = my_con,
+                     d = d,
+                     id = eamenaid,
+                     disconn = FALSE)
+  print(paste0(as.character(i), ") ", eamenaid, " <-> ", d$eamenaid))
+}
+DBI::dbDisconnect(my_con)
+```
+
+Will give:
+
+```
+[1] "1) 8db560d5-d17d-40ff-8046-0157b1b698ab <-> EAMENA-0192281"
+[1] "2) b8305141-789e-4aaa-976a-c85859e0870f <-> EAMENA-0182054"
+```
+
+As there are no `NA` in front of the ResourceID, the HP listed in the CSV file exist in the DB.
+
+8. To append these geometries to the DB, use the `-ow append` option in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
+
+<a name="bu_append_8"></a>
+```
+python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
+```
+
+Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the whole dataset of caravanserails
+[caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
 
 
 # Others
