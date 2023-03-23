@@ -700,29 +700,7 @@ The other statistic calculated is the total number of users (minus those who hav
 
 # Data management
 
-## Duplicates
-
-The function [`ref_are_duplicates()`](https://eamena-project.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
-
-```
-d <- hash::hash()
-d <- ref_are_duplicates(d = d,
-                        export.table = T,
-                        fileOut = "duplicates.csv")
-```
-
-Creates this kind of table:
-  
-| field                           | 563567f7-eef0-4683-9e88-5e4be2452f80 | fb0a2ef4-023f-4d13-b931-132799bb7a6c | dist |
-|---------------------------------|--------------------------------------|--------------------------------------|------|
-| EAMENA ID                       | EAMENA-0207209                       | EAMENA-0182057                       |  -   |
-| Assessment.Investigator...Actor | Hamed Rahnama                        | Hamed Rahnama, Bijan Rouhani         | 0.18 |
-| Assessment.Activity.Date        | 2021-05-25                           | 2022-08-21, 2022-08-30               | 0.32 |
-| Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
-| geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
-
-The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-project/eamenaR/blob/main/results/duplicates.csv
-
+Data management concerns data entry ([BU](https://github.com/eamena-project/eamenaR#bu), etc.), search of [duplicates](https://github.com/eamena-project/eamenaR#duplicates), etc.
 ## BU
 
 The Bulk upload procedure
@@ -1011,6 +989,30 @@ python manage.py packages -o import_business_data -s "./data/test/caravanserail_
 
 Now, each of these two HP has two different kind of geometries: POINT and POLYGON. See for example the whole dataset of caravanserails
 [caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson), one of the record rendered ([EAMENA-0192281.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/EAMENA-0192281.geojson)) or this latter record in the [EAMENA DB](https://database.eamena.org/en/report/8db560d5-d17d-40ff-8046-0157b1b698ab)[^4]. 
+
+
+## Duplicates
+
+The function [`ref_are_duplicates()`](https://eamena-project.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
+
+```
+d <- hash::hash()
+d <- ref_are_duplicates(d = d,
+                        export.table = T,
+                        fileOut = "duplicates.csv")
+```
+
+Creates this kind of table:
+  
+| field                           | 563567f7-eef0-4683-9e88-5e4be2452f80 | fb0a2ef4-023f-4d13-b931-132799bb7a6c | dist |
+|---------------------------------|--------------------------------------|--------------------------------------|------|
+| EAMENA ID                       | EAMENA-0207209                       | EAMENA-0182057                       |  -   |
+| Assessment.Investigator...Actor | Hamed Rahnama                        | Hamed Rahnama, Bijan Rouhani         | 0.18 |
+| Assessment.Activity.Date        | 2021-05-25                           | 2022-08-21, 2022-08-30               | 0.32 |
+| Resource.Name                   | Bedasht Caravanserai, ..., CVNS-IR   | CVNS-IR, Bedasht Caravanserai, ...   | 0.26 |
+| geometry                        | c(55.05059, 36.42466)                | c(55.05059, 36.42466)                | 0    |
+
+The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-project/eamenaR/blob/main/results/duplicates.csv
 
 
 # Others
