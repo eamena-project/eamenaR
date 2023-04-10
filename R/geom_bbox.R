@@ -2,7 +2,7 @@
 #'
 #' @name geom_bbox
 #'
-#' @description Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
+#' @description Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax of coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 #'
 #' @param dataDir path to folder where XLSXs are.
 #' @param x_column,y_column column of X and Y coordinates, if these arguments are set to 'NA', the function will read the field 'wkt'.

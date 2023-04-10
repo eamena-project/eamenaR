@@ -37,10 +37,10 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
                             mapping.file.ggsheet = FALSE,
                             job = "mk",
                             job.type = "mk_type",
-                            eamena.field = "EAMENA",
+                            eamena.field = "target",
                             eamena.id = "UNIQUEID",
                             verbose = TRUE){
-
+  `%>%` <- dplyr::`%>%` # used to not load dplyr
   dirOut <- paste0(bu.path, job, "/out/")
   dir.create(dirOut, showWarnings = FALSE)
   # data source
@@ -141,7 +141,6 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "
       if(verbose){print(paste0("     works on 'expression' field type"))}
       mapping.file.expres <- mapping.file[mapping.file[ , job.type] == "expression", ]
       mapping.file.expres <- mapping.file.expres[!is.na(mapping.file.expres[ , job.type]), ]
-
       for(i in seq(1, nrow(mapping.file.expres))){
         ea <- as.character(mapping.file.expres[i, eamena.field])
         if(verbose){print(paste0("           ... and read '", ea,"'"))}

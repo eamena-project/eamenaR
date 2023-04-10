@@ -1,3 +1,21 @@
+library(eamenaR)
+library(dplyr)
+
+ggsheet <- 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'
+list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
+                job = "mk",
+                verb = T,
+                mapping.file = ggsheet,
+                mapping.file.ggsheet = T)
+
+####
+geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk/",
+          x_column = "xcoord",
+          y_column = "ycoord",
+          geojson.name = "grids_bbox_mk_f17.geojson")
+
+
+######################
 
 library(devtools)
 
