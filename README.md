@@ -709,7 +709,7 @@ The Bulk upload procedure
 Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (*source*) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
     A -. a. get MBR<br>from geometries .-> D("geom_bbox()"):::eamenaRfunction;
     B ----> G[mapping file];
