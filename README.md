@@ -706,7 +706,7 @@ Data management concerns data entry ([BU](https://github.com/eamena-project/eame
 The Bulk upload procedure
 ### BU mapping
 
-Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (*source*) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file
+Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (*source*) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file.
 
 ```mermaid
 flowchart TD
@@ -717,7 +717,10 @@ flowchart TD
     subgraph ide1 [Geometries];
       direction LR
       D -. b. creates .-> E[mbr.geojson];
-      E -. used to collect<br>grid squares .-> F[(EAMENA DB)];
+      E -. <a href='https://github.com/eamena-project/eamenaR#collect-the-grid-squares'>used to collect<br>grid squares</a> .-> F[(EAMENA DB)];
+
+
+
       F -. export grid squares<br>in a GeoJSON file .-> H[grid_squares.geojson];
     end;
     H -. add the GRID ID .-> G
