@@ -712,10 +712,10 @@ Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project
 flowchart TD
     A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
     A -. a. get MBR<br>from geometries .-> D("geom_bbox()"):::eamenaRfunction;
-    B ----> G[mapping file];
+    B <--1. uses--> G[mapping file];
     B --2. export--> C[BU file<br><em>target</em>];
     subgraph ide1 [Geometries];
-    direction LR;
+      direction LR
       D -. b. creates .-> E[mbr.geojson];
       E -. used to collect<br>grid squares .-> F[(EAMENA DB)];
       F -. export grid squares<br>in a GeoJSON file .-> H[gs.geojson];
