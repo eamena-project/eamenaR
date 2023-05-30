@@ -2,7 +2,7 @@
 #'
 #' @name thesaurus
 #'
-#' @description Read the multi-linguism thesaurus hosted by https://thesaurus.mom.fr/opentheso/?idt=th101 and replot it as an interactive graph.
+#' @description Read the multi-linguism thesaurus with SPARQL hosted by https://thesaurus.mom.fr/opentheso/?idt=th101 and replot it as an interactive graph.
 #'
 #' @param path.thes the path to the thesaurus file.
 #' @param mod the way the thesaurus in handled. Default, "read".

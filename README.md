@@ -711,7 +711,7 @@ Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project
 ```mermaid
 flowchart LR
     A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
-    A -. a. get MBR .-> D("geom_bbox()"):::eamenaRfunction;
+    A -. a. get MBR<br>from geometries .-> D("geom_bbox()"):::eamenaRfunction;
     B --1. mapping file--> B;
     B --2. export--> C[BU file<br><em>target</em>];
     subgraph ide1 [Geometries];
