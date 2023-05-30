@@ -717,8 +717,8 @@ flowchart TD
     subgraph ide1 [Geometries];
       direction LR
       D -. b. creates .-> E[mbr.geojson];
-      E -. used to collect<br>grid squares .-> F[(EAMENA DB)];
-      F -. export grid squares<br>in a GeoJSON file .-> H[gs.geojson];
+      E -. used to collect<br>grid squares (gs) .-> F[(EAMENA DB)];
+      F -. export gs<br>in a GeoJSON file .-> H[gs.geojson];
     end;
     H -. add the GRID ID .-> G
     classDef eamenaRfunction fill:#e7deca;
