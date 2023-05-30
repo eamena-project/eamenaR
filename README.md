@@ -717,9 +717,9 @@ flowchart LR
     subgraph ide1 [Geometries];
       D -. b. creates .-> E[mbr.geojson];
       E -. used to collect<b>grid squares .-> F[(EAMENA DB)];
-      F -. export grid squares<br>in a GeoJSON file .-> G;
+      F -. export grid squares<br>in a GeoJSON file .-> H[gs.geojson];
     end;
-    E -. + GRID ID .-> B; 
+    H -. add the GRID ID .-> G
     classDef eamenaRfunction fill:#e7deca;
 ```
 
