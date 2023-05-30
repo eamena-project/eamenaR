@@ -710,17 +710,14 @@ Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project
 
 ```mermaid
 flowchart TD
-    A[structured file<br><em>source</em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
+    A[structured file<br><em><b>source</b></em>] ----> B("list_mapping_bu()"):::eamenaRfunction;
     A -. a. get MBR<br>from geometries .-> D("geom_bbox()"):::eamenaRfunction;
     B <--1. uses--> G[mapping file];
-    B --2. export--> C[BU file<br><em>target</em>];
+    B --2. export--> C[BU file<br><em><b>target</b></em>];
     subgraph ide1 [Geometries];
       direction LR
       D -. b. creates .-> E[mbr.geojson];
       E -. <a href='https://github.com/eamena-project/eamenaR#collect-the-grid-squares'>used to collect<br>grid squares</a> .-> F[(EAMENA DB)];
-
-
-
       F -. export grid squares<br>in a GeoJSON file .-> H[grid_squares.geojson];
     end;
     H -. add the GRID ID .-> G
