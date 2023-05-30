@@ -715,8 +715,9 @@ flowchart TD
     B ----> G[mapping file];
     B --2. export--> C[BU file<br><em>target</em>];
     subgraph ide1 [Geometries];
+    direction LR;
       D -. b. creates .-> E[mbr.geojson];
-      E -. used to collect<b>grid squares .-> F[(EAMENA DB)];
+      E -. used to collect<br>grid squares .-> F[(EAMENA DB)];
       F -. export grid squares<br>in a GeoJSON file .-> H[gs.geojson];
     end;
     H -. add the GRID ID .-> G
