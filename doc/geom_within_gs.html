@@ -59,10 +59,21 @@ geom_within_gs(
 
 <pre>
 
-library(dplyr)
-
+# test on a couple of coordinates
 geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 
+# run on an XLSX sheet, and print the result in the console (~ BU)
+df &lt;- readxl::read_excel("C:/Users/Thomas Huet/Desktop/temp_xlsx/Potential sites-Western Desert Simi-Kenawi.xlsx")
+values &lt;- c()
+for(i in seq(1, nrow(df))){
+  wkt &lt;- as.character(df[i, "Geometric Place Expression"])
+  grid.id &lt;- geom_within_gs(resource.wkt = wkt,
+                            gs.path = "C:/Users/Thomas Huet/Desktop/temp_xlsx/gs.geojson",
+                            verbose = FALSE)
+  values &lt;- c(values, grid.id)
+}
+is.na(values) &lt;- ""
+cat(values, sep = "\n")
 
 </pre>
 

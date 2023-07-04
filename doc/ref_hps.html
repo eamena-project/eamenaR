@@ -6,11 +6,11 @@
 
 <table width="100%" summary="page for ref_hps"><tr><td>ref_hps</td><td style="text-align: right;">R Documentation</td></tr></table>
 
-<h2>Statistics about EAMENA Heritage places (spatial distribution)</h2>
+<h2>Statistics about EAMENA Heritage places (spatial distribution, nb of HP by grids)</h2>
 
 <h3>Description</h3>
 
-<p>statistics about EAMENA Heritage places. For example the HPs created in 2022.
+<p>statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids.
 </p>
 
 
@@ -20,10 +20,11 @@
 ref_hps(
   db.con = NA,
   d = NA,
-  stat.name = "eamena-hps",
+  stat = c("spat"),
+  stat.name = "eamena_hps",
   stat.format = ".geojson",
   plot.map = FALSE,
-  export.map = FALSE,
+  export.data = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   date.after = NA,
   date.before = Sys.Date(),
@@ -44,9 +45,13 @@ ref_hps(
 <td>
 <p>a hash() object (a Python-like dictionary).</p>
 </td></tr>
+<tr valign="top"><td><code>stat</code></td>
+<td>
+<p>the type of statistic that will be computed. Default: &quot;spat&quot; (spatial).</p>
+</td></tr>
 <tr valign="top"><td><code>stat.name</code></td>
 <td>
-<p>the name of the output file. By default &quot;eamena-hps&quot;.</p>
+<p>the name of the output file. By default &quot;eamena_hps&quot;.</p>
 </td></tr>
 <tr valign="top"><td><code>stat.format</code></td>
 <td>
@@ -56,13 +61,13 @@ ref_hps(
 <td>
 <p>if TRUE will plot a map (FALSE by default).</p>
 </td></tr>
-<tr valign="top"><td><code>export.map</code></td>
+<tr valign="top"><td><code>export.data</code></td>
 <td>
 <p>if TRUE will export the map (FALSE by default).</p>
 </td></tr>
 <tr valign="top"><td><code>dirOut</code></td>
 <td>
-<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.map is TRUE.</p>
+<p>the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.data is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>date.after</code></td>
 <td>
@@ -85,7 +90,7 @@ ref_hps(
 
 <h3>Value</h3>
 
-<p>a hash() object. If plot.map and export.map are set to TRUE will also create and save maps (SHP or GeoJSON).
+<p>a hash() object. If plot.map and export.data are set to TRUE will also create and save maps (SHP or GeoJSON).
 </p>
 
 
@@ -93,6 +98,7 @@ ref_hps(
 
 <pre>
 
+# Hash dictionary and Postgres connection (change the 'xxx' with usernames and password)
 d &lt;- hash::hash()
 my_con &lt;- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
@@ -106,10 +112,18 @@ d &lt;- ref_hps(db.con = my_con,
             d = d,
             date.after = '2021-12-31',
             date.before = '2023-01-01',
-            stat.name = "eamena-hps-2022",
+            stat.name = "eamena_hps_2022",
             stat.format = ".shp",
             dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-            export.map = TRUE)
+            export.data = TRUE)
+
+# Number of HP by grids, export as CSV
+d &lt;- hash::hash()
+d &lt;- ref_hps(db.con = my_con,
+             d = d,
+             stat.name = "eamena_hps_by_grids",
+             export.data = TRUE,
+             dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
 
 </pre>
 

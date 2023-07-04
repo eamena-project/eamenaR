@@ -1,4 +1,4 @@
-#' Convert rd files to HTML files using pandoc
+#' Convert .rd files to HTML files using pandoc
 #'
 pathMan <- "C:/Rprojects/eamenaR/man/"
 pathDoc <- "C:/Rprojects/eamenaR/doc/"

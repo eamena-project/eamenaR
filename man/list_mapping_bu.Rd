@@ -12,7 +12,7 @@ list_mapping_bu(
   mapping.file.ggsheet = FALSE,
   job = "mk",
   job.type = "mk_type",
-  eamena.field = "EAMENA",
+  eamena.field = "target",
   eamena.id = "UNIQUEID",
   verbose = TRUE
 )

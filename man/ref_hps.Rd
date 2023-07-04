@@ -2,15 +2,16 @@
 % Please edit documentation in R/ref_hps.R
 \name{ref_hps}
 \alias{ref_hps}
-\title{Statistics about EAMENA Heritage places (spatial distribution)}
+\title{Statistics about EAMENA Heritage places (spatial distribution, nb of HP by grids)}
 \usage{
 ref_hps(
   db.con = NA,
   d = NA,
-  stat.name = "eamena-hps",
+  stat = c("spat"),
+  stat.name = "eamena_hps",
   stat.format = ".geojson",
   plot.map = FALSE,
-  export.map = FALSE,
+  export.data = FALSE,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   date.after = NA,
   date.before = Sys.Date(),
@@ -23,15 +24,17 @@ ref_hps(
 
 \item{d}{a hash() object (a Python-like dictionary).}
 
-\item{stat.name}{the name of the output file. By default "eamena-hps".}
+\item{stat}{the type of statistic that will be computed. Default: "spat" (spatial).}
+
+\item{stat.name}{the name of the output file. By default "eamena_hps".}
 
 \item{stat.format}{the extension of the geographic file (".geojson", ".shp"). GeoJSON by default.}
 
 \item{plot.map}{if TRUE will plot a map (FALSE by default).}
 
-\item{export.map}{if TRUE will export the map (FALSE by default).}
+\item{export.data}{if TRUE will export the map (FALSE by default).}
 
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.map is TRUE.}
+\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.data is TRUE.}
 
 \item{date.after}{the date after which the calculation is made. Useful to limit the analysis. By default, NA.}
 
@@ -42,13 +45,14 @@ ref_hps(
 \item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
-a hash() object. If plot.map and export.map are set to TRUE will also create and save maps (SHP or GeoJSON).
+a hash() object. If plot.map and export.data are set to TRUE will also create and save maps (SHP or GeoJSON).
 }
 \description{
-statistics about EAMENA Heritage places. For example the HPs created in 2022.
+statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids.
 }
 \examples{
 
+# Hash dictionary and Postgres connection (change the 'xxx' with usernames and password)
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
@@ -62,9 +66,17 @@ d <- ref_hps(db.con = my_con,
             d = d,
             date.after = '2021-12-31',
             date.before = '2023-01-01',
-            stat.name = "eamena-hps-2022",
+            stat.name = "eamena_hps_2022",
             stat.format = ".shp",
             dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-            export.map = TRUE)
+            export.data = TRUE)
+
+# Number of HP by grids, export as CSV
+d <- hash::hash()
+d <- ref_hps(db.con = my_con,
+             d = d,
+             stat.name = "eamena_hps_by_grids",
+             export.data = TRUE,
+             dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
 
 }

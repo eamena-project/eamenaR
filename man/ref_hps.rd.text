@@ -8,22 +8,23 @@ viewport: width=device-width, initial-scale=1.0, user-scalable=yes
   ref_hps     R Documentation
   --------- -----------------
 
-## Statistics about EAMENA Heritage places (spatial distribution)
+## Statistics about EAMENA Heritage places (spatial distribution, nb of HP by grids)
 
 ### Description
 
 statistics about EAMENA Heritage places. For example the HPs created in
-2022.
+2022, number of HP by grids.
 
 ### Usage
 
     ref_hps(
       db.con = NA,
       d = NA,
-      stat.name = "eamena-hps",
+      stat = c("spat"),
+      stat.name = "eamena_hps",
       stat.format = ".geojson",
       plot.map = FALSE,
-      export.map = FALSE,
+      export.data = FALSE,
       dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
       date.after = NA,
       date.before = Sys.Date(),
@@ -36,11 +37,12 @@ statistics about EAMENA Heritage places. For example the HPs created in
   --------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   `db.con`        the parameters for the Postgresql EAMENA DB, in a \'RPostgres::dbConnect()\' format.
   `d`             a hash() object (a Python-like dictionary).
-  `stat.name`     the name of the output file. By default \"eamena-hps\".
+  `stat`          the type of statistic that will be computed. Default: \"spat\" (spatial).
+  `stat.name`     the name of the output file. By default \"eamena_hps\".
   `stat.format`   the extension of the geographic file (\".geojson\", \".shp\"). GeoJSON by default.
   `plot.map`      if TRUE will plot a map (FALSE by default).
-  `export.map`    if TRUE will export the map (FALSE by default).
-  `dirOut`        the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export.map is TRUE.
+  `export.data`   if TRUE will export the map (FALSE by default).
+  `dirOut`        the folder where the outputs will be saved. By default: \'/results\'. If it doesn\'t exist, it will be created. Only useful is export.data is TRUE.
   `date.after`    the date after which the calculation is made. Useful to limit the analysis. By default, NA.
   `date.before`   the date before which the calculation is made. Useful to limit the analysis. By default, the current date (\'Sys.Date()\')
   `team.name`     only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). For examples, the possible values to limit the analysis for the EAMENA DB are: \"EAMENA Project Staff\", \"MarEA Project Staff\", \"Government Authority/Staff\", \"Volunteer/Independent Researcher\", \"Student/Trainee\", \"Academic Researcher\", \"Private Sector\", \"Non-Governmental Organisation (NGO)\", etc.
@@ -49,12 +51,13 @@ statistics about EAMENA Heritage places. For example the HPs created in
 
 ### Value
 
-a hash() object. If plot.map and export.map are set to TRUE will also
+a hash() object. If plot.map and export.data are set to TRUE will also
 create and save maps (SHP or GeoJSON).
 
 ### Examples
 
 
+    # Hash dictionary and Postgres connection (change the 'xxx' with usernames and password)
     d <- hash::hash()
     my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                    user = 'xxx',
@@ -68,8 +71,16 @@ create and save maps (SHP or GeoJSON).
                 d = d,
                 date.after = '2021-12-31',
                 date.before = '2023-01-01',
-                stat.name = "eamena-hps-2022",
+                stat.name = "eamena_hps_2022",
                 stat.format = ".shp",
                 dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-                export.map = TRUE)
+                export.data = TRUE)
+
+    # Number of HP by grids, export as CSV
+    d <- hash::hash()
+    d <- ref_hps(db.con = my_con,
+                 d = d,
+                 stat.name = "eamena_hps_by_grids",
+                 export.data = TRUE,
+                 dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
 :::

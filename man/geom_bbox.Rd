@@ -31,15 +31,17 @@ geom_bbox(
 bounding box of the dataset as a GeoJSON file
 }
 \description{
-Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax in coordinates and creates minimum bounding box (MBR), that is, extent of geometries. Export is GeoJSON file that can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
+Geometries bounding box (bbox). Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax of each XLSX coordinates and creates minimum bounding box (MBR), that is, extent of geometries. This bounding box is exported as a GeoJSON file and can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 }
 \examples{
-
-geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2")
 
 geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
           x_column = "Longitude.",
           y_column = "Latitude",
           geojson.name = "grids_bbox_mk2.geojson")
+
+geom_bbox(dataDir = "C:/Users/Thomas Huet/Desktop/temp_xlsx/",
+         dirOut = NA,
+         wkt_column = "Geometric Place Expression")
 
 }

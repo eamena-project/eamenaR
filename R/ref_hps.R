@@ -2,7 +2,7 @@
 #'
 #' @name ref_hps
 #'
-#' @description statistics about EAMENA Heritage places. For example the HPs created in 2022.
+#' @description statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids.
 #'
 #' @param db.con the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.
 #' @param d a hash() object (a Python-like dictionary).
