@@ -190,19 +190,19 @@ ref_db <- function(db.con = NA,
   return(d)
 }
 
-library(eamenaR)
-
-d <- hash::hash()
-my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
-                               password = 'postgis',
-                               dbname = 'eamena',
-                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-                               port = 5432)
-d <- ref_db(db.con = my_con,
-            d = d,
-            stat = "users",
-            date.after = "2020-08-01",
-            plot.g = T,
-            fig.width = 14)
+# library(eamenaR)
+#
+# d <- hash::hash()
+# my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+#                                user = 'postgres',
+#                                password = 'postgis',
+#                                dbname = 'eamena',
+#                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+#                                port = 5432)
+# d <- ref_db(db.con = my_con,
+#             d = d,
+#             stat = "users",
+#             date.after = "2020-08-01",
+#             plot.g = T,
+#             fig.width = 14)
 

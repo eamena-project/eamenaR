@@ -520,6 +520,13 @@ Either for [cultural periods](https://github.com/eamena-project/eamenaR#cultural
 
 Use the [`ref_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/ref_cultural_periods) and [`list_child_concepts()`](https://eamena-project.github.io/eamenaR/doc/list_child_concepts) to retrieve the list of cultural periods and subperiods directly from the EAMENA DB. 
 
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/rdm-culturalperiods.png" width="500">
+  <br>
+    <em>screenshot of the Cultural Periods in the EAMENA Reference Data Manager (RDM)</em>
+</p>
+
+
 ```
 # create an hash dictionnary to store the cultural ans subcultural periods
 d <- hash::hash()

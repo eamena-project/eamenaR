@@ -20,7 +20,8 @@
 #'           y_column = "Latitude",
 #'           geojson.name = "grids_bbox_mk2.geojson")
 #'
-#'geom_bbox(dataDir = "C:/Users/Thomas Huet/Desktop/temp_xlsx/",
+#' geom_bbox(dataDir = "C:/Users/Thomas Huet/Desktop/temp_xlsx/",
+#'          dirOut = NA,
 #'          wkt_column = "Geometric Place Expression")
 #'
 #' @export
@@ -69,7 +70,7 @@ geom_bbox <- function(dataDir = NA,
     wktcoord <- wktcoord[[wkt_column]]
     wktcoord.nona <- as.character(na.omit(wktcoord))
     df.wkt <- data.frame(geom = wktcoord.nona)
-    df.wkt.sf <- sf::st_as_sf(head(df.wkt), wkt = "geom")
+    df.wkt.sf <- sf::st_as_sf(df.wkt, wkt = "geom")
     bbox <- sf::st_bbox(df.wkt.sf)
   }
   if(is.na(wkt_column)){

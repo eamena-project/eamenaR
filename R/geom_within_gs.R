@@ -13,17 +13,29 @@
 #'
 #' @examples
 #'
-#' library(dplyr)
-#'
+#' # test on a couple of coordinates
 #' geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
 #'
+#' # run on an XLSX sheet, and print the result in the console (~ BU)
+#' df <- readxl::read_excel("C:/Users/Thomas Huet/Desktop/temp_xlsx/Potential sites-Western Desert Simi-Kenawi.xlsx")
+#' values <- c()
+#' for(i in seq(1, nrow(df))){
+#'   wkt <- as.character(df[i, "Geometric Place Expression"])
+#'   grid.id <- geom_within_gs(resource.wkt = wkt,
+#'                             gs.path = "C:/Users/Thomas Huet/Desktop/temp_xlsx/gs.geojson",
+#'                             verbose = FALSE)
+#'   values <- c(values, grid.id)
+#' }
+#' is.na(values) <- ""
+#' cat(values, sep = "\n")
 #'
 #' @export
 geom_within_gs <- function(resource.wkt = NA,
                            gs.path = paste0(system.file(package = "eamenaR"),
                                             "/extdata/grid_squares.geojson"),
                            verbose = TRUE){
-  err <-  flag <- 0
+  `%>%` <- dplyr::`%>%`
+  err <- flag <- 0
   gs.sf <- sf::st_read(gs.path, quiet = T)
   resource.geom <- data.frame(wkt = resource.wkt)
   tryCatch({
@@ -35,6 +47,7 @@ geom_within_gs <- function(resource.wkt = NA,
   )
   if(err == 0){
     for(gs in seq(1, nrow(gs.sf))){
+      # gs <- 4
       grid.square.wkt <- gs.sf$geometry[[gs]]
       is.within <- sf::st_within(resource.sf, grid.square.wkt) %>%
         lengths > 0
@@ -52,7 +65,8 @@ geom_within_gs <- function(resource.wkt = NA,
     }
   }
   if(err == 1){
+    # by convention, the BU alterned lines with geometries and lines without `NA`. We want to restitute these NA for a copy/paste
     return(NA)
-    }
+  }
 }
 
