@@ -2,7 +2,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
+The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([number of HP by grids](https://github.com/eamena-project/eamenaR#grids), [users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
   
 ```mermaid
 flowchart LR
@@ -651,6 +651,32 @@ plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](https://eamena-project.github.io/eamenaR/results/edtf_plotly_category_ym_threats_types.html)
 
 # General statistics
+
+## Grids
+
+The function [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) allows to sum the number of HP by grids. 
+
+```
+d <- hash::hash()
+d <- ref_hps(db.con = my_con,
+             d = d,
+             stat.name = "eamena_hps_by_grids",
+             export.data = TRUE,
+             dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
+```
+
+The result is a CSV file (first lines):
+
+|grid_id                              | nb_hp|grid_num  |
+|:------------------------------------|-----:|:---------|
+|004db4f1-dc2c-4dc1-a69b-c167fe891fe8 |    90|E10N33-12 |
+|7f87b5b7-c6db-45ce-873c-fc0cb9e8eccd |    55|E10N33-14 |
+|62ec57f4-0bdd-4d21-932f-0b2141fe2bb6 |    15|E10N33-32 |
+|61d85ffc-e461-4360-998d-37a02840cf1f |     3|E10N34-14 |
+|6995cca3-f7c4-4820-b20f-70aaef93deeb |    23|E10N36-12 |
+|85db112a-0964-4697-999d-c5b76e275370 |    26|E10N36-14 |
+
+See the output in a GIS, here: https://github.com/eamena-project/eamena-arches-dev/tree/main/data/grids#gis
 
 ## Users
 
