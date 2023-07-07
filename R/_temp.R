@@ -1,6 +1,56 @@
 library(eamenaR)
 library(dplyr)
 
+
+library(sf)
+
+geojson_grid <- function(geojson.path, rows, cols) {
+  if(verbose){print(paste0("Read", geojson.path))}
+  polygon <- sf::st_read(geojson.path)
+  grid.id <- polygon$Grid.ID
+  nb.subgrids <- cols*rows
+  subgrids.ids <- paste0(grid.id, '.', seq(1, nb.subgrids))
+  if(verbose){print(paste0("  * nb of subgrids:", nb.subgrids,
+                           "(", head(subgrids.ids, 2), " ... ", tail(subgrids.ids, 1), ")"))}
+  polygon_sf <- sf::st_as_sf(polygon)
+  bbox <- sf::st_bbox(polygon_sf)
+  cell_width <- (bbox[3] - bbox[1]) / cols
+  cell_height <- (bbox[4] - bbox[2]) / rows
+  #  of points
+  sfc.polygons <- sf::st_make_grid(bbox,
+                                   cellsize = c(cell_width, cell_height))
+  if(verbose){print(paste0("Subgrids created"))}
+  polygons <- sf::st_as_sf(sfc.polygons)
+  polygons <- sf::st_cast(polygons, "POLYGON")
+  polygons$id <- rev(subgrids.ids)
+  # # Intersect the grid polygons with the original polygon
+  # intersected_polygons <- sf::st_intersection(polygons, polygon_sf)
+  if(export){
+    sf::st_write(polygons,
+                 "C:/Rprojects/eamenaR/results/_divided_grid.geojson",
+                 delete_dsn = TRUE)
+    if(verbose){print(paste0("Exported"))}
+  } else {
+    return(polygons)
+  }
+}
+
+# geojson_polygon <- '{"type": "Polygon", "coordinates": [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]}'
+
+geojson_polygon <- "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/grids/test/E42N30-42.geojson"
+
+grid <- geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
+                                           "/extdata/E42N30-42.geojson"),
+                     rows = 10,
+                     cols = 20)
+# # Divide the polygon into a grid of smaller polygons
+# grid <- divide_polygon_into_grid(polygon, 70, 140)
+
+# Print the resulting grid
+print(grid)
+
+##################
+
 ggsheet <- 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'
 list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
                 job = "mk",
