@@ -737,7 +737,7 @@ Data management concerns data entry ([BU](https://github.com/eamena-project/eame
 
 ## Subgrids
 
-To facilitate a systematic remote sensing survey, a Grid Square can be divided in many subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
+TTo facilitate systematic survey, using remote sensing (ex: Google Earth), a grid can be divided into several subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
 
 ```
 geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
@@ -746,7 +746,7 @@ geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
              cols = 4)
 ```
 
-Creates [this GS](https://github.com/eamena-project/eamenaR/blob/main/results/E42N30-42_subgrids.geojson) with the same extent as `E42N30-42` and divided into `8*4` subgrids numbered from 1 to 16 (`E42N30-42_1` ... `E42N30-42_16`). 
+Creates [this GS](https://github.com/eamena-project/eamenaR/blob/main/results/E42N30-42_subgrids.geojson) with the same extent as the input GS (`E42N30-42`) and divided into `8*4` subgrids numbered from 1 to 16 (`E42N30-42_1` ... `E42N30-42_16`). 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR-functions-doc_geojson_grid.png" width="400">
