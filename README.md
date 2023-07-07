@@ -734,6 +734,27 @@ The other statistic calculated is the total number of users (minus those who hav
 # Data management
 
 Data management concerns data entry ([BU](https://github.com/eamena-project/eamenaR#bu), etc.), search of [duplicates](https://github.com/eamena-project/eamenaR#duplicates), etc.
+
+## Subgrids
+
+To facilitate a systematic remote sensing survey, a Grid Square can be divided in many subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
+
+```
+geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
+                                   "/extdata/E42N30-42.geojson"),
+             rows = 8,
+             cols = 4)
+```
+
+Creates a GS with the same extent as `E42N30-42` with `8*4` subgrids numbered from 1 to 16 (`E42N30-42_1` ... `E42N30-42_16`)
+
+<p align="center">
+  <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR-functions-doc_geojson_grid.png
+" width="550">
+    <br>
+  <em>screenshot of Google Pro with the subgrids of E42N30-42 (GeoJSON file)</em>
+</p>
+
 ## BU
 
 The Bulk upload procedure

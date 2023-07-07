@@ -34,7 +34,7 @@ geojson_grid <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   if(is.na(fileOut)){
     fileOut <- paste0(DescTools::SplitPath(geojson.path)$filename, "_subgrids.geojson")
   }
-  if(verbose){print(paste0("Read", geojson.path))}
+  if(verbose){print(paste0("Read ", geojson.path))}
   polygon <- sf::st_read(geojson.path)
   grid.id <- polygon$Grid.ID
   nb.subgrids <- cols*rows
