@@ -746,7 +746,7 @@ geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
              cols = 4)
 ```
 
-Creates a GS with the same extent as `E42N30-42` with `8*4` subgrids numbered from 1 to 16 (`E42N30-42_1` ... `E42N30-42_16`)
+Creates [this GS](https://github.com/eamena-project/eamenaR/blob/main/results/E42N30-42_subgrids.geojson) with the same extent as `E42N30-42` and divided into `8*4` subgrids numbered from 1 to 16 (`E42N30-42_1` ... `E42N30-42_16`). 
 
 <p align="center">
   <img alt="img-name" src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR-functions-doc_geojson_grid.png
