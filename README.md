@@ -737,7 +737,7 @@ Data management concerns data entry ([BU](https://github.com/eamena-project/eame
 
 ## Subgrids
 
-TTo facilitate systematic survey, using remote sensing (ex: Google Earth), a grid can be divided into several subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
+To facilitate systematic survey, using remote sensing (ex: Google Earth), a grid can be divided into several subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
 
 ```
 geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
