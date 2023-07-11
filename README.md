@@ -1011,7 +1011,7 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-p
 "b8305141-789e-4aaa-976a-c85859e0870f","MULTIPOLYGON (((51.47507 33.09169, 51.47463 33.09125, 51.47519 33.09086, 51.47561 33.09133, 51.47507 33.09169)))","High","High"
 ```
 
-7. These new geometries will be uploaded into the EAMENA DB and append to existing HP. But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
+7. These new geometries will be uploaded into the EAMENA DB and append to existing HP having the same `resourceid` (ResourceID). But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
 
 ```
 mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
