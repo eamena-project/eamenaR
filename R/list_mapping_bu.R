@@ -30,10 +30,12 @@
 #'                 mapping.file.ggsheet = T)
 #'
 #' @export
-list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
-                            bu.template.path = "C:/Rprojects/eamena-arches-dev/data/bulk/templates/Heritage Place BUS Template.xlsx",
+list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"),
+                                             "/extdata/bu/"),
+                            bu.template.path = paste0(system.file(package = "eamenaR"),
+                                                      "/extdata/bu_template.xlsx"),
                             mapping.file = paste0(system.file(package = "eamenaR"),
-                                                  "/extdata/mapping_bu.xlsx"),
+                                                  "/extdata/bu_mapping.xlsx"),
                             mapping.file.ggsheet = FALSE,
                             job = "mk",
                             job.type = "mk_type",
