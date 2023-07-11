@@ -756,7 +756,7 @@ Creates [this GS](https://github.com/eamena-project/eamenaR/blob/main/results/E4
 
 ## BU
 
-The Bulk upload procedure
+The Bulk upload procedure to [map](https://github.com/eamena-project/eamenaR#bu-mapping) unformatted datasets, [append](https://github.com/eamena-project/eamenaR#bu-append) supplementary data to existing records, etc.
 ### BU mapping
 
 Get a BU file (*target*, see ["what is a BU?"](https://github.com/eamena-project/eamena-arches-dev/tree/main/data/bulk#bulk-upload-bu--)) from an already structured file (*source*) with the [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function. This function uses a mapping file to create the equivalences between the source file and the target file.
