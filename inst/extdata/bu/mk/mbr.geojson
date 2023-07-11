@@ -1,0 +1,71 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              7,
+              36.25
+            ],
+            [
+              7,
+              36.5
+            ],
+            [
+              7.25,
+              36.5
+            ],
+            [
+              7.25,
+              36.25
+            ],
+            [
+              7,
+              36.25
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "Grid ID": "E07N36-13"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              6.75,
+              36.25
+            ],
+            [
+              6.75,
+              36.5
+            ],
+            [
+              7,
+              36.5
+            ],
+            [
+              7,
+              36.25
+            ],
+            [
+              6.75,
+              36.25
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "properties": {
+        "Grid ID": "E06N36-24"
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}
