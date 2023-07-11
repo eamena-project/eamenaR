@@ -93,7 +93,7 @@ geojson_grid <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     return(polygons)
   }
 }
-
-geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
-                                          "/extdata/E42N30-42.geojson"),
-             dirOut = "C:/Rprojects/eamena-arches-dev/data/grids/test/")
+#
+# geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
+#                                           "/extdata/E42N30-42.geojson"),
+#              dirOut = "C:/Rprojects/eamena-arches-dev/data/grids/test/")
