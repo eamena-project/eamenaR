@@ -167,14 +167,9 @@ list_mapping_bu <- function(bu.path = paste0(system.file(package = "eamenaR"),
         eval(parse(text = x.text)) # the XLSX cell text is executed
       }
     }
-
-
-
-
-
-
-
-
+    # eamenaR::geom_within_gs(data[j, "Point"],
+    #                         "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/bu/mk/mbr.geojson",
+    #                         verbose = FALSE)
     # 'other' column
     if('other' %in% unique(mapping.file[[job.type]])){
       if(verbose){print(paste0("     works on 'other' field values"))}

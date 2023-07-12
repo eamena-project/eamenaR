@@ -4,6 +4,37 @@ library(dplyr)
 
 # geojson_polygon <- '{"type": "Polygon", "coordinates": [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]}'
 
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'postgres',
+                               password = 'postgis',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+
+d <- hash::hash()
+bu.to.append <- "C:/Users/Thomas Huet/Desktop/BU test/ULVS_INFO_Relations_part1.xlsx"
+df <- openxlsx::read.xlsx(bu.to.append)
+for(i in seq(1, nrow(head(df)))){
+  print(paste0("line: ", i))
+  eamenaid.from <- df[i, "RESOURCEID_FROM"]
+  eamenaid.to <- df[i, "RESOURCEID_TO"]
+  d <- uuid_id(db.con = my_con,
+               d = d,
+               id = eamenaid.from,
+               disconn = FALSE)
+  print(paste0("   - from: ", eamenaid.from, " <-> ", d$eamenaid.from))
+  d <- uuid_id(db.con = my_con,
+               d = d,
+               id = eamenaid.to,
+               id.prj.patt = "^INFO",
+               rm = "ir",
+               disconn = FALSE)
+  print(paste0("   - to: ", eamenaid.to, " <-> ", d$eamenaid.to))
+}
+DBI::dbDisconnect(my_con)
+
+####
+
 geojson_polygon <- "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/grids/test/E42N30-42.geojson"
 
 ##################

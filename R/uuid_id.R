@@ -1,8 +1,8 @@
-#' Return the UUID of a specific Heritage Place, or Connected Component, from its ID, or the opposite by connecting the DB.
+#' Return the UUID of a specific Heritage Place, etc., from its ID, or the opposite by connecting the DB.
 #'
 #' @name uuid_id
 #'
-#' @description Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Connected Component) from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
+#' @description Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Built Component, etc.) from its ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
 #'
 #' @param db.con a `dbConnect` connection to the database.
 #' @param d a hash() object (a Python-like dictionary).
@@ -10,7 +10,7 @@
 #' @param id.prj.patt a regex matching with the project IDs, by default `"^EAMENA-"`.
 #' @param field.id the name of the field that will be created in the a hash() object for the EAMENA ID. By default 'id'.
 #' @param field.uuid the name of the field that will be created in the a hash() object for the UUID. By default 'uuid'.
-#' @param rm the Resource Model (ex: HP, connected components). The available values are: "hp" for Heritage places, "cc" for connected compobents (ex: Built component). By default "hp".
+#' @param rm used to find the ID of the Resource Model (ex: Heritage Places, Built Components, Information Resources). The available values are: "hp" for Heritage places, "cc" for connected components (ex: Built component), "ir" for Information Resources. By default "hp".
 #' @param disconn if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).
 #' @param verbose if TRUE (by default) verbose.
 #'
@@ -19,6 +19,8 @@
 #' @examples
 #'
 #' d <- hash::hash()
+#'
+#' # DB connector
 #' my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 #'                                user = 'xxx',
 #'                                password = 'xxx',
@@ -29,9 +31,9 @@
 #' ## Heritage places
 #' # from the EAMENA ID to the UUID
 #' d <- uuid_id(db.con = my_con,
-#'                    d = d,
-#'                    id = "EAMENA-0187363",
-#'                    disconn = FALSE)
+#'              d = d,
+#'              id = "EAMENA-0187363",
+#'              disconn = FALSE)
 #' d$uuid
 #' # [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
 #'
@@ -71,14 +73,14 @@
 #' @export
 # TODO: rename to `uuid_id()`
 uuid_id <- function(db.con = NA,
-                          d = NA,
-                          id = NA,
-                          field.id = "id",
-                          field.uuid = "uuid",
-                          id.prj.patt = "^EAMENA-",
-                          rm = "hp",
-                          disconn = TRUE,
-                          verbose = TRUE){
+                    d = NA,
+                    id = NA,
+                    field.id = "id",
+                    field.uuid = "uuid",
+                    id.prj.patt = "^EAMENA-",
+                    rm = "hp",
+                    disconn = TRUE,
+                    verbose = TRUE){
   # id = '90400bb6-ff54-4afd-8183-65c67fa97448'
   # id = 'COMPONENT-0000141' ; id.prj.patt = "^COMPONENT-"
   if(rm == "hp"){
@@ -86,6 +88,9 @@ uuid_id <- function(db.con = NA,
   }
   if(rm == "cc"){
     db.name <- eamenaR::ref_ids("cc.id")
+  }
+  if(rm == "ir"){
+    db.name <- eamenaR::ref_ids("ir.id")
   }
   uuid <- eamenaR::ref_ids(db.name, "db.concept.uuid")
 
@@ -144,8 +149,8 @@ uuid_id <- function(db.con = NA,
     if(length(as.character(df$dbid)) == 0){
       d[[field.id]] <- NA
     } else {
-        d[[field.id]] <- as.character(df$dbid)
-        }
+      d[[field.id]] <- as.character(df$dbid)
+    }
     d[[field.uuid]] <- id
   }
   if(disconn){

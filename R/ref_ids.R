@@ -2,7 +2,7 @@
 #'
 #' @name ref_ids
 #'
-#' @description This function read the table of correspondences `ids.csv`. This CSV file list the correspondences between concepts used in this eamenaR package (called `concept.name`), and concepts used of a given instance of Arches (called `db.concept.name` or their UUIDs: `db.concept.uuid`). All the values are uniques (no duplicates), as it, it is possible to find the exact matches over all the columns. This function is close to the CLI command `python manage.py whatisthis`, for example `python manage.py whatisthis 5b3489c0-cb8f-11ea-a292-02e7594ce0a0` returns `Measurement Number` This function is useful to generalise the operability of this R package to other Arches instances than EAMENA. Indeed, each concept or UUID is specific to a project. The only constant is the value of the concept of Heritage Places ID in this package. For example 'id' in this eamenaR package refers the 'EAMENA ID' concept in the EAMENA Arches instance. This latter concept is recorded in the `db.concept.name`. The UUID of this concept is recorded in the `db.concept.uuid` field. See the CSV correspondence table here: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv
+#' @description This function read the mapping table `ids.csv`. This CSV file list the correspondences between concepts used in this eamenaR package (called `concept.name`), and concepts used of a given instance of Arches (called `db.concept.name` or their UUIDs: `db.concept.uuid`). All the values are uniques (no duplicates), as it, it is possible to find the exact matches over all the columns. This function is close to the CLI command `python manage.py whatisthis`, for example `python manage.py whatisthis 5b3489c0-cb8f-11ea-a292-02e7594ce0a0` returns `Measurement Number` This function is useful to generalise the operability of this R package to other Arches instances than EAMENA. Indeed, each concept or UUID is specific to a project. The only constant is the value of the concept of Heritage Places ID in this package. For example 'id' in this eamenaR package refers the 'EAMENA ID' concept in the EAMENA Arches instance. This latter concept is recorded in the `db.concept.name`. The UUID of this concept is recorded in the `db.concept.uuid` field. See the CSV correspondence table here: https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv
 #'
 #' @param concept.name a value existing in the `ids.csv` file. By default NA.
 #' @param choice the output value, by default the concept label name in the database (`"db.concept.name"`).
@@ -11,6 +11,8 @@
 #' @return A string which is the concept used in the DB.
 #'
 #' @examples
+#'
+#' ## the Heritage place resource model (HP)
 #'
 #' # get the name in the database from the eamenaR name
 #' ref_ids("hp.id")
@@ -47,6 +49,11 @@
 #' Geometric.Place.Expression.uuid
 #' ## "5348cf67-c2c5-11ea-9026-02e7594ce0a0"
 #'
+#' ## another resource model: Information Resources (IR)
+#'
+#' ref_ids(concept.name = "INFORMATION ID", choice = "db.concept.uuid")
+#' ## "4c403a80-8a3d-11ea-a6a6-02e7594ce0a0"
+#'
 #' @export
 ref_ids <- function(concept.name = NA,
                     choice = "db.concept.name",
@@ -70,3 +77,5 @@ ref_ids <- function(concept.name = NA,
   }
   return(out.value)
 }
+
+
