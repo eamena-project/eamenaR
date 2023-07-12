@@ -924,6 +924,24 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 
 Append data to existing records (Bulk Upload append).
 
+#### A simple example
+
+Using [this data](https://github.com/eamena-project/eamenaR/blob/main/results/bu_append_hp_ir_descript.csv) to append to the 
+
+|ResourceID                           |General.Description.Type |General.Description |
+|:------------------------------------|:------------------------|:-------------------|
+|a882affc-60cb-4dcb-a26c-c2721fd0797c |General Description      |lorem ipsum         |
+
+Where 'a882affc-60cb-4dcb-a26c-c2721fd0797c' is the HP 'EAMENA-0188039' ([see it](https://database.eamena.org/report/a882affc-60cb-4dcb-a26c-c2721fd0797c) in the DB)
+
+Then (in the back-end) run:
+
+``` 
+python manage.py packages -o import_business_data -s "bu_append_hp_ir_descript.csv" -c "Heritage Place.mapping" -ow append
+```
+
+Will add 'lorem ipsum' to the General Description
+
 #### Information resources
 
 A list of related Information Resources (IR) can be append to existing Heritage Places (HP)
@@ -939,7 +957,7 @@ A list of related Information Resources (IR) can be append to existing Heritage 
 
 see: [information_resources_list.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/information_resources_list.csv)
 
-This list records relations between HP and IR. Before running a BU append, that will update the HP adding relations to IR, it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID and UUID using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
+This list records relations between HP and IR. Before running a BU append, that will update the HP adding relations to IR, it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID (`id`) and UUID (`uuid`) using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
 
 ```
 d <- hash::hash()
@@ -963,7 +981,7 @@ Where `my_con` is a Postgres DB connector. The results
 [1] "EAMENA-0188042 <-> d74faf0e-9a66-42c1-b4da-ed0aa5eb3052"
 ...
 ```
-
+If a `NA` value occurs, in the place of a `uuid`, it means that the listed HP doesn't exists in the DB.
 
 #### Integrating Google Earth geometries
 
@@ -976,7 +994,7 @@ flowchart LR
     C --2. KML/KMZ--> B((Google<br>Earth));
     B --3. create<br><b>POLYGON</b>--> B;
     B --4. KML/KMZ--> C;
-    C --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    C --5. GeoJSON<br><b>POLYGON</b>--> D("list_mapping_bu_append()"):::eamenaRfunction;
     D --6. append<br>new geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
@@ -989,7 +1007,7 @@ flowchart LR
     E --2. SHP--> F((GIS));
     F --3. create<br><b>POLYGON</b>--> F;
     F --4. SHP--> E;
-    E --5. GeoJSON<br><b>POLYGON</b>--> D("geojson_csv()"):::eamenaRfunction;
+    E --5. GeoJSON<br><b>POLYGON</b>--> D("list_mapping_bu_append()"):::eamenaRfunction;
     D --6. append<br>new geometries--> A;
     classDef eamenaRfunction fill:#e7deca;
 ```
@@ -1000,7 +1018,7 @@ flowchart LR
 functions: 
   - [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) 
   - [`geojson_shp()`](https://eamena-project.github.io/eamenaR/doc/geojson_shp)  
-  - [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv)  
+  - [`list_mapping_bu_append()`](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu_append)  
 
 For example:
 
@@ -1037,10 +1055,10 @@ geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
 The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](https://raw.githubusercontent.com/eamena-project/eamenaR/main/results/caravanserail_outGeoJSON.geojson))
 
 
-6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`geojson_csv()`](https://eamena-project.github.io/eamenaR/doc/geojson_csv) function
+6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`list_mapping_bu_append()`](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu_append) function
 
 ```
-geojson_csv(geom.path = paste0(system.file(package = "eamenaR"),
+list_mapping_bu_append(geom.path = paste0(system.file(package = "eamenaR"),
                                "/extdata/caravanserail_outGeoJSON.geojson"),
             csv.name = "caravanserail_outCSV")
 ```
