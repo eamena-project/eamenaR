@@ -12,6 +12,7 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                port = 5432)
 
 d <- hash::hash()
+# "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv"
 bu.to.append <- "C:/Users/Thomas Huet/Desktop/BU test/ULVS_INFO_Relations_part1.xlsx"
 df <- openxlsx::read.xlsx(bu.to.append)
 for(i in seq(1, nrow(head(df)))){
@@ -21,16 +22,36 @@ for(i in seq(1, nrow(head(df)))){
   d <- uuid_id(db.con = my_con,
                d = d,
                id = eamenaid.from,
-               disconn = FALSE)
-  print(paste0("   - from: ", eamenaid.from, " <-> ", d$eamenaid.from))
+               disconn = FALSE,
+               verbose = FALSE)
+  print(paste0("   - from: ", eamenaid.from, " <-> ", d$uuid))
   d <- uuid_id(db.con = my_con,
                d = d,
                id = eamenaid.to,
                id.prj.patt = "^INFO",
                rm = "ir",
-               disconn = FALSE)
-  print(paste0("   - to: ", eamenaid.to, " <-> ", d$eamenaid.to))
+               disconn = FALSE,
+               verbose = FALSE)
+  print(paste0("   - to: ", eamenaid.to, " <-> ", d$uuid))
+  cat("\n")
 }
+
+d <- hash::hash()
+uuids <- c()
+ct <- 0
+for(i in df[ , "RESOURCEID_FROM"]){
+  ct <- ct + 1
+  if(ct %% 50 == 0){print(ct)}
+  # eamenaid.from <- df[i, "RESOURCEID_FROM"]
+  d <- uuid_id(db.con = my_con,
+               d = d,
+               id = i,
+               disconn = FALSE,
+               verbose = FALSE)
+  uuids <- c(uuids, d$uuid)
+}
+anyNA(uuids)
+
 DBI::dbDisconnect(my_con)
 
 ####

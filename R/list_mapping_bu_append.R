@@ -31,7 +31,7 @@ list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamena
                                    csv.name = "caravanserail_outCSV",
                                    verbose = T){
   if(verbose){print(paste0("*read: ", fileIn))}
-  if(method = "geom"){
+  if(method == "geom"){
     if(verbose){print(paste0("Works with Geometries"))}
     geom <- sf::st_read(fileIn, quiet = TRUE)
     geom.noZ <- sf::st_zm(geom)
@@ -44,16 +44,36 @@ list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamena
                      "Geometry Extent Certainty" = rep("High", n),
                      "Geometry Type" = rep("Perimeter Polygon", n),
                      check.names = FALSE)
+  }
+  if(method == "ir"){
+    if(verbose){print(paste0("Works with a list of Heritage Places having related Information Resources"))}
+    df.hp.ir <- read.csv(fileIn)
+    df.hp.ir <- df.hp.ir[1, ]
+    d <- hash::hash()
+    for(i in seq(1, nrow(df.hp.ir))){
+      if(verbose){print(paste0("Read line: ", i))}
+      eamenaid.from <- df.hp.ir[i, "RESOURCEID_FROM"]
+      d <- uuid_id(db.con = my_con,
+                   d = d,
+                   id = eamenaid.from,
+                   disconn = FALSE,
+                   verbose = FALSE)
+    }
+    df <- data.frame("ResourceID" = d$uuid,
+                     "Information Resource Used" = eamenaid.to <- df.hp.ir[ , "RESOURCEID_TO"],
+                     check.names = FALSE)
+  }
+  if(export){
     outCSV <- paste0(dirOut, csv.name, ".csv")
     write.table(df, outCSV,
-                row.names = FALSE, sep = ",")
+                row.names = FALSE,
+                sep = ",")
     if(verbose){print(paste0("Exported to: ", outCSV))}
-  }
-  if(method = "geom"){
-    if(verbose){print(paste0("Works with List of related Heritage Places"))}
-
   }
 }
 
-list_mapping_bu_append(fileIn = "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv",
-                       method = "geom",)
+# list_mapping_bu_append(fileIn = "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv",
+#                        method = "ir",
+#                        dirOut = paste0(system.file(package = "eamenaR"),
+#                                        "/results/"),
+#                        csv.name = "bu_append_hp_ir")

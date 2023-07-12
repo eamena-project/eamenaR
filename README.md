@@ -922,6 +922,49 @@ The data from this new worksheet can be copied/pasted into a [BU template](https
 
 ### BU append
 
+Append data to existing records (Bulk Upload append).
+
+#### Information resources
+
+A list of related Information Resources (IR) can be append to existing Heritage Places (HP)
+
+```
+|RESOURCEID_FROM |RESOURCEID_TO       |START_DATE |END_DATE |RELATION_TYPE                            |NOTES |
+|:---------------|:-------------------|:----------|:--------|:----------------------------------------|:-----|
+|EAMENA-0188039  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
+|EAMENA-0188041  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
+|EAMENA-0188042  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
+|EAMENA-0188043  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
+```
+
+see: [information_resources_list.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/information_resources_list.csv)
+
+This list records relations between HP and IR. Before running a BU append, that will update the HP adding relations to IR, it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID and UUID using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
+
+```
+d <- hash::hash()
+bu.to.append <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv"
+df <- openxlsx::read.xlsx(bu.to.append)
+for(i in df[ , "RESOURCEID_FROM"]){
+  d <- uuid_id(db.con = my_con,
+               d = d,
+               id = i,
+               disconn = FALSE,
+               verbose = FALSE)
+  print(paste0(i, " <-> ", d$uuid))
+}
+```
+
+Where `my_con` is a Postgres DB connector. The results
+
+```
+[1] "EAMENA-0188039 <-> a882affc-60cb-4dcb-a26c-c2721fd0797c"
+[1] "EAMENA-0188041 <-> b3caf74d-8867-4cde-94fc-0d973c9a0442"
+[1] "EAMENA-0188042 <-> d74faf0e-9a66-42c1-b4da-ed0aa5eb3052"
+...
+```
+
+
 #### Integrating Google Earth geometries
 
 Most of the geometries in EAMENA are POINTS (`Geometry Type` = `Center Point`). The objective is to acquire new geometries, like POLYGONs, created in third part app, like Google Earth or a GIS, and to append them to already existing records in EAMENA.
