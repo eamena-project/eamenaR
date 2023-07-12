@@ -926,7 +926,7 @@ Append data to existing records (Bulk Upload append).
 
 #### A simple example
 
-Using [this data](https://github.com/eamena-project/eamenaR/blob/main/results/bu_append_hp_ir_descript.csv) to append to the 
+Using [this data](https://github.com/eamena-project/eamenaR/blob/main/results/bu_append_hp_ir_descript.csv) to append to 'EAMENA-0188039' 
 
 |ResourceID                           |General.Description.Type |General.Description |
 |:------------------------------------|:------------------------|:-------------------|
