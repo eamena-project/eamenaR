@@ -926,13 +926,13 @@ Append data to existing records (Bulk Upload append).
 
 #### A simple example
 
-Using [this data](https://github.com/eamena-project/eamenaR/blob/main/results/bu_append_hp_ir_descript.csv) to append to 'EAMENA-0188039' 
+Using [this data](https://github.com/eamena-project/eamenaR/blob/main/results/bu_append_hp_ir_descript.csv) to append to the HP 'EAMENA-0188039' 
 
 |ResourceID                           |General.Description.Type |General.Description |
 |:------------------------------------|:------------------------|:-------------------|
 |a882affc-60cb-4dcb-a26c-c2721fd0797c |General Description      |lorem ipsum         |
 
-Where 'a882affc-60cb-4dcb-a26c-c2721fd0797c' is the HP 'EAMENA-0188039' ([see it](https://database.eamena.org/report/a882affc-60cb-4dcb-a26c-c2721fd0797c) in the DB)
+Where 'a882affc-60cb-4dcb-a26c-c2721fd0797c' is the UUID of 'EAMENA-0188039' ([see it](https://database.eamena.org/report/a882affc-60cb-4dcb-a26c-c2721fd0797c) in the DB)
 
 Then (in the back-end) run:
 
