@@ -946,18 +946,16 @@ Will add 'lorem ipsum' to the General Description
 
 A list of related Information Resources (IR) can be append to existing Heritage Places (HP)
 
-```
 |RESOURCEID_FROM |RESOURCEID_TO       |START_DATE |END_DATE |RELATION_TYPE                            |NOTES |
 |:---------------|:-------------------|:----------|:--------|:----------------------------------------|:-----|
 |EAMENA-0188039  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
 |EAMENA-0188041  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
 |EAMENA-0188042  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
 |EAMENA-0188043  |INFORMATION-0000052 |x          |x        |Heritage Resource - Information Resource |x     |
-```
 
 see: [information_resources_list.csv](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/information_resources_list.csv)
 
-This list records relations between HP and IR. Before running a BU append, that will update the HP adding relations to IR, it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID (`id`) and UUID (`uuid`) using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
+This list records relations between HP and IR. Before running a BU append -- that will update the HP adding relations to IR -- it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID (`id`) and UUID (`uuid`) using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
 
 ```
 d <- hash::hash()
