@@ -2,6 +2,8 @@ library(eamenaR)
 library(dplyr)
 
 
+knitr::kable(read.csv("https://raw.githubusercontent.com/eamena-project/eamenaR/main/results/bu_append_hp_ir.csv"))
+
 # geojson_polygon <- '{"type": "Polygon", "coordinates": [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]]}'
 
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),

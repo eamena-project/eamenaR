@@ -3,3 +3,4 @@
 results/
 docs/
 ^codecov\.yml$
+R/_*.R
