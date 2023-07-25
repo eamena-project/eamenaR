@@ -238,7 +238,7 @@ The color of the value (optional) is recorded in the [`symbology.xlsx`](https://
     <em>screenshot of the `symbology.xlsx` file registering the different colors of the values (only the columns `list`, `values` and `colors` are used)</em>
 </p>
 
-```
+```R
 geojson_map(map.name = "caravanserail",
             field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
             fig.width = 11,
@@ -254,7 +254,7 @@ It will create two series of maps, one for each field (`"Disturbance Cause Type 
 
 Finally, Plotly can be used to create an interactive map:
 
-```
+```R
 geojson_map(map.name = "caravanserail",
             geojson.path = paste0(exdata, "caravanserail_polygon.geojson"),
             plotly.plot = T,
@@ -267,26 +267,26 @@ Will plot [this map](https://eamena-project.github.io/eamena-arches-dev/data/geo
 
 Retrieve the matches between these maps' IDs and the EAMENA IDs for heritage places by running the [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) function:
 
-```
+```R
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = T)
 ```
 
 This will give the data frame [caravanserail_list_ids.tsv](https://github.com/eamena-project/eamenaR/blob/main/results/caravanserail_list_ids.tsv). If you want the maps' IDs listed (e.g. for a figure caption), run :
 
-```
+```R
 geojson_stat(stat.name = "caravanserail", stat = "list_ids", export.stat = F)
 ```
 
 Will give:
 
-```
+```R
 1: EAMENA-0192223, 2: EAMENA-0192598, 3: EAMENA-0192599, [...], 153: EAMENA-0194775, 154: EAMENA-0194776, 155: EAMENA-0194777, 156: EAMENA-0194778
 ```
 ### Paths
 
 Reading the GeoJSON file of the heritage places, and [the CSV file](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_paths.csv) registering the paths between these heritage places, identified by different routes (route 1, route 2, etc.). Map them using the [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) function
 
-```
+```R
 geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 ```
 
@@ -298,7 +298,7 @@ geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 
 
 A good way to control the paths, avoiding double edges, etc. is to run an interactive plot of these paths:
 
-```
+```R
 geojson_map_path(interactive = T,
                  export.plot = F)
 ```
@@ -312,7 +312,7 @@ Will plot these five routes (from `0` to `4`) into an interactive [VisNetwork](h
 
 Heritages places can be drawn with their elevation, for each route, using two functions: [`geojson_addZ()`](https://eamena-project.github.io/eamenaR/doc/geojson_addZ) to add a their Z value using a geoserver API and the function [`geojson_map_path()`](https://eamena-project.github.io/eamenaR/doc/geojson_map_path) to create the routes profiles (`export.type = "profile"`)
 
-```
+```R
 df <- geojson_addZ()
 geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
                  export.type = "profile",
@@ -330,7 +330,8 @@ The numbers of the HP are the same as the [previous map](https://github.com/eame
 ### Shape analysis
 
 The use of POLYGONES (or even LINES), such as [caravanserail_polygon.geojson](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail_polygon.geojson) allows to compute shape analysis. For the latter, we use the Momocs functions integrated in the [iconr](https://github.com/zoometh/iconr) package.
-```
+
+```R
 library(Momocs)
 library(iconr)
 
@@ -355,7 +356,7 @@ conv_wkt_to_jpg(nodes = nodes,
 
 These JPGs are analysed through shape analysis comparisons (here, we limit the study to 50 caravanserails)
 
-```
+```R
 dist <- morph_nds_compar(nodes = nodes,
                          cex = .5,
                          lwd = .5,
@@ -386,7 +387,7 @@ The variable `dist` stores the distance matrix between each pairs of caravansera
 
 After the shape comparisons, a classification can be made with `morph_nds_group()`. The HCA shows that there are two main groups (or centres, `nb.centers = 2`). We can reuse this parameter for shape classification:
 
-```
+```R
 mbrshp <- morph_nds_group(nodes = nodes,
                           nb.centers = 2,
                           dataDir = dataDir,
@@ -413,7 +414,7 @@ By default, in EAMENA, relationships between Heritage Places and Built Component
 
 Functions [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources) allows to retrieve this data for a given Heritage Place
 
-```
+```R
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
@@ -440,7 +441,7 @@ Will give this `df` dataframe, with the keys (`id` and `uuid`) of the connected 
 
 Where `hp` is the Heritage place, and `cc` the connected component(s). The function [`select_related_resources()`](https://eamena-project.github.io/eamenaR/doc/select_related_resources) allows to retrieve the values of a given variable. For example, to retrieve the total number of Rooms, use the calculated dataframe `df` listing the keys (see [`list_related_resources()`](https://eamena-project.github.io/eamenaR/doc/list_related_resources)) and modify the parameter `having`. By default the value will be read in the field `"Measurement Number"` (function parameter `measure`).
 
-```
+```R
 df.measures <- select_related_resources(db.con = my_con,
                                         having = "Room",
                                         df = df)
@@ -455,7 +456,7 @@ Will give this `df.measures` dataframe:
 
 To retrieve the Heritage places' information about Rooms and Stables, create a dataframe to store this data, and run a loop stament over Heritage Places and types of Built components:
 
-```
+```R
 hps <- c("EAMENA-0164943", "EAMENA-0164937", "EAMENA-0164905")
 bcs <- c("Room", "Stable")
 
@@ -498,7 +499,7 @@ Will give:
 
 For MaREA geoarchaeological data, with the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function:
 
-```
+```R
 geojson_map(map.name = "geoarch",
             ids = "GEOARCH.ID",
             stamen.zoom = 6,
@@ -527,7 +528,7 @@ Use the [`ref_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/
 </p>
 
 
-```
+```R
 # create an hash dictionnary to store the cultural ans subcultural periods
 d <- hash::hash()
 # replace 'xxx' with the username and password
@@ -591,7 +592,7 @@ These latters (start date and end date) are stored in the `scopeNote` of each cu
 
 Create a hash dictonnary named `d` to store all data
 
-```
+```R
 library(hash)
 
 d <- hash()
@@ -599,7 +600,7 @@ d <- hash()
 
 Store all periods and sub-periods represented in the GeoJSON in the `d` dictonnary, and plot them by EAMENA ID using the [`list_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/list_cultural_periods) function
 
-```
+```R
 d <- list_cultural_periods(db = "geojson", 
                            d = d)
 plot_cultural_periods(d = d, field = "periods", plot.type = "by.eamenaid", export.plot = T)
@@ -615,7 +616,7 @@ and superiods
 
 Here, the [`plot_cultural_periods()`](https://eamena-project.github.io/eamenaR/doc/plot_cultural_periods) function  will export two PNG charts for the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) file. Periods and subperiods represented in a GeoJSON file can also be summed in a histogram
 
-```
+```R
 plot_cultural_periods(d = d, field = "subperiods", plot.type = "histogram", export.plot = T)
 ```
 <p align="center">
@@ -628,7 +629,7 @@ Performs an aoristic analysis. By default, the function reads the sample data `d
 
 Run the [`plot_edtf()`](https://eamena-project.github.io/eamenaR/doc/plot_edtf) function with the default parameters.
 
-```
+```R
 library(dplyr)
 
 plot_edtf()
@@ -640,7 +641,7 @@ plot_edtf()
 
 Aggregate the dates by months (`"ym"`) by thearts categories.
 
-```
+```R
 plot_edtf(edtf_span = "ym", edtf_analyse = "category")
 ```
 
@@ -656,7 +657,7 @@ The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](ht
 
 The function [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) allows to sum the number of HP by grids. 
 
-```
+```R
 d <- hash::hash()
 d <- ref_hps(db.con = my_con,
              d = d,
@@ -682,7 +683,7 @@ See the output in a GIS, here: https://github.com/eamena-project/eamena-arches-d
 
 The function [`ref_db()`](https://eamena-project.github.io/eamenaR/doc/ref_db) provides basic statistics on the users of the EAMENA database, for example by plotting the cumulative distribution function of the user first registration:
 
-```
+```R
 d <- hash::hash()
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
@@ -705,7 +706,7 @@ Here we restrict the plot to dates after 2020-08-01 (option `date.after`). The o
 
 The total number of users can also be restricted to an interval (options `date.after` and `date.before`), for example limiting the count to the year 2022: 
 
-```
+```R
 d <- ref_db(db.con = my_con,
                stat.name = "users_date_joined_2",
                d = d,
@@ -722,7 +723,7 @@ d <- ref_db(db.con = my_con,
 </p>
 
 
-```
+```R
 d$total_users
 #   count
 # 1   480
@@ -739,7 +740,7 @@ Data management concerns data entry ([BU](https://github.com/eamena-project/eame
 
 To facilitate systematic survey, using remote sensing (ex: Google Earth), a grid can be divided into several subgrids using the [geojson_grid()](https://eamena-project.github.io/eamenaR/doc/geojson_grid) function
 
-```
+```R
 geojson_grid(geojson.path = paste0(system.file(package = "eamenaR"),
                                    "/extdata/E42N30-42.geojson"),
              rows = 8,
@@ -783,9 +784,7 @@ functions:
 
 For example, the dataset prepared by Mohamed Kenawi (`mk`):
 
-```
-library(dplyr)
-
+```R
 ggsheet <- 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'
 list_mapping_bu(bu.path = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/",
                 job = "mk",
@@ -820,7 +819,7 @@ For each 'job', the mapping file has three columns, one for the target ('`EAMENA
 
 The [list_mapping_bu()](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu) function uses the [`geom_within_gs()`](https://eamena-project.github.io/eamenaR/doc/geom_within_gs) to find the Grid square (gs) identifier of a record by comparing their geometries. By default, the Grid Square file is **grid_squares.geojson** ([rendered](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/grid_squares.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/grid_squares.geojson))
 
-```
+```R
 library(dplyr)
 
 grid.id <- geom_within_gs(resource.wkt = "POINT(0.9 35.8)")
@@ -832,7 +831,7 @@ Will return `"E00N35-44"`
 
 Each HP have to be associated with a grid square. If you want to retrieve the grid square ID *a posteriori*, after you fill the BU - or the BUs - an approriate way to do it is to run the [geom_bbox()](https://eamena-project.github.io/eamenaR/doc/geom_bbox) function. 
 
-```
+```R
 dataDir <- "C:/Users/Thomas Huet/Downloads/2022-12-08-20221208T154207Z-001/2022-12-08/"
 
 geom_bbox(dataDir = dataDir,
@@ -842,7 +841,7 @@ geom_bbox(dataDir = dataDir,
 
 This function retrieve the xmin, xmax, ymin, ymax (minimum bounding box, or MBR) of the HPs and creates as a **GeoJSON file**, by default: `mbr.geojson`, like this:
 
-```
+```R
 {
     "type": "FeatureCollection",
     "features": [
@@ -936,7 +935,7 @@ Where 'a882affc-60cb-4dcb-a26c-c2721fd0797c' is the UUID of 'EAMENA-0188039' ([s
 
 Then (in the back-end) run:
 
-``` 
+```Python
 python manage.py packages -o import_business_data -s "bu_append_hp_ir_descript.csv" -c "Heritage Place.mapping" -ow append
 ```
 
@@ -957,7 +956,7 @@ see: [information_resources_list.csv](https://github.com/eamena-project/eamenaR/
 
 This list records relations between HP and IR. Before running a BU append -- that will update the HP adding relations to IR -- it is worth to test if every listed HP already exists in the DB (it also can be done for IR). For example, listing the correspondances between ID (`id`) and UUID (`uuid`) using the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function:
 
-```
+```R
 d <- hash::hash()
 bu.to.append <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv"
 df <- openxlsx::read.xlsx(bu.to.append)
@@ -1026,7 +1025,7 @@ For example:
 
 2. Convert **caravanserail.geojson** to a KML file named 'caravanserail_outKML.kml' with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function, filtering on POINTS[^3]:
 
-```
+```R
 library(dplyr)
 geojson_kml(geom.types = c("POINT"),
             geojson.name = "caravanserail_outKML")
@@ -1043,7 +1042,7 @@ geojson_kml(geom.types = c("POINT"),
 4. Export as KML ('caravanserail_outKML2.kml')
 5. Convert 'caravanserail_outKML2.kml' into GeoJSON with the [`geojson_kml()`](https://eamena-project.github.io/eamenaR/doc/geojson_kml) function selecting only the POLYGONs (ie, the new geometries).
 
-```
+```R
 geojson_kml(geom.path = geom.path = paste0(system.file(package = "eamenaR"),
                                            "/extdata/caravanserail_outKML2.kml")
             geom.types = c("POLYGON"),
@@ -1055,7 +1054,7 @@ The result is new POLYGON geometries (eg. [caravanserail_outGeoJSON.geojson](htt
 
 6. Convert the GeoJSON POLYGONs geometries to a format compliant with the EAMENA DB, using the [`list_mapping_bu_append()`](https://eamena-project.github.io/eamenaR/doc/list_mapping_bu_append) function
 
-```
+```R
 list_mapping_bu_append(geom.path = paste0(system.file(package = "eamenaR"),
                                "/extdata/caravanserail_outGeoJSON.geojson"),
             csv.name = "caravanserail_outCSV")
@@ -1072,7 +1071,7 @@ The result is a CSV file, [caravanserail_outCSV.csv](https://github.com/eamena-p
 
 7. These new geometries will be uploaded into the EAMENA DB and append to existing HP having the same `resourceid` (ResourceID). But it should be safe to first check that every ResourceID exist in the DB (maybe a newly created POLYGON has a typo in its name). Use the [`uuid_id()`](https://eamena-project.github.io/eamenaR/doc/uuid_id) function, in a loop to confirm the existence of the ResourceID
 
-```
+```R
 mycsv <- "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail_outCSV.csv"
 df <- read.csv(mycsv)
 for(i in seq(1, nrow(df))){
@@ -1098,7 +1097,7 @@ As there are no `NA` in front of the ResourceID, the HP listed in the CSV file e
 8. To append these geometries to the DB, use the `-ow append` option in the `import_business_data` function (see the [Arches documentation](https://arches.readthedocs.io/en/5.1/command-line-reference/#import-business-data))
 
 <a name="bu_append_8"></a>
-```
+```python
 python manage.py packages -o import_business_data -s "./data/test/caravanserail_outCSV2.csv" -c "./data/test/Heritage Place.mapping" -ow append
 ```
 
@@ -1110,7 +1109,7 @@ Now, each of these two HP has two different kind of geometries: POINT and POLYGO
 
 The function [`ref_are_duplicates()`](https://eamena-project.github.io/eamenaR/doc/ref_are_duplicates) identifies potential duplicates in a GeoJSON file, or directly in the EAMENA database. Using a fuzzy match between the values of a selection of fields, for two HPs identified by their ResourceID, this function creates a data frame with the match score (`dist` column) between each field:
 
-```
+```R
 d <- hash::hash()
 d <- ref_are_duplicates(d = d,
                         export.table = T,
