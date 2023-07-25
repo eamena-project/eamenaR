@@ -66,13 +66,13 @@ The [`ids.csv` file](https://github.com/eamena-project/eamenaR/blob/main/inst/ex
 
 Install the R package
 
-```
+```R
 devtools::install_github("eamena-project/eamenaR")
 ```
 
 And load the package
 
-```
+```R
 library(eamenaR)
 ```
 
@@ -113,7 +113,7 @@ Whether the data is Heritage Places, Built Components, etc.
 
 The [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat) function allows to display basic statistics. For example, a pie chart on 'Overall Condition Assessment':
 
-```
+```R
 geojson_stat(stat.name = "overall_cond",
              stat = "stats",
              field.names = c("Overall Condition State Type"),
@@ -127,7 +127,7 @@ geojson_stat(stat.name = "overall_cond",
 
 or an histogram on 'Disturbance Cause Type'
 
-```
+```R
 geojson_stat(stat.name = "distrub",
             stat = "stats",
             chart.type = "hist",
@@ -145,7 +145,7 @@ geojson_stat(stat.name = "distrub",
 
 or a radar chart on 'Resource Orientation'
 
-```
+```R
 geojson_stat(stat.name = "orientations",
              stat = "stats",
              chart.type = "radar",
@@ -163,7 +163,7 @@ geojson_stat(stat.name = "orientations",
 
 The [`geojson_boxplot()`](https://eamena-project.github.io/eamenaR/doc/geojson_boxplot) function creates boxplots. Path lengths, or areas, can be visualized in a boxplot, stratified by a variable (like "route") or not. With areas (`stat = area`, by default), each dot represents an heritage place. With path lenghts (`stat = dist`), each dot represent a segment length between two neighbouring caravanserails.
 
-```
+```R
 geojson_boxplot(stat = "area")
 geojson_boxplot(stat = "dist")
 ```
@@ -175,7 +175,7 @@ geojson_boxplot(stat = "dist")
 
 Startified by routes and exported:
 
-```
+```R
 geojson_boxplot(stat = "area", by = "route", export.plot = T)
 geojson_boxplot(stat = "dist", by = "route", export.plot = T)
 ```
@@ -186,7 +186,7 @@ geojson_boxplot(stat = "dist", by = "route", export.plot = T)
 
 In the same way, these boxplot can be made interactive using Plotly, and exported as HTML files
 
-```
+```R
 geojson_boxplot(stat.name = "caravanserais_areas", stat = "area", by = "route",
                 interactive = T,
                 export.plot = T)
@@ -209,7 +209,7 @@ The [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) function
 
 Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file
 
-```
+```R
 geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
 ```
 
@@ -219,7 +219,7 @@ geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
 
 Maps can also be calculated on the values of GeoJSON fields, by adding the field names in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function options.
 
-```
+```R
 geojson_map(map.name = "caravanserail",
             field.names = c("Damage Extent Type"),
             fig.width = 11,
