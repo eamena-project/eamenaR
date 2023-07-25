@@ -3,4 +3,4 @@
 results/
 docs/
 ^codecov\.yml$
-R/_*.R
+R/^_*.R
