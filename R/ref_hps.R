@@ -66,10 +66,13 @@ ref_hps <- function(db.con = NA,
     if(verbose){print("Spatial distributon")}
     # find EAMENA ID UUID
     db.name <- eamenaR::ref_ids("hp.id")
-    uuid <- eamenaR::ref_ids(db.name, "db.uuid")
+    uuid <- eamenaR::ref_ids(concept.name = db.name,
+                             choice = "db.concept.uuid")
     # find other UUIDs
-    Investigator.Role.Type.uuid <- eamenaR::ref_ids(in.value = "Investigator Role Type", choice = "db.uuid")
-    Geometric.Place.Expression.uuid <- eamenaR::ref_ids(in.value = "Geometric Place Expression", choice = "db.uuid")
+    Investigator.Role.Type.uuid <- eamenaR::ref_ids(concept.name = "Investigator Role Type",
+                                                    choice = "db.concept.uuid")
+    Geometric.Place.Expression.uuid <- eamenaR::ref_ids(concept.name = "Geometric Place Expression",
+                                                        choice = "db.concept.uuid")
     if(verbose){print("*start HPS' distribution")}
     date.before <- as.character(date.before)
     sqll <- stringr::str_interp("
@@ -145,6 +148,8 @@ ref_hps <- function(db.con = NA,
                                               ")
       sqll <- paste0(sqll, "\n", sqll.cond)
     }
+
+    # run the SQL
     coords <- d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     DBI::dbDisconnect(db.con)
     hps.geojson <- sf::st_as_sf(coords,
@@ -161,8 +166,10 @@ ref_hps <- function(db.con = NA,
   }
   if("grid" %in% stat){
     if(verbose){print("Number of HP by grids")}
-    gridid <- eamenaR::ref_ids("Grid.ID", choice = "db.concept.uuid")
-    hpgrid <- eamenaR::ref_ids("hp.grid", choice = "db.concept.uuid")
+    gridid <- eamenaR::ref_ids("Grid.ID",
+                               choice = "db.concept.uuid")
+    hpgrid <- eamenaR::ref_ids("hp.grid",
+                               choice = "db.concept.uuid")
     sqll <- stringr::str_interp("
 SELECT q1.grid_id, q1.nb_hp, q2.grid_num
 FROM (

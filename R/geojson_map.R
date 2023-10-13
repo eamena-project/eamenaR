@@ -55,6 +55,7 @@ geojson_map <- function(map.name = "map",
                         highlights.ids = NA,
                         symbology = paste0(system.file(package = "eamenaR"),
                                            "/extdata/symbology.xlsx"),
+                        maptype = "terrain-background",
                         stamen.zoom = NA,
                         fields.for.labels = c("Site Feature Interpretation Type",
                                               "Cultural Period Type",
@@ -71,6 +72,7 @@ geojson_map <- function(map.name = "map",
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   `%>%` <- dplyr::`%>%` # used to not load dplyr
   symbology <- openxlsx::read.xlsx(symbology)
+  # TODO: change to sf::st_read()?
   ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   if(is.na(stamen.zoom)){
     bbox <- sf::st_bbox(ea.geojson)
@@ -108,7 +110,7 @@ geojson_map <- function(map.name = "map",
     )
     stamenbck <- ggmap::get_stamenmap(bbox,
                                       zoom = stamen.zoom,
-                                      maptype = "terrain-background")
+                                      maptype = maptype)
     cpt.field.name <- 0
     if(!is.na(field.names)){
       # one map by field, if there are different values for the same field: one by value

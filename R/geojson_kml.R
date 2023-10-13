@@ -8,7 +8,7 @@
 #' @param geom.types types of geometries ("POINT", "LINE", "POLYGON") that will be selected. Default all: `c("POINT", "LINE", "POLYGON")`.
 #' @param export if TRUE, will export KML/KMZ file in GeoJSON format, or GeoJSON file as a KML, if FALSE simple plot.
 #' @param dirOut path to folder where KML/KMZ/GeoJSON file will be created.
-#' @param geojson.name name of KML/KMZ/GeoJSON that will be created without extension.
+#' @param out.name name of KML/KMZ/GeoJSON that will be created without extension.
 #' @param select.name for KML export only. Field selected to be KML name of heritage place, default "EAMENA ID".
 #' @param select.fields for KML export only. KML conversion remove large number of GeoJSON fields. This variable is used to select fields to preserve. Default: c("EAMENA ID","Resource Name", "resourceid").
 #' @param verbose if TRUE (by default) then display different messages.
@@ -27,7 +27,7 @@
 #' geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
 #'                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
 #'                    export = T,
-#'                    geojson.name = "kites_outKML")
+#'                    out.name = "kites_outKML")
 #'
 #' @export
 geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
@@ -36,10 +36,11 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
                         export = T,
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/extdata/"),
-                        geojson.name = "Waypoints",
+                        out.name = "Waypoints",
                         select.name = "EAMENA ID",
                         select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
                         verbose = T){
+  `%>%` <- dplyr::`%>%` # used to not load dplyr
   ext <- DescTools::SplitPath(geom.path)$extension
   if(verbose){print(paste0("*read: ", geom.path))}
   if(ext == "geojson"){
@@ -62,9 +63,9 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
   selectedGeom <- paste0(geom.types,  collapse = "|")
   if(verbose){print(paste0("Filter on selected geometries: ", selectedGeom))}
   geom <- geom %>%
-    filter(grepl(selectedGeom, sf::st_geometry_type(geometry)))
+    dplyr::filter(grepl(selectedGeom, sf::st_geometry_type(geometry)))
   if(export){
-    outFile <- paste0(dirOut, geojson.name, toGeom)
+    outFile <- paste0(dirOut, out.name, toGeom)
     if(ext == "kmz" | ext == "kml"){
       sf::st_write(geom,
                    outFile,
@@ -76,8 +77,8 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       # geom.as <- as(geom, "Spatial")
       # maptools::kmlPoints(
       #   obj = geom.as,
-      #   kmlfile = paste0(dirOut, geojson.name, toGeom),
-      #   kmlname = geojson.name,
+      #   kmlfile = paste0(dirOut, out.name, toGeom),
+      #   kmlname = out.name,
       #   kmldescription = "",
       #   name = geom.as$EAMENA.ID,
       #   description = "",
@@ -94,7 +95,7 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
       # # tried this:
       # geom.as <- as(geom, "Spatial")
       # rgdal::writeOGR(geom.as,
-      #                 paste0(dirOut, geojson.name, "ZZZ", toGeom),
+      #                 paste0(dirOut, out.name, "ZZZ", toGeom),
       #                 driver="KML",
       #                 layer="poly")
     }
@@ -103,3 +104,8 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
     plot(geom)
   }
 }
+
+geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/doc.kml",
+            dirOut = "C:/Users/Thomas Huet/Desktop/",
+            export = T,
+            out.name = "doc")

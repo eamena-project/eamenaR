@@ -55,5 +55,5 @@ list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamena
   }
 }
 
-list_mapping_bu_append(fileIn = "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv",
-                       method = "geom",)
+# list_mapping_bu_append(fileIn = "https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/information_resources_list.csv",
+#                        method = "geom",)

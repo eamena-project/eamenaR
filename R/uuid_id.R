@@ -92,6 +92,9 @@ uuid_id <- function(db.con = NA,
   if(rm == "ir"){
     db.name <- eamenaR::ref_ids("ir.id")
   }
+  if(rm == "po"){
+    db.name <- eamenaR::ref_ids("po.id")
+  }
   uuid <- eamenaR::ref_ids(db.name, "db.concept.uuid")
 
   # from project ID (like the "EAMENA ID") to UUID
@@ -106,6 +109,9 @@ uuid_id <- function(db.con = NA,
       FROM tiles
       WHERE tiledata ->> '${uuid}'::text LIKE '%${id}%'
                        ")
+      if(verbose){
+        print("SQL:\n") ; cat(sqll)
+      }
     }
     ## TODO??: does it work for only 1 UUID?
     # if (length(id) > 1) {
@@ -136,6 +142,13 @@ uuid_id <- function(db.con = NA,
   # from UUID to project ID
   if(!grepl(id.prj.patt, id)){
     # return the EAMENA ID
+    ################################
+    # TODO: update for Arches v7
+    # SELECT
+    # tiledata -> '34cfe992-c2c0-11ea-9026-02e7594ce0a0' -> 'en' ->> 'value' AS resourceid
+    # FROM tiles
+    # WHERE resourceinstanceid::text LIKE 'dbc95d2d-38fb-465e-a6cb-0545eaa7584f'
+    ################################
     if (length(id) == 1) {
       sqll <- stringr::str_interp("
       SELECT
@@ -144,6 +157,9 @@ uuid_id <- function(db.con = NA,
       WHERE resourceinstanceid::text LIKE '%${id}%'
       AND tiledata -> '${uuid}' IS NOT NULL
                        ")
+      if(verbose){
+        print("SQL:\n") ; cat(sqll)
+      }
     }
     df <- RPostgres::dbGetQuery(db.con, sqll)
     if(length(as.character(df$dbid)) == 0){

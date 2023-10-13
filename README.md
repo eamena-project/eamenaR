@@ -207,7 +207,7 @@ The [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) function
 
 ## Heritages places
 
-Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file
+Using the default **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places GeoJSON file with the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function.
 
 ```R
 geojson_map(map.name = "caravanserail", fig.width = 11, export.plot = T)
