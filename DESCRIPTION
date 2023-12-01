@@ -26,7 +26,6 @@ Imports:
     tidyr,
     DT,
     DescTools,
-    maptools,
     rosm,
     ggplot2,
     leaflet,

@@ -11,6 +11,7 @@
 #' @param stat type of statistic that will be computed. Default `list_fields` (list the fields). Other options are: `list_ids` list EAMENA IDs. Use `stat` to diplay charts like pie chart or histograms, etc., see option `chart.type`
 #' @param chart.type either "`pie`" for pie chart, or "`hist`" for histogram, "`radar`" for radar diagrams. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
 #' @param field.names field name on which statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
+#' @param ref.periods the periods reference table.
 #' @param name of field on which paths will be grouped. For example "route". Will create as many plots as there are different categories. Default NA.
 #' @param fig.width,fig.height size of output chart.
 #' @param fig.dev format of image: "png" (default), "jpg", "svg", etc.
@@ -71,6 +72,7 @@ geojson_stat <- function(stat.name = "stat",
                          chart.type = c("pie"),
                          field.names = NA,
                          by = NA,
+                         ref.periods = "https://raw.githubusercontent.com/achp-project/cultural-heritage/main/periodo-projects/cultural_periods.tsv",
                          fig.width = 6,
                          fig.height = 6,
                          fig.dev = "png",
@@ -87,9 +89,10 @@ geojson_stat <- function(stat.name = "stat",
 
   # Histogram
   `%>%` <- dplyr::`%>%` # used to not load dplyr
-  ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  ea.geojson <- sf::read_sf(geojson.path)
+  # ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   # remove leading/trailing spaces
-  names(ea.geojson) <- trimws(colnames(ea.geojson))
+  # names(ea.geojson) <- trimws(colnames(ea.geojson))
   # if(is.na(ids)){
   #   ids <- eamenaR::ref_ids("id")
   # }
@@ -144,6 +147,66 @@ geojson_stat <- function(stat.name = "stat",
       )
     # loop over the values
     for(chart in chart.type){
+
+      if(chart == "basics"){
+        # TODO: the field names are not those natives in a GeoJSON export, but the ones of SHP. I highlight them with a XXX. YYY means to add eamenaR:: inf front of the function name when finished
+        # bbox
+        bbox <- sf::st_bbox(ea.geojson)
+        geo.extent <-  list(N = bbox[['ymax']], # NSEW extent
+                            S = bbox[['ymin']],
+                            E = bbox[['xmin']],
+                            W = bbox[['xmax']])
+        # geometries
+        geom.types <- sf::st_geometry_type(ea.geojson)
+        df.geom.types.nb <- table(geom.types)
+        # grids
+        grids_nb_hp <- as.data.frame(table(ea.geojson$`Grid ID`))
+        colnames(grids_nb_hp) <- c("GridID", "n")
+        grids_nb_hp <- grids_nb_hp[order(grids_nb_hp$GridID),]
+        # admin
+        df.country <- table(ea.geojson[["Country Type"]])
+        df.admin1 <- table(ea.geojson[["Administrative Division "]]) # extra space (sic)
+        # periods XXX
+        # TODO: use 'ref_ids'
+        df.periods <- as.data.frame(table(ea.geojson[["Cultural Period Type"]]))
+        # some HP have several cultural periods, split on ','
+        df.periods.simple <- data.frame(period = character(),
+                                        nb = numeric())
+        for (i in 1:nrow(df.periods)){
+          # i <- 2
+          periods <- df.periods[i, "Var1"]
+          nb <- df.periods[i, "Freq"]
+          periods <- unlist(stringr::str_split(periods, ","))
+          for (j in 1:length(periods)){
+            df.periods.simple[nrow(df.periods.simple) + 1,] = c(periods[j], nb)
+          }
+        }
+        df.periods.simple$nb <- as.numeric(df.periods.simple$nb)
+        df.periods.simple$period <- trimws(df.periods.simple$period) # trim spaces
+        df.periods <- aggregate(nb ~ period, data = df.periods.simple, sum)
+        # order the periods
+        df.ordered.periods <- ref_periods() # YYY
+        df.ordered.periods <- c(df.ordered.periods, "Unknown")
+        # test
+        not.in.ref <- setdiff(df.periods$period, df.ordered.periods)
+        if (length(not.in.ref) > 0){
+          print(paste0("  /!\\ These periods aren't listed in the reference list: '", not.in.ref, "'"))
+        }
+        df.periods <- df.periods[match(df.ordered.periods, df.periods$period),]
+        df.periods <- df.periods[complete.cases(df.periods), ]
+        periods <- setNames(as.character(df.periods$nb), df.periods$period)
+        # ...
+        linfos <- c(nb = nrow(ea.geojson),
+                    geo.extent = geo.extent,
+                    geo.type = df.geom.types.nb,
+                    grids = grids_nb_hp,
+                    grid_list = cat(as.character(grids_nb_hp$GridID), sep = ", "),
+                    adm.country = df.country,
+                    adm.adm1 = df.admin1,
+                    periods = periods)
+        print(str(linfos))
+      }
+
       if(chart == "boxplot"){
         # chart <- "boxplot"
         if(verbose){print(paste0("Chart '", chart,"'"))}
