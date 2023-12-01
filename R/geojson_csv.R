@@ -1,6 +1,6 @@
 #' Convert different types of files (GeoJSON, CSV, etc.) into an appropriate structure for a Bulk Upload append procedure
 #'
-#' @name list_mapping_bu_append
+#' @name geojson_csv
 #'
 #' @description Function allows file format conversion from GeoJSON to CSV. Output CSV file can be imported into EAMENA DB with bulk upload append procedure.
 #'
@@ -16,13 +16,13 @@
 #' @examples
 #'
 #' ## Geometries
-#' list_mapping_bu_append()
+#' geojson_csv()
 #'
 #' ## List of related IR (HP <-> IR)
 #'
 #'
 #' @export
-list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamenaR"),
+geojson_csv <- function(fileIn = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail_outGeoJSON.geojson"),
                                    method = "geom",
                                    export = T,
@@ -49,7 +49,7 @@ list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamena
                 row.names = FALSE, sep = ",")
     if(verbose){print(paste0("Exported to: ", outCSV))}
   }
-  if(method = "geom"){
+  if(method == "geom"){
     if(verbose){print(paste0("Works with List of related Heritage Places"))}
 
   }
