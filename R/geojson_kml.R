@@ -104,8 +104,8 @@ geojson_kml <- function(geom.path = paste0(system.file(package = "eamenaR"),
     plot(geom)
   }
 }
-
-geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/doc.kml",
-            dirOut = "C:/Users/Thomas Huet/Desktop/",
-            export = T,
-            out.name = "doc")
+#
+# geojson_kml(geom.path = "C:/Users/Thomas Huet/Desktop/doc.kml",
+#             dirOut = "C:/Users/Thomas Huet/Desktop/",
+#             export = T,
+#             out.name = "doc")
