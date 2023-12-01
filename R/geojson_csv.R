@@ -31,7 +31,7 @@ list_mapping_bu_append <- function(fileIn = paste0(system.file(package = "eamena
                                    csv.name = "caravanserail_outCSV",
                                    verbose = T){
   if(verbose){print(paste0("*read: ", fileIn))}
-  if(method = "geom"){
+  if(method == "geom"){
     if(verbose){print(paste0("Works with Geometries"))}
     geom <- sf::st_read(fileIn, quiet = TRUE)
     geom.noZ <- sf::st_zm(geom)
