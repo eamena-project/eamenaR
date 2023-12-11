@@ -4,7 +4,7 @@
 #'
 #' @description statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids.
 #'
-#' @param db.con the parameters for the Postgresql EAMENA DB, in a `RPostgres::dbConnect()` format.
+#' @param db.con the parameters for the Postgres EAMENA DB, in a `RPostgres::dbConnect()` format.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param stat the type of statistic that will be computed. Default: "spat" (spatial).
 #' @param stat.name the name of the output file. By default "eamena_hps".
@@ -40,12 +40,25 @@
 #'             dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
 #'             export.data = TRUE)
 #'
+#' # Heritage places created during the year 2023 as a GeoJSON file
+#' d <- ref_hps(db.con = my_con,
+#'              d = d,
+#'              date.after = '2022-12-31',
+#'              date.before = '2024-01-01',
+#'              stat.name = "eamena_hps_2023",
+#'              stat.format = ".geojson",
+#'              team.name = "EAMENA Project Staff",
+#'              dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
+#'              export.data = TRUE)
+#'
 #' # Number of HP by grids, export as CSV
 #' d <- hash::hash()
 #' d <- ref_hps(db.con = my_con,
 #'              d = d,
 #'              stat.name = "eamena_hps_by_grids",
+#'              date.before = NA,
 #'              export.data = TRUE,
+#'              stat.format = ".csv",
 #'              dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
 #'
 #' @export
@@ -75,40 +88,41 @@ ref_hps <- function(db.con = NA,
                                                         choice = "db.concept.uuid")
     if(verbose){print("*start HPS' distribution")}
     date.before <- as.character(date.before)
-    sqll <- stringr::str_interp("
-  SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
-  	-- EAMENA ID
+    sqll <- stringr::str_interp(
+    "
+    SELECT ids.ri, ids.ei, staff.teamname, coords.x, coords.y, created.cdate  FROM (
+    	-- EAMENA ID
+        SELECT * FROM (
+        SELECT
+        resourceinstanceid::TEXT AS ri,
+    	tiledata ->> '${uuid}'::text as ei
+        FROM tiles
+        ) AS x
+        WHERE ei IS NOT NULL
+    ) AS ids,
+    (
+  	-- team
+    SELECT * FROM (
+  	SELECT
+  	u.resourceinstanceid::TEXT as ri,
+  	m.value::text as teamname
+  	FROM tiles u
+  	JOIN values m ON (u.tiledata -> '${Investigator.Role.Type.uuid}'::text ->> 0 = m.valueid::text)
+      ) AS x
+      WHERE teamname IS NOT NULL
+  ) AS staff,
+  (
+  	-- coordinates
       SELECT * FROM (
       SELECT
       resourceinstanceid::TEXT AS ri,
-  	tiledata ->> '${uuid}'::text as ei
+      ST_X(ST_AsText(ST_Centroid(ST_GeomFromGeoJSON(tiledata -> '${Geometric.Place.Expression.uuid}' -> 'features' -> 0 -> 'geometry')))) x,
+      ST_Y(ST_AsText(ST_Centroid(ST_GeomFromGeoJSON(tiledata -> '${Geometric.Place.Expression.uuid}' -> 'features' -> 0 -> 'geometry')))) y
       FROM tiles
       ) AS x
-      WHERE ei IS NOT NULL
-  ) AS ids,
-  (
-	-- team
-    SELECT * FROM (
-	SELECT
-	u.resourceinstanceid::TEXT as ri,
-	m.value::text as teamname
-	FROM tiles u
-	JOIN values m ON (u.tiledata -> '${Investigator.Role.Type.uuid}'::text ->> 0 = m.valueid::text)
-    ) AS x
-    WHERE teamname IS NOT NULL
-) AS staff,
-(
-	-- coordinates
-    SELECT * FROM (
-    SELECT
-    resourceinstanceid::TEXT AS ri,
-    ST_X(ST_AsText(ST_Centroid(ST_GeomFromGeoJSON(tiledata -> '${Geometric.Place.Expression.uuid}' -> 'features' -> 0 -> 'geometry')))) x,
-    ST_Y(ST_AsText(ST_Centroid(ST_GeomFromGeoJSON(tiledata -> '${Geometric.Place.Expression.uuid}' -> 'features' -> 0 -> 'geometry')))) y
-    FROM tiles
-    ) AS x
-    WHERE x IS NOT NULL AND y IS NOT NULL
-) AS coords
-            "
+      WHERE x IS NOT NULL AND y IS NOT NULL
+  ) AS coords
+    "
     )
     # limit on HPs creation dates
     if(!is.na(date.after) & !is.na(date.before)){
@@ -164,29 +178,31 @@ ref_hps <- function(db.con = NA,
     }
     return(d)
   }
+  # Grids
   if("grid" %in% stat){
     if(verbose){print("Number of HP by grids")}
     gridid <- eamenaR::ref_ids("Grid.ID",
                                choice = "db.concept.uuid")
     hpgrid <- eamenaR::ref_ids("hp.grid",
                                choice = "db.concept.uuid")
-    sqll <- stringr::str_interp("
-SELECT q1.grid_id, q1.nb_hp, q2.grid_num
-FROM (
-    SELECT COUNT(resourceinstanceid::text) AS nb_hp,
-        tiledata -> '${hpgrid}' #>> '{0, resourceId}' AS grid_id
-    FROM tiles
-    WHERE tiledata ->> '${hpgrid}' IS NOT NULL
-    GROUP BY grid_id
-) q1
-INNER JOIN(
-    SELECT resourceinstanceid::text AS grid_id,
-        tiledata -> '${gridid}' -> 'en' ->> 'value' AS grid_num
-    FROM tiles
-    WHERE tiledata -> '${gridid}' IS NOT NULL
-) q2
-ON q1.grid_id = q2.grid_id;
-          "
+    sqll <- stringr::str_interp(
+    "
+    SELECT q1.grid_id, q1.nb_hp, q2.grid_num
+    FROM (
+        SELECT COUNT(resourceinstanceid::text) AS nb_hp,
+            tiledata -> '${hpgrid}' #>> '{0, resourceId}' AS grid_id
+        FROM tiles
+        WHERE tiledata ->> '${hpgrid}' IS NOT NULL
+        GROUP BY grid_id
+    ) q1
+    INNER JOIN(
+        SELECT resourceinstanceid::text AS grid_id,
+            tiledata -> '${gridid}' -> 'en' ->> 'value' AS grid_num
+        FROM tiles
+        WHERE tiledata -> '${gridid}' IS NOT NULL
+    ) q2
+    ON q1.grid_id = q2.grid_id;
+    "
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     if(export.data){
