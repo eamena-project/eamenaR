@@ -60,12 +60,16 @@ ref_db <- function(db.con = NA,
     # Resource Models
     if(verbose){print(paste0("    - run statistic: '", "resource models", "'"))}
     sqll <- "
-      SELECT name, graphid FROM graphs WHERE ontologyid is not null
+      SELECT name, graphid
+      FROM graphs
+      WHERE ontologyid is not null
             "
     d[["rms_list"]] <- DBI::dbGetQuery(db.con, sqll)
     # get the UUID of the identifier nodes
     sqll <- stringr::str_interp("
-      SELECT nodeid, name, graphid FROM nodes WHERE ontologyclass LIKE '%${identifiernode}%' AND datatype LIKE 'string';
+      SELECT nodeid, name, graphid
+      FROM nodes
+      WHERE ontologyclass LIKE '%${identifiernode}%' AND datatype LIKE 'string';
             ")
     d[["rms_identifier_nodes"]] <- DBI::dbGetQuery(db.con, sqll)
     ## simplify variables
@@ -190,19 +194,23 @@ ref_db <- function(db.con = NA,
   return(d)
 }
 
-# library(eamenaR)
-#
-# d <- hash::hash()
-# my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-#                                user = 'postgres',
-#                                password = 'postgis',
-#                                dbname = 'eamena',
-#                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-#                                port = 5432)
-# d <- ref_db(db.con = my_con,
-#             d = d,
-#             stat = "users",
-#             date.after = "2020-08-01",
-#             plot.g = T,
-#             fig.width = 14)
+library(eamenaR)
+
+d <- hash::hash()
+my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+                               user = 'postgres',
+                               password = 'postgis',
+                               dbname = 'eamena',
+                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+                               port = 5432)
+d <- ref_db(db.con = my_con,
+            d = d,
+            stat = "users",
+            date.after = "2022-12-31",
+            plot.g = T,
+            export.plot.g = T,
+            dirOut = "C:/Rprojects/eamenaR/results/",
+            stat.name = "user_date_joined_during2023",
+            # plot.g = T,
+            fig.width = 14)
 

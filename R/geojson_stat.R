@@ -1,3 +1,5 @@
+# DO NOT UPDATE, see `_geojson_stat*`
+#####################################
 #' Basic statistics on GeoJSON file like lists or charts
 #'
 #' @name geojson_stat
