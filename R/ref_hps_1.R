@@ -9,6 +9,7 @@
 #' @param stat the type of statistic that will be computed. Default: "spat" (spatial).Possible values: "grid" for stats on grids; "hist" for stats on categories having a large number of possible values (ex: Disturbances); "pie" for stats on categories having a small number of possible values (ex: Condition).
 #' @param perc Percentage (if TRUE) or counts (default).
 #' @param stat.name the name of the output file. By default "eamena_hps".
+#' @param stat.field a `db.concept.name` listed in the 'ids.csv' file to use for the stats, for example 'Disturbance Cause Category Type', 'Overall Condition State Type', etc.
 #' @param stat.format the extension of the geographic file (".geojson", ".shp"). GeoJSON by default.
 #' @param plot.map if TRUE will plot a map (FALSE by default).
 #' @param export.data if TRUE will export the map (FALSE by default).
@@ -104,6 +105,7 @@ ref_hps <- function(db.con = NA,
                     stat = c("spat"),
                     perc = FALSE,
                     stat.name = "eamena_hps",
+                    stat.field = NA,
                     stat.format = ".geojson",
                     plot.map = FALSE,
                     export.data = FALSE,

@@ -50,7 +50,7 @@ The functions names refer to their content :
 
 ## Correspondances between concept labels and UUIDs
 
-The [`ids.csv` file](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the EAMENA DB). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-project.github.io/eamenaR/doc/ref_ids))
+The file [`ids.csv`](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the [reference data/mds](https://github.com/eamena-project/eamena-arches-dev/blob/main/dbs/database.eamena/data/reference_data/mds/mds-template-readonly.tsv)). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-project.github.io/eamenaR/doc/ref_ids))
 
 |r.concept.name            |db.concept.name           |db.concept.uuid                     |
 |--------------------------|--------------------------|------------------------------------|
