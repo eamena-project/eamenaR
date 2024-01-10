@@ -105,7 +105,7 @@ ref_hps <- function(db.con = NA,
                     stat = c("spat"),
                     perc = FALSE,
                     stat.name = "eamena_hps",
-                    stat.field = NA,
+                    stat.field = "Overall Condition State Type",
                     stat.format = ".geojson",
                     plot.map = FALSE,
                     export.data = FALSE,
@@ -302,6 +302,10 @@ ref_hps <- function(db.con = NA,
     }
   }
   if("hist" %in% stat){
+    # return, for example: # 34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
+    field.name <- eamenaR::ref_ids(stat.field,
+                                   choice = "db.concept.uuid")
+
     # TODO: generalise the SQL for other categories. Currently it only deals with Disturbance Cause Category Type (UUID=34cfea68-c2c0-11ea-9026-02e7594ce0a0). Ex:
     sqll <- "
     SELECT v.value AS categ_type, COUNT(v.value) AS nb

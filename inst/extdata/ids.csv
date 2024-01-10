@@ -17,3 +17,6 @@ Room,Room,642e89b5-70cb-46e1-851d-7930858b7f65
 Grid.ID,Grid ID,b3628db0-742d-11ea-b4d0-02e7594ce0a0
 hp.grid,hp.grid,34cfea5d-c2c0-11ea-9026-02e7594ce0a0
 po.Appellation,PO-Appellation,e98e1cfe-c38b-11ea-9026-02e7594ce0a0
+hp.assess.act.date,Assessment Activity Date,34cfea81-c2c0-11ea-9026-02e7594ce0a0
+hp.disturbances.cause,Disturbance Cause Category Type,34cfea68-c2c0-11ea-9026-02e7594ce0a0
+hp.overall.condition,Overall Condition State Type,34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
