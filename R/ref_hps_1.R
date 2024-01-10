@@ -305,16 +305,17 @@ ref_hps <- function(db.con = NA,
     # return, for example: # 34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
     field.name <- eamenaR::ref_ids(stat.field,
                                    choice = "db.concept.uuid")
-
     # TODO: generalise the SQL for other categories. Currently it only deals with Disturbance Cause Category Type (UUID=34cfea68-c2c0-11ea-9026-02e7594ce0a0). Ex:
-    sqll <- "
+    sqll <- stringr::str_interp(
+      "
     SELECT v.value AS categ_type, COUNT(v.value) AS nb
     FROM tiles t
-    JOIN values v ON t.tiledata ->> '34cfea68-c2c0-11ea-9026-02e7594ce0a0'::text IS NOT NULL
-    AND v.valueid = (t.tiledata ->> '34cfea68-c2c0-11ea-9026-02e7594ce0a0'::text)::uuid
+    JOIN values v ON t.tiledata ->> '${field.name}'::text IS NOT NULL
+    AND v.valueid = (t.tiledata ->> '${field.name}'::text)::uuid
     GROUP BY v.valueid
     ORDER BY nb DESC
     "
+    )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     if(export.data){
       df <- d[[stat.name]]
@@ -379,7 +380,9 @@ ref_hps <- function(db.con = NA,
   }
   if("pie" %in% stat){
     # TODO: generalise the SQL for other categories. Currently it only deals with Overall Condition State Type (UUID=34cfe9f5-c2c0-11ea-9026-02e7594ce0a0)
-    sqll <-
+    field.name <- eamenaR::ref_ids(stat.field,
+                                   choice = "db.concept.uuid")
+    sqll <- stringr::str_interp(
       "
       SELECT v.value AS categ_type, COUNT(v.value) AS nb
       FROM tiles t
@@ -388,6 +391,7 @@ ref_hps <- function(db.con = NA,
       GROUP BY v.valueid
       ORDER BY nb DESC
       "
+    )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     if(export.data){
       df <- d[[stat.name]]
