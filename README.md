@@ -25,11 +25,11 @@ Together with analysis functions, the package offers different methods to manage
 
 ```mermaid
 flowchart LR
-    subgraph ide1 ["<b>F</b>indable, <b>A</b>ccessible"]
+    subgraph ide1 ["Findable, **A**ccessible"]
     A[(EAMENA<br>DB)];
     end
     A[(EAMENA<br>DB)] <---> B{{"eamenaR"}}:::eamenaRpkg;
-    subgraph ide2 ["<b>I<\b>nteroperable, <b>R<\b>eusable"]
+    subgraph ide2 ["Interoperable, Reusable"]
     B;
     end
     classDef eamenaRpkg fill:#e3c071;
