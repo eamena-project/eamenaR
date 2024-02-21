@@ -48,7 +48,8 @@ The functions names refer to their content :
 | plot_*               | creates a map, a graphic, etc.                         | `plot_edtf()`            |
 | ref_*                | direct connection to the EAMENA PostgreSQL database    | `ref_cultural_periods()` |
 
-## Correspondances between concept labels and UUIDs
+## UUIDs of the nodes
+> Correspondances between concept labels and UUIDs
 
 The file [`ids.csv`](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/ids.csv) is a correspondence table between permanent concepts' labels used in this package (`r.concept.name`), customised concepts' labels used in a specific Arches project `db.concept.name` and the latter UUIDs `db.concept.uuid` (by default, these values are those of the [reference data/mds](https://github.com/eamena-project/eamena-arches-dev/blob/main/dbs/database.eamena/data/reference_data/mds/mds-template-readonly.tsv)). Depending on how you named your Arches instance concepts, you will have to modifiy these correspondences (see the function [`ref_ids()`](https://eamena-project.github.io/eamenaR/doc/ref_ids))
 
@@ -61,6 +62,7 @@ The file [`ids.csv`](https://github.com/eamena-project/eamenaR/blob/main/inst/ex
 |Cultural.Sub-Period       |Cultural Sub-Period       |16cb160e-7b31-4872-b2ca-6305ad311011|
 |Disturbance.Extent.Type   |Disturbance Extent Type   |41488800-6c00-30f2-b93f-785e38ab6251|
 
+> Use the Python function `node_uuids()` to retrieve the fields `db.concept.name` and `db.concept.uuid ` for any RM (see [documentation](https://github.com/eamena-project/eamena-arches-dev/tree/main/dbs/database.eamena/data/reference_data#uuids))
 
 # Install and load package
 
