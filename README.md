@@ -25,7 +25,7 @@ Together with analysis functions, the package offers different methods to manage
 
 ```mermaid
 flowchart LR
-    subgraph ide1 ["Findable, **A**ccessible"]
+    subgraph ide1 [Findable, **A**ccessible]
     A[(EAMENA<br>DB)];
     end
     A[(EAMENA<br>DB)] <---> B{{"eamenaR"}}:::eamenaRpkg;
