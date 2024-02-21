@@ -29,7 +29,7 @@ flowchart LR
     A[(EAMENA<br>DB)];
     end
     A[(EAMENA<br>DB)] <---> B{{"eamenaR"}}:::eamenaRpkg;
-    subgraph ide2 ["<b>I</b>nteroperable, <b>R</b>eusable"]
+    subgraph ide2 ["<b>I<\b>nteroperable, <b>R<\b>eusable"]
     B;
     end
     classDef eamenaRpkg fill:#e3c071;
