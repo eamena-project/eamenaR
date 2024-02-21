@@ -71,6 +71,7 @@
 #'              d = d,
 #'              stat = "hist",
 #'              stat.name = "Disturbance Cause Category Type",
+#'              stat.field = "Disturbance Cause Category Type",
 #'              max.num = 20,
 #'              export.data = TRUE,
 #'              dirOut = "C:/Rprojects/eamenaR/results/",
@@ -82,6 +83,7 @@
 #'              d = d,
 #'              stat = "pie",
 #'              stat.name = "Overall Condition State Type",
+#'              stat.field = "Overall Condition State Type",
 #'              export.data = TRUE,
 #'              dirOut = "C:/Rprojects/eamenaR/results/",
 #'              fig.width = 12,
@@ -92,6 +94,7 @@
 #'              d = d,
 #'              stat = "pie",
 #'              stat.name = "Overall Condition State Type",
+#'              stat.field = "Overall Condition State Type",
 #'              perc = TRUE,
 #'              rounded = 1,
 #'              export.data = TRUE,
@@ -104,6 +107,7 @@ ref_hps <- function(db.con = NA,
                     d = NA,
                     stat = c("spat"),
                     perc = FALSE,
+                    rounded = 1,
                     stat.name = "eamena_hps",
                     stat.field = "Overall Condition State Type",
                     stat.format = ".geojson",
@@ -303,15 +307,15 @@ ref_hps <- function(db.con = NA,
   }
   if("hist" %in% stat){
     # return, for example: # 34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
-    field.name <- eamenaR::ref_ids(stat.field,
+    field.uuid <- eamenaR::ref_ids(stat.field,
                                    choice = "db.concept.uuid")
     # TODO: generalise the SQL for other categories. Currently it only deals with Disturbance Cause Category Type (UUID=34cfea68-c2c0-11ea-9026-02e7594ce0a0). Ex:
     sqll <- stringr::str_interp(
       "
     SELECT v.value AS categ_type, COUNT(v.value) AS nb
     FROM tiles t
-    JOIN values v ON t.tiledata ->> '${field.name}'::text IS NOT NULL
-    AND v.valueid = (t.tiledata ->> '${field.name}'::text)::uuid
+    JOIN values v ON t.tiledata ->> '${field.uuid}'::text IS NOT NULL
+    AND v.valueid = (t.tiledata ->> '${field.uuid}'::text)::uuid
     GROUP BY v.valueid
     ORDER BY nb DESC
     "
@@ -342,8 +346,8 @@ ref_hps <- function(db.con = NA,
           ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
                          axis.title.y = ggplot2::element_text(angle = 90),
                          plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
-                         panel.spacing = unit(2, "lines"),
-                         plot.title = ggplot2::element_text(margin = margin(b = 20))
+                         panel.spacing = ggplot2::unit(2, "lines"),
+                         plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
           )
       }
       if(perc){
@@ -358,9 +362,13 @@ ref_hps <- function(db.con = NA,
           ) +
           ggplot2::ylab(paste(stat.name, '%')) +
           ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
+          ggplot2::scale_y_continuous(expand = c(0, 0, .075, 0)) + # expand the top to uncut large bar labels
           ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
                          axis.title.y = ggplot2::element_text(angle = 90),
-                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"))
+                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
+                         panel.spacing = ggplot2::unit(2, "lines"),
+                         plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
+          )
       }
       if (export.data) {
         dir.create(dirOut, showWarnings = FALSE)
@@ -380,14 +388,14 @@ ref_hps <- function(db.con = NA,
   }
   if("pie" %in% stat){
     # TODO: generalise the SQL for other categories. Currently it only deals with Overall Condition State Type (UUID=34cfe9f5-c2c0-11ea-9026-02e7594ce0a0)
-    field.name <- eamenaR::ref_ids(stat.field,
+    field.uuid <- eamenaR::ref_ids(stat.field,
                                    choice = "db.concept.uuid")
     sqll <- stringr::str_interp(
       "
       SELECT v.value AS categ_type, COUNT(v.value) AS nb
       FROM tiles t
-      JOIN values v ON t.tiledata ->> '34cfe9f5-c2c0-11ea-9026-02e7594ce0a0'::text IS NOT NULL
-                   AND v.valueid = (t.tiledata ->> '34cfe9f5-c2c0-11ea-9026-02e7594ce0a0'::text)::uuid
+      JOIN values v ON t.tiledata ->> '${field.uuid}'::text IS NOT NULL
+                   AND v.valueid = (t.tiledata ->> '${field.uuid}'::text)::uuid
       GROUP BY v.valueid
       ORDER BY nb DESC
       "
@@ -484,7 +492,8 @@ db.con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 d <- ref_hps(db.con = db.con,
              d = d,
              stat = "hist",
-             stat.name = "Disturbance Cause Category Type",
+             stat.name = "Threat Category",
+             stat.field = "Threat Category",
              perc = T,
              max.num = 20,
              export.data = TRUE,
