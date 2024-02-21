@@ -2,7 +2,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([number of HP by grids](https://github.com/eamena-project/eamenaR#grids), [users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/en/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
+The ***eamenaR*** package is under developments. It allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([number of HP by grids](https://github.com/eamena-project/eamenaR#grids), [users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
   
 ```mermaid
 flowchart LR
@@ -1128,40 +1128,7 @@ Creates this kind of table:
 
 The `dist` shows that the geometries are exactly the same, and that there are slight differences in the other fields. The CSV output is here: https://github.com/eamena-project/eamenaR/blob/main/results/duplicates.csv
 
-
-# Others
-
-## Share a GeoJSON geometry
-
-Go to https://geojson.io/, use the geocoder to find a location, draw a POINT, LINE or a POLYGON (in green), copy the JSON geometry (in red) and paste it into a new `.geojson` file.  
-
-![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-io.png)
-
-
-The format of a rectangle selection is 4 different points[^2], starting from the geographical origin (`xmin, ymin`), e.g.: `"POINT(0 0)"`
-
-```
-[
-    xmin,
-    ymin
-],
-[
-    xmax,
-    ymin
-],
-[
-    xmax,
-    ymax
-],
-[
-    xmin
-    ymax
-],
-[
-    xmin,
-    ymin
-]
-```
+---
 
 [^1]: JavaScript is **THE** interactive web language, and the most popular file types are JSON and GeoJSON (respectively JavaScript Objet Notation and GeoJavaScript Object Notation).
 [^2]: there is a duplicate which comes from the need to close the polygon, so the coordinates of the origin (`xmin, ymin`) are the same as those of the last point.
