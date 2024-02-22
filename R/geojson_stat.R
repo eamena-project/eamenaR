@@ -286,8 +286,8 @@ geojson_stat <- function(stat.name = "stat",
         for(field.name in field.names){
           # field.name <- "Overall Condition State Type"
           # c("Good", "Fair", "Poor", "Very Bad", "Destroyed")
-
           df <- as.data.frame(table(ea.geojson[[field.name]]))
+          df$Var1 <- replace(df$Var1, df$Var1 == "", "NaN")
           df$Freq.perc <- round((df$Freq/sum(df$Freq))*100, 0)
           names(df)[names(df) == 'Var1'] <- field.name
           if(field.name == "Overall Condition State Type"){
@@ -377,9 +377,9 @@ geojson_stat <- function(stat.name = "stat",
 #              dirOut = "C:/Rprojects/eamenaR/results/")
 
 geojson_stat(geojson.path = "C:/Users/Thomas Huet/Downloads/MAPSS_Xiongnu_khovd.geojson",
-             stat.name = "MAPSS_FunctionType",
+             stat.name = "MAPSS_ThreatDriverType",
              stat = "stats",
-             field.names = c("Remote Sensing Heritage Resource Function Type"),
+             field.names = c("Threat Driver Type"),
              export.plot = T,
              # dirOut = "C:/Users/Thomas Huet/Downloads/"
              dirOut = "C:/Rprojects/eamenaR/results/"
