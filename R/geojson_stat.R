@@ -149,7 +149,6 @@ geojson_stat <- function(stat.name = "stat",
       )
     # loop over the values
     for(chart in chart.type){
-
       if(chart == "basics"){
         # TODO: the field names are not those natives in a GeoJSON export, but the ones of SHP. I highlight them with a XXX. YYY means to add eamenaR:: inf front of the function name when finished
         # bbox
@@ -285,7 +284,7 @@ geojson_stat <- function(stat.name = "stat",
       # chart <- "pie"
       if(chart == "pie"){
         for(field.name in field.names){
-          field.name <- "Overall Condition State Type"
+          # field.name <- "Overall Condition State Type"
           # c("Good", "Fair", "Poor", "Very Bad", "Destroyed")
 
           df <- as.data.frame(table(ea.geojson[[field.name]]))
@@ -363,7 +362,7 @@ geojson_stat <- function(stat.name = "stat",
     }
     if (!export.stat & !export.plot){
       if(verbose){print(paste("Chart:"))}
-      gg
+      print(gg)
     }
   }
 }
@@ -377,3 +376,11 @@ geojson_stat <- function(stat.name = "stat",
 #              export.plot = T,
 #              dirOut = "C:/Rprojects/eamenaR/results/")
 
+geojson_stat(geojson.path = "C:/Users/Thomas Huet/Downloads/MAPSS_Xiongnu_khovd.geojson",
+             stat.name = "MAPSS_FunctionType",
+             stat = "stats",
+             field.names = c("Remote Sensing Heritage Resource Function Type"),
+             export.plot = T,
+             # dirOut = "C:/Users/Thomas Huet/Downloads/"
+             dirOut = "C:/Rprojects/eamenaR/results/"
+             )
