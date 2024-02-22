@@ -92,7 +92,7 @@ Data will come from two sources: exported files, and SQL queries.
 
 ## Exported files
 
-GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson** URL (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].  
+GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].  
 
 ![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
 

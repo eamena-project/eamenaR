@@ -39,5 +39,5 @@ geojson_imagery <- function(geojson.path = paste0(system.file(package = "eamenaR
   pass
 }
 
-geojson.path <- "C:/Users/Thomas Huet/Desktop/Sistan/data/sistan_part1_hps.geojson"
-geojson_imagery(geojson.path)
+# geojson.path <- "C:/Users/Thomas Huet/Desktop/Sistan/data/sistan_part1_hps.geojson"
+# geojson_imagery(geojson.path)
