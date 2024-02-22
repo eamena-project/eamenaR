@@ -194,23 +194,23 @@ ref_db <- function(db.con = NA,
   return(d)
 }
 
-library(eamenaR)
-
-d <- hash::hash()
-my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
-                               password = 'postgis',
-                               dbname = 'eamena',
-                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-                               port = 5432)
-d <- ref_db(db.con = my_con,
-            d = d,
-            stat = "users",
-            date.after = "2022-12-31",
-            plot.g = T,
-            export.plot.g = T,
-            dirOut = "C:/Rprojects/eamenaR/results/",
-            stat.name = "user_date_joined_during2023",
-            # plot.g = T,
-            fig.width = 14)
+# library(eamenaR)
+#
+# d <- hash::hash()
+# my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+#                                user = 'postgres',
+#                                password = 'postgis',
+#                                dbname = 'eamena',
+#                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
+#                                port = 5432)
+# d <- ref_db(db.con = my_con,
+#             d = d,
+#             stat = "users",
+#             date.after = "2022-12-31",
+#             plot.g = T,
+#             export.plot.g = T,
+#             dirOut = "C:/Rprojects/eamenaR/results/",
+#             stat.name = "user_date_joined_during2023",
+#             # plot.g = T,
+#             fig.width = 14)
 
