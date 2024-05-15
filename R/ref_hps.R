@@ -451,15 +451,6 @@ ref_hps <- function(db.con = NA,
   }
 }
 
-library(eamenaR)
-
-d <- hash::hash()
-db.con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
-                               user = 'postgres',
-                               password = 'postgis',
-                               dbname = 'eamena',
-                               host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
-                               port = 5432)
 
 # d <- ref_hps(db.con = db.con,
 #              d = d,
