@@ -92,7 +92,7 @@ Data will come from two sources: exported files, and SQL queries.
 
 ## Exported files
 
-GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file[^1].  
+GeoJSON is the preferred format for working with EAMENA. Create a search in EAMENA, in the export menu, copy the **geojson url** (in green) to the clipboard, paste it into your web browser and create a GeoJSON file.  
 
 ![](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/geojson-export.png)
 
@@ -124,6 +124,18 @@ geojson_stat(stat.name = "overall_cond",
 <p align="center">
   <img alt="img-name" src="./results/overall_condition_pie.png" width="400">
 </p>
+
+The same chart can be done for an external DB
+
+```R
+geojson_stat(geojson.path = "C:/Users/Thomas Huet/Downloads/MAPSS_Xiongnu_khovd.geojson",
+             stat.name = "MAPSS_ThreatDriverType",
+             stat = "stats",
+             field.names = c("Threat Driver Type"),
+             export.plot = T,
+             dirOut = "C:/Rprojects/eamenaR/results/"
+             )
+```
 
 ## Histograms
 

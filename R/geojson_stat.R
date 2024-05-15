@@ -376,11 +376,4 @@ geojson_stat <- function(stat.name = "stat",
 #              export.plot = T,
 #              dirOut = "C:/Rprojects/eamenaR/results/")
 
-geojson_stat(geojson.path = "C:/Users/Thomas Huet/Downloads/MAPSS_Xiongnu_khovd.geojson",
-             stat.name = "MAPSS_ThreatDriverType",
-             stat = "stats",
-             field.names = c("Threat Driver Type"),
-             export.plot = T,
-             # dirOut = "C:/Users/Thomas Huet/Downloads/"
-             dirOut = "C:/Rprojects/eamenaR/results/"
-             )
+
