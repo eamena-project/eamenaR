@@ -6,7 +6,8 @@
 #'
 #' @param map.name name of output map and name of saved file (if export.plot is TRUE). Default "map".
 #' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
-#' @param geojson.grids optional. path of GeoJSON file to show also grids
+#' @param geojson.grids optional. path of GeoJSON file to show also grids.
+#' @param zoom An integer value for the zoom for the Stadiamap basemap. Default NA, will be calculated automatically.
 #' @param ids IDs of resources, default "EAMENA.ID" (R fieldname format, without spaces).
 #' @param field.names a vector of one or many field names for thematic cartography. If NA (default), will create a general map
 #' @param highlights.ids EAMENA IDs (ex: 'EAMENA-0205783') that will be highlighted in map. If NA (default), no highlights.
@@ -37,6 +38,16 @@
 #'            field.names = c("Disturbance Cause Type ", "Damage Extent Type"),
 #'            export.plot = T)
 #'
+#' # read from Zenodo and return a list of maps
+#' map.name <- "Sistan_dataset_Damages_Extent"
+#' all.g <- geojson_map(map.name = map.name,
+#'                      field.names = c("Damage Extent Type"),
+#'                      geojson.path = "https://doi.org/10.5281/zenodo.10375902",
+#'                      max.maps = 6,
+#'                      hp.color = "black",
+#'                      hp.color.bck = "grey",
+#'                      hp.size = 1.5)
+#'
 #' # save an interactive map
 #' geojson_map(map.name = "caravanserail_plotly",
 #'             interactive = T,
@@ -45,7 +56,6 @@
 #' # plot a general map of geoarchaeological data
 #' geojson_map(map.name = "geoarch",
 #'             ids = "GEOARCH.ID",
-#'             stamen.zoom = 6,
 #'             geojson.path = "C:/Rprojects/eamena-arches-dev/data/geojson/geoarchaeo.geojson",
 #'             export.plot = F)
 #'
@@ -54,9 +64,9 @@ geojson_map <- function(map.name = "map",
                         geojson.path = paste0(system.file(package = "eamenaR"),
                                               "/extdata/caravanserail.geojson"),
                         geojson.grids = NA,
+                        zoom = NA,
                         ids = "EAMENA ID",
                         field.names = NA,
-                        highlights.ids = NA,
                         symbology = paste0(system.file(package = "eamenaR"),
                                            "/extdata/symbology.xlsx"),
                         hp.color = "red",
@@ -82,17 +92,59 @@ geojson_map <- function(map.name = "map",
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   `%>%` <- dplyr::`%>%` # used to not load dplyr
   symbology.df <- openxlsx::read.xlsx(symbology)
-  ea.geojson <- sf::read_sf(geojson.path)
-  # sf::st_crs(ea.geojson) <- 4326
-  # sp::proj4string(ea.geojson) <- sp::CRS("+init=epsg:4326")
-  bbox <- sf::st_as_sfc(sf::st_bbox(ea.geojson))
-  # if(is.na(stamen.zoom)){
-  #   bbox <- sf::st_bbox(ea.geojson)
-  #   stamen.zoom <- rosm:::tile.raster.autozoom(
-  #     rosm::extract_bbox(
-  #       matrix(bbox, ncol = 2, byrow = TRUE)),
-  #     epsg = 4326)
+  geojson.read <- eamenaR::geojson_read(geojson.path)
+  ea.geojson <- geojson.read[[1]]
+  capt <- geojson.read[[2]]
+  # #################################################
+  # # TODO: factorise this 'read' part to geojson_stats, etc.
+  # if(is.character(geojson.path) & DescTools::SplitPath(geojson.path)$extension == "geojson"){
+  #   if(verbose){
+  #     print(paste0("ROI: Reads a GeoJSON path"))
+  #   }
+  #   ea.geojson <- sf::read_sf(geojson.path, quiet = TRUE)
+  #   capt <- SplitPath(geojson.path)$fullfilename
+  #   # where.roi <- sf::st_read(roi, quiet = TRUE)
   # }
+  # # geojson.path = "https://zenodo.org/api/records/10375902/files/sistan_part1_hps.zip/content"
+  # if(grep('zenodo', geojson.path)){
+  # # if(grep('zenodo.*zip', geojson.path)){
+  #   if(verbose){
+  #     print(paste0("ROI: Download a ZIP file hosted on Zenodo"))
+  #   }
+  #   geojson.path.api <- gsub("doi.org/.*/zenodo.", replacement = "zenodo.org/api/records/", geojson.path)
+  #   if(verbose){
+  #     print(paste0("The Zenodo DOI has been converted into an URL API"))
+  #   }
+  #   temp <- tempfile()
+  #   response <- httr::GET(geojson.path.api)
+  #   response_content <- httr::content(response, "text")
+  #   response_json <- jsonlite::fromJSON(response_content)
+  #   geo.file <- as.character(response_json$files$links)
+  #   download.file(geo.file,
+  #                 destfile = temp, quiet = TRUE, mode = "wb")
+  #   td <- tempdir()
+  #   lfiles <- unzip(temp, exdir = td)
+  #   if(verbose){
+  #     cat("Downloaded file(s):", lfiles, "\n")
+  #   }
+  #   # filter to find the GeoJSON
+  #   geojson_paths <- lfiles[grepl("\\.geojson$", lfiles, ignore.case = TRUE)]
+  #   if(length(geojson_paths) == 0){
+  #     stop("No GeoJSON files have been found in the Zenodo URL")
+  #   }
+  #   # compute the Zenodo citation (APA)
+  #   bib.authors <- as.character(response_json$metadata$creators[1])
+  #   bib.title <- response_json$title
+  #   bib.url <- response_json$doi_url
+  #   bib.year <- format(as.Date(response_json$metadata$publication_date, format = "%Y-%m-%d"), "%Y")
+  #   bib.type <- response_json$metadata$resource_type$type
+  #   capt <- paste0(bib.authors, ". (", bib.year, "). ", bib.title, " [", bib.type, "]. Zenodo. ", bib.url)
+  #   # read only the first GeoJSON as it is expected to have one GeoJSON by ZIP
+  #   ea.geojson <- sf::read_sf(geojson_paths[1], quiet = TRUE)
+  # }
+  #####################
+  bbox_values <- sf::st_bbox(ea.geojson)
+  bbox <- sf::st_as_sfc(bbox_values)
   ea.geojson <- sf::st_zm(ea.geojson) # rm Z
   ea.geojson.geom.types <- sf::st_geometry_type(ea.geojson$geometry)
   # Pt, Ln, Pl
@@ -102,12 +154,6 @@ geojson_map <- function(map.name = "map",
   ea.geojson.line$idf <- rownames(ea.geojson.line)
   ea.geojson.polygon <- ea.geojson[sf::st_geometry_type(ea.geojson$geometry) %in% c("POLYGON", "MULTIPOLYGON"), ]
   ea.geojson.polygon$idf <- rownames(ea.geojson.polygon)
-  if(!is.na(highlights.ids)){
-    ea.geojson.highlights.point <- row.names(ea.geojson.point[ea.geojson.point@data[ , ids] %in% highlights.ids, ])
-    ea.geojson.highlights.line <- row.names(ea.geojson.line[ea.geojson.line@data[ , ids] %in% highlights.ids, ])
-    ea.geojson.highlights.polygon <- row.names(ea.geojson.polygon[ea.geojson.polygon@data[ , ids] %in% highlights.ids, ])
-  }
-
   # non plolty
   if(!interactive){
     # cast Line and polygons to points
@@ -115,41 +161,66 @@ geojson_map <- function(map.name = "map",
     ea.geojson.polygon.point <- sf::st_centroid(ea.geojson.polygon)
     ea.geojson.point.all <- rbind(ea.geojson.point, ea.geojson.line.point)
     ea.geojson.point.all <- rbind(ea.geojson.point.all, ea.geojson.polygon.point)
-    # left <- as.numeric(sf::st_bbox(ea.geojson.point)$xmin)
-    # bottom <- as.numeric(sf::st_bbox(ea.geojson.point)$ymin)
-    # right <- as.numeric(sf::st_bbox(ea.geojson.point)$xmax)
-    # top <- as.numeric(sf::st_bbox(ea.geojson.point)$ymax)
-    # buffer <- mean(c(abs(left - right), abs(top - bottom)))/10
-    # bbox <- c(left = left - buffer,
-    #           bottom = bottom - buffer,
-    #           right = right + buffer,
-    #           top = top + buffer
-    # )
 
-    # stamenbck <- ggmap::get_stadiamap(bbox,
-    #                                   zoom = stamen.zoom,
-    #                                   maptype = maptype)
-
+    ggmap::register_stadiamaps("aa5c9739-90c7-410b-9e9b-6c904df6e4dd")
+    if(is.na(geojson.grids)[1]){
+      # no grids to plot
+      buff <- .1
+      left <- as.numeric(sf::st_bbox(ea.geojson.point.all)$xmin)
+      left.L <- left - buff # floor(left)
+      bottom <- as.numeric(sf::st_bbox(ea.geojson.point.all)$ymin)
+      bottom.L <- bottom - buff #floor(bottom)
+      right <- as.numeric(sf::st_bbox(ea.geojson.point.all)$xmax)
+      right.L <- right + buff # ceiling(right)
+      top <- as.numeric(sf::st_bbox(ea.geojson.point.all)$ymax)
+      top.L <- top + buff # ceiling(top)
+    } else {
+      buff <- .05
+      ea.geojson.grids <- sf::read_sf(geojson.grids)
+      left <- as.numeric(sf::st_bbox(ea.geojson.grids)$xmin)
+      left.L <- left - buff # floor(left)
+      bottom <- as.numeric(sf::st_bbox(ea.geojson.grids)$ymin)
+      bottom.L <- bottom - buff #floor(bottom)
+      right <- as.numeric(sf::st_bbox(ea.geojson.grids)$xmax)
+      right.L <- right + buff # ceiling(right)
+      top <- as.numeric(sf::st_bbox(ea.geojson.grids)$ymax)
+      top.L <- top + buff # ceiling(top)
+    }
+    if(is.na(zoom)){
+      if(verbose){
+        print(paste0("Basemap: will calculate the zoom automatically"))
+      }
+      lon_range <- c(bbox_values["xmin"], bbox_values["xmax"])
+      lat_range <- c(bbox_values["ymin"], bbox_values["ymax"])
+      zoom <- ggmap::calc_zoom(lon_range, lat_range)
+    }
+    stamenbck <- ggmap::get_stadiamap(bbox = c(left = left.L,
+                                               bottom = bottom.L,
+                                               right = right.L,
+                                               top = top.L),
+                                      maptype = "stamen_terrain_background",
+                                      crop = TRUE,
+                                      zoom = zoom)
     cpt.field.name <- 0
     if(!is.na(field.names)){
       # one map by field, if there are different values for the same field: one by value
       cpt.field.value <- 0
       cpt.field.name <- cpt.field.name + 1
-      print(paste0("* there is/are '", length(field.names),"' different field name to read"))
+      if(verbose){
+        print(paste0("* there is/are '", length(field.names),"' different field name to read"))
+      }
       for(field.name in field.names){
         # field.name <- "Damage Extent Type"
         # field.name <- "Disturbance Cause Type "
         # field.name <- "Overall Condition State Type"
         # field.name = c("Disturbance Cause Category Type")
-        # field.name = 'Infrastructure/Transport'
+
         # cpt.field.value <- 0
         # cpt.field.name <- cpt.field.name + 1
         # print(paste0(" ", cpt.field.name, "/",length(field.names),")    read '", field.name,"' field name"))
 
         if(!is.na(max.maps)){
           unic.values <- as.data.frame(table(ea.geojson.point.all[[field.name]]))
-          # summed.unic.values <- aggregate(Freq ~ Var1, data = unic.values, sum)
-
           df.val.simple <- data.frame(val = character(),
                                       nb = numeric())
           for (i in 1:nrow(unic.values)){
@@ -182,27 +253,21 @@ geojson_map <- function(map.name = "map",
             splitted.unique.values <- as.character(na.omit(splitted.unique.values))
           }
         }
-        # print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
+        if(verbose){
+          print(paste0("*       - there is/are ", length(splitted.unique.values)," different field values to read"))
+        }
         # symbology.df <- openxlsx::read.xlsx(symbology)
         symbology.field <- symbology.df[symbology.df$list == field.name, c("values", "hexa")]
         if(nrow(symbology.field) == 0){
-          # default colors
+          if(verbose){
+            print(paste0("*       - add default colors"))
+          }
           coloramp <- rev(RColorBrewer::brewer.pal(11, "Spectral"))
           colors <- colorRampPalette(coloramp)(length(splitted.unique.values))
           symbology.field <- data.frame(values = splitted.unique.values,
                                         colors = colors)
         }
         names(symbology.field)[names(symbology.field) == 'values'] <- field.name
-        # sf::st_crs(ea.geojson.point.all) <- 4326
-        # print(ea.geojson.point.all)
-        # sf::st_transform(ea.geojson.point.all, crs = "ESRI:3857")
-        # xxx <- ea.geojson.point.all
-        # - - - - - - - - - - - - - -- - - - -
-        ## basemaps creates: R Session aborted
-        # ea.geojson.point.all <- sf::st_transform(ea.geojson.point.all, crs = 3857)
-        # bbox <- sf::st_transform(bbox, crs = 3857)
-        # basemaps::set_defaults(map_service = "osm", map_type = "topographic")
-        # basemaps::set_defaults(map_service = maptype[1], map_type = maptype[2])
         # - - - - - - - - - - - - - - - - - - -
         if(different.values.in.the.field){
           # as many maps as there are different values
@@ -213,6 +278,7 @@ geojson_map <- function(map.name = "map",
             # splitted.unique.values <- splitted.unique.values[1:5]
             # field.value <- "Water and/or Wind Action"
             # field.value <- "Agricultural/Pastoral"
+            # field.value <- "Infrastructure/Transport"
             cpt.field.value <- cpt.field.value + 1
             print(paste0("        ", cpt.field.value, "/",
                          length(splitted.unique.values),")    read '",
@@ -221,55 +287,23 @@ geojson_map <- function(map.name = "map",
             ea.geojson.point.sub <- merge(ea.geojson.point.sub,
                                           symbology.field, by = field.name,
                                           all.x = T)
-            ggmap::register_stadiamaps("aa5c9739-90c7-410b-9e9b-6c904df6e4dd")
-            if(is.na(geojson.grids)[1]){
-              # no grids to plot
-              buff <- .1
-              left <- as.numeric(sf::st_bbox(ea.geojson.point.sub)$xmin)
-              left.L <- left - buff # floor(left)
-              bottom <- as.numeric(sf::st_bbox(ea.geojson.point.sub)$ymin)
-              bottom.L <- bottom - buff #floor(bottom)
-              right <- as.numeric(sf::st_bbox(ea.geojson.point.sub)$xmax)
-              right.L <- right + buff # ceiling(right)
-              top <- as.numeric(sf::st_bbox(ea.geojson.point.sub)$ymax)
-              top.L <- top + buff # ceiling(top)
-            } else {
-              buff <- .05
-              geojson.grids <- sf::read_sf(geojson.grids)
-              left <- as.numeric(sf::st_bbox(ea.geojson.grids)$xmin)
-              left.L <- left - buff # floor(left)
-              bottom <- as.numeric(sf::st_bbox(ea.geojson.grids)$ymin)
-              bottom.L <- bottom - buff #floor(bottom)
-              right <- as.numeric(sf::st_bbox(ea.geojson.grids)$xmax)
-              right.L <- right + buff # ceiling(right)
-              top <- as.numeric(sf::st_bbox(ea.geojson.grids)$ymax)
-              top.L <- top + buff # ceiling(top)
-            }
-            stamenbck <- get_stadiamap(bbox = c(left = left.L,
-                                                bottom = bottom.L,
-                                                right = right.L,
-                                                top = top.L),
-                                       maptype = "stamen_terrain_background",
-                                       crop = TRUE,
-                                       zoom = 9)
-            ea.geojson.point.sub$colors[is.na(ea.geojson.point.sub$colors)] <- hp.color.bck
-            tit <- paste0(field.value, " (n=", as.character(nrow(ea.geojson.point.sub)), ")")
+            # useful?
+            # ea.geojson.point.sub$colors[is.na(ea.geojson.point.sub$colors)] <- hp.color.bck
+
+            tit <- paste0(field.name, ": ", field.value, " (n=", as.character(nrow(ea.geojson.point.sub)), ")")
+            print(paste("Creates", tit))
             if(nrow(ea.geojson.point.sub) > 0){
               gmap <- ggmap::ggmap(stamenbck) +
-                ggplot2::ggtitle(tit)
+                # ggplot2::ggtitle(label = tit,
+                #                  subtitle = )
               if(!is.na(geojson.grids)[1]){
                 gmap <- gmap +
                   ggplot2::geom_sf(data = ea.geojson.grids,
-                                    color = "grey", fill = NA,
-                                    # ggplot2::aes(),
-                                    inherit.aes = FALSE)
+                                   color = "darkgrey", fill = NA,
+                                   # ggplot2::aes(),
+                                   inherit.aes = FALSE)
               }
               gmap <- gmap +
-                # ggplot2:: geom_sf(data = ea.geojson, fill = 'red',
-                #                   inherit.aes = FALSE) +
-                # gmap <- ggmap::ggmap(stamenbck) +
-                # gmap <- ggplot2::ggplot() +
-                # basemaps::basemap_gglayer(bbox) +
                 ggplot2::geom_sf(data = ea.geojson.point.all,
                                  ggplot2::aes(color = hp.color.bck),
                                  size = hp.size,
@@ -281,20 +315,20 @@ geojson_map <- function(map.name = "map",
                 ggplot2::scale_color_identity(# guide = "legend",
                   name = field.name,
                   label = c("other", field.value)) +
-                # ggplot2::scale_fill_identity() +
-                # ggplot2::coord_sf() +
-                # ggplot2::labs(title = field.value) +
-                # subtitle = paste0(field.name, " = ", field.value)) +
+                ggplot2::labs(title = tit,
+                              caption = paste0("Data source:\n", capt)) +
                 ggplot2::scale_x_continuous(breaks = seq(floor(left), ceiling(right), by = .5)) +
                 ggplot2::scale_y_continuous(breaks = seq(floor(bottom), ceiling(top), by = .5)) +
-                ggplot2::theme(plot.title = ggplot2::element_text(size = 10,
+                ggplot2::theme(plot.title = ggplot2::element_text(size = 12,
                                                                   hjust = 0.5),
-                               axis.title = ggplot2::element_blank())
+                               axis.title = ggplot2::element_blank(),
+                               plot.caption = ggplot2::element_text(size = 6, hjust = 0))
               # add to list
+              print("map created")
+              # if (!export.plot) {
+              #   return(all.g)
+              # }
               all.g[[length(all.g) + 1]] <- gmap
-              if (!export.plot) {
-                print(gmap)
-              }
             }
           }
           if (export.plot) {
@@ -303,10 +337,11 @@ geojson_map <- function(map.name = "map",
             field.name.norm <- gsub(" ", "_", field.name.norm)
             field.name.norm <- gsub("%", "perc", field.name.norm)
             gout <- paste0(dirOut, map.name, "_", field.name.norm, ".png")
-            margin <- ggplot2::theme(plot.margin = ggplot2::unit(c(0,0,0,0), "cm"))
+            margin <- ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
             ggplot2::ggsave(file = gout,
-                            gridExtra::arrangeGrob(top = field.name,
-                                                   grobs = lapply(all.g, "+", margin), ncol = ncol),
+                            gridExtra::arrangeGrob(#top = field.name,
+                              top = grid::textGrob(field.name, gp = grid::gpar(fontsize = 14)),
+                              grobs = lapply(all.g, "+", margin), ncol = ncol),
                             width = fig.width,
                             height = fig.height)
 
@@ -317,6 +352,8 @@ geojson_map <- function(map.name = "map",
                             height = fig.height)
             print(paste(gout, "is exported"))
           }
+
+          return(all.g)
         }
 
         if(!different.values.in.the.field){

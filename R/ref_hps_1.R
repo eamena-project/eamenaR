@@ -1,6 +1,6 @@
 #' Statistics about EAMENA Heritage places (spatial distribution, nb of HP by grids, etc.)
 #'
-#' @name ref_hps
+#' @name ref_hps_1
 #'
 #' @description statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids, type of disturbances, overall condition state type of heritage places. This function is the backend counterpart of `geojson_stat()` for GeoJSON files.
 #'
@@ -103,27 +103,27 @@
 #'              fig.height = 6)
 #'
 #' @export
-ref_hps <- function(db.con = NA,
-                    d = NA,
-                    stat = c("spat"),
-                    perc = FALSE,
-                    rounded = 1,
-                    stat.name = "eamena_hps",
-                    stat.field = "Overall Condition State Type",
-                    stat.format = ".geojson",
-                    plot.map = FALSE,
-                    export.data = FALSE,
-                    fig.width = 6,
-                    fig.height = 6,
-                    fig.dev = "png",
-                    dirOut = paste0(system.file(package = "eamenaR"),
-                                    "/results/"),
-                    date.after = NA,
-                    date.before = Sys.Date(),
-                    on.date = "assess.activity.date",
-                    max.num = NA,
-                    team.name = NA,
-                    verbose = TRUE){
+ref_hps_1 <- function(db.con = NA,
+                      d = NA,
+                      stat = c("spat"),
+                      perc = FALSE,
+                      rounded = 1,
+                      stat.name = "eamena_hps",
+                      stat.field = "Overall Condition State Type",
+                      stat.format = ".geojson",
+                      plot.map = FALSE,
+                      export.data = FALSE,
+                      fig.width = 6,
+                      fig.height = 6,
+                      fig.dev = "png",
+                      dirOut = paste0(system.file(package = "eamenaR"),
+                                      "/results/"),
+                      date.after = NA,
+                      date.before = NA,
+                      on.date = "assess.activity.date",
+                      max.num = NA,
+                      team.name = NA,
+                      verbose = TRUE){
   blank_theme <- ggplot2::theme_minimal()+
     ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
@@ -155,7 +155,8 @@ ref_hps <- function(db.con = NA,
           SELECT * FROM (
           SELECT
           resourceinstanceid::TEXT AS ri,
-      	tiledata ->> '${uuid}'::text as ei
+      	-- tiledata ->> '${uuid}'::text as ei
+      	  tiledata -> '34cfe992-c2c0-11ea-9026-02e7594ce0a0' -> 'en' #>> '{value}' as ei
           FROM tiles
           ) AS x
           WHERE ei IS NOT NULL
@@ -232,8 +233,9 @@ ref_hps <- function(db.con = NA,
     }
 
     # limit on HPs creation dates
-    if(is.na(date.after)){
-      if(verbose){print("   - limit on dates of creation")}
+    if(is.na(date.after) & is.na(date.before)){
+      #  date.before = Sys.Date(),
+      if(verbose){print("   - do not limit on dates of creation")}
       sqll.cond <- stringr::str_interp("
         WHERE ids.ri = staff.ri AND ids.ri = coords.ri
                                               ")
