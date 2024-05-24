@@ -7,8 +7,7 @@
 ref_routes(
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  csv.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail_paths.csv"),
+  csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
   concept.name = "hp.id",
   by = NA,
   verbose = TRUE
@@ -30,8 +29,4 @@ A `sf` file of the heritage places with their routes.
 }
 \description{
 Join the GeoJSON file of heritage places with the CSV file of routes. Each heritage place has its route (the `by` option) registered in a CSV file. This function creates a merge of these two files
-}
-\examples{
-
-
 }

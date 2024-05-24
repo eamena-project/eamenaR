@@ -9,7 +9,7 @@ geojson_kml(
   geom.types = c("POINT", "LINE", "POLYGON"),
   export = T,
   dirOut = paste0(system.file(package = "eamenaR"), "/extdata/"),
-  geojson.name = "Waypoints",
+  out.name = "Waypoints",
   select.name = "EAMENA ID",
   select.fields = c("EAMENA ID", "Resource Name", "resourceid"),
   verbose = T
@@ -24,7 +24,7 @@ geojson_kml(
 
 \item{dirOut}{path to folder where KML/KMZ/GeoJSON file will be created.}
 
-\item{geojson.name}{name of KML/KMZ/GeoJSON that will be created without extension.}
+\item{out.name}{name of KML/KMZ/GeoJSON that will be created without extension.}
 
 \item{select.name}{for KML export only. Field selected to be KML name of heritage place, default "EAMENA ID".}
 
@@ -50,6 +50,6 @@ geojson_kml(geom.types = "POINT")
 geojson_kml(geom.path = "C:/Rprojects/eamenaR/inst/extdata/kites.geojson",
                    dirOut = "C:/Rprojects/eamenaR/inst/extdata/",
                    export = T,
-                   geojson.name = "kites_outKML")
+                   out.name = "kites_outKML")
 
 }

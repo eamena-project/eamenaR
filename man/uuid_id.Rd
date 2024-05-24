@@ -2,7 +2,7 @@
 % Please edit documentation in R/uuid_id.R
 \name{uuid_id}
 \alias{uuid_id}
-\title{Return the UUID of a specific Heritage Place, or Connected Component, from its ID, or the opposite by connecting the DB.}
+\title{Return the UUID of a specific Heritage Place, etc., from its ID, or the opposite by connecting the DB.}
 \usage{
 uuid_id(
   db.con = NA,
@@ -29,7 +29,7 @@ uuid_id(
 
 \item{id.prj.patt}{a regex matching with the project IDs, by default `"^EAMENA-"`.}
 
-\item{rm}{the Resource Model (ex: HP, connected components). The available values are: "hp" for Heritage places, "cc" for connected compobents (ex: Built component). By default "hp".}
+\item{rm}{used to find the ID of the Resource Model (ex: Heritage Places, Built Components, Information Resources). The available values are: "hp" for Heritage places, "cc" for connected components (ex: Built component), "ir" for Information Resources. By default "hp".}
 
 \item{disconn}{if TRUE (default) will disconnect from the DB once done. If FALSE, the user has to disconnect (eg. DBI::dbDisconnect(my_con)).}
 
@@ -39,11 +39,13 @@ uuid_id(
 a hash() object (a Python-like dictionary) with EAMENA ID and ResourceID. If a given ID doesn't exist, will fill the value of the hash dictionary with NA.
 }
 \description{
-Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Connected Component) from its EAMENA ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
+Return the ResourceID of a feature in a Resource Model (ex: an Heritage Place, a Built Component, etc.) from its ID, or the opposite: the ResourceID from the EAMENA ID, and store these ID into a hash() object. A connection with the EAMENA database is needed. The ResourceID is a UUID. This function uses the `ref_ids()` one for interoperability purposes.
 }
 \examples{
 
 d <- hash::hash()
+
+# DB connector
 my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
                                password = 'xxx',
@@ -54,9 +56,9 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 ## Heritage places
 # from the EAMENA ID to the UUID
 d <- uuid_id(db.con = my_con,
-                   d = d,
-                   id = "EAMENA-0187363",
-                   disconn = FALSE)
+             d = d,
+             id = "EAMENA-0187363",
+             disconn = FALSE)
 d$uuid
 # [1] "12053a2b-9127-47a4-990f-7f5279cd89da"
 

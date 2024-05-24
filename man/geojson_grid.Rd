@@ -8,6 +8,7 @@ geojson_grid(
   geojson.path = paste0(system.file(package = "eamenaR"), "/extdata/E42N30-42.geojson"),
   rows = 140,
   cols = 60,
+  boustrop = TRUE,
   export = TRUE,
   fileOut = NA,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
@@ -21,6 +22,8 @@ geojson_grid(
 
 \item{cols}{number of cells in the Y dimension. By default 60.}
 
+\item{boustrop}{if TRUE (Default) will numbered in a boustrophedon way, starting from the upper left subgrid cell.}
+
 \item{export}{if TRUE, export the GeoJSON file, if FALSE will only return it}
 
 \item{fileOut}{name of the exported GeoJSON with extension (ex: "E42N30-42_subgrids.geojson"). Default `NA`, will add "_subgrids" to the input GeoJSON}
@@ -33,7 +36,7 @@ geojson_grid(
 A GeoJSON file with the same extent as the input GeoJSON file, but divided in many smaller polygons numbered from 1 to ...
 }
 \description{
-Divide a Grid Square (GS) into a selected number of subgrids (rows, cols). This function is useful for anyone who want to survey systematicaly a GS (~ 24km * 28 km) by dividing this GS in many smaller grids (numbered from GS.1 to GS.n). By default, GS are divided into 140 rows and 60 columns to fit with a Google Earth scale ("distance to your eye") that correspond to 300 m in a way each subgrid is entirely visible on a computer screen
+Divide a Grid Square (GS) into a selected number of subgrids (rows, cols). This function is useful for anyone who want to survey systematicaly a GS (~ 24km * 28 km) by dividing this GS in many smaller grids (numbered from GS.1 to GS.n in a boustrophedon order). By default, GS are divided into 140 rows and 60 columns to fit with a Google Earth scale ("distance to your eye") that correspond to 300 m in a way each subgrid is entirely visible on a computer screen
 }
 \examples{
 

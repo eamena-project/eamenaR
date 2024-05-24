@@ -2,14 +2,16 @@
 % Please edit documentation in R/list_related_resources.R
 \name{list_related_resources}
 \alias{list_related_resources}
-\title{List the connected components of an HP}
+\title{List the related resources of an HP}
 \usage{
 list_related_resources(
   db.con = NA,
   d = NA,
   field = NA,
   id = NA,
-  relationshiptype = "PX_is_related_to",
+  relationshipwith = NA,
+  relationshiptype = NA,
+  relationshipdirect = c("from", "to"),
   disconn = TRUE,
   verbose = TRUE
 )
@@ -23,17 +25,19 @@ list_related_resources(
 
 \item{id}{the ID of an HP, either an UUID or an EAMENA ID. By default, NA.}
 
-\item{relationshiptype}{the type of relation existing betwen an HP and a BC. By default, the CIDOC-CRM 'PX_is_related_to'.}
+\item{relationshipwith}{the RM on which the related resources will be retrieved: "hp", "ir", "po", "cc", ...}
+
+\item{relationshiptype}{the type of relation existing between an HP and a BC (for exmple the CIDOC-CRM 'PX_is_related_to').}
 
 \item{disconn}{if TRUE (by defalut), will disconnect from the DB.}
 
 \item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
-A dataframe with the IDs and UUIDs of HP and CC
+A dataframe with the IDs and UUIDs of HP and rr
 }
 \description{
-With a given HP, find all the connected components.
+With a given HP, find all the related resources.
 }
 \examples{
 
@@ -49,7 +53,7 @@ df <- list_related_resources(db.con = my_con,
                              d = d,
                              id = "EAMENA-0164943")
 df
-##            hp.id                              hp.uuid             cc.id                              cc.uuid
+##            hp.id                              hp.uuid             rr.id                              rr.uuid
 ## 1 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000141 90400bb6-ff54-4afd-8183-65c67fa97448
 ## 2 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000143 0dab164a-6d3a-443c-954a-50d93efbff35
 

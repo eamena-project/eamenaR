@@ -1,6 +1,6 @@
 #' Create boxplot or various boxplots of path lengths between different heritage places
 #'
-#' @name geojson_boxplot
+#' @name geojson_boxplot Create boxplot or various boxplots of path lengths between different heritage places
 #'
 #' @description
 #'
@@ -18,7 +18,7 @@
 #' @param color.set the RBrewer color set. Default "Set1".
 #' @param verbose if TRUE (Default), print messages.
 #'
-#' @return
+#' @return A boxplot
 #'
 #' @examples
 #'

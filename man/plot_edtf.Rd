@@ -5,8 +5,7 @@
 \title{Create an aoristic analysis of cultural heritage threats from a dataset.}
 \usage{
 plot_edtf(
-  data_file = paste0(system.file(package = "eamenaR"),
-    "/extdata/disturbances_edtf.xlsx"),
+  data_file = paste0(system.file(package = "eamenaR"), "/extdata/disturbances_edtf.xlsx"),
   date_column = "EDTF",
   site_column = "S_ID",
   analyse_column = "Disturbance.Type",

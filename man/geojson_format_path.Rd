@@ -7,8 +7,7 @@
 geojson_format_path(
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  csv.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail_paths.csv"),
+  csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
   by = NA,
   concept.name = "hp.id",
   verbose = TRUE
@@ -30,7 +29,4 @@ Dataframe with appropriate columns: "from.id", "from", "to.id", "to", "from.geom
 }
 \description{
 Use dataframe of heritage places (ie, places, vertices), and file of paths (as edges) between these heritage places, to format new dataframe. Heritage places (HP) are stored in GeoJSON file. Paths between HP are stored in CSV file. Function cleans the datasets, removing existing paths linking two heritage places that don't not exist in the GeoJSON. New dataframe is used by functions `geojson_map_path()`, `geojson_boxplot_path()` to model dataset with network analysis.
-}
-\examples{
-
 }

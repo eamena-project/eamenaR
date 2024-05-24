@@ -118,8 +118,7 @@ The [`geojson_stat()`](https://eamena-project.github.io/eamenaR/doc/geojson_stat
 ```R
 geojson_stat(stat.name = "overall_cond",
              stat = "stats",
-             field.names = c("Overall Condition State Type"),
-             write.stat = T)
+             field.names = c("Overall Condition State Type"))
 ```
 <p align="center">
   <img alt="img-name" src="./results/overall_condition_pie.png" width="400">

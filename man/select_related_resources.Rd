@@ -2,7 +2,7 @@
 % Please edit documentation in R/select_related_resources.R
 \name{select_related_resources}
 \alias{select_related_resources}
-\title{For a given Heritage Place, find all Connected Components, select the components have a given value in a certain field}
+\title{For a given Heritage Place, find all related resources, select the components have a given value in a certain field}
 \usage{
 select_related_resources(
   db.con = NA,
@@ -18,7 +18,7 @@ select_related_resources(
 
 \item{df}{a dataframe resultion from the `list_related_resources()` function, having the UUID of Connected Component}
 
-\item{having}{a vector of values to only keep CC having these values. By default c("Stable"). These values must appear in the `ids.csv` file with their `valueid` (see `python manage.py whatisthis`).}
+\item{having}{a vector of values to only keep rr having these values. By default c("Stable"). These values must appear in the `ids.csv` file with their `valueid` (see `python manage.py whatisthis`).}
 
 \item{measure}{the name of the field where the value of `having` is recorded. By default "Measurement Number".}
 
@@ -27,10 +27,10 @@ select_related_resources(
 \item{verbose}{if TRUE (by default), print messages.}
 }
 \value{
-A dataframe recordind the IDs and UUIDs of the Heritage Place and Connected Components with, for the latter, the selected fields
+A dataframe recordind the IDs and UUIDs of the Heritage Place and related resources with, for the latter, the selected fields
 }
 \description{
-For a given Heritage Place, find all Connected Components (ex: a Built Component) having a a given value (ex: "Stable") in a certain field (ex: "Measurement Number"). This function is run after `list_related_resources()`.
+For a given Heritage Place, find all related resources (ex: a Built Component) having a a given value (ex: "Stable") in a certain field (ex: "Measurement Number"). This function is run after `list_related_resources()`.
 }
 \examples{
 
@@ -51,7 +51,7 @@ df <- list_related_resources(db.con = my_con,
 df.measures <- select_related_resources(db.con = my_con,
                                         df = df)
 df.measures
-##            hp.id                              hp.uuid             cc.id                              cc.uuid cc.type
+##            hp.id                              hp.uuid             rr.id                              rr.uuid rr.type
 ## 1 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000141 90400bb6-ff54-4afd-8183-65c67fa97448  Stable
 ## Measurement.Number
 ## 1                 30
@@ -61,7 +61,7 @@ df.measures <- select_related_resources(db.con = my_con,
                                         having = c("Room"),
                                         df = df)
 df.measures
-##             hp.id                              hp.uuid             cc.id                              cc.uuid cc.type cc.measure
+##             hp.id                              hp.uuid             rr.id                              rr.uuid rr.type rr.measure
 ## 1 EAMENA-0164943 d4feb830-10c7-4d80-a19e-e608f424be4c COMPONENT-0000144 28af281c-e4b9-44ac-aa98-2608581b7540    Room         28
 
 }

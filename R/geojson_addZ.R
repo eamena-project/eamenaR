@@ -13,7 +13,7 @@
 #' @param dirOut the folder where outputs will be saved. By default: '/results'. If folder doesn't exist, it will be created.
 #' @param verbose if TRUE (by default): verbose.
 #'
-#' @return
+#' @return Creates a Z column with Z values
 #'
 #' @examples
 #'

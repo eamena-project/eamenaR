@@ -23,7 +23,7 @@ geom_bbox(
 
 \item{dirOut}{folder where GeoJSON will be saved. Default: '/results'. If it doesn't exist, will be created.}
 
-\item{geojson.name}{name of the GeoJSON that will be created, Default 'mbr' (minimum bound rectangle)}
+\item{geojson.name}{name of the GeoJSON that will be created, Default 'mbr' (MBR, minimum bound rectangle).}
 
 \item{verbose}{if TRUE (default) then display different messages.}
 }
@@ -31,17 +31,13 @@ geom_bbox(
 bounding box of the dataset as a GeoJSON file
 }
 \description{
-Geometries bounding box (bbox). Read one or various XLSX worksheets within folder. Collect the xmin, xmax, ymin, xmax of each XLSX coordinates and creates minimum bounding box (MBR), that is, extent of geometries. This bounding box is exported as a GeoJSON file and can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
+Geometries bounding box (bbox). Read one or various XLSX worksheets within folder. Collect the `xmin`, `xmax`, `ymin`, `xmax` of each XLSX coordinates and creates minimum bounding box (MBR), that is, extent of geometries. This bounding box is exported as a GeoJSON file, printed in the console, and can be copy/paste in the Map filter of EAMENA database to recover selected grid cells(\link[eamenaR]{list_mapping_bu.R}). Can also be used to get precise Stamen basemap extent (ggmap), etc.
 }
 \examples{
 
-geom_bbox(dataDir = "C:/Rprojects/eamena-arches-dev/data/bulk/bu/mk2/",
-          x_column = "Longitude.",
-          y_column = "Latitude",
-          geojson.name = "grids_bbox_mk2.geojson")
+# Read and map the "AAA_f18_text_temp.xlsx" file
+geom_bbox(dataDir = paste0(system.file(package = "eamenaR"), "/extdata/bu/mk/"),
+          wkt_column = "Point")
 
-geom_bbox(dataDir = "C:/Users/Thomas Huet/Desktop/temp_xlsx/",
-         dirOut = NA,
-         wkt_column = "Geometric Place Expression")
 
 }

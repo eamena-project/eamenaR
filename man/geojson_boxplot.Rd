@@ -9,8 +9,7 @@ geojson_boxplot(
   concept.name = "hp.id",
   geojson.path = paste0(system.file(package = "eamenaR"),
     "/extdata/caravanserail.geojson"),
-  csv.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail_paths.csv"),
+  csv.path = paste0(system.file(package = "eamenaR"), "/extdata/caravanserail_paths.csv"),
   stat = c("area"),
   chart.type = c("boxplot"),
   by = NA,
@@ -50,11 +49,8 @@ geojson_boxplot(
 
 \item{name}{of field on which paths will be grouped. Example "route". Will create as many plots as there are different categories. By default NA.}
 }
-\value{
-
-}
 \description{
-
+Create boxplot or various boxplots of path lengths between different heritage places
 }
 \examples{
 

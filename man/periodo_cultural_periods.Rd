@@ -26,7 +26,3 @@ A DT data.frame of the Periodo cultural periods.
 \description{
 read a release of the periodo cultural periods thesaurus and creates an interactive dataframe.
 }
-\examples{
-
-
-}

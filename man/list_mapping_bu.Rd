@@ -6,10 +6,10 @@
 \usage{
 list_mapping_bu(
   bu.path = paste0(system.file(package = "eamenaR"), "/extdata/bu/"),
- 
-    bu.template.path = "C:/Rprojects/eamena-arches-dev/data/bulk/templates/Heritage Place BUS Template.xlsx",
-  mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/mapping_bu.xlsx"),
-  mapping.file.ggsheet = FALSE,
+  bu.template.path = paste0(system.file(package = "eamenaR"),
+    "/extdata/bu_template.xlsx"),
+  bu.mapping.file = paste0(system.file(package = "eamenaR"), "/extdata/bu_mapping.xlsx"),
+  bu.mapping.file.ggsheet = FALSE,
   job = "mk",
   job.type = "mk_type",
   eamena.field = "target",
@@ -22,11 +22,11 @@ list_mapping_bu(
 
 \item{bu.template.path}{the path to the BU template. The output will be written into this structure}
 
-\item{mapping.file}{the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).}
+\item{bu.mapping.file}{the path to the XLSX or Google Sheet file providing the equivalences (mapping) between the source file (unformatted) and the target file (formatted as a BU).}
 
-\item{mapping.file.ggsheet}{is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.}
+\item{bu.mapping.file.ggsheet}{is the mapping file a Google Sheet (for example: 'https://docs.google.com/spreadsheets/d/1nXgz98mGOySgc0Q2zIeT1RvHGNl4WRq1Fp9m5qB8g8k/edit#gid=1083097625'), by default: FALSE.}
 
-\item{job}{the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'.}
+\item{job}{the job folder is a subfolder of `bu/`. It contains the unformatted XLSX datasets. `job` is also the name of the source fields in the mapping file. By default 'mk'. To clean the mapping file, the function will keep the `target` column, and all columns having a name starting with `mk` and followed by and underscore `mk_` and will remove all the other ones (`mk2`, `mk3`, etc.)}
 
 \item{job.type}{the name of the field in the `mapping.file` XLSX giving the name of the mapping function to do:
 - 'field': one-to-one correspondences, the source values will be copied as it into the target file;
