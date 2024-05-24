@@ -19,6 +19,7 @@
 #' @param export.plot if TRUE, export plot, if FALSE will only display it.
 #' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.
 #' @param fig.width,fig.height size of output map.
+#' @param verbose if TRUE (default) then display different messages.
 #'
 #' @return An interactive map (leaflet) or not
 #'
@@ -87,12 +88,13 @@ geojson_map <- function(map.name = "map",
                         dirOut = paste0(system.file(package = "eamenaR"),
                                         "/results/"),
                         fig.width = 8,
-                        fig.height = 8){
+                        fig.height = 8,
+                        verbose = TRUE){
   # field.names <- "Overall Condition State Type"
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   `%>%` <- dplyr::`%>%` # used to not load dplyr
   symbology.df <- openxlsx::read.xlsx(symbology)
-  geojson.read <- eamenaR::geojson_read(geojson.path)
+  geojson.read <- eamenaR::geojson_read(geojson.path, verbose)
   ea.geojson <- geojson.read[[1]]
   capt <- geojson.read[[2]]
   # #################################################

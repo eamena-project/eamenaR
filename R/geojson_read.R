@@ -13,7 +13,8 @@
 #'
 #' @export
 geojson_read <- function(geojson.path = paste0(system.file(package = "eamenaR"),
-                                              "/extdata/caravanserail.geojson")){
+                                              "/extdata/caravanserail.geojson"),
+                         verbose = TRUE){
   # field.names <- "Overall Condition State Type"
   # TODO: generalise from point to other geometries: centroid Polygon, Lines
   `%>%` <- dplyr::`%>%` # used to not load dplyr

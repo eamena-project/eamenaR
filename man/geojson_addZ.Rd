@@ -33,6 +33,9 @@ geojson_addZ(
 
 \item{verbose}{if TRUE (by default): verbose.}
 }
+\value{
+Creates a Z column with Z values
+}
 \description{
 Use geoserver API to recover the Z for given set of points stored in GeoJSON file. Geoserver API can lead to Timeout.
 }

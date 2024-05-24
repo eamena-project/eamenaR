@@ -6,7 +6,8 @@
 \usage{
 geojson_read(
   geojson.path = paste0(system.file(package = "eamenaR"),
-    "/extdata/caravanserail.geojson")
+    "/extdata/caravanserail.geojson"),
+  verbose = TRUE
 )
 }
 \arguments{

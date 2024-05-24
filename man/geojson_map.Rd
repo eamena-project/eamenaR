@@ -26,7 +26,8 @@ geojson_map(
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
-  fig.height = 8
+  fig.height = 8,
+  verbose = TRUE
 )
 
 geojson_map(
@@ -50,7 +51,8 @@ geojson_map(
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
-  fig.height = 8
+  fig.height = 8,
+  verbose = TRUE
 )
 
 geojson_map(
@@ -74,7 +76,8 @@ geojson_map(
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
-  fig.height = 8
+  fig.height = 8,
+  verbose = TRUE
 )
 
 geojson_map(
@@ -98,7 +101,8 @@ geojson_map(
   export.plot = F,
   dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   fig.width = 8,
-  fig.height = 8
+  fig.height = 8,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -129,6 +133,8 @@ geojson_map(
 \item{dirOut}{folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.}
 
 \item{fig.width, fig.height}{size of output map.}
+
+\item{verbose}{if TRUE (default) then display different messages.}
 
 \item{stamen.zoom}{zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). Default NA, zoom level will be calculated automatically.}
 
