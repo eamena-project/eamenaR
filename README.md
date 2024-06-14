@@ -666,6 +666,44 @@ The interactive plotly output is [edtf_plotly_category_ym_threats_types.html](ht
 
 # General statistics
 
+## Heritage Places
+
+Counting and mapping the distribution of Heritage Places created each year using the [ref_hps()]() and [plot_hps()]() functions
+
+```R
+# calcualte statistics
+stat.name <- "hps_all"
+d <- ref_hps(db.con = db.con,
+             date.after = '2012-12-31',
+             date.before = '2032-12-31',
+             d = d,
+             stat.name = stat.name)
+# create a list of ggplot
+lg <- plot_hps(df = d[[stat.name]])
+# arrange and save theses plots
+margin <- ggplot2::theme(plot.margin = ggplot2::unit(c(.2, -.1, .2, -.1), "cm"))
+arranged_plots <- gridExtra::arrangeGrob(grobs = lapply(lg, "+", margin),
+                                         ncol = 2)
+final_plot <- gridExtra::grid.arrange(
+  arranged_plots,
+  top = grid::textGrob("Heritage places in the EAMENA database by years",
+                       gp = grid::gpar(fontsize = 20, fontface = "bold")),
+  bottom = grid::textGrob(paste0("n = ", nrow(sf_df)),
+                          gp = grid::gpar(fontsize = 16))
+)
+ggplot2::ggsave(
+  file = "C:/Rprojects/eamenaR/results/hps_by_years.png",
+  plot = final_plot,
+  height = 19, width = 14
+)
+```
+
+Gives:
+
+<p align="center">
+  <img alt="img-name" src="./results/hps_by_years.png" width="700">
+</p>
+
 ## Grids
 
 The function [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) allows to sum the number of HP by grids. 
