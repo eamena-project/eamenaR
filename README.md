@@ -2,7 +2,7 @@
 # ***eamenaR*** <img src="https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/www/eamenaR_logo.png" width='100px' align="right"/>
 > R package for front-end statistical analysis of the EAMENA database
 
-The ***eamenaR*** package is under developments. It allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([number of HP by grids](https://github.com/eamena-project/eamenaR#grids), [users](https://github.com/eamena-project/eamenaR#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
+The ***eamenaR*** package is under developments. It allows to analyse the [typological](https://github.com/eamena-project/eamenaR#typology), [spatial](https://github.com/eamena-project/eamenaR#time) and [temporal](https://github.com/eamena-project/eamenaR#time) data, to [manage data](https://github.com/eamena-project/eamenaR#data-management), and to calculate basic statistics ([number of HP by grids](https://github.com/eamena-project/eamenaR#grids), [users](https://github.com/eamena-project/eamenaR?tab=readme-ov-file#users), etc.) from the Arches-powered [EAMENA database](https://database.eamena.org/)[^8]. ***eamenaR*** is also open to new collaboration[^9]. 
   
 ```mermaid
 flowchart LR

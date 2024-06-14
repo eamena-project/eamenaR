@@ -10,15 +10,13 @@
 #' @param stat the type of statistic that will be computed. This is also the hash dictionary (`d`) field name that will be filled with this statistics, e.g. "users", "date_joined", etc., or "all". Default: "all".
 #' @param chart.type the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. Default "all".
 #' @param stat.name the name of the output file. If NA (default) will use the `stat` variable.
-#' @param plot.g if TRUE will create a plot. Default: FALSE.
-#' @param export.plot.g if TRUE will export the plot. Default: FALSE.
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.
+#' @param create.ggplot if TRUE will create a plot. Default: FALSE.
 #' @param date.after the date after which the calculation is made. Useful to limit the analysis. Default: NA.
 #' @param date.before the date before which the calculation is made. Useful to limit the analysis. Default, the current date (`Sys.Date()`)
-#' @param fig.width,fig.height dimension of the exported plot in cm.
+#' @param fig.width,fig.height dimension of the ggplot in cm.
 #' @param verbose if TRUE (by default), print messages
 #'
-#' @return a hash() object. If plot.g and export.plot.g are set to TRUE will also create and save plots
+#' @return a hash() object. If create.ggplot and export.create.ggplot are set to TRUE will also create and save plots
 #'
 #' @examples
 #'
@@ -32,8 +30,6 @@
 #' d <- ref_db(db.con = my_con,
 #'                d = d,
 #'                date.after = "2020-08-01",
-#'                plot.g = T,
-#'                export.plot.g = T,
 #'                fig.width = 14)
 #'
 #' @export
@@ -44,10 +40,7 @@ ref_db <- function(db.con = NA,
                    stat = c("all"),
                    chart.type = c("all"),
                    stat.name = NA,
-                   plot.g = F,
-                   export.plot.g = F,
-                   dirOut = paste0(system.file(package = "eamenaR"),
-                                   "/results/"),
+                   create.ggplot = F,
                    date.after = NA,
                    date.before = Sys.Date(),
                    fig.width = 8,
@@ -128,7 +121,7 @@ ref_db <- function(db.con = NA,
             "
     d[["users_date_joined"]] <- DBI::dbGetQuery(db.con, sqll)
     users.tot <- nrow(d[["users_date_joined"]])
-    if(plot.g){
+    if(create.ggplot){
       gtit <- paste0("Evolution of the number of users of the ", db.name, " database")
       date_joined <- format(d[["users_date_joined"]], "%Y-%m-%d")
       dates.ymd <- lubridate::ymd(date_joined$date_joined)
@@ -176,20 +169,10 @@ ref_db <- function(db.con = NA,
           ggplot2::theme(legend.position = "bottom",
                          axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
       }
-      if(export.plot.g){
-        dir.create(dirOut, showWarnings = FALSE)
-        gout <- paste0(dirOut, stat.name, ".png")
-        ggplot2::ggsave(gout,
-                        dates.date.joined,
-                        width = fig.width,
-                        height = fig.height)
-        if(verbose){print(paste0("    - plot exported to: '", gout))}
-      } else {
-        print(dates.date.joined)
-      }
     }
     # }
     if(verbose){print("*end users' statistics")}
+    d[["users_date_joined_ggplot"]] <- dates.date.joined
   }
   return(d)
 }
@@ -207,10 +190,10 @@ ref_db <- function(db.con = NA,
 #             d = d,
 #             stat = "users",
 #             date.after = "2022-12-31",
-#             plot.g = T,
-#             export.plot.g = T,
+#             create.ggplot = T,
+#             export.create.ggplot = T,
 #             dirOut = "C:/Rprojects/eamenaR/results/",
 #             stat.name = "user_date_joined_during2023",
-#             # plot.g = T,
+#             # create.ggplot = T,
 #             fig.width = 14)
 
