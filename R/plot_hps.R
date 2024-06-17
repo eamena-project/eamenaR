@@ -41,7 +41,7 @@ plot_hps <- function(df = NA,
                                                top = as.numeric(sf::st_bbox(GSnew)$ymax)),
                                       maptype = "stamen_terrain_background",
                                       crop = FALSE,
-                                      zoom = 5)
+                                      zoom = 7)
   }
   if(is.na(stadia_map_token)){
     # TODO

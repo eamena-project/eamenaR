@@ -12,8 +12,8 @@
 #' @param stat.field a `db.concept.name` listed in the 'ids.csv' file to use for the stats, for example 'Disturbance Cause Category Type', 'Overall Condition State Type', etc.
 #' @param stat.format the extension of the geographic file (".geojson", ".shp"). GeoJSON by default.
 #' @param plot.map if TRUE will plot a map (FALSE by default).
-#' @param export.data if TRUE will export the map (FALSE by default).
-#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.data is TRUE.
+#' @param export.plot if TRUE will export the plot (FALSE by default).
+#' @param dirOut the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot is TRUE.
 #' @param date.after the date after which the calculation is made. Useful to limit the analysis. By default, NA.
 #' @param date.before the date before which the calculation is made. Useful to limit the analysis. By default, the current date (`Sys.Date()`)
 #' @param on.date whether to limit on "createdate" (a Postgres inner field) or on the field "Assessment Activity Date" (default)
@@ -21,7 +21,7 @@
 #' @param team.name only the HPs from this team. Useful to limit the analysis. By default, NA (all the teams). For examples, the possible values to limit the analysis for the EAMENA DB are: "EAMENA Project Staff", "MarEA Project Staff", "Government Authority/Staff", "Volunteer/Independent Researcher", "Student/Trainee", "Academic Researcher", "Private Sector", "Non-Governmental Organisation (NGO)", etc.
 #' @param verbose if TRUE (by default), print messages.
 #'
-#' @return a hash() object. If plot.map and export.data are set to TRUE will also create and save maps (SHP or GeoJSON).
+#' @return a hash() object. If plot.map and export.plot are set to TRUE will also create and save maps (SHP or GeoJSON).
 #'
 #' @examples
 #'
@@ -43,7 +43,7 @@
 #'             stat.name = "eamena_hps_2022",
 #'             stat.format = ".shp",
 #'             dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-#'             export.data = TRUE)
+#'             export.plot = TRUE)
 #'
 #' # Heritage places created during the year 2023 as a GeoJSON file
 #' d <- ref_hps(db.con = db.con,
@@ -54,17 +54,15 @@
 #'              stat.format = ".geojson",
 #'              team.name = "EAMENA Project Staff",
 #'              dirOut = 'C:/Rprojects/eamena-arches-dev/data/geojson/',
-#'              export.data = TRUE)
+#'              export.plot = TRUE)
 #'
-#' # Number of HP by grids, export as CSV
+#' # Number of HP by grids
 #' d <- hash::hash()
 #' d <- ref_hps(db.con = db.con,
 #'              d = d,
+#'              stat = "grid",
 #'              stat.name = "eamena_hps_by_grids",
-#'              date.before = NA,
-#'              export.data = TRUE,
-#'              stat.format = ".csv",
-#'              dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
+#'              date.before = NA)
 #'
 #' # histogram on Disturbance Cause Category Type
 #' d <- ref_hps(db.con = db.con,
@@ -73,10 +71,7 @@
 #'              stat.name = "Disturbance Cause Category Type",
 #'              stat.field = "Disturbance Cause Category Type",
 #'              max.num = 20,
-#'              export.data = TRUE,
-#'              dirOut = "C:/Rprojects/eamenaR/results/",
-#'              fig.width = 14,
-#'              fig.height = 8)
+#'              export.plot = TRUE)
 #'
 #' # pie chart on Overall Condition State Type, counts
 #' d <- ref_hps(db.con = db.con,
@@ -84,10 +79,7 @@
 #'              stat = "pie",
 #'              stat.name = "Overall Condition State Type",
 #'              stat.field = "Overall Condition State Type",
-#'              export.data = TRUE,
-#'              dirOut = "C:/Rprojects/eamenaR/results/",
-#'              fig.width = 12,
-#'              fig.height = 6)
+#'              export.plot = TRUE)
 #'
 #' # pie chart on Overall Condition State Type, percents
 #' d <- ref_hps(db.con = db.con,
@@ -97,7 +89,7 @@
 #'              stat.field = "Overall Condition State Type",
 #'              perc = TRUE,
 #'              rounded = 1,
-#'              export.data = TRUE,
+#'              export.plot = TRUE,
 #'              dirOut = "C:/Rprojects/eamenaR/results/",
 #'              fig.width = 12,
 #'              fig.height = 6)
@@ -115,7 +107,7 @@ ref_hps <- function(db.con = NA,
                     stat.field = "Overall Condition State Type",
                     stat.format = ".geojson",
                     plot.map = FALSE,
-                    export.data = FALSE,
+                    export.plot = FALSE,
                     fig.width = 6,
                     fig.height = 6,
                     fig.dev = "png",
@@ -128,6 +120,8 @@ ref_hps <- function(db.con = NA,
                     team.name = NA,
                     verbose = TRUE){
   `%>%` <- dplyr::`%>%` # used to not load dplyr
+  if("grid_nb" %in% stat){stat <- c(stat, "grid")}
+  if("grid_nb" %in% stat){stat <- c(stat, "grid")}
   blank_theme <- ggplot2::theme_minimal()+
     ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
@@ -267,7 +261,7 @@ ref_hps <- function(db.con = NA,
                                 crs = 4326,
                                 agr = "constant",
                                 na.fail = FALSE)
-    if(export.data){
+    if(export.plot){
       if(verbose){print("* write file")}
       outFile <- paste0(dirOut, stat.name, stat.format)
       sf::st_write(hps.geojson, outFile, append = FALSE)
@@ -307,11 +301,32 @@ ref_hps <- function(db.con = NA,
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     # df <- d[[stat.name]]
     # df <- df[!duplicated(df[["ri"]]),] # rm duplicated ri (resource id)
-    if(export.data){
-      if(verbose){print("* write file")}
-      outFile <- paste0(dirOut, stat.name, ".csv")
-      write.csv(d[[stat.name]], outFile, row.names = F)
-    }
+    # if(export.plot){
+    #   if(verbose){print("* write file")}
+    #   outFile <- paste0(dirOut, stat.name, ".csv")
+    #   write.csv(d[[stat.name]], outFile, row.names = F)
+    # }
+    if(verbose){print("Grids with geometries")}
+    sqll <- stringr::str_interp(
+      "
+      SELECT ids.gs, ids.ri, ST_AsBinary(ST_Transform(ST_SetSRID(coords.geom, 3857), 4326)) AS geom
+      FROM (
+         SELECT name ->> 'en' as gs, resourceinstanceid::TEXT AS ri
+         FROM resource_instances
+         WHERE graphid = '77d18973-7428-11ea-b4d0-02e7594ce0a0'
+      ) AS ids
+      JOIN (
+         SELECT resourceinstanceid::TEXT AS ri, geom
+         FROM geojson_geometries
+         WHERE geom IS NOT NULL
+      ) AS coords ON ids.ri = coords.ri
+      LIMIT 10
+      "
+    )
+    # Fetch the results as an sf object
+    res_sf <- st_read(con, sqll)
+    d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
+    return(d)
   }
   if("hist" %in% stat){
     # return, for example: # 34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
@@ -329,7 +344,7 @@ ref_hps <- function(db.con = NA,
     "
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    if(export.data){
+    if(export.plot){
       df <- d[[stat.name]]
       warp.at <- 25
       df$categ_type <- stringr::str_wrap(df$categ_type, width = warp.at)
@@ -378,20 +393,22 @@ ref_hps <- function(db.con = NA,
                          plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
           )
       }
-      if (export.data) {
-        dir.create(dirOut, showWarnings = FALSE)
-        if(perc){
-          gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
-        }
-        if(!perc){
-          gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
-        }
-        ggplot2::ggsave(gout, gg,
-                        width = fig.width,
-                        height = fig.height)
-        if(verbose){print(paste(gout, "has been exported"))}
-      }
+      # if (export.plot) {
+      #   dir.create(dirOut, showWarnings = FALSE)
+      #   if(perc){
+      #     gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
+      #   }
+      #   if(!perc){
+      #     gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
+      #   }
+      #   ggplot2::ggsave(gout, gg,
+      #                   width = fig.width,
+      #                   height = fig.height)
+      #   if(verbose){print(paste(gout, "has been exported"))}
+      # }
     }
+    plot.name <- paste0(stat.name, ' plot')
+    d[[plot.name]] <- gg
     return(d)
   }
   if("pie" %in% stat){
@@ -409,7 +426,7 @@ ref_hps <- function(db.con = NA,
       "
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    if(export.data){
+    if(export.plot){
       df <- d[[stat.name]]
       overall.levels <- c("Good", "Fair", "Poor", "Very Bad", "Destroyed", "Unknown")
       df <- subset(df, categ_type %in% overall.levels) # filter
@@ -461,17 +478,19 @@ ref_hps <- function(db.con = NA,
                          plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
           blank_theme
       }
-      dir.create(dirOut, showWarnings = FALSE)
-      if(perc){
-        gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
-      }
-      if(!perc){
-        gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
-      }
-      ggplot2::ggsave(gout, gg,
-                      width = fig.width,
-                      height = fig.height)
-      if(verbose){print(paste(gout, "has been exported"))}
+      plot.name <- paste0(stat.name, ' plot')
+      d[[plot.name]] <- gg
+      # dir.create(dirOut, showWarnings = FALSE)
+      # if(perc){
+      #   gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
+      # }
+      # if(!perc){
+      #   gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
+      # }
+      # ggplot2::ggsave(gout, gg,
+      #                 width = fig.width,
+      #                 height = fig.height)
+      # if(verbose){print(paste(gout, "has been exported"))}
     }
     return(d)
   }
@@ -492,7 +511,7 @@ ref_hps <- function(db.con = NA,
 #              stat = "hist",
 #              stat.name = "Disturbance Cause Category Type",
 #              max.num = 20,
-#              export.data = TRUE,
+#              export.plot = TRUE,
 #              dirOut = "C:/Rprojects/eamenaR/results/",
 #              fig.width = 14,
 #              fig.height = 8)
@@ -504,7 +523,7 @@ ref_hps <- function(db.con = NA,
 #              stat.field = "Threat Category",
 #              perc = T,
 #              max.num = 20,
-#              export.data = TRUE,
+#              export.plot = TRUE,
 #              dirOut = "C:/Rprojects/eamenaR/results/",
 #              fig.width = 14,
 #              fig.height = 8)
