@@ -23,25 +23,51 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
                                 concept.name = "hp.id",
                                 verbose = TRUE){
   r.id <- eamenaR::ref_ids(concept.name)
-  df <- eamenaR::geojson_stat(stat = c("list_ids"),
-                              geojson.path = geojson.path,
-                              concept.name = concept.name,
-                              export.stat = T)
+  df <- geojson_stat(stat = c("list_ids"),
+                     geojson.path = geojson.path,
+                     concept.name = concept.name)
   df$id <- rownames(df)
   paths <- read.table(csv.path, sep = ",", header = T)
   hp.in.paths <- unique(unique(paths$from),
                         unique(paths$to))
-  in.paths.only <- setdiff(hp.in.paths, df$hp.id)
+  if(verbose){
+    print(paste0("There are ", nrow(df), " HPs"))
+    print(paste0("There are ", length(hp.in.paths), " HPs in the paths"))
+    print("------------")
+    not.in.paths <- setdiff(df$hp.id, hp.in.paths)
+    print(paste0("There are ", as.character(length(not.in.paths)), " HPs not existing in the paths:"))
+    print(not.in.paths)
+    print("------------")
+    not.in.hps <- setdiff(hp.in.paths, df$hp.id)
+    print(paste0("There are ", as.character(length(not.in.hps)), " listed HPs in the paths, but not existing in the HPs dataset"))
+    print(not.in.hps)
+  }
   # clean df with existing HP having Zs and existing in path
-  paths <- paths[!(paths$from %in% in.paths.only | paths$to %in% in.paths.only), ]
-  hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+  paths <- paths[!(paths$from %in% not.in.hps | paths$to %in% not.in.hps), ]
+  # hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+  if(inherits(geojson.path, "sf")){
+    if(verbose){
+      print(paste0("Reads a 'sf' dataframe"))
+    }
+    hp.geom.sf <- geojson.path
+  }
+  if(is.character(geojson.path)){
+    if(verbose){
+      print(paste0("Reads a path"))
+    }
+    # hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+    hp.geom.sf <- sf::st_read(geojson.path)
+    sf::st_crs(hp.geom.sf) <- 4326
+  }
   paths$path.wkt <- paths$dist.m <- paths$from.id <- paths$to.id <- paths$from.geom <- paths$to.geom <- NA
   if(verbose){print(paste0("Read the path file and collect geometries from the heritage places dataframe"))}
   for(i in seq(1, nrow(paths))){
     # i <- 1
-    if(verbose){print(paste0(" * read line ", i, "/", nrow(paths)))}
     path.from <- paths[i, "from"]
     path.to <- paths[i, "to"]
+    if(verbose){
+      print(paste0(" * read line ", i, "/", nrow(paths), ": ", path.from, ",", path.to))
+    }
     # from <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.from, ]
     # to <- hp.geom.sf[hp.geom.sf[["EAMENA ID"]] == path.to, ]
     from <- hp.geom.sf[hp.geom.sf[[r.id]] == path.from, ]
@@ -56,7 +82,7 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
       hp.nb.geom <- length(fromto.hp[[r.id]])
       # exist a POINT geometry
       if(any(sf::st_geometry_type(fromto.hp) == point.geometry)){
-        if(verbose){print(paste0("  - ", hp.name, " (", a.hp,") has a POINT or MULTIPOINT geometry"))}
+        if(verbose){print(paste0("    - ", hp.name, " (", a.hp,") has a POINT or MULTIPOINT geometry"))}
         geom.is.point <- match(TRUE, sf::st_geometry_type(fromto.hp) == point.geometry)
         # only the first one
         geom.is.point <- geom.is.point[1]
@@ -105,11 +131,14 @@ geojson_format_path <- function(geojson.path = paste0(system.file(package = "eam
   if(verbose){print(paste0(".. done"))}
   print(colnames(paths))
   if(!is.na(by)){
+    print(by)
     if(verbose){print(paste0("will stratify on the 'by' column values"))}
     # a reminder: by is the column to stratify data. If the users doesn't have a column by, the latter is instancied to by = 1 for facets. So if the column by as the same valeu as the by variable, value by ...
-    paths <- paths[ , c("from.id", "from", "to.id", "to",
-                        "from.geom", "to.geom", "path.wkt", "dist.m",
-                        by)]
+    print(colnames(paths))
+    selected.columns <- c("from.id", "from", "to.id", "to",
+                          "from.geom", "to.geom", "path.wkt", "dist.m",
+                          by)
+    paths <- paths[ , selected.columns]
     if(verbose){
       print(paste0("the count of heritage places by '", by, "' is:"))
       print(table(paths[[by]]))

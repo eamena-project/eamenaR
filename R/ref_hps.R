@@ -1,6 +1,6 @@
-#' Statistics about EAMENA Heritage places (spatial distribution, nb of HP by grids, etc.)
+#' Statistics about EAMENA business data: Heritage places (spatial distribution, nb of HP by grids, etc.), Grids, etc.
 #'
-#' @name ref_hps
+#' @name ref_data
 #'
 #' @description statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids, type of disturbances, overall condition state type of heritage places. This function is the backend counterpart of `geojson_stat()` for GeoJSON files.
 #'
@@ -120,8 +120,7 @@ ref_hps <- function(db.con = NA,
                     team.name = NA,
                     verbose = TRUE){
   `%>%` <- dplyr::`%>%` # used to not load dplyr
-  if("grid_nb" %in% stat){stat <- c(stat, "grid")}
-  if("grid_nb" %in% stat){stat <- c(stat, "grid")}
+  if("grid" %in% stat){stat <- c(stat, "grid_nb", "grid_geom")}
   blank_theme <- ggplot2::theme_minimal()+
     ggplot2::theme(
       axis.title.x = ggplot2::element_blank(),
@@ -271,7 +270,7 @@ ref_hps <- function(db.con = NA,
   }
 
   # Grids
-  if("grid" %in% stat){
+  if("grid_nb" %in% stat){
     if(verbose){print("Number of HP by grids")}
     gridid <- eamenaR::ref_ids("Grid.ID",
                                choice = "db.concept.uuid")
@@ -279,7 +278,7 @@ ref_hps <- function(db.con = NA,
                                choice = "db.concept.uuid")
     sqll <- stringr::str_interp(
       "
-    SELECT q1.nb_hp, q2.grid_num
+    SELECT q1.nb_hp, q2.gs
     FROM (
         SELECT COUNT(resourceinstanceid::text) AS nb_hp,
         tiledata -> '${hpgrid}' #>> '{0, resourceId}' AS grid_id
@@ -289,45 +288,51 @@ ref_hps <- function(db.con = NA,
     ) q1
     INNER JOIN(
         SELECT resourceinstanceid::text AS grid_id,
-            tiledata -> '${gridid}' -> 'en' ->> 'value' AS grid_num
+            tiledata -> '${gridid}' -> 'en' ->> 'value' AS gs
         FROM tiles
         WHERE tiledata -> '${gridid}' IS NOT NULL
     ) q2
     ON q1.grid_id = q2.grid_id;
     "
     )
+    d[['grid_nb']] <- DBI::dbGetQuery(db.con, sqll)
     if(verbose){print("SQL =")}
     if(verbose){cat(sqll)}
-    d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    # df <- d[[stat.name]]
-    # df <- df[!duplicated(df[["ri"]]),] # rm duplicated ri (resource id)
-    # if(export.plot){
-    #   if(verbose){print("* write file")}
-    #   outFile <- paste0(dirOut, stat.name, ".csv")
-    #   write.csv(d[[stat.name]], outFile, row.names = F)
-    # }
-    if(verbose){print("Grids with geometries")}
-    sqll <- stringr::str_interp(
-      "
-      SELECT ids.gs, ids.ri, ST_AsBinary(ST_Transform(ST_SetSRID(coords.geom, 3857), 4326)) AS geom
-      FROM (
-         SELECT name ->> 'en' as gs, resourceinstanceid::TEXT AS ri
-         FROM resource_instances
-         WHERE graphid = '77d18973-7428-11ea-b4d0-02e7594ce0a0'
-      ) AS ids
-      JOIN (
-         SELECT resourceinstanceid::TEXT AS ri, geom
-         FROM geojson_geometries
-         WHERE geom IS NOT NULL
-      ) AS coords ON ids.ri = coords.ri
-      LIMIT 10
-      "
-    )
-    # Fetch the results as an sf object
-    res_sf <- st_read(con, sqll)
-    d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    return(d)
   }
+  # df <- d[[stat.name]]
+  # df <- df[!duplicated(df[["ri"]]),] # rm duplicated ri (resource id)
+  # if(export.plot){
+  #   if(verbose){print("* write file")}
+  #   outFile <- paste0(dirOut, stat.name, ".csv")
+  #   write.csv(d[[stat.name]], outFile, row.names = F)
+  # }
+  # TODO: NB: this is pure Grid calculation, the name of the function `ref_hps()` doesn't suits anymore...
+  if("grid_geom" %in% stat){
+    if(verbose){print("Grids with geometries")}
+    sqll <- "
+    SELECT ids.gs, ids.ri, ST_AsText(ST_Transform(ST_SetSRID(coords.geom, 3857), 4326)) AS geom
+    FROM (
+        SELECT name ->> 'en' as gs, resourceinstanceid::TEXT AS ri
+        FROM resource_instances
+        WHERE graphid = '77d18973-7428-11ea-b4d0-02e7594ce0a0'
+    ) AS ids
+    JOIN (
+        SELECT resourceinstanceid::TEXT AS ri, geom
+        FROM geojson_geometries
+        WHERE geom IS NOT NULL
+    ) AS coords
+    ON ids.ri = coords.ri
+    "
+    data <- DBI::dbGetQuery(db.con, sqll)
+    data$geom <- st_as_sfc(data$geom, crs = 4326)
+    sf_data <- st_as_sf(data, sf_column_name = "geom")
+    d[['grid_geom']] <- sf_data # DBI::dbGetQuery(db.con, sqll)
+    if(verbose){print("SQL =")}
+    if(verbose){cat(sqll)}
+  }
+  return(d)
+
+  # histogramm
   if("hist" %in% stat){
     # return, for example: # 34cfe9f5-c2c0-11ea-9026-02e7594ce0a0
     field.uuid <- eamenaR::ref_ids(stat.field,

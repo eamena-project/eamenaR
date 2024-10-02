@@ -10,10 +10,9 @@
 #' @param elevation.api the geoserver API used to collect the elevation, by default 'gmrt_point' (https://www.gmrt.org). Another option is 'gmrt_profile', and 'open-elevation' (https://api.open-elevation.com/).
 #' @param timeout the threshold below which the expectation of a response is accepted, in seconds. By default, 30.
 #' @param sleep the time delay between two API request in seconds. By default 0.3.
-#' @param dirOut the folder where outputs will be saved. By default: '/results'. If folder doesn't exist, it will be created.
 #' @param verbose if TRUE (by default): verbose.
 #'
-#' @return Creates a Z column with Z values
+#' @return An sf object with a Z column with Z values
 #'
 #' @examples
 #'
@@ -31,12 +30,22 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
                          elevation.api = "gmrt_point",
                          timeout = 30,
                          sleep = .3,
-                         dirOut = paste0(system.file(package = "eamenaR"),
-                                         "/results/"),
                          verbose = TRUE){
   `%>%` <- dplyr::`%>%` # used to not load dplyr
-  if(verbose){print(paste0("* get Z from ", elevation.api, " elevation API"))}
-  ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  if(verbose){print(paste0("* get Z from '", elevation.api, "' elevation API"))}
+  if(inherits(geojson.path, "sf")){
+    if(verbose){
+      print(paste0("Reads a 'sf' dataframe"))
+    }
+    ea.geojson <- geojson.path
+  }
+  if(is.character(geojson.path)){
+    if(verbose){
+      print(paste0("Reads a GeoJSON file path"))
+    }
+    ea.geojson <- sf::st_read(geojson.path)
+    # ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  }
   # rm duplicates (ex: same HP with POINT and POLYGONS)
   ea.geojson <- ea.geojson %>%
     dplyr::distinct(!!as.name(ids), .keep_all = TRUE)
@@ -56,7 +65,7 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
     # hp.is <- my.geom$hp[i]
     # bc.is <- my.geom$bc[i]
     if(verbose){
-      if(i == 1 | i%%10 == 0){
+      if(i == 1 | i %% 10 == 0){
         print(paste0("     - read ", i, "/", n.row))
       }
     }
@@ -131,19 +140,22 @@ geojson_addZ <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   }
   if(verbose){
     print(paste0("  A total of '", length(Zs), "' Z have been calculated:"))
-    print(head(Zs))
+    # print(head(Zs))
   }
   # print(Zs)
   my.geom$Z <- Zs
-  if(is.na(geojson.out)){
-    fileOutName <- paste0(DescTools::SplitPath(geojson.path)$filename,
-                          "Z.geojson")
-  } else {
-    fileOutName <- geojson.out
-  }
-  dir.create(dirOut, showWarnings = FALSE)
-  fileOut <- paste0(dirOut, fileOutName)
-  sf::st_write(my.geom, fileOut, delete_dsn = TRUE)
-  if(verbose){print(paste0("* '", fileOutName, "'has been exported to '", dirOut, "'"))}
-  return(df.profile)
+  # if(is.na(geojson.out)){
+  #   fileOutName <- paste0(DescTools::SplitPath(geojson.path)$filename,
+  #                         "Z.geojson")
+  # } else {
+  #   fileOutName <- geojson.out
+  # }
+  d <- hash::hash()
+  d[["withZ"]] <- my.geom
+  return(d)
+  # dir.create(dirOut, showWarnings = FALSE)
+  # fileOut <- paste0(dirOut, fileOutName)
+  # sf::st_write(my.geom, fileOut, delete_dsn = TRUE)
+  # if(verbose){print(paste0("* '", fileOutName, "'has been exported to '", dirOut, "'"))}
+  # return(df.profile)
 }

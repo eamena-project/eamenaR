@@ -33,13 +33,28 @@ ref_routes <- function(geojson.path = paste0(system.file(package = "eamenaR"),
   df <- rbind(df1, df2)
   df <- df[!duplicated(df), ]
   # read the heritage places
-  ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  # ea.geojson <- geojsonsf::geojson_sf(geojson.path)
+  if(inherits(geojson.path, "sf")){
+    if(verbose){
+      print(paste0("Reads a 'sf' dataframe"))
+    }
+    ea.geojson <- geojson.path
+  }
+  if(is.character(geojson.path)){
+    if(verbose){
+      print(paste0("Reads a path"))
+    }
+    # hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+    ea.geojson <- sf::st_read(geojson.path)
+  }
   # remove leading/trailing spaces
   names(ea.geojson) <- trimws(colnames(ea.geojson))
   ea.geojson <- merge(ea.geojson, df, by = r.id)
   if(verbose){
-    print(paste0("merge of '", DescTools::SplitPath(geojson.path)$fullfilename,
-                 "' and '", DescTools::SplitPath(csv.path)$fullfilename,
-                 "' has been done on the field '", by,"'"))}
+    if(is.character(geojson.path)){
+      print(paste0("merge of '", DescTools::SplitPath(geojson.path)$fullfilename,
+                   "' and '", DescTools::SplitPath(csv.path)$fullfilename,
+                   "' has been done on the field '", by,"'"))}
+  }
   return(ea.geojson)
 }

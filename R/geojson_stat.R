@@ -15,11 +15,6 @@
 #' @param field.names field name on which statistic will be performed. Only useful if the option `stat` is set to `stats` (`stat = "stats"`).
 #' @param ref.periods the periods reference table.
 #' @param name of field on which paths will be grouped. For example "route". Will create as many plots as there are different categories. Default NA.
-#' @param fig.width,fig.height size of output chart.
-#' @param fig.dev format of image: "png" (default), "jpg", "svg", etc.
-#' @param export.stat if TRUE return stats to be stored in new variable
-#' @param export.plot if TRUE, export tats in new file, if FALSE will only display it
-#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export.plot is TRUE.
 #' @param verbose if TRUE (by default), print messages.
 #'
 #' @return Show or export basic statistics on GeoJSON file
@@ -75,13 +70,6 @@ geojson_stat <- function(stat.name = "stat",
                          field.names = NA,
                          by = NA,
                          ref.periods = "https://raw.githubusercontent.com/achp-project/cultural-heritage/main/periodo-projects/cultural_periods.tsv",
-                         fig.width = 6,
-                         fig.height = 6,
-                         fig.dev = "png",
-                         export.stat = FALSE,
-                         export.plot = FALSE,
-                         dirOut = paste0(system.file(package = "eamenaR"),
-                                         "/results/"),
                          verbose = TRUE){
   # ea.geojson <- sf::st_read(geojson.path)
 
@@ -91,7 +79,19 @@ geojson_stat <- function(stat.name = "stat",
 
   # Histogram
   `%>%` <- dplyr::`%>%` # used to not load dplyr
-  ea.geojson <- sf::read_sf(geojson.path)
+  # ea.geojson <- sf::read_sf(geojson.path)
+  if(inherits(geojson.path, "sf")){
+    if(verbose){
+      print(paste0("Reads a 'sf' dataframe"))
+    }
+    ea.geojson <- geojson.path
+  }
+  if(is.character(geojson.path)){
+    if(verbose){
+      print(paste0("Reads a path"))
+    }
+    ea.geojson <- sf::read_sf(geojson.path)
+  }
   # ea.geojson <- geojsonsf::geojson_sf(geojson.path)
   # remove leading/trailing spaces
   # names(ea.geojson) <- trimws(colnames(ea.geojson))
@@ -99,6 +99,7 @@ geojson_stat <- function(stat.name = "stat",
   #   ids <- eamenaR::ref_ids("id")
   # }
   if("list_fields" %in% stat){
+    if(verbose){print("list_fields")}
     field.names <- colnames(ea.geojson)[! colnames(ea.geojson) %in% "geometry"]
     if (export.stat) {
       dir.create(dirOut, showWarnings = FALSE)
@@ -113,31 +114,38 @@ geojson_stat <- function(stat.name = "stat",
     }
   }
   if("list_ids" %in% stat){
+    if(verbose){print("list_ids")}
     df <- data.frame(id = row.names(ea.geojson),
                      ea.ids = ea.geojson[[ids]])
     # rename column
     colnames(df)[2] = concept.name
-    if (export.plot) {
-      dir.create(dirOut, showWarnings = FALSE)
-      tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
-      write.table(df, tout, sep = "\t", row.names = F)
-      if(verbose){print(paste(tout, "is exported"))}
-    }
-    if (export.stat) {
-      rownames(df) <- df$id
-      df$id <- NULL
-      return(df)
-    }
-    if (!export.stat & !export.plot){
-      if(verbose){print(paste("Ids list:", "\n"))}
-      cat(paste0(df$id, ": ", df[ , concept.name]), sep =", ")
-    }
+    rownames(df) <- df$id
+    df$id <- NULL
+    return(df)
+    # if (export.plot) {
+    #   if(verbose){print("     ..export plot")}
+    #   dir.create(dirOut, showWarnings = FALSE)
+    #   tout <- paste0(dirOut, stat.name, "_list_ids.tsv")
+    #   write.table(df, tout, sep = "\t", row.names = F)
+    #   if(verbose){print(paste(tout, "is exported"))}
+    # }
+    # if (export.stat) {
+    #   if(verbose){print("     ..export stats")}
+    #   rownames(df) <- df$id
+    #   df$id <- NULL
+    #   return(df)
+    # }
+    # if (!export.stat & !export.plot){
+    #   if(verbose){print(paste("Ids list:", "\n"))}
+    #   cat(paste0(df$id, ": ", df[ , concept.name]), sep =", ")
+    # }
   }
   if("stats" %in% stat){
     # df <- data.frame(id = row.names(ea.geojson),
     #                  ea.ids = ea.geojson[[ids]])
 
     # blank theme for ggplot
+    if(verbose){print("stats")}
     blank_theme <- ggplot2::theme_minimal()+
       ggplot2::theme(
         axis.title.x = ggplot2::element_blank(),
@@ -145,11 +153,12 @@ geojson_stat <- function(stat.name = "stat",
         panel.border = ggplot2::element_blank(),
         panel.grid = ggplot2::element_blank(),
         axis.ticks = ggplot2::element_blank(),
-        plot.title = ggplot2::element_text(size=14, face="bold")
+        plot.title = ggplot2::element_text(size = 14, face = "bold")
       )
     # loop over the values
     for(chart in chart.type){
       if(chart == "basics"){
+        if(verbose){print("basics")}
         # TODO: the field names are not those natives in a GeoJSON export, but the ones of SHP. I highlight them with a XXX. YYY means to add eamenaR:: inf front of the function name when finished
         # bbox
         bbox <- sf::st_bbox(ea.geojson)
@@ -283,6 +292,7 @@ geojson_stat <- function(stat.name = "stat",
 
       # chart <- "pie"
       if(chart == "pie"){
+        if(verbose){print("pie")}
         for(field.name in field.names){
           # field.name <- "Overall Condition State Type"
           # c("Good", "Fair", "Poor", "Very Bad", "Destroyed")
@@ -309,11 +319,16 @@ geojson_stat <- function(stat.name = "stat",
         }
       }
       if(chart == "hist"){
+        warp.at <- 40
+        if(verbose){print("hist")}
         for(field.name in field.names){
-          warp.at <- 40
+          if(verbose){print(paste0("Read field: '", field.name, "'"))}
           # field.name <- "Disturbance Cause Type"
           # field.name <- "Disturbance Cause Category Type"
-          df <- as.data.frame(table(ea.geojson[[field.name]]))
+          # print(ea.geojson)
+          df <- as.data.frame(sf::st_drop_geometry(ea.geojson))
+          df <- as.data.frame(table(df[[field.name]]))
+          # if(verbose){print(ea.geojson[[field.name]])}
           df$Var1 <- stringr::str_wrap(df$Var1, width = warp.at)
           # there might have different values for a single field
           aggregated.unique.values <- unique(ea.geojson[[field.name]])
@@ -328,10 +343,6 @@ geojson_stat <- function(stat.name = "stat",
           gg <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[field.name]], y = Freq)) +
             ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
             blank_theme +
-            ggplot2::labs(title = paste0(field.name),
-                          # subtitle = my_subtitle,
-                          caption = paste0("Data source:",
-                                           DescTools::SplitPath(geojson.path)$fullfilename)) +
             # ggplot2::ylab(paste0(field.name, " %")) +
             ggplot2::ylab(paste0(field.name, " %")) +
             ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
@@ -340,30 +351,25 @@ geojson_stat <- function(stat.name = "stat",
                            plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"))
           #   ggplot2::theme(plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"))
           # axis.title.y = ggplot2::element_blank()
-          gg
+          if(is.character(geojson.path)){
+            gg <- gg + ggplot2::labs(title = paste0(field.name),
+                                     # subtitle = my_subtitle,
+                                     caption = paste0("Data source:",
+                                                      DescTools::SplitPath(geojson.path)$fullfilename))
+          }
+          if(inherits(geojson.path, "sf")){
+            gg <- gg + ggplot2::labs(title = paste0(field.name))
+          }
           if(verbose){print(paste("histogram", "created"))}
         }
       }
     }
     # rename column | what for ??
-    colnames(df)[2] = concept.name
-    if (export.plot) {
-      dir.create(dirOut, showWarnings = FALSE)
-      gout <- paste0(dirOut, stat.name, "_", chart, ".", fig.dev)
-      ggplot2::ggsave(gout, gg,
-                      width = fig.width,
-                      height = fig.height)
-      if(verbose){print(paste(gout, "has been exported"))}
+    # colnames(df)[2] = concept.name
+    if(verbose){
+      print(paste("Export chart"))
     }
-    if (export.stat) {
-      # rownames(df) <- df$id
-      # df$id <- NULL
-      # return(df)
-    }
-    if (!export.stat & !export.plot){
-      if(verbose){print(paste("Chart:"))}
-      print(gg)
-    }
+    return(gg)
   }
 }
 

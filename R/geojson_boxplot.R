@@ -62,10 +62,10 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
   `%>%` <- dplyr::`%>%` # used to not load dplyr
   r.id <- eamenaR::ref_ids(concept.name)
   if(!is.na(by)){
-    hp.geojson <- eamenaR::ref_routes(geojson.path = geojson.path,
-                                      csv.path = csv.path,
-                                      by = by,
-                                      verbose = verbose)
+    hp.geojson <- ref_routes(geojson.path = geojson.path,
+                             csv.path = csv.path,
+                             by = by,
+                             verbose = verbose)
     by.unique <- unique(hp.geojson[[by]])
     df.colors <- data.frame(by = by.unique,
                             color = RColorBrewer::brewer.pal(length(by.unique), color.set))
@@ -73,7 +73,18 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
     names(df.colors)[1] <- by
   } else {
     # change its value to 'by'
-    hp.geojson <- geojsonsf::geojson_sf(geojson.path)
+    if(inherits(geojson.path, "sf")){
+      if(verbose){
+        print(paste0("Reads a 'sf' dataframe"))
+      }
+      hp.geojson <- geojson.path
+    }
+    if(is.character(geojson.path)){
+      if(verbose){
+        print(paste0("Reads a path"))
+      }
+      hp.geojson <- sf::read_sf(geojson.path)
+    }
     hp.geojson$by <- 1
     by <- "by"
     df.colors <- data.frame(by = 1,
@@ -98,7 +109,7 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
       df.measurements <- df.measurements[!duplicated(df.measurements), ]
       if(by != "by"){
         df.measurements <- merge(df.measurements, df.colors, by = by, all.x = T)
-        if(verbose){print(paste0("the boxplots will be filtered on the column: '", by,"'"))}
+        if(verbose){print(paste0("Area - the boxplots will be filtered on the column: '", by,"'"))}
       } else {
         df.measurements$color <- "red"
       }
@@ -112,15 +123,15 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
       my_subtitle <- paste0("Distribution of distances between two heritage places")
       if(verbose){print(my_subtitle)}
       if(by != "by"){my_subtitle <-  paste0(my_subtitle, " by '", by,"'")}
-      df.measurements <- eamenaR::geojson_format_path(geojson.path = geojson.path,
-                                                      csv.path = csv.path,
-                                                      concept.name = concept.name,
-                                                      by = by,
-                                                      verbose = verbose)
+      df.measurements <- geojson_format_path(geojson.path = geojson.path,
+                                             csv.path = csv.path,
+                                             concept.name = concept.name,
+                                             by = by,
+                                             verbose = verbose)
       names(df.measurements)[names(df.measurements) == 'dist.m'] <- 'value'
       if(by != "by"){
         df.measurements <- merge(df.measurements, df.colors, by = by, all.x = T)
-        if(verbose){print(paste0("the boxplots will be filtered on the column: '", by,"'"))}
+        if(verbose){print(paste0("Dist - the boxplots will be filtered on the column: '", by,"'"))}
       } else {
         df.measurements$color <- "red"
       }
@@ -129,6 +140,7 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
     }
   }
   if(!interactive){
+    if(verbose){print(paste0("create a ggplot"))}
     my_theme <- list(
       ggplot2::theme(legend.position = "none",
                      plot.title = ggplot2::element_text(size = 10),
@@ -161,29 +173,30 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
                            size = 2,
                            stroke = 0,
                            alpha = 0.7) +
+      ggplot2::stat_summary(fun = mean, geom = "point", shape = 3, size = 3, color = "red") +
       ggplot2::scale_colour_identity() +
       ggplot2::ylab(my_ylab) +
-      ggplot2::labs(title = paste0("Distribution of ", measurements.type),
-                    subtitle = my_subtitle,
-                    caption = paste0("Data source:", DescTools::SplitPath(geojson.path)$fullfilename)) +
       ggplot2::theme_bw() +
       my_theme
     if(by != "by"){
       gout <- gout +
         ggplot2::facet_grid(. ~ df.measurements[[by]], scales = "free")
     }
-  }
-  if(export.plot & !interactive){
-    ggplot2::ggsave(filename = paste0(dirOut, stat.name, ".png"),
-                    plot = gout,
-                    height = fig.height,
-                    width = fig.width)
-    if(verbose){
-      print(paste0("the '", stat.name,"' file has been saved into '", dirOut, "'"))
+    if(inherits(geojson.path, "sf")){
+      gout <- gout +
+        ggplot2::labs(title = paste0("Distribution of ", measurements.type),
+                      subtitle = my_subtitle)
     }
+    if(is.character(geojson.path)){
+      gout <- gout +
+        ggplot2::labs(title = paste0("Distribution of ", measurements.type),
+                    subtitle = my_subtitle,
+                    caption = paste0("Data source:", DescTools::SplitPath(geojson.path)$fullfilename))
+    }
+    print("ggplot created")
   }
-  if(!export.plot & !interactive){
-    print(gout)
+  if(!interactive){
+    return(gout)
   }
   if(interactive){
     if(verbose){print(paste0("interactive plot"))}

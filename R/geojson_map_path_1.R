@@ -4,32 +4,31 @@
 #'
 #' @description Create distribution map and elevation profile of HP linked together by paths, for example, caravanserails.
 #'
+#' @param d A hash dictionary.
 #' @param map.name name of output map and name of saved file (if export.plot is TRUE). Default "map_path".
 #' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
 #' @param csv.path path to CSV where edges between two HPs are recorded. Default 'caravanserail_paths.csv'.
-#' @param export.type type of output: map (`map`) or profile (`profile`). For latter Z should be calculated with the `geojson_addZ()` function.
+#' @param stats type of output: map (`map`) or profile (`profile`). For latter Z should be calculated with the `geojson_addZ()` function.
 #' @param name of category column. Default "route" for caravanserais.
+#' @param show.ids Show HP labels. Default: TRUE.
 #' @param selected.category limit study to some categories. For example to some particular routes for caravanserais. Default NA, no limitation.
-#' @param symbology path to XLSX recording symbology for different values, default 'symbology.xlsx'.
+#' @param symbology.path path to XLSX recording symbology for different values, default 'symbology.xlsx'.
 #' @param stamen.zoom zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, zoom level will be calculated automatically.
 #' @param interactive if TRUE will plot VisNetwork. Default FALSE.
-#' @param export.plot if TRUE, export plot, if FALSE will only display it.
-#' @param dirOut folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful if export plot is TRUE.
-#' @param fig.width,fig.height size of output map.
 #' @param color.set RBrewer color set. Default "Set1".
 #' @param verbose if TRUE (by default), print messages.
 #'
-#' @return PNG map and HMTL map of HPs linked together by paths
+#' @return An hash object with maps of HPs linked together by paths, profiles, etc.
 #'
 #' @examples
 #'
 #' library(dplyr)
 #'
 #' # plot general map of HPs
-#' geojson_map_path(map.name = "caravanserail_paths", export.plot = F)
+#' d <- hash::hash()
+#' d <- geojson_map_path(map.name = "caravanserail_paths")
+#' d$caravanserail_paths_map
 #'
-#' # plot and export
-#' geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 11)
 #'
 #' # create an interactive map of each route
 #' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
@@ -51,39 +50,36 @@
 #' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
 #'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
 #'                  selected.category = c(0, 1, 2, 3, 4),
-#'                  export.type = "profile")
+#'                  stats = "profile")
 #'
 #' # create profile of each route and export
 #' geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
 #'                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
 #'                  selected.category = c(0, 1, 2, 3, 4),
-#'                  export.type = "profile",
+#'                  stats = "profile",
 #'                  export.plot = T,
 #'                  fig.height = 11,
 #'                  fig.width = 18,
 #'                  dirOut = "C:/Rprojects/eamenaR/results/")
 #'
 #' @export
-geojson_map_path <- function(map.name = "map_path",
+geojson_map_path <- function(d = NA,
+                             map.name = "paths",
                              geojson.path = paste0(system.file(package = "eamenaR"),
                                                    "/extdata/caravanserail.geojson"),
                              csv.path = paste0(system.file(package = "eamenaR"),
                                                "/extdata/caravanserail_paths.csv"),
-                             export.type = c("map"),
+                             stats = c("map"),
                              by = "route",
+                             show.ids = TRUE,
                              selected.category = NA,
-                             symbology = paste0(system.file(package = "eamenaR"),
-                                                "/extdata/symbology.xlsx"),
+                             symbology.path = paste0(system.file(package = "eamenaR"),
+                                                     "/extdata/symbology.xlsx"),
                              interactive = FALSE,
                              stamen.zoom = NA,
-                             export.plot = F,
-                             dirOut = paste0(system.file(package = "eamenaR"),
-                                             "/results/"),
-                             fig.width = 8,
-                             fig.height = 8,
                              color.set = "Set1",
                              verbose = TRUE){
-  symbology <- openxlsx::read.xlsx(symbology)
+  symbology <- openxlsx::read.xlsx(symbology.path)
   r.id <- eamenaR::ref_ids("hp.id")
   if(verbose){print("* paths between HPs")}
   paths <- geojson_format_path(geojson.path,
@@ -101,7 +97,8 @@ geojson_map_path <- function(map.name = "map_path",
   }
   paths.geom.sf <- sf::st_as_sf(paths, wkt = "path.wkt")
   sf::st_crs(paths.geom.sf) <- 4326
-  if(!inherits(geojson.path, "sf")){
+  d[["paths"]] <- paths.geom.sf
+  if(inherits(geojson.path, "sf")){
     if(verbose){
       print(paste0("Reads a 'sf' dataframe"))
     }
@@ -111,9 +108,19 @@ geojson_map_path <- function(map.name = "map_path",
     if(verbose){
       print(paste0("Reads a GeoJSON file path"))
     }
-    hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+    # hp.geom.sf <- geojsonsf::geojson_sf(geojson.path)
+    hp.geom.sf <- sf::st_read(geojson.path)
     sf::st_crs(hp.geom.sf) <- 4326
   }
+  # ids?
+  if(verbose){
+    print(paste0("Run geojson_stat for 'list_ids'"))
+  }
+  df.ids <- geojson_stat(stat = c("list_ids"),
+                         geojson.path = geojson.path,
+                         export.stat = T)
+  df.ids <- data.frame(id = rownames(df.ids),
+                       hp.1 = df.ids[["hp.id"]])
   # categories colors
   by.ids <- unique(paths.geom.sf[[by]])
   by.colors <- RColorBrewer::brewer.pal(length(by.ids), color.set)
@@ -122,11 +129,12 @@ geojson_map_path <- function(map.name = "map_path",
   )
   paths.geom.sf <- merge(paths.geom.sf, df.colors, by = by)
   by.unique <- unique(paths.geom.sf[[by]])
-  # if("profile" %in% export.type & interactive == FALSE){
-  #   if(verbose){print(" - creates a static 'profile' of the paths")}
-  #   # TO COMPLETE ...
+  # TODO: COMPLETE ...
   # }
-  if("map" %in% export.type & interactive){
+  # if("profile" %in% stats & interactive == FALSE){
+  #   if(verbose){print(" - creates a static 'profile' of the paths")}
+  #
+  if("map" %in% stats & interactive){
     if(verbose){print(" - creates an interactive 'map' of the paths")}
     for(a.by in by.unique){
       if(verbose){print(paste0("   selected", by, " is '", a.by, "'"))}
@@ -141,24 +149,16 @@ geojson_map_path <- function(map.name = "map_path",
       colnames(edges)[which(names(edges) == "dist.m")] <- "value"
       edges$title <- paste(round(edges$value/1000, 0), "km") # to km
       colnames(nodes)[which(names(nodes) == "dist.m")] <- "value"
-      visRoute <- visNetwork::visNetwork(nodes, edges,
-                                         main = paste0(by, " ", a.by),
-                                         width = "90%", height = "90vh") %>%
+      gout <- visNetwork::visNetwork(nodes, edges,
+                                     main = paste0(by, " ", a.by),
+                                     width = "90%", height = "90vh") %>%
         visNetwork::visEdges(arrows = "to") %>%
         visNetwork::visOptions(highlightNearest = T)
-      if(!export.plot){print(visRoute)}
-      if(export.plot){
-        if(verbose){print(paste0("  - export an interactive network"))}
-        fileOut <- paste0(map.name, "_map_", by, "_", a.by, ".html")
-        visNetwork::visSave(visRoute,
-                            paste0(dirOut, fileOut),
-                            # selfcontained = TRUE,
-                            background = "white")
-        if(verbose){print(paste0("* the network '", fileOut, "' has been exported to: ", dirOut))}
-      }
     }
+    outName <- paste0(map.name, "_map_interact")
+    d[[outName]] <- gout
   }
-  if("map" %in% export.type & !interactive){
+  if("map" %in% stats & !interactive){
     if(verbose){print(" - creates a static 'map' of the paths")}
     left <- as.numeric(sf::st_bbox(hp.geom.sf)$xmin)
     bottom <- as.numeric(sf::st_bbox(hp.geom.sf)$ymin)
@@ -197,7 +197,7 @@ geojson_map_path <- function(map.name = "map_path",
     hp.geojson.line <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "LINESTRING", ]
     hp.geojson.polygon <- hp.geom.sf[sf::st_geometry_type(hp.geom.sf$geometry) == "POLYGON", ]
     xxxv <- setNames(by.colors, by.ids)
-    mapOut <- ggmap::ggmap(stamenbck) +
+    gout <- ggmap::ggmap(stamenbck) +
       ggplot2::geom_sf(data = paths.geom.sf,
                        # ggplot2::aes(colour = color),
                        ggplot2::aes(colour = factor(route)),
@@ -212,19 +212,19 @@ geojson_map_path <- function(map.name = "map_path",
       ggplot2::geom_sf(data = hp.geojson.polygon,
                        colour = "black",
                        inherit.aes = FALSE) +
-      ggrepel::geom_text_repel(data = hp.geojson.point,
-                               ggplot2::aes(x = sf::st_coordinates(hp.geojson.point)[, "X"],
-                                            y = sf::st_coordinates(hp.geojson.point)[, "Y"],
-                                            label = rownames(hp.geojson.point)),
-                               size = 2,
-                               segment.color = "black",
-                               segment.size = .1,
-                               segment.alpha = .5,
-                               min.segment.length = .3,
-                               force = .5,
-                               max.time = 1.5,
-                               max.overlaps = Inf,
-                               inherit.aes = FALSE) +
+      # ggrepel::geom_text_repel(data = hp.geojson.point,
+      #                          ggplot2::aes(x = sf::st_coordinates(hp.geojson.point)[, "X"],
+      #                                       y = sf::st_coordinates(hp.geojson.point)[, "Y"],
+      #                                       label = rownames(hp.geojson.point)),
+      #                          size = 2,
+      #                          segment.color = "black",
+      #                          segment.size = .1,
+      #                          segment.alpha = .5,
+      #                          min.segment.length = .3,
+      #                          force = .5,
+      #                          max.time = 1.5,
+      #                          max.overlaps = Inf,
+      #                          inherit.aes = FALSE) +
       ggplot2::labs(title = map.name) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = 15,
                                                         hjust = 0.5),
@@ -233,22 +233,30 @@ geojson_map_path <- function(map.name = "map_path",
       ggplot2::labs(color = by) +
       # ggplot2::scale_discrete_manual(values = setNames(by.colors, by.ids)) +
       ggplot2::scale_colour_manual(values = by.colors)
-    # ggplot2::scale_fill_discrete(labels = by.ids)
-    if (export.plot) {
-      if(verbose){print(paste0("    - export 'map'"))}
-      dir.create(dirOut, showWarnings = FALSE)
-      gout <- paste0(map.name, ".png")
-      ggplot2::ggsave(filename = paste0(dirOut, gout),
-                      plot = mapOut,
-                      height = fig.height,
-                      width = fig.width)
-      if(verbose){print(paste0("    - the '", by, "' map '", gout,"' is exported into: '", dirOut,"'"))}
-    } else {
-      if(verbose){print(paste0("    - the '", by, "' map '", map.name,"' is plotted"))}
-      plot(mapOut)
+    if(show.ids){
+      if(verbose){
+        print("Show HP ids")
+      }
+      gout <- gout +
+        ggrepel::geom_text_repel(data = hp.geojson.point,
+                                 ggplot2::aes(x = sf::st_coordinates(hp.geojson.point)[, "X"],
+                                              y = sf::st_coordinates(hp.geojson.point)[, "Y"],
+                                              label = rownames(hp.geojson.point)),
+                                 size = 2,
+                                 segment.color = "black",
+                                 segment.size = .1,
+                                 segment.alpha = .5,
+                                 min.segment.length = .3,
+                                 force = .5,
+                                 max.time = 1.5,
+                                 max.overlaps = Inf,
+                                 inherit.aes = FALSE)
     }
+    outName <- paste0(map.name, "_map")
+    d[[outName]] <- gout
+    # ggplot2::scale_fill_discrete(labels = by.ids)
   }
-  if("profile" %in% export.type){
+  if("profile" %in% stats){
     # to store values
     df.dist.Zs <- data.frame(hp.1 = character(),
                              dist = numeric(),
@@ -354,11 +362,11 @@ geojson_map_path <- function(map.name = "map_path",
     # rownames(df.dist.Zs) <- seq(1, )
 
     # # recovers ids (short names for plotting)
-    df.ids <- eamenaR::geojson_stat(stat = c("list_ids"),
-                                    geojson.path = geojson.path,
-                                    export.stat = T)
-    df.ids <- data.frame(id = rownames(df.ids),
-                         hp.1 = df.ids[["hp.id"]])
+    # df.ids <- eamenaR::geojson_stat(stat = c("list_ids"),
+    #                                 geojson.path = geojson.path,
+    #                                 export.stat = T)
+    # df.ids <- data.frame(id = rownames(df.ids),
+    #                      hp.1 = df.ids[["hp.id"]])
     df.complete <- merge(df.dist.Zs, df.ids, by = "hp.1", all.x = T)
     df.complete <- df.complete[df.complete$dist != Inf, ]
     # type conversion
@@ -380,25 +388,20 @@ geojson_map_path <- function(map.name = "map_path",
       ggplot2::labs(color = factor(by)) +
       ggplot2::scale_colour_manual(values = by.colors) +
       ggplot2::theme_bw()
-    if (export.plot) {
-      if(verbose){print(paste0("    - export 'profile'"))}
-      dir.create(dirOut, showWarnings = FALSE)
-      profOut <- paste0(map.name, "_profile", ".png")
-      ggplot2::ggsave(filename = paste0(dirOut, profOut),
-                      plot = gout,
-                      height = fig.height,
-                      width = fig.width)
-      if(verbose){print(paste0("    - the routes' profile '", profOut,"' is exported into: '", dirOut,"'"))}
-    } else {
-      gout
-    }
+    outName <- paste0(map.name, "_profile")
+    # print(outName)
+    # print(gout)
+    d[[outName]] <- gout
+    if(verbose){print(paste0("profiles.. done!"))}
   }
+  d[["ids"]] <- df.ids
+  return(d)
 }
 
 # geojson_map_path(geojson.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserailZ.geojson",
 #                  csv.path = "C:/Rprojects/eamenaR/inst/extdata/caravanserail_paths.csv",
 #                  # selected.category = c(0, 1, 2, 3, 4),
-#                  export.type = "profile",
+#                  stats = "profile",
 #                  export.plot = T)
 
 # geojson_map_path(map.name = "caravanserail_paths", export.plot = T, fig.width = 15)
