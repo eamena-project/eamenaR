@@ -415,6 +415,25 @@ It gives a Kmeans plot with 2 centers:
 
 The variable `mbrshp` stores the membership of all caravanserais (here group 1 or group 2). It can be reused in the [`geojson_map()`](https://eamena-project.github.io/eamenaR/doc/geojson_map) function, for example, to locate the different forms of caravanserai.
 
+### Conversions
+
+To manage KML and GeoJSON geometries, the workflow will be to:
+
+```mermaid
+flowchart LR
+    A[(EAMENA DB)] --search--> A;
+    A --export GeoJSON URL--> B[Create GeoJSON file];
+    B --import--> C((Google Earth));
+    C --"HPs POINTS -> POLYGONS"--> C;
+    C --export KML/KMZ--> D{{"geom_kml()"}}; 
+    subgraph eamenaR
+    D --"convert KML/KMZ to GeoJSON"--> D;
+    D --export--> E{{"geom_bu()"}};
+    E --"TODO: format GeoJSON as a BU"--> E
+    end
+    E --add a new geometry-->A;
+```
+
 ## Related resources
 
 Part of the information of the Heritage Places can be recorded in the Built Components (`COMPONENT-`), which are connected components of Heritage Places. For example, `COMPONENT-0000141`, `COMPONENT-0000143` and `COMPONENT-0000144` record respectively 30 Stables, 1 Courtyard and 28 Rooms for the caravanserail Maranjab (`EAMENA-164943`).
