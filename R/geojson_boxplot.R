@@ -2,7 +2,7 @@
 #'
 #' @name geojson_boxplot
 #'
-#' @description
+#' @description Create boxplot or various boxplots of path lengths between different heritage places
 #'
 #' @param stat.name name of output file and plot. Default "caravanserais_areas".
 #' @param concept.name key used to identify heritage places. Default "hp.id".

@@ -2,7 +2,7 @@
 #'
 #' @name ref_hp_mds
 #'
-#' @description
+#' @description Generates a DT table of field names and field description from 'mds-template.xlsx'
 #'
 #' @param mds.template The XLSX file listing the HP fields, field descriptions, fields UUID in the DB, if these fields are part of the Minimum Data Standards (MDS), etc..
 #' @param create.datatable If TRUE (default), will export an HTML datatable
