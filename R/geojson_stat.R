@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' geojson_stat(stat.name = "geojson_fields", export.stat = T)
+#' geojson_stat(stat.name = "geojson_fields")
 #'
 #' # list HP names
 #' geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
@@ -101,17 +101,19 @@ geojson_stat <- function(stat.name = "stat",
   if("list_fields" %in% stat){
     if(verbose){print("list_fields")}
     field.names <- colnames(ea.geojson)[! colnames(ea.geojson) %in% "geometry"]
-    if (export.stat) {
-      dir.create(dirOut, showWarnings = FALSE)
-      tout <- paste0(dirOut, stat.name, "_list_fields.tsv")
-      df <- data.frame(src.geojson = DescTools::SplitPath(geojson.path)$filename,
-                       field.names = field.names)
-      write.table(df, tout, sep = "\t", row.names = F)
-      if(verbose){print(paste(tout, "is exported"))}
-    } else {
-      if(verbose){print(paste("Field list:", "\n"))}
-      cat(field.names, sep = "\n")
-    }
+    # if (export.stat) {
+    #   dir.create(dirOut, showWarnings = FALSE)
+    #   tout <- paste0(dirOut, stat.name, "_list_fields.tsv")
+    #   df <- data.frame(src.geojson = DescTools::SplitPath(geojson.path)$filename,
+    #                    field.names = field.names)
+    #   write.table(df, tout, sep = "\t", row.names = F)
+    #   if(verbose){print(paste(tout, "is exported"))}
+    # } else {
+    #   if(verbose){print(paste("Field list:", "\n"))}
+    #   cat(field.names, sep = "\n")
+    # }
+    if(verbose){print(paste("Field list:", "\n"))}
+    cat(field.names, sep = "\n")
   }
   if("list_ids" %in% stat){
     if(verbose){print("list_ids")}
