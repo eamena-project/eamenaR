@@ -1,6 +1,6 @@
 #' Generates a DT table of field names and field description from 'mds-template.xlsx'
 #'
-#' @name ref_hp_mds Create boxplot or various boxplots of path lengths between different heritage places
+#' @name ref_hp_mds
 #'
 #' @description
 #'
