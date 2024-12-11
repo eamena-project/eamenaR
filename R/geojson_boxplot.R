@@ -1,6 +1,6 @@
 #' Create boxplot or various boxplots of path lengths between different heritage places
 #'
-#' @name geojson_boxplot Create boxplot or various boxplots of path lengths between different heritage places
+#' @name geojson_boxplot
 #'
 #' @description
 #'
