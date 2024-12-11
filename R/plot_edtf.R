@@ -45,10 +45,13 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"),
                       id.filter = NA,
                       type.plot = c("plotly"),
                       freeze_y = FALSE,
+                      verbose.freq = 10,
                       export.plot = FALSE,
                       file_out = "df_out",
                       dirOut = paste0(system.file(package = "eamenaR"),
                                       "/results/")){
+  `%intersect%` <- messydates::`%intersect%` # used to not load messydates
+  `%>%` <- dplyr::`%>%` # used to not load dplyr
   df <- openxlsx::read.xlsx(data_file,
                             sheet = 1)
   if(!is.na(rm_date)){
@@ -65,9 +68,10 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"),
     cat = character(),
     density = integer())
   for(i in seq_len(nrow(df))){
-    if (i %% 50 == 0){print(message(paste0("read dates ", i, "/", nrow(df))))}
-    dates <- messydates::md_intersect(messydates::as_messydate(edft_limits),
-                                      messydates::as_messydate(df[i, date_column]))
+    if ((i %% verbose.freq == 0) | i == 1){print(paste0("read dates ", i, "/", nrow(df)))}
+    dates <- messydates::as_messydate(edft_limits) %intersect% messydates::as_messydate(df[i, date_column])
+    # dates <- messydates::md_intersect(messydates::as_messydate(edft_limits),
+    #                                   messydates::as_messydate(df[i, date_column]))
     if("ymd" %in% edtf_unit){
       dates <- dates
     }
@@ -88,13 +92,13 @@ plot_edtf <- function(data_file = paste0(system.file(package = "eamenaR"),
 
   if("all" %in% edtf_analyse){
     df.out.general <- df.out %>%
-      group_by(date) %>%
-      summarise(density = sum(density))
+      dplyr::group_by(date) %>%
+      dplyr::summarise(density = sum(density))
   }
   if("category" %in% edtf_analyse){
     df.out.cat <- df.out %>%
-      group_by(date, cat) %>%
-      summarise(density = sum(density))
+      dplyr::group_by(date, cat) %>%
+      dplyr::summarise(density = sum(density))
   }
   if("plotly" %in% type.plot){
     if("all" %in% edtf_analyse){
