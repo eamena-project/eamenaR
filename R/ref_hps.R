@@ -1,6 +1,6 @@
 #' Statistics about EAMENA business data: Heritage places (spatial distribution, nb of HP by grids, etc.), Grids, etc.
 #'
-#' @name ref_data
+#' @name ref_hps
 #'
 #' @description statistics about EAMENA Heritage places. For example the HPs created in 2022, number of HP by grids, type of disturbances, overall condition state type of heritage places. This function is the backend counterpart of `geojson_stat()` for GeoJSON files.
 #'

@@ -12,7 +12,6 @@ geojson_addZ(
   elevation.api = "gmrt_point",
   timeout = 30,
   sleep = 0.3,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   verbose = TRUE
 )
 }
@@ -29,12 +28,10 @@ geojson_addZ(
 
 \item{sleep}{the time delay between two API request in seconds. By default 0.3.}
 
-\item{dirOut}{the folder where outputs will be saved. By default: '/results'. If folder doesn't exist, it will be created.}
-
 \item{verbose}{if TRUE (by default): verbose.}
 }
 \value{
-Creates a Z column with Z values
+An sf object with a Z column with Z values
 }
 \description{
 Use geoserver API to recover the Z for given set of points stored in GeoJSON file. Geoserver API can lead to Timeout.

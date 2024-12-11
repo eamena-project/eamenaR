@@ -19,12 +19,6 @@ geojson_stat(
   by = NA,
   ref.periods =
     "https://raw.githubusercontent.com/achp-project/cultural-heritage/main/periodo-projects/cultural_periods.tsv",
-  fig.width = 6,
-  fig.height = 6,
-  fig.dev = "png",
-  export.stat = FALSE,
-  export.plot = FALSE,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   verbose = TRUE
 )
 
@@ -49,12 +43,6 @@ geojson_stat(
   by = NA,
   ref.periods =
     "https://raw.githubusercontent.com/achp-project/cultural-heritage/main/periodo-projects/cultural_periods.tsv",
-  fig.width = 6,
-  fig.height = 6,
-  fig.dev = "png",
-  export.stat = FALSE,
-  export.plot = FALSE,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
   verbose = TRUE
 )
 }
@@ -75,19 +63,19 @@ geojson_stat(
 
 \item{ref.periods}{the periods reference table.}
 
-\item{fig.width, fig.height}{size of output chart.}
-
-\item{fig.dev}{format of image: "png" (default), "jpg", "svg", etc.}
-
-\item{export.stat}{if TRUE return stats to be stored in new variable}
+\item{verbose}{if TRUE (by default), print messages.}
 
 \item{export.plot}{if TRUE, export tats in new file, if FALSE will only display it}
 
 \item{dirOut}{folder where outputs will be saved. Default: '/results'. If it doesn't exist, will be created. Only useful is export.plot is TRUE.}
 
-\item{verbose}{if TRUE (by default), print messages.}
-
 \item{color.set}{the RBrewer color set. Default "Set1".}
+
+\item{fig.width, fig.height}{size of output chart.}
+
+\item{fig.dev}{format of image: "png" (default), "jpg", "svg", etc.}
+
+\item{export.stat}{if TRUE return stats to be stored in new variable}
 
 \item{name}{of field on which paths will be grouped. For example "route". Will create as many plots as there are different categories. Default NA.}
 }
@@ -159,7 +147,7 @@ geojson_stat(stat.name = "geojson_fields", stat = "list_ids")
 
 
 
-geojson_stat(stat.name = "geojson_fields", export.stat = T)
+geojson_stat(stat.name = "geojson_fields")
 
 # list HP names
 geojson_stat(stat.name = "geojson_fields", stat = "list_ids")

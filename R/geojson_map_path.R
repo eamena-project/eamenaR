@@ -117,8 +117,7 @@ geojson_map_path <- function(d = NA,
     print(paste0("Run geojson_stat for 'list_ids'"))
   }
   df.ids <- geojson_stat(stat = c("list_ids"),
-                         geojson.path = geojson.path,
-                         export.stat = T)
+                         geojson.path = geojson.path)
   df.ids <- data.frame(id = rownames(df.ids),
                        hp.1 = df.ids[["hp.id"]])
   # categories colors

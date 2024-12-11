@@ -12,9 +12,7 @@ ref_db(
   stat = c("all"),
   chart.type = c("all"),
   stat.name = NA,
-  plot.g = F,
-  export.plot.g = F,
-  dirOut = paste0(system.file(package = "eamenaR"), "/results/"),
+  create.ggplot = F,
   date.after = NA,
   date.before = Sys.Date(),
   fig.width = 8,
@@ -35,22 +33,18 @@ ref_db(
 
 \item{stat.name}{the name of the output file. If NA (default) will use the `stat` variable.}
 
-\item{plot.g}{if TRUE will create a plot. Default: FALSE.}
-
-\item{export.plot.g}{if TRUE will export the plot. Default: FALSE.}
-
-\item{dirOut}{the folder where the outputs will be saved. By default: '/results'. If it doesn't exist, it will be created. Only useful is export.plot.g is TRUE.}
+\item{create.ggplot}{if TRUE will create a plot. Default: FALSE.}
 
 \item{date.after}{the date after which the calculation is made. Useful to limit the analysis. Default: NA.}
 
 \item{date.before}{the date before which the calculation is made. Useful to limit the analysis. Default, the current date (`Sys.Date()`)}
 
-\item{fig.width, fig.height}{dimension of the exported plot in cm.}
+\item{fig.width, fig.height}{dimension of the ggplot in cm.}
 
 \item{verbose}{if TRUE (by default), print messages}
 }
 \value{
-a hash() object. If plot.g and export.plot.g are set to TRUE will also create and save plots
+a hash() object. If create.ggplot and export.create.ggplot are set to TRUE will also create and save plots
 }
 \description{
 statistics about Arches records: users (total number, activities, etc.), resource models (total numbers, etc.)
@@ -67,8 +61,6 @@ my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
 d <- ref_db(db.con = my_con,
                d = d,
                date.after = "2020-08-01",
-               plot.g = T,
-               export.plot.g = T,
                fig.width = 14)
 
 }
