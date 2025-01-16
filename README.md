@@ -725,7 +725,7 @@ Gives:
 
 ## Grids
 
-The function [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) allows to sum the number of HP by grids. 
+The function [`ref_hps()`](https://eamena-project.github.io/eamenaR/doc/ref_hps) allows to sum the number of HP by GS. 
 
 ```R
 d <- hash::hash()
@@ -736,16 +736,46 @@ d <- ref_hps(db.con = my_con,
              dirOut = 'C:/Rprojects/eamena-arches-dev/data/grids/')
 ```
 
-The result is a CSV file (first lines):
+The result is:
 
-|grid_id                              | nb_hp|grid_num  |
-|:------------------------------------|-----:|:---------|
-|004db4f1-dc2c-4dc1-a69b-c167fe891fe8 |    90|E10N33-12 |
-|7f87b5b7-c6db-45ce-873c-fc0cb9e8eccd |    55|E10N33-14 |
-|62ec57f4-0bdd-4d21-932f-0b2141fe2bb6 |    15|E10N33-32 |
-|61d85ffc-e461-4360-998d-37a02840cf1f |     3|E10N34-14 |
-|6995cca3-f7c4-4820-b20f-70aaef93deeb |    23|E10N36-12 |
-|85db112a-0964-4697-999d-c5b76e275370 |    26|E10N36-14 |
+1. a dataframe listing the number of Heritage Places by GS (first lines):
+
+```R
+head(d$grid_nb)
+```
+
+| nb_hp |    gs      |
+|-------|------------|
+|   1   | E35N32-14  |
+|  635  | E35N32-14  |
+|  101  | E51N25-34  |
+|   12  | E65N31-13  |
+|   17  | E65N31-14  |
+|   5   | E64N31-33  |
+
+2. an `sf` file listing the geometris and UUID of the GS 
+
+```R
+head(d$grid_geom)
+```
+
+```
+Simple feature collection with 6 features and 2 fields
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -4.25 ymin: 16.5 xmax: 67.75 ymax: 35
+Geodetic CRS:  WGS 84
+         gs                                   ri                           geom
+1 E65N30-13 000170e2-44dd-404a-ac9a-74478b90629c POLYGON ((65 30.25, 65 30.5...
+2 W04N16-42 00079b54-194c-4739-b7b4-1e5c24110801 POLYGON ((-4.25 16.5, -4.25...
+3 E67N34-43 0010b9cb-4e3d-4603-9d94-683ae1b823e9 POLYGON ((67.5 34.75, 67.5 ...
+4 E37N29-12 001adec4-9bf3-4512-a0c0-a13d6043b373 POLYGON ((37.25 29, 37.25 2...
+5 E10N21-24 001f9bb7-9961-4cbc-92d7-0af4aec680ee POLYGON ((10.75 21.25, 10.7...
+6 E37N29-44 0021d687-c534-4827-8cbb-541e06b4be0d POLYGON ((37.75 29.75, 37.7...
+```
+
+
+
 
 See the output in a GIS, here: https://github.com/eamena-project/eamena-arches-dev/tree/main/data/grids#gis
 

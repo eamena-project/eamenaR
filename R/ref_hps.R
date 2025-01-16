@@ -324,8 +324,8 @@ ref_hps <- function(db.con = NA,
     ON ids.ri = coords.ri
     "
     data <- DBI::dbGetQuery(db.con, sqll)
-    data$geom <- st_as_sfc(data$geom, crs = 4326)
-    sf_data <- st_as_sf(data, sf_column_name = "geom")
+    data$geom <- sf::st_as_sfc(data$geom, crs = 4326)
+    sf_data <- sf::st_as_sf(data, sf_column_name = "geom")
     d[['grid_geom']] <- sf_data # DBI::dbGetQuery(db.con, sqll)
     if(verbose){print("SQL =")}
     if(verbose){cat(sqll)}
