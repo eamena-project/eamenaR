@@ -785,13 +785,13 @@ The function [`ref_db()`](https://eamena-project.github.io/eamenaR/doc/ref_db) p
 
 ```R
 d <- hash::hash()
-my_con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
+db.con <- RPostgres::dbConnect(drv = RPostgres::Postgres(),
                                user = 'xxx',
                                password = 'xxx',
                                dbname = 'eamena',
                                host = 'ec2-54-155-109-226.eu-west-1.compute.amazonaws.com',
                                port = 5432)
-d <- ref_db(db.con = my_con,
+d <- ref_db(db.con = db.con,
             d = d,
             date.after = "2020-08-01",
             plot.g = T,

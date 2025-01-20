@@ -1,4 +1,4 @@
-#' Statistics about EAMENA business data: Heritage places (spatial distribution, nb of HP by grids, etc.), Grids, etc.
+#' Statistics about EAMENA business data: Heritage places (spatial distribution, nb of HP by grids, etc.), Grids, etc
 #'
 #' @name ref_hps
 #'
@@ -349,75 +349,74 @@ ref_hps <- function(db.con = NA,
     "
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    if(export.plot){
-      df <- d[[stat.name]]
-      warp.at <- 25
-      df$categ_type <- stringr::str_wrap(df$categ_type, width = warp.at)
-      if(!is.na(max.num)){
-        # limit
-        df <- head(df, max.num)
-      }
-      df$categ_type <- factor(df$categ_type, levels = df$categ_type)
-      df$nb <- as.integer(df$nb)
-      if(!perc){
-        gg <- ggplot2::ggplot(df, ggplot2::aes(x = categ_type, y = nb)) +
-          ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
-          blank_theme +
-          ggplot2::geom_text(ggplot2::aes(label = scales::comma(nb)), vjust = -0.3, hjust = 0, size = 3, angle = 45) +
-          ggplot2::labs(title = paste0(stat.name),
-                        caption = paste0("Data source: EAMENA database ",
-                                         Sys.Date())
-          ) +
-          ggplot2::ylab(paste(stat.name)) +
-          ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
-          ggplot2::scale_y_continuous(expand = c(0, 0, .075, 0)) + # expand the top to uncut large bar labels
-          ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
-                         axis.title.y = ggplot2::element_text(angle = 90),
-                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
-                         panel.spacing = ggplot2::unit(2, "lines"),
-                         plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
-          )
-      }
-      if(perc){
-        df$nb <- round(((df$nb / sum(df$nb)) * 100), rounded)
-        gg <- ggplot2::ggplot(df, ggplot2::aes(x = categ_type, y = nb)) +
-          ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
-          blank_theme +
-          ggplot2::geom_text(ggplot2::aes(label = nb), vjust = -0.3, hjust = 0, size = 4, angle = 45) +
-          ggplot2::labs(title = paste0(stat.name),
-                        caption = paste0("Data source: EAMENA database ",
-                                         Sys.Date())
-          ) +
-          ggplot2::ylab(paste(stat.name, '%')) +
-          ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
-          ggplot2::scale_y_continuous(expand = c(0, 0, .075, 0)) + # expand the top to uncut large bar labels
-          ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
-                         axis.title.y = ggplot2::element_text(angle = 90),
-                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
-                         panel.spacing = ggplot2::unit(2, "lines"),
-                         plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
-          )
-      }
-      # if (export.plot) {
-      #   dir.create(dirOut, showWarnings = FALSE)
-      #   if(perc){
-      #     gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
-      #   }
-      #   if(!perc){
-      #     gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
-      #   }
-      #   ggplot2::ggsave(gout, gg,
-      #                   width = fig.width,
-      #                   height = fig.height)
-      #   if(verbose){print(paste(gout, "has been exported"))}
-      # }
+    df <- d[[stat.name]]
+    warp.at <- 25
+    df$categ_type <- stringr::str_wrap(df$categ_type, width = warp.at)
+    if(!is.na(max.num)){
+      # limit
+      df <- head(df, max.num)
     }
+    df$categ_type <- factor(df$categ_type, levels = df$categ_type)
+    df$nb <- as.integer(df$nb)
+    if(!perc){
+      gg <- ggplot2::ggplot(df, ggplot2::aes(x = categ_type, y = nb)) +
+        ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
+        blank_theme +
+        ggplot2::geom_text(ggplot2::aes(label = scales::comma(nb)), vjust = -0.3, hjust = 0, size = 3, angle = 45) +
+        ggplot2::labs(title = paste0(stat.name),
+                      caption = paste0("Data source: EAMENA database ",
+                                       Sys.Date())
+        ) +
+        ggplot2::ylab(paste(stat.name)) +
+        ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
+        ggplot2::scale_y_continuous(expand = c(0, 0, .075, 0)) + # expand the top to uncut large bar labels
+        ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+                       axis.title.y = ggplot2::element_text(angle = 90),
+                       plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
+                       panel.spacing = ggplot2::unit(2, "lines"),
+                       plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
+        )
+    }
+    if(perc){
+      df$nb <- round(((df$nb / sum(df$nb)) * 100), rounded)
+      gg <- ggplot2::ggplot(df, ggplot2::aes(x = categ_type, y = nb)) +
+        ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
+        blank_theme +
+        ggplot2::geom_text(ggplot2::aes(label = nb), vjust = -0.3, hjust = 0, size = 4, angle = 45) +
+        ggplot2::labs(title = paste0(stat.name),
+                      caption = paste0("Data source: EAMENA database ",
+                                       Sys.Date())
+        ) +
+        ggplot2::ylab(paste(stat.name, '%')) +
+        ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
+        ggplot2::scale_y_continuous(expand = c(0, 0, .075, 0)) + # expand the top to uncut large bar labels
+        ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, size = 10),
+                       axis.title.y = ggplot2::element_text(angle = 90),
+                       plot.margin = ggplot2::margin(0, 0, 1, 1, "cm"),
+                       panel.spacing = ggplot2::unit(2, "lines"),
+                       plot.title = ggplot2::element_text(margin = ggplot2::margin(b = 20))
+        )
+    }
+    # if (export.plot) {
+    #   dir.create(dirOut, showWarnings = FALSE)
+    #   if(perc){
+    #     gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
+    #   }
+    #   if(!perc){
+    #     gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
+    #   }
+    #   ggplot2::ggsave(gout, gg,
+    #                   width = fig.width,
+    #                   height = fig.height)
+    #   if(verbose){print(paste(gout, "has been exported"))}
+    # }
     plot.name <- paste0(stat.name, ' plot')
     d[[plot.name]] <- gg
     return(d)
   }
   if("pie" %in% stat){
     # TODO: generalise the SQL for other categories. Currently it only deals with Overall Condition State Type (UUID=34cfe9f5-c2c0-11ea-9026-02e7594ce0a0)
+    if(verbose){print(paste("Pie chart"))}
     field.uuid <- eamenaR::ref_ids(stat.field,
                                    choice = "db.concept.uuid")
     sqll <- stringr::str_interp(
@@ -431,72 +430,75 @@ ref_hps <- function(db.con = NA,
       "
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
-    if(export.plot){
-      df <- d[[stat.name]]
-      overall.levels <- c("Good", "Fair", "Poor", "Very Bad", "Destroyed", "Unknown")
-      df <- subset(df, categ_type %in% overall.levels) # filter
-      df$categ_type <- factor(df$categ_type, levels = overall.levels)
-      df$nb <- as.integer(df$nb)
-      # colors
-      color_ramp <- RColorBrewer::brewer.pal(9, "Set1")
-      num_colors <- length(overall.levels) - 1 # avoid Unknown
-      selected_colors <- color_ramp[1:num_colors]
-      selected_colors <- c(selected_colors, "#d3d3d3")
-      # ggplot2::ggplot(df, ggplot2::aes(x = "",
-      #                                  y = nb,
-      #                                  fill = selected_colors)) +
-      if(!perc){
-        gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
-                                               y = nb,
-                                               fill = categ_type)) +
-          ggplot2::geom_bar(width = 1, stat = "identity") +
-          ggplot2::geom_text(ggplot2::aes(label = scales::comma(nb)),
-                             position = ggplot2::position_stack(vjust = 0.5)) +
-          ggplot2::coord_polar("y", start = 0) +
-          ggplot2::scale_fill_manual(values = selected_colors) +
-          ggplot2::scale_y_continuous(labels = scales::comma) +
-          # ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15)) +
-          ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15),
-                        caption = paste0("Data source: EAMENA database ",
-                                         Sys.Date())) +
-          ggplot2::theme(axis.text.x = ggplot2::element_text(size = 10),
-                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
-          blank_theme
-      }
-      if(perc){
-        # TODO: factorise ggplot with non perc
-        df$nb <- round(((df$nb / sum(df$nb)) * 100), rounded)
-        gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
-                                               y = nb,
-                                               fill = categ_type)) +
-          ggplot2::geom_bar(width = 1, stat = "identity") +
-          ggplot2::geom_text(ggplot2::aes(label = paste(nb, "%")),
-                             position = ggplot2::position_stack(vjust = 0.5)) +
-          ggplot2::coord_polar("y", start = 0) +
-          ggplot2::scale_fill_manual(values = selected_colors) +
-          ggplot2::scale_y_continuous(labels = scales::comma) +
-          # ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15)) +
-          ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15),
-                        caption = paste0("Data source: EAMENA database ",
-                                         Sys.Date())) +
-          ggplot2::theme(axis.text.x = ggplot2::element_text(size = 10),
-                         plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
-          blank_theme
-      }
-      plot.name <- paste0(stat.name, ' plot')
-      d[[plot.name]] <- gg
-      # dir.create(dirOut, showWarnings = FALSE)
-      # if(perc){
-      #   gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
-      # }
-      # if(!perc){
-      #   gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
-      # }
-      # ggplot2::ggsave(gout, gg,
-      #                 width = fig.width,
-      #                 height = fig.height)
-      # if(verbose){print(paste(gout, "has been exported"))}
+
+    df <- d[[stat.name]]
+    overall.levels <- c("Good", "Fair", "Poor", "Very Bad", "Destroyed", "Unknown")
+    df <- subset(df, categ_type %in% overall.levels) # filter
+    total.nb <- nrow(df)
+    df$categ_type <- factor(df$categ_type, levels = overall.levels)
+    df$nb <- as.integer(df$nb)
+    # colors
+    color_ramp <- RColorBrewer::brewer.pal(9, "Set1")
+    num_colors <- length(overall.levels) - 1 # avoid Unknown
+    selected_colors <- color_ramp[1:num_colors]
+    selected_colors <- c(selected_colors, "#d3d3d3")
+    # ggplot2::ggplot(df, ggplot2::aes(x = "",
+    #                                  y = nb,
+    #                                  fill = selected_colors)) +
+
+    if(!perc){
+      if(verbose){print(paste("  - counts"))}
+      gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
+                                             y = nb,
+                                             fill = categ_type)) +
+        ggplot2::geom_bar(width = 1, stat = "identity") +
+        ggplot2::geom_text(ggplot2::aes(label = scales::comma(nb)),
+                           position = ggplot2::position_stack(vjust = 0.5)) +
+        ggplot2::coord_polar("y", start = 0) +
+        ggplot2::scale_fill_manual(values = selected_colors) +
+        ggplot2::scale_y_continuous(labels = scales::comma) +
+        # ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15)) +
+        ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15),
+                      caption = paste0("total nb: ", total.nb," | data source: EAMENA database ",
+                                       Sys.Date())) +
+        ggplot2::theme(axis.text.x = ggplot2::element_text(size = 10),
+                       plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
+        blank_theme
     }
+    if(perc){
+      # TODO: factorise ggplot with non perc
+      if(verbose){print(paste("  - precents"))}
+      df$nb <- round(((df$nb / sum(df$nb)) * 100), rounded)
+      gg <- ggplot2::ggplot(df, ggplot2::aes(x = "",
+                                             y = nb,
+                                             fill = categ_type)) +
+        ggplot2::geom_bar(width = 1, stat = "identity") +
+        ggplot2::geom_text(ggplot2::aes(label = paste(nb, "%")),
+                           position = ggplot2::position_stack(vjust = 0.5)) +
+        ggplot2::coord_polar("y", start = 0) +
+        ggplot2::scale_fill_manual(values = selected_colors) +
+        ggplot2::scale_y_continuous(labels = scales::comma) +
+        # ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15)) +
+        ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15),
+                      caption = paste0("Data source: EAMENA database ",
+                                       Sys.Date())) +
+        ggplot2::theme(axis.text.x = ggplot2::element_text(size = 10),
+                       plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
+        blank_theme
+    }
+    plot.name <- paste0(stat.name, ' plot')
+    d[[plot.name]] <- gg
+    # dir.create(dirOut, showWarnings = FALSE)
+    # if(perc){
+    #   gout <- paste0(dirOut, stat.name, "_", stat, "_perc.", fig.dev)
+    # }
+    # if(!perc){
+    #   gout <- paste0(dirOut, stat.name, "_", stat, "_nb.", fig.dev)
+    # }
+    # ggplot2::ggsave(gout, gg,
+    #                 width = fig.width,
+    #                 height = fig.height)
+    # if(verbose){print(paste(gout, "has been exported"))}
     return(d)
   }
 }

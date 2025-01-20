@@ -5,7 +5,6 @@
 #' @description statistics about Arches records: users (total number, activities, etc.), resource models (total numbers, etc.)
 #'
 #' @param db.con the parameters for the PostgreSQL EAMENA DB, in a `RPostgres::dbConnect()` format.
-#' @param db.name the name of the Arches database, by default `EAMENA`.
 #' @param d a hash() object (a Python-like dictionary).
 #' @param stat the type of statistic that will be computed. This is also the hash dictionary (`d`) field name that will be filled with this statistics, e.g. "users", "date_joined", etc., or "all". Default: "all".
 #' @param chart.type the type of stat chart, or diagram that will be plotted. Choice: "edtf" for cumulative function, etc. Default "all".
@@ -35,12 +34,10 @@
 #' @export
 ref_db <- function(db.con = NA,
                    d = NA,
-                   db.name = "EAMENA",
                    identifiernode = 'E42_Identifier',
                    stat = c("all"),
                    chart.type = c("all"),
                    stat.name = NA,
-                   create.ggplot = F,
                    date.after = NA,
                    date.before = Sys.Date(),
                    fig.width = 8,
@@ -121,55 +118,59 @@ ref_db <- function(db.con = NA,
             "
     d[["users_date_joined"]] <- DBI::dbGetQuery(db.con, sqll)
     users.tot <- nrow(d[["users_date_joined"]])
-    if(create.ggplot){
-      gtit <- paste0("Evolution of the number of users of the ", db.name, " database")
-      date_joined <- format(d[["users_date_joined"]], "%Y-%m-%d")
-      dates.ymd <- lubridate::ymd(date_joined$date_joined)
-      dates.ym <- format(dates.ymd, "%Y-%m") # to character
-      if(!is.na(date.after)){
-        date.after <- lubridate::ymd(date.after)
-        date.after <- format(date.after, "%Y-%m") # to character
-        # dates.ym <- dates.ym[dates.ym > date.after] # OK
-      }
-      #date.before <- lubridate::ymd(date.before)
-      if(lubridate::is.Date(date.before)){
-        date.before <- format(date.before, "%Y-%m")
-      }
+    gtit <- paste0("Evolution of the number of users of the database")
+    date_joined <- format(d[["users_date_joined"]], "%Y-%m-%d")
+    dates.ymd <- lubridate::ymd(date_joined$date_joined)
+    dates.ym <- format(dates.ymd, "%Y-%m") # to character
+    if(!is.na(date.after)){
+      date.after <- lubridate::ymd(date.after)
+      date.after <- format(date.after, "%Y-%m") # to character
+      # dates.ym <- dates.ym[dates.ym > date.after] # OK
+    }
+    #date.before <- lubridate::ymd(date.before)
+    if(lubridate::is.Date(date.before)){
+      if(verbose){print(paste0("users between two dates"))}
+      date.before <- format(date.before, "%Y-%m")
       # interval
       dates.ym <- dates.ym[dates.ym > date.after & dates.ym < date.before]
       dates.ym <- lubridate::ym(dates.ym)
       gsubtit <- paste0(length(dates.ym), " users who logged at least once between ",
                         date.after, " and ", date.before, " (total users: ", users.tot, ")")
-      if("edtf" %in% stat | "all" %in% chart.type){
-        df <- data.frame(dates = dates.ym)
-        dates.date.joined <- ggplot2::ggplot(df, ggplot2::aes(dates)) +
-          ggplot2::stat_bin(ggplot2::aes(y = cumsum(..count..)), geom = "step") +
-          # ggplot2::ggtitle() +
-          # m <- m + theme()
-          # ggplot2::xlab() +
-          # ggplot2::ylab() +
-          ggplot2::scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
-          ggplot2::theme_bw() +
-          ggplot2::labs(x = "date joined",
-                        y = "nb of users",
-                        title = gtit,
-                        subtitle = gsubtit) +
-          ggplot2::theme(legend.position = "bottom",
-                         axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
-      }
-      if(FALSE == TRUE){
-        # TODO: non-cumulative ; store ggplot into list()
-        dates.date.joined <- ggplot2::ggplot() +
-          ggplot2::geom_histogram(ggplot2::aes(x = dates.ym), binwidth = 5) +
-          ggplot2::xlab("date joined") +
-          ggplot2::ylab("nb of users") +
-          ggplot2::scale_y_log10(breaks = c(1, 2, 3, 4, 5, 10, 20, 30, 50, 100)) +
-          ggplot2::scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
-          ggplot2::theme_bw() +
-          ggplot2::theme(legend.position = "bottom",
-                         axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
-      }
+    } else {
+      if(verbose){print(paste0("users after a specific date"))}
+      # after
+      dates.ym <- dates.ym[dates.ym > date.after]
+      dates.ym <- lubridate::ym(dates.ym)
+      gsubtit <- paste0(length(dates.ym), " users who logged at least once after ",
+                        date.after, " (total users: ", users.tot, ")")
     }
+    # if("edtf" %in% stat | "all" %in% chart.type){
+    df <- data.frame(dates = dates.ym)
+    dates.date.joined <- ggplot2::ggplot(df, ggplot2::aes(dates)) +
+      ggplot2::stat_bin(ggplot2::aes(y = cumsum(..count..)), geom = "step") +
+      # ggplot2::ggtitle() +
+      # m <- m + theme()
+      # ggplot2::xlab() +
+      # ggplot2::ylab() +
+      ggplot2::scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
+      ggplot2::theme_bw() +
+      ggplot2::labs(x = "date joined",
+                    y = "nb of users",
+                    title = gtit,
+                    subtitle = gsubtit) +
+      ggplot2::theme(legend.position = "bottom",
+                     axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
+    # }
+    # # TODO: non-cumulative ; store ggplot into list()
+    # dates.date.joined <- ggplot2::ggplot() +
+    #   ggplot2::geom_histogram(ggplot2::aes(x = dates.ym), binwidth = 5) +
+    #   ggplot2::xlab("date joined") +
+    #   ggplot2::ylab("nb of users") +
+    #   ggplot2::scale_y_log10(breaks = c(1, 2, 3, 4, 5, 10, 20, 30, 50, 100)) +
+    #   ggplot2::scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
+    #   ggplot2::theme_bw() +
+    #   ggplot2::theme(legend.position = "bottom",
+    #                  axis.text.x = ggplot2::element_text(angle = 90, vjust = .5, hjust = .5))
     # }
     if(verbose){print("*end users' statistics")}
     d[["users_date_joined_ggplot"]] <- dates.date.joined

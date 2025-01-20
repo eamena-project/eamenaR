@@ -9,6 +9,15 @@
 #'
 #' @examples
 #'
+#' # HP created in 2024
+#' stat.name <- "hps_all"
+#' d <- ref_hps(db.con = db.con,
+#'              date.after = '2023-12-31',
+#'              date.before = '2025-01-01',
+#'              d = d,
+#'              stat.name = stat.name)
+#' lg <- plot_hps(df = d[[stat.name]])
+#'
 #'
 #' @export
 plot_hps <- function(df = NA,
@@ -29,9 +38,11 @@ plot_hps <- function(df = NA,
 
   countries <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
 
-  GSpath <- "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/grids/"
+  GSpath <- "https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/dbs/database.eamena/data/reference_data/grids/"
+  # after the extent to Afghanistan (2023 and after)
   GSnew <- sf::st_read(paste0(GSpath, "EAMENA_Grid_contour.geojson"))
-  GSold <- sf::st_read(paste0(GSpath, "(archives)/EAMENA_Grid_contour.geojson"))
+  # before the extent to Afghanistan (2022 and before)
+  GSold <- sf::st_read(paste0(GSpath, "EAMENA_Grid_contour_old.geojson"))
 
   if(!is.na(stadia_map_token)){
     ggmap::register_stadiamaps(stadia_map_token)
@@ -70,5 +81,3 @@ plot_hps <- function(df = NA,
   }
   return(lg)
 }
-
-
