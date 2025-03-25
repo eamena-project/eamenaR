@@ -6,7 +6,7 @@ The ***eamenaR*** package is under developments. It allows to analyse the [typol
   
 ```mermaid
 flowchart LR
-    A[(EAMENA<br>DB)] <--data<br>exchange--> B{{"eamenaR"}}:::eamenaRpkg;
+    A[(EAMENA<br>DB)] --is read by--> B{{"eamenaR"}}:::eamenaRpkg;
     B --data<br>management--> B;
     B <--data<br>exchange--> C((third part<br>app));
     B --"output"--> D[maps<br>charts<br>listings<br>...];
