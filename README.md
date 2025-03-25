@@ -1119,7 +1119,7 @@ functions:
 
 For example:
 
-1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-project/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamena-arches-dev/blob/main/data/geojson/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamena-arches-dev/main/data/geojson/caravanserail.geojson)) Heritage Places.  
+1. Export a GeoJSON file from EAMENA (see: [GeoJSON files](https://github.com/eamena-project/eamenaR#geojson-files)), for example **caravanserail.geojson** ([rendered](https://github.com/eamena-project/eamenaR/blob/main/inst/extdata/caravanserail.geojson) | [raw](https://raw.githubusercontent.com/eamena-project/eamenaR/main/inst/extdata/caravanserail.geojson)) Heritage Places.  
 
 <a name="geojson_kml"></a>  
 

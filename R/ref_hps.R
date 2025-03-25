@@ -329,8 +329,8 @@ ref_hps <- function(db.con = NA,
     d[['grid_geom']] <- sf_data # DBI::dbGetQuery(db.con, sqll)
     if(verbose){print("SQL =")}
     if(verbose){cat(sqll)}
+    return(d) #?
   }
-  return(d)
 
   # histogramm
   if("hist" %in% stat){
@@ -350,6 +350,7 @@ ref_hps <- function(db.con = NA,
     )
     d[[stat.name]] <- DBI::dbGetQuery(db.con, sqll)
     df <- d[[stat.name]]
+    total.nb <- sum(df$nb)
     warp.at <- 25
     df$categ_type <- stringr::str_wrap(df$categ_type, width = warp.at)
     if(!is.na(max.num)){
@@ -364,7 +365,9 @@ ref_hps <- function(db.con = NA,
         blank_theme +
         ggplot2::geom_text(ggplot2::aes(label = scales::comma(nb)), vjust = -0.3, hjust = 0, size = 3, angle = 45) +
         ggplot2::labs(title = paste0(stat.name),
-                      caption = paste0("Data source: EAMENA database ",
+                      caption = paste0("total nb: ",
+                                       format(total.nb, big.mark = ","),
+                                       " | data source: EAMENA database ",
                                        Sys.Date())
         ) +
         ggplot2::ylab(paste(stat.name)) +
@@ -434,7 +437,8 @@ ref_hps <- function(db.con = NA,
     df <- d[[stat.name]]
     overall.levels <- c("Good", "Fair", "Poor", "Very Bad", "Destroyed", "Unknown")
     df <- subset(df, categ_type %in% overall.levels) # filter
-    total.nb <- nrow(df)
+    df.overall.levels <- d[[stat.name]][d[[stat.name]]$categ_type %in% overall.levels, ]
+    total.nb <- sum(df.overall.levels$nb)
     df$categ_type <- factor(df$categ_type, levels = overall.levels)
     df$nb <- as.integer(df$nb)
     # colors
@@ -459,7 +463,9 @@ ref_hps <- function(db.con = NA,
         ggplot2::scale_y_continuous(labels = scales::comma) +
         # ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15)) +
         ggplot2::labs(fill = stringr::str_wrap(stat.name, width = 15),
-                      caption = paste0("total nb: ", total.nb," | data source: EAMENA database ",
+                      caption = paste0("total nb: ",
+                                       format(total.nb, big.mark = ","),
+                                       " | data source: EAMENA database ",
                                        Sys.Date())) +
         ggplot2::theme(axis.text.x = ggplot2::element_text(size = 10),
                        plot.margin = ggplot2::margin(0, 0, 1, 1, "cm")) +
