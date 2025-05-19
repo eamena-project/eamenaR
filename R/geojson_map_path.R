@@ -1,19 +1,21 @@
-#' Create map and profile with paths between different heritage places (HP)
+#' Create map and profile section of paths between different heritage places (HP)
 #'
 #' @name geojson_map_path
 #'
-#' @description Create distribution map and elevation profile of HP linked together by paths, for example, caravanserails.
+#' @description Create distribution map and elevation profile of HP linked together by paths, for example, caravanserails. Return a "map", a "map_profile", etc.
 #'
 #' @param d A hash dictionary.
-#' @param map.name name of output map and name of saved file (if export.plot is TRUE). Default "map_path".
+#' @param map.name title of output map.
 #' @param geojson.path path of GeoJSON file. Default 'caravanserail.geojson'.
 #' @param csv.path path to CSV where edges between two HPs are recorded. Default 'caravanserail_paths.csv'.
 #' @param stats type of output: map (`map`) or profile (`profile`). For latter Z should be calculated with the `geojson_addZ()` function.
 #' @param name of category column. Default "route" for caravanserais.
 #' @param show.ids Show HP labels. Default: TRUE.
+#' @param lbl.size Size of the labels.
 #' @param selected.category limit study to some categories. For example to some particular routes for caravanserais. Default NA, no limitation.
 #' @param symbology.path path to XLSX recording symbology for different values, default 'symbology.xlsx'.
 #' @param stamen.zoom zoom of Stamen basemap, between 0 (world, unprecise) to 21 (building, very precise). By default NA, zoom level will be calculated automatically.
+#' @param buffer A buffer to add to the map extension. In degrees, seconds.
 #' @param interactive if TRUE will plot VisNetwork. Default FALSE.
 #' @param color.set RBrewer color set. Default "Set1".
 #' @param verbose if TRUE (by default), print messages.
@@ -72,9 +74,11 @@ geojson_map_path <- function(d = NA,
                              stats = c("map"),
                              by = "route",
                              show.ids = TRUE,
+                             lbl.size = 1,
                              selected.category = NA,
                              symbology.path = paste0(system.file(package = "eamenaR"),
                                                      "/extdata/symbology.xlsx"),
+                             buffer = 0.1,
                              interactive = FALSE,
                              stamen.zoom = NA,
                              color.set = "Set1",
@@ -154,16 +158,18 @@ geojson_map_path <- function(d = NA,
         visNetwork::visEdges(arrows = "to") %>%
         visNetwork::visOptions(highlightNearest = T)
     }
-    outName <- paste0(map.name, "_map_interact")
+    outName <- paste0("map_interact")
     d[[outName]] <- gout
   }
   if("map" %in% stats & !interactive){
-    if(verbose){print(" - creates a static 'map' of the paths")}
+    if(verbose){
+      print(" - creates a static 'map' of the paths")
+      }
     left <- as.numeric(sf::st_bbox(hp.geom.sf)$xmin)
     bottom <- as.numeric(sf::st_bbox(hp.geom.sf)$ymin)
     right <- as.numeric(sf::st_bbox(hp.geom.sf)$xmax)
     top <- as.numeric(sf::st_bbox(hp.geom.sf)$ymax)
-    buffer <- mean(c(abs(left - right), abs(top - bottom)))/10
+    # buffer <- mean(c(abs(left - right), abs(top - bottom)))/10
     bbox <- c(left = left - buffer,
               bottom = bottom - buffer,
               right = right + buffer,
@@ -241,7 +247,7 @@ geojson_map_path <- function(d = NA,
                                  ggplot2::aes(x = sf::st_coordinates(hp.geojson.point)[, "X"],
                                               y = sf::st_coordinates(hp.geojson.point)[, "Y"],
                                               label = rownames(hp.geojson.point)),
-                                 size = 2,
+                                 size = lbl.size,
                                  segment.color = "black",
                                  segment.size = .1,
                                  segment.alpha = .5,
@@ -251,7 +257,7 @@ geojson_map_path <- function(d = NA,
                                  max.overlaps = Inf,
                                  inherit.aes = FALSE)
     }
-    outName <- paste0(map.name, "_map")
+    outName <- paste0("map")
     d[[outName]] <- gout
     # ggplot2::scale_fill_discrete(labels = by.ids)
   }
@@ -387,7 +393,7 @@ geojson_map_path <- function(d = NA,
       ggplot2::labs(color = factor(by)) +
       ggplot2::scale_colour_manual(values = by.colors) +
       ggplot2::theme_bw()
-    outName <- paste0(map.name, "_profile")
+    outName <- paste0("map_profile")
     # print(outName)
     # print(gout)
     d[[outName]] <- gout
