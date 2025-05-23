@@ -120,14 +120,16 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
     }
     # distances
     if(stat == "dist"){
-      my_subtitle <- paste0("Distribution of distances between two heritage places")
-      if(verbose){print(my_subtitle)}
-      if(by != "by"){my_subtitle <-  paste0(my_subtitle, " by '", by,"'")}
       df.measurements <- geojson_format_path(geojson.path = geojson.path,
                                              csv.path = csv.path,
                                              concept.name = concept.name,
                                              by = by,
                                              verbose = verbose)
+      my_subtitle <- paste0("Distribution of distances between two heritage places (n = ",
+                            nrow(df.measurements),
+                            ")")
+      if(by != "by"){my_subtitle <-  paste0(my_subtitle, " by '", by,"'")}
+      if(verbose){print(my_subtitle)}
       names(df.measurements)[names(df.measurements) == 'dist.m'] <- 'value'
       if(by != "by"){
         df.measurements <- merge(df.measurements, df.colors, by = by, all.x = T)
