@@ -346,7 +346,8 @@ geojson_stat <- function(stat.name = "stat",
             ggplot2::geom_bar(stat = "identity", fill = "lightblue") +
             blank_theme +
             # ggplot2::ylab(paste0(field.name, " %")) +
-            ggplot2::ylab(paste0(field.name, " %")) +
+            # ggplot2::ylab(paste0(field.name, " %")) +
+            ggplot2::ylab(paste0(field.name, " (nb)")) +
             ggplot2::scale_x_discrete(labels = function(x) stringr::str_wrap(x, width = warp.at)) +
             ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1),
                            axis.title.y = ggplot2::element_text(angle = 90),

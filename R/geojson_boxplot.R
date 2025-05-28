@@ -49,6 +49,7 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
                                                   "/extdata/caravanserail.geojson"),
                             csv.path = paste0(system.file(package = "eamenaR"),
                                               "/extdata/caravanserail_paths.csv"),
+                            tit = "Distribution of heritage places' areas",
                             stat = c("area"),
                             chart.type = c("boxplot"),
                             by = NA,
@@ -94,7 +95,7 @@ geojson_boxplot <- function(stat.name = "caravanserais_areas",
   }
   if(chart.type == "boxplot"){
     if(stat == "area"){
-      my_subtitle <- paste0("Distribution of heritage places' areas")
+      my_subtitle <- paste0(tit)
       if(verbose){print(my_subtitle)}
       if(by != "by"){my_subtitle <-  paste0(my_subtitle, " by '", by,"'")}
       df.measurements <- data.frame(id = hp.geojson[[r.id]],
